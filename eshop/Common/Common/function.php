@@ -1,5 +1,11 @@
 <?php
 	
+	/**
+	*[Xss过滤]
+	*@param string 	$val[需要过滤的字符]
+	*@return  string 	[过滤后的字符]
+	*【实例】
+	*/
 	function removeXss($val){
 		static $obj = null;
 		if($obj===null){
@@ -12,6 +18,14 @@
 	}
 
 
+
+	/**
+	*[MD5加密]
+	*@param string	$password[需要加密的字符串]
+	*@return  array/bool 	[md5加密的字符或false]
+	*【实例】
+	*pwd('1234');
+	*/
 	function pwd($password){
 		if(!strlen($password))
 			return false;
@@ -19,6 +33,17 @@
 	}
 	
 
+
+	/**
+	*[获取子孙树]
+	*@param array 	$arr[有parent_id的数组]
+	*@param int 	 	$p[parent_id的值] 
+	*@param int 		$lv[数组的等级] 
+	*@return  array 	$treeArr[排列好的数组]
+	*【实例】
+	*$catAll = D('cat')->select();
+	*var_dump(getTree($catAll));
+	*/
 	function getTree($arr, $p=0 , $lv=0){
 		$treeArr = array();
 		foreach( $arr as $val){
@@ -32,6 +57,16 @@
 	}
 	
 	
+
+	/**
+	*[上传图片]
+	*@param string 	$imgName[上传图片的名字]
+	*@param array 	$size[缩略图的大小小] 默认大小100px
+	*@param string 	$savePath[上传文件所在的文件夹路径] 默认文件夹UpLoad/Goods
+	*@return  array 	$data[成功返回上传文件的路径和缩略图路径/失败返回错误信息]
+	*【实例】
+	*	imgUpLoad('logo',array(200,200),'Brand');
+	*/
 	function imgUpLoad($imgName,$size=array(),$savePath=''){
 		$data = array();
 		if(isset($_FILES[$imgName])&&$_FILES[$imgName]['error']==0){
@@ -58,9 +93,16 @@
 		}
 		return $data;
 	}
-	
 
 
+
+	/**
+	*[删除上传图片和缩略图]
+	*@param object 	$obj[删除图片路径所在表实例化的对象]
+	*【实例】
+	*$goods = D('goods');
+	*imgDel($goods);
+	*/
 	 function imgDel($obj){
 		$path = C('UpLoad_Config')['rootPath'];
 		$data = $obj->find($obj->id);
