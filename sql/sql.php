@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS goods(
 
 
 
-
+11
 
 #########################RBAC###########################
 CREATE TABLE privilege(
