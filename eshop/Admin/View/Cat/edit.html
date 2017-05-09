@@ -1,0 +1,41 @@
+  <layout name="Index/header_foot"/>
+  <div class="main-div">
+      <form id="cat_form" method="post" name="theForm" enctype="multipart/form-data" >
+
+              <table width="100%" style="margin:0 auto" id="general-table">
+                    
+                    <input type="hidden" name="id" value="{$catOne['id']}">
+                    <input type="hidden" name="parent_id" value="{$catOne['parent_id']}">
+                    <tr>
+                          <td class="label">分类名称:</td>
+                          <td><input type='text' name='cat_name' maxlength="20" value='{$catOne["cat_name"]}' size='27' /> <font color="red">*</font></td>
+                    </tr>
+
+                    <tr>
+                          <td class="label">上级分类:</td>
+                          <td>
+                                <input type="text" value="{$catOne['parent_name']}" disabled>
+                          </td>
+                    </tr>
+
+                    <tr>
+                          <td class="label">分类描述：</td>
+                          <td><textarea name="cat_desc" id="" cols="40" rows="10" placeholder="最大128字,可以为空">{$catOne['cat_desc']}</textarea></td>
+                    </tr>
+
+                    <tr>
+                          <td class="label">是否在前台显示：</td>
+                          <td>
+                                <input type="radio" name="is_show" value="1" <eq name="catOne['is_show']" value="1">checked</eq> >是
+                                <input type="radio" name="is_show" value="0" <eq name="catOne['is_show']" value="0">checked</eq> >否
+                          </td>
+                    </tr>
+
+              </table>
+              <div class="button-div">
+              <input type="submit" value=" 确定 " />
+              <input type="reset" value=" 重置 " />
+              </div>
+      </form>
+  </div>
+

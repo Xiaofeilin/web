@@ -111,3 +111,6 @@
 		unlink($logo);
 		unlink($sm_logo);
 	}
+	
+
+	

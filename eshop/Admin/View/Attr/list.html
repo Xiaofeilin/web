@@ -1,0 +1,28 @@
+<layout name="Index/header_foot"/>
+<form method="post" action="" name="listForm">
+       <div class="list-div" id="listDiv">
+             <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
+                    <tr>
+                          <th>ID</th>
+                          <th>属性名</th>
+                          <th>属性值</th>  
+                          <th>操作</th>
+                    </tr>
+                    <foreach name="AttrList" item="val">
+                    <tr align="center" class="0" id="0_1" id = 'tr_1'>
+                          <td align="center">{$val['id']}</td>
+                          <td align="center" class="first-cell" style = 'padding-left="0"'>
+                                <span><a href="#" >{$val[attr_name]}</a></span>
+                          </td>
+                          <td align="center"><span>{$val['attr_option_values']}</span></td>
+                          <td width="24%" align="center">
+                                 <a href="{:U('edit',array('id'=>$val['id']) )}">编辑</a> |
+                                 <a href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" title="移除">移除</a>
+                          </td>
+                    </tr>
+                    </foreach>
+            </table>
+      </div>
+</form>
+
+       
