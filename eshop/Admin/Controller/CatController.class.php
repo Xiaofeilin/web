@@ -17,6 +17,7 @@
 			parent::add();
 			$data['catAll'] = $this->model->lvIt3();
 			$this->assign($data);
+			$this->assignHead('添加分类',U('add'),'分类列表');
 			$this->display();
 		}
 
@@ -31,6 +32,7 @@
 			$data = array();
 			$data['catOne'] = $this->model->getCatOne($id);
 			$this->assign($data);
+			$this->assignHead('修改分类',U('add'),'分类列表');
 			$this->display();
 		}
 
