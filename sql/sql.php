@@ -77,6 +77,9 @@ CREATE TABLE cat(
 	id tinyint unsigned not null auto_increment,
 	cat_name varchar(30) not null comment '分类名称',
 	parent_id smallint unsigned not null default '0' comment '父级分类',
+	cat_path varchar(32) not null default'0' comment'分类路径',  
+	cat_desc varchar(128) not null default '' comment '分类描述',
+	is_show tinyint unsigned not null default '0' comment'是否显示 1:显示，0:不显示',
 	primary key(id)
 )engine=InnoDB default charset=utf8 comment'商品类型';
 
@@ -88,7 +91,7 @@ CREATE TABLE type(
 )engine=InnoDB default charset=utf8 comment'商品类型';
 
 DROP TABLE IF EXISTS attribute;
-CREATE TABLE attribute(
+CREATE TABLE attr(
 	id mediumint unsigned not null auto_increment,
 	attr_name varchar(30) not null comment '属性名',
 	attr_type tinyint unsigned not null default '0' comment'属性的类型 0:唯一,1:可选',
