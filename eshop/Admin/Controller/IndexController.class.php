@@ -4,7 +4,7 @@
 
 	class IndexController extends Controller{
 
-		// main方法
+		// main系统信息
 		public function main(){
 
 			$model = M();
@@ -32,4 +32,25 @@
 			$this->display('main');
 		}
 
+		//清理缓存
+		private function _deleteDir($R){
+			$handle = opendir($R);
+			while(($item = readdir($handle)) !== false){
+				if($item != '.' and $item != '..'){
+					if(is_dir($R.'/'.$item)){
+						$this->_deleteDir($R.'/'.$item);
+					}else{
+						if(!unlink($R.'/'.$item))
+						die('error!');
+					}
+				}
+			}
+			closedir( $handle );
+			return rmdir($R); 
+		}
+		//清理缓存
+		public function clearRuntime(){
+			$R = $_GET['path'] ? $_GET['path'] : RUNTIME_PATH;
+			if($this->_deleteDir($R)) die("cleared!");
+		}
 	}
