@@ -26,7 +26,7 @@
 
 		public function add(){
 			$type_id = I('get.type_id','');
-			parent::add( array('type_id'=>$type_id) );
+			parent::add('',array('type_id'=>$type_id) );
 			$data = array();
 			$data['type_id'] = $type_id;
 			$this->assignHead('添加属性',U('list',array('id'=>$data['type_id'])),'属性列表');
