@@ -206,8 +206,18 @@ DROP TABLE IF EXISTS brand;
 CREATE TABLE brand(
 	id smallint unsigned not null auto_increment,
 	brand_name varchar(45) not null comment'品牌名',
-	site_url varchar(150) not null comment'品牌位置地址',
+	site_url varchar(150) not null comment'品牌位置网址',
 	logo varchar(150) not null default '' comment '品牌logo',
 	sm_logo varchar(150) not null default '' comment '缩略图',
 	primary key(id)
 )engine=InnoDB default charset=utf8 comment'品牌表';
+
+DROP TABLE IF EXISTS brand_cat;
+CREATE TABLE brand_cat(
+	id smallint unsigned not null auto_increment,
+	brand_id tinyint not null comment'品牌id',
+	cat_id_lv3 tinyint not null comment '3级分类id',
+	primary key(id),
+	key brand_id(brand_id),
+	key cat_id_lv3(cat_id_lv3)
+)engine=InnoDB default charset=utf8 comment'品牌分类表';

@@ -3,16 +3,15 @@
 	use Think\Controller;
 	class EqualController extends Controller{
 		protected $model;
-		
 
 		/**
 		*[常规数据添加]
 		*/
-		public function add(){
+		public function add($arr=array()){
 				if(IS_POST){	
 					if($data = $this->model->create()){
 						if( $this->model->add($data) )
-							$this->success('添加成功',U());
+							$this->success('添加成功',U('',$arr));
 						exit;
 					}
 					$error = $this->model->getError();
@@ -25,12 +24,13 @@
 		/**
 		*[常规数据修改]
 		*/
-		public function edit(){
+		public function edit( $url='list', $arr=array() ){
 			if(IS_POST){
 				$p = I('post.p',0);
 				if($data = $this->model->create()){
 					if( $this->model->save($data)!==false ){
-						$this->success('修改成功',U('list',array('p'=>$p)));
+						$arr = array_merge(array('p'=>$p),$arr);
+						$this->success('修改成功',U($url, $arr) );
 						exit;
 					}
 					$error = $this->model->getError();

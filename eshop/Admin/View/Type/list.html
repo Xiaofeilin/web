@@ -10,7 +10,6 @@
               </select>
                <input type="submit" value="搜索">
        </p>
-
 </form>
 
 <form method="post" action="" name="listForm">
@@ -30,7 +29,7 @@
                           <td width="24%" align="center">
                                  <a href="{:U('Attr/list',array('id'=>$val['id']) )}">编辑属性</a> |
                                  <a href="{:U('edit',array('id'=>$val['id']) )}">编辑</a> |
-                                 <a href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" title="移除">移除</a>
+                                 <a href="{:U('del',array('id'=>$val['id'],'p'=>$p) )}" title="移除">移除</a>
                           </td>
                     </tr>
                     </foreach>

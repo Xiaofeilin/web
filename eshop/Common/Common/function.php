@@ -67,7 +67,7 @@
 	*【实例】
 	*	imgUpLoad('logo',array(200,200),'Brand');
 	*/
-	function imgUpLoad($imgName,$size=array(),$savePath=''){
+	function imgUpLoad($imgName="logo",$size=array(),$savePath=''){
 		$data = array();
 		if(isset($_FILES[$imgName])&&$_FILES[$imgName]['error']==0){
 			$config = C('UpLoad_Config');
