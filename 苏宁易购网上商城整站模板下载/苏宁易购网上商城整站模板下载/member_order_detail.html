@@ -1,0 +1,652 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head></head> 
+ <body> 
+  <iframe src="http://wmcdn.qtmojo.cn/adxcm_base_idigger.htm" style="width: 0px; height: 0px; position: absolute; top: -100px; left: -100px; display: none;"></iframe> 
+  <meta charset="utf-8" /> 
+  <link href="images/favicon.ico" type="image/ico" rel="shortcut icon" /> 
+  <title>订单详情</title> 
+  <script type="text/javascript">
+//全局变量
+var sn=sn||{"context":'/emall',"domain":'www.suning.com',"storeId":'10052' || '10052',"catalogId":'10051' || '10051',"typeFlg":'',"productType":'Product',"memberDomain":'member.suning.com',"cartPath":"cart.suning.com/emall","imageDomianDir":"http://image2.suning.cn","scriptDomianDir":"http://b2cres.suning.cn","reviewPath":'http://review.suning.com/',"adId":'',"online":'online.suning.com',"conline":'conline.suning.com',"cookieDomain":'.suning.com',"langId":"-7" || '-7',"productId":"","partNumber":"","SPIKE_HOST":"promotion.suning.com","cityId":"","searchDomain" : 'http://search.suning.com/emall/',"qiangDomain":'qiang.suning.com',"productShareName":"","sslDomain":'ssl.suning.com',"passportLogon":'https://passport.suning.com/ids/login'};
+var reBuyUrl = "sprd_10052_10051_";
+</script> 
+  <script type="text/javascript">
+var logon_prd_reg = /^\w*?.suning.com$/;
+//pre host
+var logon_pre_v7_reg = /^(\w*)(pre)(\w*)(.cnsuning.com)$/;
+//sit host
+var logon_sit_v7_reg = /^(\w*)(sit)(\w*)(.cnsuning.com)$/;
+var _logonhostName = document.location.hostname;
+//根据不同易购版本指定js文件的路径
+function judgeEnv(){
+//DEV：开发环境 ， PRD:生产环境  PRE:预生产环境 ；SIT：测试环境
+if(logon_prd_reg.test(_logonhostName)){
+envType = "PRD";
+} else if(logon_pre_v7_reg.test(_logonhostName)){
+envType = "PRE";
+} else if(logon_sit_v7_reg.test(_logonhostName)){
+envType = "SIT";
+} else {
+envType = "DEV";
+}
+}
+judgeEnv();
+var protocolValue = window.location.protocol;
+//定义弹出框的主题和项目路径
+var passport_config = {
+base: "/webapp/wcs/stores/",
+loginTheme: "b2c_pop" ,
+successCallbackUrl: "servlet/popupLoginSuccess?storeId=10052&catalogId=10051&"
+};
+if(envType=="DEV"){
+passport_config.base =  protocolValue + "//b2cdev.cnsuning.com/webapp/wcs/stores/";
+passport_config.successCallbackUrl = passport_config.base + passport_config.successCallbackUrl;
+}else if(envType=="SIT"){
+passport_config.base =  protocolValue + "//membersit.cnsuning.com/webapp/wcs/stores/";
+passport_config.successCallbackUrl = passport_config.base + passport_config.successCallbackUrl;
+}else if(envType=="PRE"){
+passport_config.base =  protocolValue + "//memberpre.cnsuning.com/webapp/wcs/stores/";
+passport_config.successCallbackUrl = passport_config.base + passport_config.successCallbackUrl;
+}else if(envType=="PRD"){
+passport_config.base =  protocolValue + "//member.suning.com/webapp/wcs/stores/";
+passport_config.successCallbackUrl = passport_config.base + passport_config.successCallbackUrl;
+}
+function finishLogon(){
+SFE.base.toolBarEvent();
+}
+function testPopLogin() {
+ensureLogin(finishLogon);
+}
+</script> 
+  <script src="http://b2cres.suning.cn/javascript/js_user_201306/passport.js?v=2016031003" type="text/javascript"></script> 
+  <meta content="苏宁电器网上商城,提供彩电、冰箱、洗衣机、空调、手机,笔记本电脑,数码相机,单反相机,MP3，MP4，厨房家电,厨卫家电,生活小电器,办公家电,家居用品的网上销售。网上购买家电方便快捷,全国门店付款、自提，售后门店服务本地化,中国3C家电连锁零售企业领跑者" name="description" /> 
+  <meta content="苏宁官网,苏宁网上商城,北京苏宁,上海苏宁,苏宁手机,彩电,冰箱,洗衣机,空调,手机,手机配件,笔记本电脑,台式电脑,电脑配件,数码相机,数码摄像机,单反相机,MP3,MP4,电教产品,数码配件,厨房家电,厨卫家电,生活小电器,办公家电,家居用品" name="keywords" /> 
+  <link type="text/css" rel="stylesheet" href="http://b2cres.suning.cn/css/MySuning/V4/css/mySuning.css?v=2016031003" /> 
+  <link type="text/css" rel="stylesheet" href="http://b2cres.suning.cn/css/ordercenter/v2014/ms-orderDetail.css?v=201603100301" /> 
+  <link type="text/css" rel="stylesheet" href="http://b2cres.suning.cn/css/css_sn/returnGoods/style04/exchangeOrders.css?v=2016031003" /> 
+  <script src="http://b2cres.suning.cn/css/MySuning/V4/js/jquery.js?v=2016031003" type="text/javascript"></script> 
+  <script src="http://b2cres.suning.cn/javascript/js_sn/ordercenter/orderDetail2014.js?v=2016031003" type="text/javascript"></script> 
+  <script src="http://b2cres.suning.cn/javascript/js_sn/ordercenter/orderDetailService2014.js?v=2016031003" type="text/javascript"></script> 
+  <script async="" src="http://c.cnzz.com/core.php"></script> 
+  <!-- Start - JSP File Name:  ErrorMessageSetup.jspf --> 
+  <!-- End - JSP File Name:  ErrorMessageSetup.jspf --> 
+  <input type="hidden" value="https://review.suning.com/" id="evaluateUrl" /> 
+  <input type="hidden" value="http://review.suning.com/" id="evaHTTP" /> 
+  <input type="hidden" value="9024799467" id="orderId" /> 
+  <input type="hidden" value="http://www.suning.com/emall" id="orddomain" /> 
+  <input type="hidden" value="http://product.suning.com" id="fourthPageDomain" /> 
+  <input type="hidden" value="0070075699" id="cshopVendorCode" /> 
+  <input type="hidden" value="" id="reviewItemIds" /> 
+  <input type="hidden" value="" id="reviewOmsItemIds" /> 
+  <input type="hidden" value="0070075699" id="reviewVendorCode" /> 
+  <script type="text/javascript">
+//全局变量
+var sn = sn || {
+"context": "/emall",
+"domain": "www.suning.com",
+"storeId": "10052",
+"catalogId": "10051",
+"memberDomain": "member.suning.com",
+"online": "online.suning.com",
+"cookieDomain": ".suning.com",
+"categoryId": "20089",
+"searchDomain": "http://search.suning.com/emall/",
+"sslDomain":'ssl.suning.com'
+};
+var favorite_config = {
+"favoriteDomain":'',
+"recommendDomain":"",
+"snCartPath":"",
+"productDomain":""
+};
+</script> 
+  <link rel="stylesheet" href="css/common.css" /> 
+  <link rel="stylesheet" href="css/search.css" /> 
+  <link rel="stylesheet" href="css/sn-sidebar.css" /> 
+  <script type="text/javascript" src="js/jquery.js"></script> 
+  <script type="text/javascript" src="js/sn_lazyload.js"></script> 
+  <script type="text/javascript" src="js/lazyelem.min.js"></script> 
+  <script type="text/javascript" src="js/SFE.base.min.js"></script> 
+  <script type="text/javascript" src="js/search.min.js"></script> 
+  <script type="text/javascript" src="js/sn-sidebar.min.js"></script> 
+  <script type="text/javascript" src="js/chatCompat_mini.js"></script> 
+  <div class="ng-top-banner" id="_TOP_BANNER_"></div> 
+  <div class="ng-toolbar"> 
+   <div class="ng-toolbar-con wrapper"> 
+    <div class="ng-toolbar-left"> 
+     <a name="public0_none_dbgjt_fhyisy01" id="ng-bar-node-backhome" class="ng-bar-node ng-bar-node-backhome" href="index.html" style="display: block;"> <i class="ng-iconfont ng-backhome"></i><span>返回易购首页</span> <i class="ng-line ng-iconfont ml10"></i> </a> 
+     <!--网站导航 [[--> 
+     <div class="ng-bar-node-box ng-site-nav-box"> 
+      <a name="public0_none_dbgjt_wzdh03" class="ng-bar-node ng-bar-node-site" href="javascript:void(0);"> <span>网站导航</span><em class="ng-iconfont down"></em> </a> 
+      <div style="display:none;" class="ng-sn-site-nav ng-d-box site-nav-child"> 
+       <dl class="sn-site-list lnb"> 
+        <dt>
+          特色购物 
+        </dt> 
+        <dd> 
+         <p><a target="_blank" href="http://10035.suning.com/" name="public0_none_dbgjt_wzdh030101">苏宁互联</a></p> 
+         <p><a target="_blank" href="http://store.suning.com/v.htm" name="public0_none_dbgjt_wzdh030102">苏宁V购</a></p> 
+         <p><a target="_blank" href="http://ka.suning.com/" name="public0_none_dbgjt_wzdh030103">苏宁卡</a></p> 
+         <p><a target="_blank" href="http://g.suning.com/" name="public0_none_dbgjt_wzdh030104">海外购</a></p> 
+         <p><a target="_blank" href="http://b.suning.com/" name="public0_none_dbgjt_wzdh030105">政企采购</a></p> 
+         <p><a target="_blank" href="coupon.html" name="public0_none_dbgjt_wzdh030106">大聚惠</a></p> 
+         <p><a target="_blank" href="http://try.suning.com/" name="public0_none_dbgjt_wzdh030107">0元试用</a></p> 
+         <p><a target="_blank" href="http://tv.suning.com/" name="public0_none_dbgjt_wzdh030108">视频购物</a></p> 
+         <p><a target="_blank" href="http://sale.suning.com/images/advertise/mdr/oabangong526/index.html" name="public0_none_dbgjt_wzdh030111">办公直通车</a></p> 
+         <p><a target="_blank" href="http://pai.suning.com/shanpai/" name="public0_none_dbgjt_wzdh030112">闪拍</a></p> 
+         <p><a target="_blank" href="http://yushou.suning.com" name="public0_none_dbgjt_wzdh030113">预售</a></p> 
+         <p><a target="_blank" href="http://new.suning.com" name="public0_none_dbgjt_wzdh030114">新发现</a></p> 
+         <p><a target="_blank" href="http://2.suning.com" name="public0_none_dbgjt_wzdh030115">二手优品</a></p> 
+        </dd> 
+       </dl> 
+       <dl class="sn-site-list"> 
+        <dt>
+          主题频道 
+        </dt> 
+        <dd> 
+         <p><a target="_blank" href="http://channel.suning.com/dianqicheng.html" name="public0_none_dbgjt_wzdh030201">电器城</a></p> 
+         <p><a target="_blank" href="supermarket.html" name="public0_none_dbgjt_wzdh030202">苏宁超市</a></p> 
+         <p><a target="_blank" href="http://shouji.suning.com/" name="public0_none_dbgjt_wzdh030203">手机</a></p> 
+         <p><a target="_blank" href="http://sports.suning.com/" name="public0_none_dbgjt_wzdh030204">运动馆</a></p> 
+         <p><a target="_blank" href="http://book.suning.com/" name="public0_none_dbgjt_wzdh030205">图书</a></p> 
+         <p><a target="_blank" href="child.html?/" name="public0_none_dbgjt_wzdh030207">红孩子母婴</a></p> 
+         <p><a target="_blank" href="http://binggo.suning.com/" name="public0_none_dbgjt_wzdh030208">美妆个护</a></p> 
+         <p><a target="_blank" href="http://pindao.suning.com/city/diannao.htm" name="public0_none_dbgjt_wzdh030209">电脑</a></p> 
+         <p><a target="_blank" href="clothes.html" name="public0_none_dbgjt_wzdh030210">服装城</a></p> 
+         <p><a target="_blank" href="http://smarthome.suning.com/" name="public0_none_dbgjt_wzdh030213">智能生活</a></p> 
+         <p><a target="_blank" href="http://pindao.suning.com/city/jiazhuang.htm" name="public0_none_dbgjt_wzdh030214">家装馆</a></p> 
+         <p><a target="_blank" href="http://pindao.suning.com/city/qiche.htm" name="public0_none_dbgjt_wzdh030215">汽车用品</a></p> 
+         <p><a target="_blank" href="http://re.suning.com/?utm_source=daohang" name="public0_none_dbgjt_wzdh030216">苏宁热卖</a></p> 
+        </dd> 
+       </dl> 
+       <dl class="sn-site-list"> 
+        <dt>
+          生活助手 
+        </dt> 
+        <dd> 
+         <p><a target="_blank" href="https://passport.suning.com/ids/trustLogin?sysCode=epp&amp;targetUrl=https://licai.suning.com/bof/bofIndex.htm" name="public0_none_dbgjt_wzdh030301">零钱宝<i class="hot"></i></a></p> 
+         <p><a target="_blank" href="http://chong.suning.com/eppscrp/mobile/fill.htm" name="public0_none_dbgjt_wzdh030302">手机充值</a></p> 
+         <p><a target="_blank" href="http://huochepiao.suning.com/" name="public0_none_dbgjt_wzdh030303">火车票</a></p> 
+         <p><a target="_blank" href="http://sh.suning.com/life/at/memtrans!input.action" name="public0_none_dbgjt_wzdh030304">转账还款</a></p> 
+         <p><a target="_blank" href="http://assss.suning.com/assss-web/pc/helper/appointmentStep1.do" name="public0_none_dbgjt_wzdh030305">约服务</a></p> 
+         <p><a target="_blank" href="http://sh.suning.com/life/2-1.html" name="public0_none_dbgjt_wzdh030306">水电煤</a></p> 
+         <p><a target="_blank" href="http://baoxian.suning.com/ins/index.htm" name="public0_none_dbgjt_wzdh030307">保险</a></p> 
+         <p><a target="_blank" href="http://caipiao.suning.com/" name="public0_none_dbgjt_wzdh030308">彩票</a></p> 
+         <p><a target="_blank" href="http://jipiao.suning.com/" name="public0_none_dbgjt_wzdh030309">机票</a></p> 
+         <p><a target="_blank" href="http://store.suning.com/" name="public0_none_dbgjt_wzdh030509">门店查询</a></p> 
+        </dd> 
+       </dl> 
+       <dl class="sn-site-list"> 
+        <dt>
+          会员服务 
+        </dt> 
+        <dd> 
+         <p><a target="_blank" href="http://vip.suning.com" name="public0_none_dbgjt_wzdh030401">会员联盟<i class="hot"></i></a></p> 
+         <p><a target="_blank" href="http://club.suning.com/" name="public0_none_dbgjt_wzdh030402">苏宁社区</a></p> 
+         <p><a target="_blank" href="http://baoxian.suning.com/ins/jiaDian.htm" name="public0_none_dbgjt_wzdh030403">延长保修</a></p> 
+         <p><a target="_blank" href="http://snbook.suning.com/web/index.htm" name="public0_none_dbgjt_wzdh030404">免费书城</a></p> 
+         <p><a target="_blank" href="https://passport.suning.com/ids/trustLogin?sysCode=epp&amp;targetUrl=https://pay.suning.com/epp-epw/login/login.action" name="public0_none_dbgjt_wzdh030405">易付宝</a></p> 
+         <p><a target="_blank" href="https://passport.suning.com/ids/trustLogin?sysCode=epp&amp;targetUrl=https://licai.suning.com/bof/licaiIndex.htm" name="public0_none_dbgjt_wzdh030407">苏宁理财</a></p> 
+         <p><a target="_blank" href="http://jinrong.suning.com" name="public0_none_dbgjt_wzdh030406">苏宁金融</a></p> 
+        </dd> 
+       </dl> 
+       <dl class="sn-site-list rnb"> 
+        <dt>
+          更多热点 
+        </dt> 
+        <dd> 
+         <p><a target="_blank" href="http://www.pptv.com/" name="public0_none_dbgjt_wzdh030503">PPTV</a></p> 
+         <p><a target="_blank" href="http://sale.suning.com/syb/20120419xsjkhd/index.html" name="public0_none_dbgjt_wzdh030504">客户端</a></p> 
+         <p><a target="_blank" href="http://sop.suning.com/" name="public0_none_dbgjt_wzdh030505">商家入驻<i class="hot"></i></a></p> 
+         <p><a target="_blank" href="http://pan.suning.com/cloud-web/web2/cloud.html" name="public0_none_dbgjt_wzdh030506">苏宁云盘</a></p> 
+         <p><a target="_blank" href="http://sncs.suning.com/" name="public0_none_dbgjt_wzdh030507">苏宁众包</a></p> 
+         <p><a target="_blank" href="http://union.suning.com/" name="public0_none_dbgjt_wzdh030508">苏宁联盟</a></p> 
+         <p><a target="_blank" href="http://ued.suning.com/survey/" name="public0_none_dbgjt_wzdh030510">用户体验</a></p> 
+         <p><a target="_blank" href="http://gongyi.suning.com" name="public0_none_dbgjt_wzdh030511">公益频道</a></p> 
+         <p><a target="_blank" href="http://jiameng.suning.com/home.action" name="public0_none_dbgjt_wzdh030502">校园先锋</a></p> 
+         <p><a target="_blank" href="http://jiameng.suning.com/home.action" name="">苏宁加盟</a></p> 
+         <p><a target="_blank" href="http://www.suningcloud.com/" name="">苏宁云</a></p> 
+         <p><a target="_blank" href="http://fc.suning.com/" name="">苏宁足球</a></p> 
+        </dd> 
+       </dl> 
+       <a name="public0_none_dbgjt_wzdh030516" class="ng-close" href="javascript:void(0);"><em class="ng-iconfont"></em></a> 
+      </div> 
+     </div> 
+     <!--网站导航 ]]--> 
+     <!-- 消息 [[ --> 
+     <div class="ng-bar-node-box ng-msg-box"> 
+      <a target="_blank" name="public0_none_dbgjt_wdxx01" class="ng-bar-node ng-bar-node-msg" href="member_message.html"> <span>消息<i class="ng-iconfont dot"></i></span><em class="ng-iconfont down"></em> </a> 
+      <div style="display:none;" class="ng-d-box ng-msg-child"> 
+       <div class="ng-msg-list"> 
+        <div class="ng-msg-item ng-msg-item-no"> 
+         <i></i> 
+         <span>嗷~ 没有新消息...</span> 
+        </div> 
+       </div> 
+       <div class="ng-msg-bottom"> 
+        <a target="_blank" name="public0_none_dbgjt_wdxx01" href="member_message.html">查看更多</a> 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 消息 ]] --> 
+    </div> 
+    <div class="ng-toolbar-right"> 
+     <!-- 登录注册 --> 
+     <a style="display:none;" rel="nofollow" id="username-node" class="ng-bar-node username-bar-node username-bar-node-showside" href="javascript:void(0)"> <span id="usernameHtml01">180******38</span> <em class="hasmsg ng-iconfont"></em> </a> 
+     <div style="display: block;" id="username-node-slide" class="ng-bar-node-box username-handle"> 
+      <a class="ng-bar-node username-bar-node username-bar-node-noside" rel="nofollow" href="member_index.html"> <span id="usernameHtml02">180******38</span> <em class="hasmsg ng-iconfont"></em> <em class="ng-iconfont down"></em> </a> 
+      <div style="display:none;" class="ng-d-box ng-down-box ng-username-slide"> 
+       <a rel="nofollow" target="_blank" class="ng-vip-union" href="member_info.html">账号管理</a> 
+       <a rel="nofollow" href="javascript:SFE.base.logoff();">退出登录</a> 
+      </div> 
+     </div> 
+     <div id="reg-bar-node" class="ng-bar-node reg-bar-node" style="display: none;"> 
+      <a class="login" rel="nofollow" name="public0_none_dbgjt_login0800" href="login.html">登录</a> 
+      <a name="public0_none_dbgjt_register09" rel="nofollow" class="login reg-bbb" target="_blank" href="https://reg.suning.com/person.do">注册</a> 
+     </div> 
+     <!--我的订单 [[--> 
+     <div class="ng-bar-node-box myorder-handle"> 
+      <a class="ng-bar-node ng-bar-node-fix touch-href ng-bar-node-pr5" name="public0_none_dbgjt_order04" rel="nofollow" href="member_order.html?storeId=10052&amp;catalogId=10051"><span>我的订单</span><em class="ng-iconfont down"></em></a> 
+      <div style="display:none;" class="ng-down-box ng-d-box myorder-child"> 
+       <a name="public0_none_dbgjt_order0401" rel="nofollow" href="member_order.html?catalogId=10051&amp;storeId=10052&amp;selectTime=all&amp;status=M">待支付<em id="waitPayCounts"></em></a> 
+       <a name="public0_none_dbgjt_order0402" rel="nofollow" href="member_order.html?catalogId=10051&amp;storeId=10052&amp;selectTime=all&amp;status=C000">待收货<em id="waitDeliveryCounts"></em></a> 
+       <a name="public0_none_dbgjt_order0403" rel="nofollow" href="member_comments.html">待评价<em id="waitEvaluation"></em></a> 
+       <a name="public0_none_dbgjt_order0404" rel="nofollow" href="http://member.suning.com/emall/SNLingYueGoodsOrderView?storeId=10052&amp;catalogId=10051">修改订单</a> 
+      </div> 
+     </div> 
+     <!--我的订单 ]]--> 
+     <!--我的易购 [[--> 
+     <div class="ng-bar-node-box mysuning-handle"> 
+      <a class="ng-bar-node ng-bar-node-fix touch-href ng-bar-node-pr5" name="public0_none_dbgjt_wdyg05" rel="nofollow" href="member_index.html"><span>我的易购</span><em class="ng-iconfont down"></em></a> 
+      <div style="display:none;" class="ng-down-box ng-d-box mysuning-child"> 
+       <a target="_blank" rel="nofollow" name="public0_none_dbgjt_wdyg0501" href="http://2.suning.com/myOrder/queryMyOrders.do">我的二手</a> 
+       <a target="_blank" name="public0_none_dbgjt_wdyg0502" rel="nofollow" href="https://passport.suning.com/ids/trustLogin?sysCode=epp&amp;targetUrl=http://my.jr.suning.com/sfp/accountAssets/index.htm">我的金融</a> 
+       <a name="public0_none_dbgjt_wdyg0503" rel="nofollow" href="member_collect_goods.html">我的收藏</a> 
+       <a rel="nofollow" href="https://rxf.suning.com/epps-cpf/accountMgt/assetOverview.do">我的任性付</a> 
+       <a name="public0_none_dbgjt_wdyg0504" rel="nofollow" href="member_coupon.html?storeId=10052&amp;catalogId=10051">我的优惠券</a> 
+       <a name="public0_none_dbgjt_wdyg0505" rel="nofollow" href="http://vip.suning.com/sign/welcome.do">打卡赚云钻</a> 
+       <a name="public0_none_dbgjt_wdyg0506" rel="nofollow" target="_blank" class="ng-vip-union" href="http://vip.suning.com">会员联盟<em class="ng-iconfont"></em></a> 
+      </div> 
+     </div> 
+     <!--我的易购 ]]--> 
+     <!-- 购物车 --> 
+     <a href="cart.html?langId=-7&amp;storeId=10052&amp;catalogId=10051" rel="nofollow" name="public0_none_minicart_gouwclj" class="ng-bar-node ng-bar-node-mini-cart"> <em class="ng-iconfont cart"></em><span>购物车</span> <span id="J_total_num_box" class="total-num-box"> <b id="showTotalQty" class="total-num J_cart_total_num">0</b> <span class="total-num-bg-box"> <em></em> <i></i> </span> </span> </a> 
+     <!--手机苏宁 [[--> 
+     <div class="ng-bar-node-box app-down-box"> 
+      <a class="ng-bar-node mb-suning touch-href" rel="nofollow" name="public0_none_dbgjt_sjsn01" target="_blank" href="http://sale.suning.com/syb/20120419xsjkhd/index.html"> <em class="ng-iconfont mb"></em><span>手机苏宁</span><em class="ng-iconfont down"></em> </a> 
+      <div style="display:none;" class="ng-mb-box ng-d-box mb-down-child"> 
+       <div class="ng-code-box"> 
+        <p class="ng-tip"> <a target="_blank" name="public0_none_dbgjt_sjsn0101" rel="nofollow" href="http://sale.suning.com/syb/20120419xsjkhd/index.html">扫一扫，下载易购客户端</a> </p> 
+        <a target="_blank" name="public0_none_dbgjt_sjsn0102" rel="nofollow" href="http://sale.suning.com/syb/20120419xsjkhd/index.html"> <img width="80" height="80" alt="苏宁易购APP二维码" src3="https://sslres.suning.com/public/v3/images/code.png?var=07" /> </a> 
+       </div> 
+       <div class="ng-app-box"> 
+        <div class="ng-app-list"> 
+         <a class="ng-app" name="public0_none_dbgjt_sjsn0103" rel="nofollow" target="_blank" href="https://passport.suning.com/ids/trustLogin?sysCode=epp&amp;targetUrl=https://pay.suning.com/epp-epw/login/login.action"><img title="易付宝钱包" src3="https://sslres.suning.com/public/v3/images/app-ebook.png?var=01" /></a> 
+         <a class="ng-app" name="public0_none_dbgjt_sjsn0104" rel="nofollow" target="_blank" href="http://sale.suning.com/images/advertise/zyn/TV0811sndjt/index.html"><img title="苏宁易购TV版" src3="https://sslres.suning.com/public/v3/images/app-sn.png?var=03" /></a> 
+         <a class="ng-app" name="public0_none_dbgjt_sjsn0105" rel="nofollow" target="_blank" href="http://app.pptv.com/pg_get_clt"><img title="PPTV" src3="https://sslres.suning.com/public/v3/images/app-pptv.png?var=01" /></a> 
+         <a class="ng-app" name="public0_none_dbgjt_sjsn0106" rel="nofollow" target="_blank" href="http://snbook.suning.com/web/index.htm"><img title="苏宁阅读" src3="https://sslres.suning.com/public/v3/images/app-suning.png?var=02" /></a> 
+        </div> 
+       </div> 
+       <a name="public0_none_dbgjt_sjsn0108" rel="nofollow" target="_blank" href="http://sale.suning.com/syb/yinliuye0512/index.html"> <img width="242" height="35" src3="https://sslres.suning.com/public/v3/images/newreg.png?v=20150506" /> </a> 
+       <a rel="nofollow" class="ng-close" name="index_none_dbgjt_sjsn0110" href="javascript:void(0);"><em class="ng-iconfont"></em></a> 
+      </div> 
+     </div> 
+     <!--手机苏宁 ]]--> 
+     <a target="_blank" class="ng-bar-node ng-bar-node-pr5" name="public0_none_dbgjt_yfb06" href="https://passport.suning.com/ids/trustLogin?sysCode=epp&amp;targetUrl=https://pay.suning.com/epp-epw/login/login.action"><span>易付宝</span></a> 
+     <a target="_blank" name="public0_none_dbgjt_qypd01" class="ng-bar-node ng-bar-node-pr5" href="http://b.suning.com"><span>政企采购</span></a> 
+     <!--服务中心 [[--> 
+     <div class="ng-bar-node-box service-handle"> 
+      <a name="public0_none_dbgjt_fwzx07" rel="nofollow" class="ng-bar-node ng-bar-node-service ng-bar-node-fix touch-href ng-bar-node-pr5" href="javascript:void(0);"><span>客户服务</span><em class="ng-iconfont down"></em> </a> 
+      <div style="display:none;" class="ng-down-box ng-d-box service-center-child ng-ser-list"> 
+       <a name="public0_none_dbgjt_fwzx0705" target="_blank" rel="nofollow" href="http://help.suning.com">帮助中心</a> 
+       <a name="public0_none_dbgjt_fwzx0704" target="_blank" rel="nofollow" href="http://store.suning.com">查找门店</a> 
+       <a target="_blank" name="public0_none_dbgjt_fwzx0701" rel="nofollow" href="member_aftersale.html?storeId=10052&amp;catalogId=10051">退换货</a> 
+       <a target="_blank" href="http://assss.suning.com/assss-web/pc/helper/appointmentStep1.do">约服务</a> 
+       <a target="_blank" name="public0_none_dbgjt_fwzx0702" rel="nofollow" href="member_suggest.html">投诉</a> 
+       <a target="_blank" name="public0_none_dbgjt_fwzx0706" rel="nofollow" href="http://s.suning.com">建议反馈</a> 
+       <a name="public0_none_dbgjt_fwzx0707" rel="nofollow" href="javascript:findpass();">在线咨询</a> 
+      </div> 
+     </div> 
+     <!--服务中心 ]]--> 
+    </div> 
+    <div id="ng-minicart-slide-box"></div> 
+   </div> 
+  </div> 
+  <div class="ng-header ng-channel-header"> 
+   <div class="ng-header-con"> 
+    <div class="wrapper"> 
+     <div id="G_SUNING_LOGO" class="ng-logo-box"> 
+      <!-- LOGO --> 
+      <a class="ng-logo" href="index.html"> <img width="190" height="100" alt="苏宁易购" src="https://sslres.suning.com/public/v3/images/logo/snlogo.png?v=2015042703" /> </a> 
+      <span class="channel-logo" id="G_CHANNEL_LOGO"></span> 
+     </div> 
+     <div class="ng-search channel-search"> 
+      <!-- PRFLS SEARCH --> 
+      <div class="g-search"> 
+       <i class="ng-iconfont search-icon"></i> 
+       <form onsubmit="return SFE.search.onSubmitSearch(this)" method="get"> 
+        <div class="search-keyword-box"> 
+         <input type="text" autocomplete="off" value="" name="index1_none_search_ss2" class="search-keyword" id="searchKeywords" tabindex="0" /> 
+        </div> 
+        <input type="submit" value="搜索" name="index1_none_search_ss1" class="search-btn" id="searchSubmit" /> 
+        <div class="g-search-hotwords" id="snKeywordNew"> 
+         <input type="hidden" key="想不到你是这样的三星S7，竟然免费送！" value="想不到你是这样的三星S7，竟然免费送！" id="searchDefaultKeyword" /> 
+         <a href="http://search.suning.com/%E6%AF%8F%E5%8D%83%E5%87%8F%E7%99%BE/" target="_blank" name="public0_RSC_每千减百_0-0"><font style="color:#FF6600">每千减百</font></a> 
+         <a href="http://search.suning.com/%E4%B8%89%E6%98%9FS7/" target="_blank" name="public0_RSC_三星S7_1-0">三星S7</a> 
+         <a href="http://th.suning.com/cpm/calCptClicks?&amp;tid=16342254&amp;sid=16066185&amp;positionID=100002642&amp;iTime=20160312&amp;cptType=HSW&amp;ap=NmY5YjVhZTdmM2M0NWM0OWQ2YzE0ZjE1MmZkYzU4MTF8MTYzNDIyNTR8NDI4OTUyMDQ3fDE2MDY2MTg1fDEwMDAwMjY0MnwxNTg3MDc1MXznvo7nmoTnqbrosIN8576O55qE56m66LCDfGh0dHA6Ly9zaG9wLnN1bmluZy5jb20vMzAwMDAwNjEvaW5kZXguaHRtbHwxMjUwMDAwfENQVHwyMDE2LTAzLTEyIDIwOjUwOjIzfHwxOTIuMTY4LjQ0LjE4M3xIU1d8aG9tZXwxOTIuMTY4LjUxLjQyfHBjdHwzfA==" target="_blank" name="public0_RSC_美的空调_2-0"><font style="color:#FF6600">美的空调</font></a> 
+         <a href="http://search.suning.com/9%252E9%E5%85%83%E8%B5%B7/" target="_blank" name="public0_RSC_9.9元起_3-0">9.9元起</a> 
+         <a href="http://search.suning.com/%E5%B7%A7%E5%85%8B%E5%8A%9B/" target="_blank" name="public0_RSC_巧克力_4-0"><font style="color:#FF6600">巧克力</font></a> 
+         <a href="http://search.suning.com/%E7%BA%A2%E5%8C%85%E9%99%90%E9%87%8F%E6%8A%A2/" target="_blank" name="public0_RSC_红包限量抢_5-0">红包限量抢</a> 
+         <a href="http://search.suning.com/%E7%A9%BA%E8%B0%83%E5%85%8D%E8%B4%B9%E5%AE%89%E8%A3%85/" target="_blank" name="public0_RSC_空调免费安装_6-0">空调免费安装</a> 
+         <a href="http://search.suning.com/%E5%8E%A8%E5%8D%AB%E4%B8%93%E5%9C%BA/" target="_blank" name="public0_RSC_厨卫专场_7-0">厨卫专场</a> 
+         <a href="http://search.suning.com/%E6%BD%AE%E6%B5%81%E5%8D%95%E5%93%81/" target="_blank" name="public0_RSC_潮流单品_8-0">潮流单品</a> 
+         <a href="http://search.suning.com/%E6%B4%97%E8%A1%A3%E6%9C%BA/" target="_blank" name="public0_RSC_洗衣机_9-0">洗衣机</a> 
+         <a href="http://search.suning.com/%E7%BA%A2%E7%B1%B3note3/" target="_blank" name="public0_RSC_红米note3_10-0">红米note3</a> 
+        </div> 
+       </form> 
+       <div class="g-ac-results hide" id="ac_results" style="display: none;"></div> 
+       <div class="g-rec-results hide" id="rec_results" style="display: none;"> 
+        <ul class="history-results"></ul> 
+        <ul class="rec-results"></ul> 
+       </div> 
+      </div> 
+     </div> 
+     <!-- LOGO --> 
+     <div id="ng-top-act" class="ng-top-act"></div> 
+    </div> 
+   </div> 
+  </div> 
+  <div class="ng-nav-bar ng-nav-bar-chanel"> 
+   <div class="ng-sort"> 
+    <a name="public0_none_dht_09" target="_blank" href="http://www.suning.com/emall/pgv_10052_10051_1_.html" class="ng-all-hook"> <span>全部商品分类</span><em class="ng-iconfont"></em> </a> 
+    <div class="ng-sort-list-box"> 
+     <div class="ng-sort-detail"> 
+      <a name="public0_none_ml_gban" class="ng-close-sort" href="javascript:void(0);"><em class="ng-iconfont"></em></a> 
+      <div class="sort-chanel"> 
+      </div> 
+      <div class="cate-list"> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="ng-nav-index"> 
+    <ul id="ng-main-nav" class="ng-nav"> 
+     <li><a name="public0_none_dht_01" target="_blank" href="index.html">首页</a></li> 
+     <li><a target="_blank" href="vip.html" name="public0_none_tspd_01">苏宁会员<i class="new"></i></a></li> 
+     <li><a name="public0_none_dht_05" target="_blank" href="clothes.html">服装城</a></li> 
+     <li><a name="public0_none_dht_02" target="_blank" href="supermarket.html">苏宁超市</a></li> 
+     <li><a name="public0_none_dht_04" target="_blank" href="electric.html">电器城</a></li> 
+     <li><a name="public0_none_dht_03" target="_blank" href="child.html?/">红孩子母婴</a></li> 
+     <li><a name="public0_none_dht_06" target="_blank" href="coupon.html">大聚惠<i class="hot"></i></a></li> 
+     <li><a name="public0_none_dht_08" target="_blank" href="mall.html">苏宁金融</a></li> 
+     <!-- 		<li><a href="http://binggo.suning.com/" target="_blank" name="public0_none_dht_08">美妆</a></li>
+		<li><a href="http://pai.suning.com/shanpai" target="_blank" name="public0_none_dht_08">闪拍</a></li> --> 
+    </ul> 
+   </div> 
+   <div class="ng-nav-right-txtact"></div> 
+  </div> 
+  <div class="wrapper"> 
+   <div class="od-curmb"> 
+    <a href="index.html">首页</a> &gt; 
+    <a href="member_index.html">我的易购</a> &gt; 
+    <a href="member_order.html?storeId=10052&amp;catalogId=10051">订单中心</a> &gt; 订单详情 
+   </div> 
+   <div class="od-status  od-reservation"> 
+    <div class="header"> 
+     <span class="od-id">订单编号：9024799467</span> 
+     <span class="od-dt">下单时间：2016-03-12</span> 
+     <div class="od-opts"> 
+      <a href="http://member.suning.com/emall/SNModifyOrderPageView?storeId=10052&amp;catalogId=10051&amp;orderId=9024799467&amp;cshopVendorCode=0070075699&amp;vendors=1" name="ddzx_none_detailed_modify">修改订单</a> 
+      <a onclick="javascript:redirectCancelOrder('9024799467','M','11613');return false;" href="javascript:void(0)" name="ddzx_none_details_cancel">取消订单</a> 
+     </div> 
+    </div> 
+    <div class="status-main"> 
+     <div class="clearfix"> 
+      <span class="status">订单状态：<b><font id="updateOrderStatus">等待支付</font></b></span> 
+      <a target="_blank" id="gotoPay" class="btn btn-pay" href="https://ssl.suning.com/emall/SNRedirectPaymentProcess?orderId=9024799467&amp;checkType=true&amp;policyId=11613&amp;subPolicyId=20001&amp;storeId=10052&amp;catalogId=10051&amp;langId=-7&amp;sourceUrl=SNCmyOrdersDetailView" name="ddzx_none_details_pay">去支付</a> 
+      <a target="_blank" id="gotoAnPay" href="http://cart.suning.com/emall/SNPayForAnotherCmd?orderId=9024799467&amp;storeId=10052&amp;catalogId=10051&amp;langId=-7" class="btn btn-buy" name="ddzx_none_details_zrdf">找人代付</a> 
+      <div style="" id="cshopOrderCountDownTime" class="date-time"> 
+       <span id="timeLeftMessage" class="count-down">剩余支付时间：</span> 
+       <span class="icon"></span> 
+       <span id="timeTipView" class="count-down"><b><font color="#E47833">23</font></b>小时<b><font color="#E47833">26</font></b>分<b><font color="#E47833">39</font></b>秒（逾期订单将自动取消）</span> 
+      </div> 
+     </div> 
+     <p class="record-word tips-record-word"> 为保证您购买的商品及时发货，请尽快支付，以免商品卖光哦！ </p> 
+     <p class="tip-word"> <i class="icon-tip"></i><strong>重要提醒：</strong>近期假冒客服诈骗事件频发，<em class="color-red"><b>苏宁不会以系统维护订单异常为由要求您办理退货退款，</b></em>请谨防钓鱼链接及带&quot;+&quot;号的诈骗电话！<a href="http://help.suning.com/page/id-567.htm" class="link" target="_blank">谨防诈骗提示</a>。 </p> 
+    </div> 
+   </div> 
+   <div class="od-wrap clearfix"> 
+    <input type="hidden" value="商品清单" id="invoiceDetailId" /> 
+    <div class="od-outline"> 
+     <dl class="item-delivery"> 
+      <dt>
+        收货人信息 
+      </dt> 
+      <dd> 
+       <div class="item-row"> 
+        <span class="row-val">黄金林</span> 
+       </div> 
+       <div class="item-row"> 
+        <span class="row-val">180****1538</span> 
+       </div> 
+       <div class="item-row item-addr"> 
+        <span class="row-val">上海上海市普陀区全区中浩云花园23栋2003</span> 
+       </div> 
+       <div class="item-row"> 
+        <span class="row-key">配送方式：</span> 
+        <span class="row-val">配送</span> 
+       </div> 
+      </dd> 
+      <dt>
+        发票信息 
+      </dt> 
+      <dd> 
+       <div class="item-row"> 
+        <span class="row-key">未开发票</span> 
+       </div> 
+      </dd> 
+      <dt>
+        订单备注 
+      </dt> 
+      <dd> 
+       <div class="item-row"> 
+        <span class="row-val"> www </span> 
+       </div> 
+       <div class="item-more"> 
+        <div class="item-row">
+          www 
+        </div> 
+        <i class="icon-yellow-up"></i> 
+       </div> 
+      </dd> 
+      <dt>
+        支付信息 
+      </dt> 
+      <dd class="last"> 
+       <div class="item-row"> 
+        <span class="row-key">付款方式：</span> 
+        <span class="row-val">在线支付</span> 
+       </div> 
+       <div class="item-row"> 
+        <span class="row-key">运　　费：</span> 
+        <span class="row-val"><span class="snPrice"><i>&yen;</i><em>0.00</em></span></span> 
+       </div> 
+       <div class="item-row"> 
+        <span class="row-key">券卡/优惠：</span> 
+        <span class="row-val"><span class="snPrice"><i>&yen;</i><em>0.00</em></span></span> 
+       </div> 
+       <div class="item-row"> 
+        <span class="row-key">订单金额：</span> 
+        <span class="row-val"><span class="snPrice"><i>&yen;</i><em>228.00</em></span> </span> 
+       </div> 
+      </dd> 
+     </dl> 
+     <div class="od-pay"> 
+      <div class="item-row"> 
+       <span class="row-key">应付金额：</span> 
+       <span class="row-val"><span class="snPrice"><i>&yen;</i><em>228.00</em></span></span> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="od-detail"> 
+     <div class="od-good-show"> 
+      <div name="scrollBtn" style="display: none;" class="show-pre"> 
+       <a href="javascript:void(0)"><i class="icon-arrow-left"></i></a> 
+      </div> 
+      <div class="show-content" style="overflow: visible;"> 
+       <ul style="left: 0px; white-space: normal;" class="clearfix"> 
+        <li data-goodnum="good_1" name="itemLi" class="active"> 
+         <div class="good-single"> 
+          <a href="javascript:void(0);"> <img width="60" height="60" title="花袭人 鲜花速递全国 21朵香水百合送亲友送朋友上海海南镇江徐州苏州南京全国同城配送 百合款1" alt="花袭人 鲜花速递全国 21朵香水百合送亲友送朋友上海海南镇江徐州苏州南京全国同城配送 百合款1" src="http://image3.suning.cn/content/catentries/00000000012473/000000000124734977/000000000124734977_tn.jpg" /> </a> 
+         </div> </li> 
+       </ul> 
+      </div> 
+      <i class="icon-arrow-up"></i> 
+      <div name="scrollBtn" style="display: none;" class="show-next"> 
+       <a href="javascript:void(0)"><i class="icon-arrow-right"></i></a> 
+      </div> 
+     </div> 
+     <div class="od-real-info has-od-status-c "> 
+      <div class="thevery-prdinfo prdinfo-default"> 
+       <div class="od-operation"> 
+        <dl class="clearfix"> 
+         <dt> 
+          <i class="icon-tip"></i>商品状态：商品待支付 
+         </dt> 
+        </dl> 
+       </div> 
+       <div class="od-real-status"> 
+        <ol class="od-stepfour clearfix"> 
+         <li class="first active"> 
+          <div class="status-item"> 
+           <p>订单提交</p> 
+           <div class="status-pic status1"></div> 
+           <div class="status-time"> 
+            <span>2016-03-12 20:17:07</span> 
+           </div> 
+          </div> </li> 
+         <li class=""> 
+          <div class="status-line"></div> 
+          <div class="status-item"> 
+           <p>支付完成</p> 
+           <div class="status-pic status2"></div> 
+          </div> </li> 
+         <li class=""> 
+          <div class="status-line"></div> 
+          <div class="status-item"> 
+           <p>卖家已发货</p> 
+           <div class="status-pic status3"></div> 
+          </div> </li> 
+         <li class=""> 
+          <div class="status-line"></div> 
+          <div class="status-item"> 
+           <p>收货完成</p> 
+           <div class="status-pic status4"></div> 
+          </div> </li> 
+        </ol> 
+       </div> 
+       <div class="od-wl-status"> 
+        <div class="wl-status-content"> 
+         <ol class="clearfix"> 
+          <li class="active"> <span class="status-time">2016-03-12 20:17:07</span> <span class="status-text">您的订单已提交，请尽快支付</span> </li> 
+         </ol> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="od-help-info"> 
+    <i class="icon-phone"></i> 
+    <span>订单状态随时查询，尽在<a title="苏宁客户端" target="_blank" name="ddzx_none_details_client" href="http://sale.suning.com/images/advertise/hg/20120419xsjkhd/index.html" class="khd">苏宁客户端</a> </span> 
+    <div class="ewm"> 
+     <a target="_blank" href="http://sale.suning.com/images/advertise/hg/20120419xsjkhd/index.html"><img width="110" height="110" src="http://sale.suning.com/act/20150413/20150413/20150413.png" /></a> 
+     <em class="ewm-txt">扫一扫下载客户端</em> 
+     <i class="icon-arr"></i> 
+    </div> 
+   </div> 
+   <div class="od-gd"> 
+    <table> 
+     <thead> 
+      <tr> 
+       <td colspan="2">商品</td> 
+       <td> 
+        <div class="gd-good-price">
+          单价 
+        </div></td> 
+       <td> 
+        <div class="gd-good-quantity">
+          数量 
+        </div></td> 
+       <td> 
+        <div class="gd-good-total-price">
+          商品总额 
+        </div></td> 
+      </tr> 
+     </thead> 
+     <tbody> 
+      <tr> 
+       <td class="gd-good-pic"> <a name="ddzx_none_details_pic" target="_blank" title="花袭人 鲜花速递全国 21朵香水百合送亲友送朋友上海海南镇江徐州苏州南京全国同城配送 百合款1" href="http://product.suning.com/0070075699/124734977.html"> <img alt="花袭人 鲜花速递全国 21朵香水百合送亲友送朋友上海海南镇江徐州苏州南京全国同城配送 百合款1" title="花袭人 鲜花速递全国 21朵香水百合送亲友送朋友上海海南镇江徐州苏州南京全国同城配送 百合款1" src="http://image4.suning.cn/content/catentries/00000000012473/000000000124734977/000000000124734977_tn.jpg" /> </a> </td> 
+       <td> 
+        <div class="gd-good-name"> 
+         <a name="ddzx_none_details_title" target="_blank" href="http://product.suning.com/0070075699/124734977.html">花袭人 鲜花速递全国 21朵香水百合送亲友送朋友上海海南镇江徐州苏州南京全国同城配送 百合款1</a> 
+        </div> <a href="http://sphss.suning.com/productspan/show.html?key=gCDDUq6ntAT0wLcsg7U19gSpaeCkhLI8XqrjEm2bxJcaGwUBhW4TyyTY%2BP1k1Dzr" target="_blank" class="deal-capture" name="ddzx_none_details_snapshot">[交易快照]</a> </td> 
+       <td> 
+        <div class="gd-good-price"> 
+         <span class="snPrice"> <i>&yen;</i> <em> 228.00 </em> </span> 
+        </div> </td> 
+       <td> 
+        <div class="gd-good-quantity"> 
+         <span> 1 </span> 
+        </div> </td> 
+       <td> 
+        <div class="gd-good-total-price"> 
+         <span class="snPrice"> <i>&yen;</i> <em> 228.00 </em> </span> 
+        </div> </td> 
+      </tr> 
+     </tbody> 
+     <tfoot> 
+      <tr> 
+       <td colspan="6" class="colspan-box"> 
+        <div class="colspan">
+          券卡/优惠： 
+         <span class="snPrice"><i>&yen;</i><em>0.00</em></span> 
+        </div> 
+        <div class="colspan">
+          运费金额： 
+         <span class="snPrice"><i>&yen;</i><em>0.00</em></span> 
+        </div> 
+        <div class="colspan">
+          商品总计： 
+         <span class="snPrice"><i>&yen;</i><em>228.00</em></span> 
+        </div> </td> 
+      </tr> 
+      <tr> 
+       <td class="last" colspan="6">应付金额：<span class="snPrice"><i>&yen;</i><em>228.00</em></span> </td> 
+      </tr> 
+     </tfoot> 
+    </table> 
+   </div> 
+   <div class="od-help-info"> 
+    <i class="icon-question"></i> 
+    <span><a target="_blank" title="什么是订单状态？" href="http://help.suning.com/page/id-308.htm">什么是订单状态？</a><a target="_blank" title="签收验货注意什么？" href="http://help.suning.com/page/channel-40.htm">签收验货注意什么？</a><a target="_blank" title="更多帮助" href="http://help.suning.com">更多帮助</a></span> 
+   </div> 
+   <a target="_blank" href="http://sale.suning.com/images/advertise/hg/20120419xsjkhd/index.html" class="ad-place"> <img width="990" height="90" src="http://b2cres.suning.cn/css/ordercenter/v2014/images/orderDetailAD.jpg?v=2016031003" /> </a> 
+  </div> 
+  <!--右侧悬浮调查问卷 [[--> 
+  <div style="position: fixed;_position:absolute; top: 70%; left: auto; z-index: 7500; right: 0px; margin-bottom: 270px;" class="ECode-floatBar"> 
+   <div class="g-sidebar" id="gSideTools"> 
+    <ul> 
+     <li class="sidebar-qrcode"> <a class="qrcode-thumb" href="http://sale.suning.com/images/advertise/hss/muzhisha0802/index.html" target="_blank" style="display: none;">点我享豪礼</a> 
+      <div style="" id="home-qrcode" class="qrcode-pic qrcode-pic-show"> 
+       <!--[if IE 6]><iframe frameborder="0" src="https://imgssl.suning.com/images/ShoppingArea/Common/blankbg.gif"></iframe><![endif]--> 
+       <a href="http://sale.suning.com/images/advertise/hss/muzhisha0802/index.html" target="_blank"><img alt="" src3="http://image1.suning.cn/images/shop/cms/269/1380116144107.png" src="http://image1.suning.cn/images/shop/cms/269/1380116144107.png" /></a> 
+       <p><a href="http://sale.suning.com/images/advertise/hss/muzhisha0802/index.html" target="_blank">点我享豪礼</a></p> 
+      </div> </li> 
+     <li><a href="http://ued.suning.com/survey/view/dingdanxiangqing" class="i-side-survey"><em>问卷调查</em><i></i></a></li> 
+    </ul> 
+   </div> 
+  </div> 
+  <div class="clear"></div>  
+ </body>
+</html>

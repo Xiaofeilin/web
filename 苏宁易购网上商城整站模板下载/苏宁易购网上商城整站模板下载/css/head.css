@@ -1,0 +1,47 @@
+.header {
+	padding: 15px 0;
+	background: #fff
+}
+
+#snlogo {
+	width: 990px;
+	margin: auto
+}
+
+#snlogo a {
+	float: left;
+	display: block;
+	cursor: pointer
+}
+
+#snlogo .channel {
+	margin: 18px 0 0 10px;
+	display: inline-block;
+	height: 22px;
+	width: 112px;
+	float: left;
+	background: url(../images/relogo.png) no-repeat;
+	_background: url(../images/relogo-ie.png) no-repeat
+}
+
+#snlogo .link-cont {
+	margin: 18px 0 0 10px;
+	display: inline-block;
+	height: 22px;
+	float: right
+}
+
+#snlogo .link-cont a {
+	display: inline-block;
+	margin-left: 36px;
+	color: #333;
+	font: 16px "Microsoft YaHei";
+	cursor: pointer
+}
+
+#snlogo .link-cont a:hover,#snlogo .link-cont .hover_blue {
+	color: #0070d8;
+	border-bottom: 2px solid #0070d8;
+	text-decoration: none;
+	font-weight: bold
+}

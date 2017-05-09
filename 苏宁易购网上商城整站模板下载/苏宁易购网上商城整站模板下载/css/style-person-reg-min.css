@@ -1,0 +1,95 @@
+.reg-phone-code .btn-get-code {
+	margin: 0
+}
+
+.input-tip .yuyin {
+	color: #999
+}
+
+.text-right {
+	text-align: right
+}
+
+.per-input-tip i {
+	color: #ff9c00
+}
+
+.blue-border {
+	border: 1px solid #0af!important
+}
+
+.reg-phone-code .btn-get-code:hover {
+	color: #5693d3!important
+}
+
+.login-bor a:hover {
+	text-decoration: none;
+	border-bottom: 1px solid #F60
+}
+
+.shadow {
+	width: 460px;
+	height: 50px;
+	position: absolute;
+	z-index: 99;
+	background: url(../images/ie_click.png) no-repeat\9
+}
+
+.setgray .code-txtbox {
+	background-color: #f6f6f6
+}
+
+.setgray input {
+	background: 0
+}
+
+.setgray .btn-get-code {
+	cursor: not-allowed;
+	color: #d6d6d6!important
+}
+
+.setgray .btn-get-code:hover {
+	text-decoration: none!important;
+	color: #d6d6d6!important
+}
+
+.shadow-wrap {
+	position: relative
+}
+
+.input-tip .yuyin .yuyin-icon {
+	top: -1px
+}
+
+.tab-cont .reg-nav .reg-step {
+	_position: relative;
+	_top: 1px
+}
+
+.error-wrap {
+	height: 50px
+}
+
+*+html .error-wrap {
+	padding-bottom: 10px
+}
+
+.auto-label a {
+	cursor: pointer
+}
+
+.mail-reg {
+	z-index: 1
+}
+
+.noActive {
+	text-decoration: none
+}
+
+.noActive:hover {
+	text-decoration: none!important
+}
+
+.reg-main .per-input-tip,.reg-main .safe-rank-box {
+	height: 25px
+}
