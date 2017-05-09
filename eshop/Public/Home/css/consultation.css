@@ -1,0 +1,119 @@
+.db { display: block!important;}
+.dn { display: none!important;}
+.dib { display: inline-block!important;}
+
+.cs-wrap { width: 990px; }
+.root1000 .cs-wrap { width: 790px; }
+.cs-spring { display: inline-block; 
+/*            background: url(../images/icons.png);*/
+}
+.cs-wrap a,
+.cs-wrap a:visited { color: #333; }
+.cs-wrap a:hover { color:#f70}
+.cs-fonta { font:0/0 a; }
+
+.cs-wrap .cs-link,
+.cs-wrap .cs-link:visited { color:#2272c8; }
+.cs-wrap .cs-link:hover { color: #f60; }
+
+/*选项卡节点*/
+
+.cs-main { }
+.cs-main-wrap { margin-top: -1px; background: #fff; }
+
+.cs-main-item { overflow: hidden; position: relative; }
+.cs-place-item { border:1px solid #ddd; border-bottom: 0}
+.cs-place-item li { border-top: 1px solid #ddd; margin-left: -1px; margin-top: -1px; }
+.cs-place-item li.now { border-top: 3px solid #f60; position: relative; }
+.cs-place-item li p { display: inline-block; *display: inline; *zoom:1; height: 29px; line-height: 28px; padding: 0 15px; border-left: 1px solid #ddd; border-right: 1px solid #ddd; color: #333; cursor: pointer; -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; user-select: none; }
+.cs-place-item li p span { color: #999; }
+.cs-place-item li.now p { height: 27px; line-height: 25px; font-weight: 700; color: #f70; cursor: default; }
+.cs-place-item li.now p span { font-weight: 400; color: #f70; }
+
+.cs-place-goto { position: absolute; right: 10px; top: 5px;*top:3px; font-family: simsun; }
+.cs-place-goto .publish-consultation,
+.cs-place-goto .publish-consultation:visited { display: inline-block;  padding: 0 10px; height: 20px; line-height: 20px; border: 1px solid #ddd; border-radius: 2px; background:#f9f9f9; background:-webkit-linear-gradient(top,#f9f9f9,#f2f2f2); background:-moz-linear-gradient(top,#f9f9f9,#f2f2f2); background:-webkit-ms-gradient(top,#f9f9f9,#f2f2f2); background:-webkit-o-gradient(top,#f9f9f9,#f2f2f2);  }
+.cs-place-goto .publish-consultation:hover { background:#f2f2f2; text-decoration: none;}
+.cs-place-goto .cs-online-server { color: #2272c8; }
+.cs-place-goto .cs-online-server:hover { color: #F60; }
+
+/**/
+.cs-main-target { border-left: 1px solid #ddd; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; }
+.cs-target-item {  }
+.cs-target-item .item { position: relative; border-top: 1px solid #ddd;}
+.cs-target-item .left { _width:740px; padding: 20px 0 40px; overflow:hidden; }
+.cs-target-item .left i { display: inline-block; float: left; width: 16px; height: 19px; margin-left: 20px; margin-right: 15px; vertical-align: middle; }
+.cs-target-item .left .nickname { float: left; width: 114px; height: 20px; line-height: 20px; overflow: hidden; }
+.cs-target-item .question { color: #333; }
+.cs-target-item .question i { background-position:-71px -126px; }
+.cs-target-item .answer { padding-top: 15px; color: #666; }
+.cs-target-item .answer i { background-position:-88px -126px; }
+.cs-target-item .user { width:170px; height:20px; overflow:hidden;color: #999}
+.cs-target-item .content { width: 570px; line-height: 20px; overflow: hidden; word-break:break-all; }
+.root1000 .cs-target-item .content { width: 370px;}
+.cs-target-item .right { padding-right: 20px; padding-top:20px; text-align: right; }
+.cs-target-item .right .time { }
+.cs-target-item .right .time span{ padding-left: 10px; }
+.cs-target-item .right .action { position: absolute; bottom: 10px;right: 20px; }
+.cs-target-item .right .action a,
+.cs-target-item .right .action a:visited { float: left; padding: 0 10px; height: 20px; line-height: 20px; border: 1px solid #ddd; border-radius: 2px; background:#f9f9f9; background:-webkit-linear-gradient(top,#f9f9f9,#f2f2f2); background:-moz-linear-gradient(top,#f9f9f9,#f2f2f2); background:-webkit-ms-gradient(top,#f9f9f9,#f2f2f2); background:-webkit-o-gradient(top,#f9f9f9,#f2f2f2); }
+.cs-target-item .right .action a:hover { background:#f2f2f2; text-decoration: none; }
+.cs-target-item .right .action .like { margin-right: 10px;}
+
+#publish-consultation-template { display: none;}
+.cs-publish {padding: 20px 0; }
+.cs-publish-item { padding: 5px;}
+.cs-publish .key { width: 70px; height: 20px; text-align: right;}
+.cs-publish .value { position: relative;}
+.cs-publish .value select { width: 80px; height: 20px; border:1px solid #ccc; }
+.cs-publish .value textarea { width: 350px; height: 90px; padding: 5px; border: 1px solid #ccc;}
+.cs-publish .value input {width: 50px; height: 20px; padding-left: 5px; padding-right: 5px; border: 1px solid #ccc; }
+.cs-publish .value .over { color: #dd0000;}
+.cs-publish .error input { border:1px solid  #dd0000}
+.cs-publish .value em { color: #f70}
+.cs-publish .value img { width: 60px;height: 22px;vertical-align: top;padding-left: 5px; cursor: pointer;}
+.cs-publish .value .change,
+.cs-publish .value .change:visited { margin-left: 5px; margin-right: 5px; color: #2171C7; }
+.cs-publish .value .change:hover { color: #f70;}
+.cs-publish .value .cs-spring { display: none; position: absolute;left: 45px;top: 5px;height: 12px; width: 12px;}
+.cs-publish .value .error-message { display: none; color: #dd0000}
+.cs-publish .pass  .cs-spring { display: block; background-position: -123px -111px;}
+.cs-publish .error .cs-spring { display: block; background-position: -123px -125px; }
+.cs-publish .value .submit,
+.cs-publish .value .submit:visited { display: inline-block; height: 20px; line-height: 30px;  padding: 0 12px; border:1px solid #EA7F00;  background: #F78700;  background:-webkit-linear-gradient(top,#FFA318,#F78700); background:-moz-linear-gradient(top,#FFA318,#F78700); background:-webkit-ms-gradient(top,#FFA318,#F78700); background:-webkit-o-gradient(top,#FFA318,#F78700); color: #fff; }
+.cs-publish .value .submit:hover { background: #FFF6E7; border-color: #FFB84E; background:-webkit-linear-gradient(top,#FFF,#FFF6E7); background:-moz-linear-gradient(top,#FFF,#FFF6E7); background:-webkit-ms-gradient(top,#FFF,#FFF6E7); background:-webkit-o-gradient(top,#FFF,#FFF6E7);color: #333; text-decoration: none; }
+.cs-publish .value span {display:none;  color:#dd0000; padding-left:5px;}
+
+.cs-notice-content { text-align:center;font-weight:700; font-size:14px; }
+.cs-notice-btn {padding-top:20px; text-align:center;}
+.cs-notice-btn a,
+.cs-notice-btn a:visited { display: inline-block; height: 20px; line-height: 30px;  padding: 0 12px; border:1px solid #EA7F00;  background: #F78700;  background:-webkit-linear-gradient(top,#FFA318,#F78700); background:-moz-linear-gradient(top,#FFA318,#F78700); background:-webkit-ms-gradient(top,#FFA318,#F78700); background:-webkit-o-gradient(top,#FFA318,#F78700); color: #fff; }
+.cs-notice-btn a:hover { background: #FFF6E7; border-color: #FFB84E; background:-webkit-linear-gradient(top,#FFF,#FFF6E7); background:-moz-linear-gradient(top,#FFF,#FFF6E7); background:-webkit-ms-gradient(top,#FFF,#FFF6E7); background:-webkit-o-gradient(top,#FFF,#FFF6E7);color: #333; text-decoration: none; }
+
+.cs-hasNoConsultation { padding:20px 0;border-top:1px solid #ddd; font-size:14px; text-align:center;  }
+
+/* 分页节点 */
+.ui-page { _position:relative; _height:42px; padding-top: 10px;  }
+.ui-page-item { }
+.ui-page-item .item span, .ui-page-item .item a { position: relative; float: left; _float: right; height: 30px; line-height: 30px; padding: 0 10px; border: 1px solid #ccc; margin-right: 5px;  }
+.ui-page-item .item a { font-weight: 700;background:#fff; }
+.ui-page-item .item a.current { padding: 1px 11px ; border: 0;background:none; }
+.ui-page-item .item a.current:hover {padding: 1px 11px ; border: 0; text-decoration: none; color: #333; cursor: default;}
+.ui-page-item .item .range { padding: 0 10px; border: 0 }
+.ui-page-item .item .prev, .ui-page-item .item .next { font-weight: 400; width: 50px; cursor: pointer; text-align: center; }
+.ui-page-item .item i { position: absolute; width: 6px; height: 11px;  }
+.ui-page-item .item .prev i {top:10px; right: 55px; background-position: -93px -112px; margin-right: 5px; }
+.ui-page-item .item .next i {top:10px; right: 5px;background-position: -100px -112px; margin-left: 5px; }
+.ui-page-item .item .prev-disable, .ui-page-item .item .prev-disable:visited, .ui-page-item .item .next-disable, .ui-page-item .item .next-disable:visited { cursor: default; color: #ccc }
+.ui-page-item .item .prev-disable:hover, .ui-page-item .item .next-disable:hover { text-decoration: none; color: #ccc }
+.ui-page-item .item .prev-disable i { top:10px; right: 55px; background-position: -107px -112px; }
+.ui-page-item .item .next-disable i { top:10px; right: 5px; background-position: -114px -112px; }
+.ui-page-item .go { 
+	display: inline; _position:absolute; _right:0; height: 30px; line-height: 30px; vertical-align: middle; margin-left: 30px; 
+	display:none;
+}
+.ui-page-item .go span { *display:inline-block; *vertical-align:top;}
+.ui-page-item .item { _position:absolute; _right:200px;}
+.ui-page-item .go input { height: 30px; line-height: 30px; margin: 0 10px; border: 1px solid #ccc;  }
+.ui-page-item .go .num { max-width: 40px; height: 28px; _width: 40px; font-weight: 700; text-align: center; }
+.ui-page-item .go .submit { width: 50px; background: #ffffff; background: -webkit-linear-gradient(top, #ffffff, #f7f7f7); background: -moz-linear-gradient(top, #ffffff, #f7f7f7); background: -webkit-ms-gradient(top, #ffffff, #f7f7f7); background: -webkit-o-gradient(top, #ffffff, #f7f7f7); cursor: pointer; }
