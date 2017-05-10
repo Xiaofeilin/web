@@ -112,5 +112,45 @@
 		unlink($sm_logo);
 	}
 	
+	/**
+	*[检测登录用户名是否正确]
+	*@param string 	$val[用户输入的用户名]
+	*/
+	function checkAcc($val){
+		$map['account'] = $val;
+		$user = D('user')->where($map)->find();
+		if(empty($user)){
+			return false;
+		}else{
+			return true;
+		}
+	}
 
+	/**
+	*[检测登录密码是否正确]
+	*@param string 	$val[用户输入的密码]
+	*/
+	function checkPwd($val){
+		$map['pwd'] = md5($val);
+		$user = D('user')->where($map)->find();
+		if(empty($user)){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	/**
+	*[检测登录验证码是否正确]
+	*@param string 	$val[用户输入的验证码]
+	*/
+	function checkCode($val){
+		$verify = new \Think\Verify();  
+		$result = $verify->check($val);
+		if(!$result){ 
+			return false;
+		}else{
+			return true;
+		}
+	}
 	
