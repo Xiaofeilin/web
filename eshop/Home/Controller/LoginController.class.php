@@ -6,17 +6,40 @@ class LoginController extends Controller {
 		if(IS_POST){
 			//var_dump($_POST);
 			$rule = array(
-				array('account','checkAcc','用户名不正确！',0,'function'),
+				array('account','checkAcc','用户名不存在！',0,'function'),
 				array('password','checkPwd','密码不正确！',0,'function'),
 				array('code','checkCode','验证码不正确！',0,'function'),
 			);
 			$user = D('user');
 			$info = $user->validate($rule)->create();
 			//var_dump($info);
+
+			$map['account'] = I('account');
+			//$map['pwd'] = md5(I('password'));
+			//var_dump($map);
+			$userInfo = $user->where($map)->find();
+			//var_dump($userInfo);
+			$time = time();
+
 			if($info){
+				$_SESSION['info'] = $userInfo;
+				//var_dump($_SESSION);
+
+				$data['errorlogin'] = 0;
+				$data['lastregtime'] = $time;
+				$user->where("id={$userInfo['id']}")->save($data);
+
 				$this->ajaxReturn(1);
 			}else{
-				$this->ajaxReturn($user->getError(),"eval");
+				$data['errorlogin'] = $userInfo['errorlogin'] + 1;
+				$data['errortime'] = $time;
+				$user->where("id={$userInfo['id']}")->save($data);
+
+				if($time - $errortime < 1800 && $userInfo['errorlogin'] > 5){
+					$this->ajaxReturn("账户名或密码输入错误超过5次，你的账户已被锁定30分钟。","eval");
+				}else{
+					$this->ajaxReturn($user->getError(),"eval");
+				}
 			}
 		}else{
 			$this->display();
