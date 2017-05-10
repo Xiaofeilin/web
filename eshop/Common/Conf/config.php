@@ -41,4 +41,6 @@ return array(
 	 'MD5_KEY'		=>	'@#$%^&*',
 	 
 	 'URL_MODEL'            => 2, //URL模式
+
+	 'SHOW_PAGE_TRACE' => true,
 );
