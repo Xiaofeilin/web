@@ -10,17 +10,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
   <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css" /> 
   <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/index.css" /> 
-  <style>
-    #float_top_bar_background{
-      display:none;
-      width:100%;
-      height:52px;
-      background:rgba(255,255,255,0.93);
-      position:fixed;
-      top:0;
-      z-index:-1;
-    }
-  </style>
  </head> 
  <body> 
   <script>
@@ -109,9 +98,6 @@ var TOP_BANNER_DATA = {
   <!--tool bar [[--> 
   <div id="_TOP_BANNER_" class="ng-top-banner"></div> 
   <div class="ng-toolbar"> 
-    <!-- 浮动导航背景颜色 -->
-    <div id="float_top_bar_background"></div>
-    <!-- 浮动导航背景颜色结束 -->
    <div class="ng-toolbar-con wrapper"> 
     <div class="ng-toolbar-left"> 
      <a href="index.html" class="ng-bar-node ng-bar-node-backhome" id="ng-bar-node-backhome" name="public0_none_dbgjt_fhyisy01"> <i class="ng-iconfont ng-backhome"></i><span>返回易购首页</span> <i class="ng-line ng-iconfont ml10"></i> </a> 
@@ -259,7 +245,6 @@ var usernameNode = document.getElementById('username-node');
 var usernameNodeSlide = document.getElementById('username-node-slide');
 var usernameHtml01 = document.getElementById('usernameHtml01') , usernameHtml02 = document.getElementById('usernameHtml02');
 var regBarNode = document.getElementById('reg-bar-node');
-var floattopbarbackground = document.getElementById('float_top_bar_background');
 if (uernameA != null && uernameA != "") {
 var uernameC = d("nick");
 // if( ((window.sidebar_config && sidebar_config.enable)||sn.hasSidebar) && !sn.hasNewSidebar ){
@@ -270,14 +255,12 @@ usernameNodeSlide.style.display = "block";
 usernameHtml01.innerHTML = uernameC;
 usernameHtml02.innerHTML = uernameC;
 regBarNode.style.display = "none";
-floattopbarbackground.style.display = "none";
 }else{
 usernameNode.style.display = "none";
 usernameNodeSlide.style.display = "none";
 usernameHtml01.innerHTML = " ";
 usernameHtml02.innerHTML = " ";
 regBarNode.style.display = "block";
-floattopbarbackground.style.display = "block";
 }
 </script> 
      <!--我的订单 [[--> 
@@ -355,6 +338,9 @@ document.getElementById('showTotalQty').innerHTML = ngCartNum;
    </div> 
   </div> 
   <!--tool bar ]]--> 
+  <!-- 浮动导航背景颜色 -->
+  <div id="top-bar-background"></div>
+  <!-- 浮动导航背景颜色结束 -->
   <!--header [[--> 
   <div class="ng-header"> 
    <div class="code-maintain"> 
@@ -364,7 +350,7 @@ document.getElementById('showTotalQty').innerHTML = ngCartNum;
     <div class="ng-header-box"> 
      <a href="index.html" name="index2_none_logo_logo01" class="logo-set" title="苏宁易购"> <img alt="苏宁易购" src="http://image4.suning.cn/uimg/cms/img/145751029674635837.png" /> </a> 
      <img src="http://script.suning.cn/images/ShoppingArea/Common/blank.gif" src3="http://img.suning.cn/project/cmsWeb/suning/homepage/v1/images/slogn.png" class="slogn" /> 
-    </div> 
+    </div>
     <div class="ng-search"> 
      <!-- PRFLS SEARCH --> 
      <div class="g-search"> 
