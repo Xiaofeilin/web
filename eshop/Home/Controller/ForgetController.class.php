@@ -2,7 +2,7 @@
 namespace Home\Controller;
 use Think\Controller;
 class ForgetController extends Controller {
-	public function index(){
+	public function forget(){
 		$this->display();
 	}
 
@@ -17,5 +17,27 @@ class ForgetController extends Controller {
 		);
 		$verify = new \Think\Verify($config);
 		$verify->entry();
+	}
+
+	public function checkAcc(){
+		if(IS_POST){
+			$code = I('code');
+			$verify = new \Think\Verify();  
+			$result = $verify->check($code);//判断验证码
+
+			$rule = array(
+				array('account','checkAcc','用户名不存在！',0,'function'),
+			);
+			$user = D('user');
+			$info = $user->validate($rule)->create();//判断用户信息
+
+			$check = new \Home\Model\ForgetModel();
+			$res = $check->forgetAcc($result,$info);
+
+			$_SESSION['forgetAcc'] = $info;
+			$this->ajaxReturn($res);
+		}else{
+			$this->display();
+		}
 	}
 }

@@ -69,7 +69,9 @@ function hrefLink(e) {
   <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/sn_lazyload.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/lazyelem.min.js"></script> 
+  <!--
   <script type="text/javascript" src="__PUBLIC__/Home/js/SFE.base.min.js"></script> 
+  -->
   <script type="text/javascript" src="__PUBLIC__/Home/js/search.min.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/sn-sidebar.min.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/chatCompat_mini.js"></script> 
@@ -339,7 +341,9 @@ function hrefLink(e) {
     <a href="/asc/index.do" name="asc_index_navbar_logo"><span class="channel"></span></a> 
     <span class="link-cont"> <a href="/asc/index.do" name="asc_index_navbar_homepage" id="head_index">首页</a> <a href="/asc/toolservice.do" name="asc_index_securityinfo" id="head_sectool">安全工具</a> <a href="/asc/school.do" name="asc_index_navbar_school" id="head_secschool">安全学堂</a> <a href="member_index.html" name="asc_index_navbar_personal" id="head_loginhis">个人中心</a> </span> 
    </div> 
+   <!--
    <script type="text/javascript" src="https://sslres.suning.com/project/asc/style/js/da_opt_inc-min.js?v=201601280042"></script> 
+   -->
    <script type="text/javascript">
 /**
  *2014-03-03
@@ -845,18 +849,22 @@ $(document).ready(function(){
 						<div class="h50"></div> 
 
 						<div class="reg-txtbox"> 
+							<!--
 							<label class="input-label" style="display: block;">请输入您的密码</label> 
+							-->
 							<i class="ico-pwd"></i> 
 							<i class="ms-ico ms-ico-ok" id="errorIcon" style="display:none"></i> 
-							<input class="txt-input" type="text" id="mobileAlias" name="userName" value="" tabindex="1" /> 
+							<input class="txt-input" type="text" id="mobileAlias" name="userName" value="" tabindex="1" placeholder="请输入您的密码" /> 
 						</div> 
 						<div class="input-tip per-input-tip" id="tipMessage" style="color:red">密码格式不正确</div> 
 
 						<div class="reg-txtbox"> 
+							<!--
 							<label class="input-label" style="display: block;">请重复输入您的密码</label> 
+							-->
 							<i class="ico-pwd"></i> 
 							<i class="ms-ico ms-ico-ok" id="errorIcon" style="display:none"></i> 
-							<input class="txt-input" type="text" id="mobileAlias" name="userName" value="" tabindex="1" /> 
+							<input class="txt-input" type="text" id="mobileAlias" name="userName" value="" tabindex="1" placeholder="请重复输入您的密码" /> 
 						</div> 
 						<div class="input-tip per-input-tip" id="tipMessage2" style="color:red">重复密码不正确</div> 
 
