@@ -46,7 +46,7 @@
 			$catOne = $this->model->find($id);
 			$catOne['is_show'] = $catOne['is_show']?0:1;
 			if($this->model->save($catOne))
-				echo $catOne['is_show'];
+				$this->ajaxReturn( $catOne['is_show'] );
 		}
 
 

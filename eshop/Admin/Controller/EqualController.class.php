@@ -45,6 +45,9 @@
 			}
 		}
 
+
+		
+
 		public function assignHead($title,$url,$urlName){
 			$this->assign('title',$title);
 			$this->assign('url',$url);

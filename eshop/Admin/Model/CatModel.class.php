@@ -73,10 +73,6 @@
 			$data['show'] = $page->show();
 			$catList = $this->order('concat(cat_path,id) desc')->where($where)->limit($page->firstRow.','.$page->listRows)->select();
 			foreach ($catList as $key => $value) {
-				$is_show = 'no';
-				if($value['is_show'])
-					$is_show = 'yes';
-				$catList[$key]['is_show'] = $is_show;
 				$catList[$key]['lv'] = substr_count($value['cat_path'] , ',');
 			}
 			$data['catList'] = $catList;
