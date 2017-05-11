@@ -13,7 +13,6 @@
 		public function list(){
 			$data = $this->model->search();
 			$this->assign($data);
-			
 			$this->assignHead('商品列表',U('add'),'商品添加');
 			$this->display();
 		}
@@ -33,14 +32,40 @@
 			$goodsOne = $this->model->find($id);
 			$data = array_merge($this->model->goodsLink(),$this->model->restore($id,$goodsOne['type_id']) );
 			$data['goodsOne'] = $goodsOne;
+			$this->assignHead('商品修改',U('list'),'商品列表');
 			$this->assign($data);
 			$this->display();
 		}
 
-		
+
+		public function recycle(){
+			$data = $this->model->search(1);
+			$this->assign($data);
+			$this->assignHead('回收站',U('list'),'商品列表');
+			$this->display();
+		}
+
 
 		public function del(){
+			if( $id = I('get.id','') ){
+				$p = I('get.p','');
+				if( $this->model->save(array('is_delete'=>1,'id'=>$id)) )
+					$this->success( '回收成功' , U( 'list' , array('p'=>$p) ) );
+				exit;
+			}
+			$error = $this->model->getError();
+			$this->error($error);
+		}
 
+		public function restore(){
+			if( $id = I('get.id','') ){
+				$p = I('get.p','');
+				if( $this->model->save(array('is_delete'=>0,'id'=>$id)) )
+					$this->success( '还原成功' , U( 'recycle' , array('p'=>$p) ) );
+				exit;
+			}
+			$error = $this->model->getError();
+			$this->error($error);
 		}
 
 		public function ajaxGetAttr(){
@@ -56,11 +81,13 @@
 		public function ajaxGetStatus(){
 			$data = array();
 			$status = I('get.status','');
-			$id = I('get.id','');
-			if( $goodsOne = $this->model->find($id) ){
-				$goodsOne[$status] = $goodsOne[$status]?0:1;
-				if($this->model->save($goodsOne) )
-					$this->ajaxReturn( $goodsOne[$status] );
+			if($status!=='is_sale'){
+				$id = I('get.id','');
+				if( $goodsOne = $this->model->find($id) ){
+					$goodsOne[$status] = $goodsOne[$status]?0:1;
+					if($this->model->save($goodsOne) )
+						$this->ajaxReturn( $goodsOne[$status] );
+				}
 			}
 		}
 
