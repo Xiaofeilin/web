@@ -20,13 +20,25 @@
 
 		public function add(){
 			parent::add();
-			$data = $this->model->goodsAss();
+			$data = $this->model->goodsLink();
 			$this->assign($data);
 			$this->assignHead('商品添加',U('list'),'商品列表');
 			$this->display();
 		}
 
 		public function edit(){
+			var_dump($_POST);
+			$id = I('get.id','');
+			$data = array();
+			$data = array_merge($this->model->goodsLink(),$this->model->restore($id));
+			$data['goodsOne'] = $this->model->find($id);
+			$this->assign($data);
+			$this->display();
+		}
+
+		
+
+		public function del(){
 
 		}
 
@@ -40,10 +52,6 @@
 			}
 		}
 
-		public function del(){
-
-		}
-
 		public function ajaxGetStatus(){
 			$data = array();
 			$status = I('get.status','');
@@ -53,5 +61,11 @@
 				if($this->model->save($goodsOne) )
 					$this->ajaxReturn( $goodsOne[$status] );
 			}
+		}
+
+		public function ajaxDelAttr(){
+			$id = I('get.id');
+			if(D('GoodsAttr')->delete($id))
+				$this->ajaxReturn(1);
 		}
 	}

@@ -113,5 +113,18 @@
 		unlink($sm_logo);
 	}
 	
+	/**
+	*[验证密码是否正确]
+	*@param string 	$val[用户输入的密码]
+	*/
+	function checkPwd($val){
+		$map['pwd'] = md5($val);
+		$user = M('user')->where($map)->find();
+		if($user){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 	

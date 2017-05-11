@@ -1,7 +1,9 @@
 <layout name="Index/header_foot"/>
+<form >
+
+</form>
 <form method="post" action="" name="listForm">
        <div class="list-div" id="listDiv">
-
              <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
                     <tr>
                           <th>商品名称</th>      
@@ -38,13 +40,13 @@
                           <td align="center" >{$val['addtime']}</td>
                           <td align="center" >{$val['sort_num']}</td>
                           <td  align="center" >
-                                <a href="{:U('edit',array('id'=>$val['id']) )}">编辑</a> |
-                                 <a href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" title="移除">回收站</a>
+                                <a href="{:U('edit',array('id'=>$val['id'],'p'=>$p) )}">编辑</a> |
+                                 <a href="{:U('del',array('id'=>$val['id'],'p'=>$p) )}" title="移除">回收站</a>
                           </td>
                     </tr>
                     </foreach>
                     <tr><td height="30" colspan="15" align="center">{$show}</td></tr>
-            </table>
+             </table>
       </div>
 </form>
 <script>
