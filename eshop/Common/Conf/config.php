@@ -40,5 +40,8 @@ return array(
 	/***********************md5**************************/
 	 'MD5_KEY'		=>	'@#$%^&*',
 	 
-	 'URL_MODEL'            => 2, //URL模式
+	 'URL_MODEL'            => 2, //URL模式,
+
+	 'SHOW_PAGE_TRACE'   	=>	true,
+
 );

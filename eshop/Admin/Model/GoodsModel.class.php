@@ -2,7 +2,7 @@
 	namespace Admin\Model;
 	class GoodsModel extends EqualModel{
 
-		  protected $_auto = array ( 
+		  protected $_auto = array( 
 		  	 array('addtime','time',1,'function') , 
 		  );
 
@@ -10,9 +10,9 @@
 		   	array('goods_name','require','商品名必须填',1),
 		   	array('cat_id','number','请不要乱改html代码',1),
 		   	array('brand_id','number','请不要乱改html代码',2),
-		   	array('market_price','number','市场价是正整数',1),
+		   	array('market_price','is_numeric','市场价是正整数',1,'function'),
 		   	array('market_price','require','市场价必须填',1),
-		   	array('shop_price','number','本店价是正整数',1),
+		   	array('shop_price','is_numeric','本店价是正整数',1,'function'),
 		   	array('shop_price','require','本店价必须填',1),
 		   	array('integral','number','积分是正整数',2),
 		   	array('integral_price','number','积分兑换是正整数',2),
@@ -50,13 +50,12 @@
 		/**
 		*[还原商品的属性值，商品价格，商品相册]
 		*/
-		public function restore($id){
+		public function restore($id,$type_id){
 			$data = array();
 
 			//获取当前商品相册
-			$memberPrice = D('MemberPrice');
-			$data['memberPriceList'] = $memberPrice->where('goods_id='.$id)->select();
-
+			$GoodsPics = D('GoodsPics');
+			$data['goodsPicsList'] = $GoodsPics->where('goods_id='.$id)->select();
 			//**********************************************会员价格******************************************************************
 			//获取所有会员等级
 			$memberLevel = D('MemberLevel');
@@ -93,17 +92,18 @@
 				$attrId[] = $val['attr_id'];
 			}
 			$attrId=array_unique($attrId);
-
+			
 			//判断该类型有没有添加了新属性,有新属性添加到数组中
 			$attr = D('attr');
 			if($attrId){
-				$attrList = $attr->field('id attr_id,attr_name,attr_type,attr_option_values,type_id')->where( array( 'type_id'=>array('eq',$data['goods']['type_id']) , 'id'=>array('not in',$attrId ) ) )->select();
+				$attrList = $attr->field('id attr_id,attr_name,attr_type,attr_option_values,type_id')->where( array( 'type_id'=>array('eq',$type_id) , 'id'=>array('not in',$attrId ) ) )->select();
 				$data['goodsAttrList']= array_merge($data['goodsAttrList'],$attrList);
 			}
 
 			//欢迎当前商品的属性表
 			$data['goodsAttrHtml'] = '';
 			$attrId = array();
+	
 			foreach ($data['goodsAttrList'] as $key => $val) {
 				$data['goodsAttrHtml'].= '<p>';
 				$data['goodsAttrHtml'].=$val['attr_name'].':';
@@ -129,7 +129,7 @@
 					}
 					$data['goodsAttrHtml'].='</select>';
 					if($val['attr_type']==1)
-						$data['goodsAttrHtml'].='<input type="text" name='.$str.'attr_price[]['.$val[$str1.'id'].'] value='.$val['attr_price'].'>';
+						$data['goodsAttrHtml'].='<input type="text" attr_id='.$val['attr_id'].' name='.$str.'attr_price[]['.$val[$str1.'id'].'] value='.$val['attr_price'].'>';
 				}
 				$data['goodsAttrHtml'].='</p>';
 
@@ -217,42 +217,52 @@
 		}
 
 		protected function _before_update(&$data){
-			imgDel($this,$data['id']);
-			$imgData = imgUpLoad('logo');
-			if(isset( $imgData['error'])){
-				$this->error = $imgData['error'];
-				return false;
-			}else{
-				$data['logo'] = $imgData['logo'];
-				$data['sm_logo'] = $imgData['sm_logo'];
-			}
-			if($data['is_sale']==1){
-				$data['promote_start_time'] = strtotime($data['promote_start_time'].' 00:00:01');
-				$data['promote_end_time'] = strtotime($data['promote_end_time'].' 23:59:59');
+			if($_FILES['logo']['size']){
+				imgDel($this,$data['id']);
+				$imgData = imgUpLoad('logo');
+				if(isset( $imgData['error'])){
+					$this->error = $imgData['error'];
+					return false;
+				}else{
+					$data['logo'] = $imgData['logo'];
+					$data['sm_logo'] = $imgData['sm_logo'];
+				}
+				if($data['is_sale']==1){
+					$data['promote_start_time'] = strtotime($data['promote_start_time'].' 00:00:01');
+					$data['promote_end_time'] = strtotime($data['promote_end_time'].' 23:59:59');
+				}
 			}
 		}
 
 		protected function _after_update($data){
+
+			//****************************修改商品属性*****************************
 			$goodsAttr = D('GoodsAttr');
-			if($old_attr_id=I('get.old_attr_id','')){
+			if($old_attr_id=I('post.old_attr_id','')){
 				$old_attr_price = I('post.old_attr_price','');
 				$attrOldData = array();
 				foreach ($old_attr_id as $key => $value) {
-					foreach ($old_attr_price as $key1 => $value1) {
+					foreach ($value as $key1 => $value1) {
 						if(!$value1) continue;
 						$price = isset($old_attr_price[$key][$key1])?$old_attr_price[$key][$key1]:0;
-						$attrOldData = array(
-							'goods_id'=>I('post.id'),
-							'id'=>$k,
-							'attr_value'=>$v,
-							'attr_price'=>$price,
-						);
+						if(is_numeric( $old_attr_price[$key][$key1] ) || empty($old_attr_price[$key][$key1])){
+							$attrOldData = array(
+								'id'=>$key1,
+								'attr_value'=>$value1,
+								'attr_price'=>$price,
+							);
+							
+						}else
+							return false;
 					}
-					$goodsAttr->save($attrOldData );
+					if($attrOldData)
+						$goodsAttr->save($attrOldData);
 				}
+				
 			}else
 				D('GoodsAttr')->where('goods_id='.$data['id'])->delete();
-			if($attr_id = I('get.attr_id','')){
+
+			if($attr_id = I('post.attr_id','')){
 				$attr_price = I('post.attr_price','');
 				$attrData = array();
 				foreach ($attr_id as $key => $value) {
@@ -271,10 +281,10 @@
 			}
 
 		
+	
 
-
+			//*************************修改会员价格******************************
 			if( $memberPrice = I('post.member_price','') ){
-				$
 				$memberPriceData = array();
 				foreach ($memberPrice as $key => $value) {
 					if(!$value)  continue;
@@ -286,8 +296,34 @@
 				}
 				if($memberPriceData){
 					$memberPrice = D('MemberPrice');
+					$memberPrice->where('goods_id='.$data['id'])->delete();
 					$memberPrice->addAll($memberPriceData);
 				}
+			}
+
+			//*************************修改图片************************************
+			if( $pics = $_FILES['pics'] ){
+				$num = count( $pics['name'] );
+				$picsData = array();
+				for($i=0 ; $i<$num ; $i++){
+					if(!$pics['size'][$i])  continue;
+					$_FILES['logo'] = array(
+						'name'=>$pics['name'][$i],
+						'type'=>$pics['type'][$i],
+						'tmp_name'=>$pics['tmp_name'][$i],
+						'error'=>$pics['error'][$i],
+						'size'=>$pics['size'][$i],
+					);
+					$imgData = imgUpLoad('logo');
+
+					$picsData[] = array(
+						'goods_id' => $data['id'],
+						'pic' => $imgData['logo'],
+						'sm_pic' => $imgData['sm_logo'],
+					);
+				}
+				$goodsPics = D('GoodsPics');
+				$goodsPics->addAll($picsData);
 			}
 		}
 

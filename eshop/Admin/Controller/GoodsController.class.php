@@ -27,11 +27,12 @@
 		}
 
 		public function edit(){
-			var_dump($_POST);
+			parent::edit();
 			$id = I('get.id','');
 			$data = array();
-			$data = array_merge($this->model->goodsLink(),$this->model->restore($id));
-			$data['goodsOne'] = $this->model->find($id);
+			$goodsOne = $this->model->find($id);
+			$data = array_merge($this->model->goodsLink(),$this->model->restore($id,$goodsOne['type_id']) );
+			$data['goodsOne'] = $goodsOne;
 			$this->assign($data);
 			$this->display();
 		}
@@ -64,8 +65,17 @@
 		}
 
 		public function ajaxDelAttr(){
-			$id = I('get.id');
-			if(D('GoodsAttr')->delete($id))
-				$this->ajaxReturn(1);
+			if( $id = I('get.id') ){
+				if(D('GoodsAttr')->delete($id))
+					$this->ajaxReturn(1);
+			}
+		}
+
+
+		public function ajaxDelImg(){
+			if( $id = I('get.id','') ){
+				if(D('GoodsPics')->delete($id))
+					$this->ajaxReturn(1);
+			}
 		}
 	}

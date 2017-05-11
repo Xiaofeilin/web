@@ -64,12 +64,12 @@
              
              <tr>
                    <td class="label">市场价：</td>
-                   <td><input type="text" name="market_price" value="{$goodsOne['market_price']}" size="20" /></td>
+                   <td><input type="text" name="market_price" value="{$goodsOne['market_price']|intval}" size="20" /></td>
              </tr>
 
             <tr>
                     <td class="label">本店售价：</td>
-                    <td><input type="text" name="shop_price" value="{$goodsOne['shop_price']}" size="20" /></td>
+                    <td><input type="text" name="shop_price" value="{$goodsOne['shop_price']|intval}" size="20" /></td>
             </tr>
 
             
@@ -194,18 +194,18 @@
 
 
       <table width="90%" id="pic-table" style="display:none" align="center">
-              <tr>
+             <tr>
                    <td>
                           <ul id="pics_ul">
-                          <foreach name="goodsPicsData " item="val">
+                          <foreach name="goodsPicsList " item="val">
                             <li>
                             <input type="button" class="del_img" id="{$val['id']}" value="删除"><br>
-                            <img width="30"src="__ROOT__/Uploads/{$val['pic']}" alt="">
+                            <img width="50"src="__ROOT__/Uploads/{$val['pic']}" alt="">
                            </li>
                            </foreach>
                       </ul>
                     </td>
-              </tr>
+             </tr>
              <tr>
                    <td class="label"></td>
                    <td>
@@ -305,12 +305,20 @@
               var p = $(a).parent();
               if($(a).html()=="[+]"){
                     var newP = p.clone();
-                    var oldName = newP.find('select').attr('name');
-                    var newName = oldName.replace('old_','');
-                    newP.find('select').attr("name",newName);
-                     var oldName = newP.find('input').attr('name');
-                    var newName = oldName.replace('old_','');
-                    newP.find('input').attr("name",newName);
+                     var attr_input = newP.find('input');
+                    var oldName = attr_input .attr('name');
+                    var oldName = oldName.replace('old_','');
+                    var newName = oldName.slice(0,10);
+                    var attr_id = attr_input.attr('attr_id');
+                    var newName = newName+'[ ]['+attr_id+']';
+                    attr_input.attr("name",newName);
+
+                    var attr_select = newP.find('select');
+                     var oldName = attr_select.attr('name');
+                    var oldName = oldName.replace('old_','');
+                    var newName = oldName.slice(0,7);
+                    var newName = newName+'[ ]['+attr_id+']';
+                    attr_select.attr("name",newName);
                     newP.find("a").html("[-]");
                     p.after(newP);
               }else{
