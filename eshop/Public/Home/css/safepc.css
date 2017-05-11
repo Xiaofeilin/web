@@ -291,15 +291,15 @@
 }
 
 .code-num img {
-	width: 70px;
-	height: 30px;
-	margin-top: 8px;
+	width: 140px;
+	height: 49px;
+	/*margin-top: 8px;*/
 	line-height: 0
 }
 
 .changecode {
 	position: relative;
-	left: 30px;
+	left: 10px;
 	bottom: 10px;
 	color: #08C;
 	font-size: 12px
@@ -638,7 +638,7 @@
 
 .reg-suc .tip {
 	margin-top: 12px;
-	font-size: 18px;
+	font:18px "Microsoft YaHei";
 	text-align: center;
 	color: #666
 }
@@ -1484,4 +1484,23 @@
 	color: #333;
 	padding: 15px 0;
 	line-height: 22px
+}
+
+.reg-suc .logo {
+	background: url(../images/lion.png) no-repeat;
+	display: block;
+	width: 120px;
+	height: 161px;
+	margin: 40px auto 0
+}
+
+.reg-suc1 .logo {
+	background: url(../images/lion-run.gif) no-repeat
+}
+
+.relocation {
+	text-align: center;
+	font-size: 14px;
+	color: #999;
+	padding-top: 20px
 }

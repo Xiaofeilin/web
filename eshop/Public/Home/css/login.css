@@ -2758,9 +2758,10 @@ body {
 
 .login-other {
 	margin-top: 25px;
-	text-align: right;
-	height: 28px;
-	line-height: 16px
+	text-align: center;
+	height: 30px;
+	line-height: 16px;
+	font:normal bold 30px 黑体;
 }
 
 .qrlogin-link {
