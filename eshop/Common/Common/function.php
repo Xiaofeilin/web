@@ -127,4 +127,19 @@
 		}
 	}
 
+	/**
+	*[验证用户名是否存在]
+	*@param string 	$val[用户输入的用户名]
+	*/
+	function checkAcc($val){
+		$map['account'] = $val;
+		$user = M('user')->where($map)->find();
+		if($user){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+
 	

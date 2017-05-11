@@ -234,24 +234,6 @@
 
 		protected function _after_update($data){
 			$goodsAttr = D('GoodsAttr');
-			if($attr_id = I('get.attr_id','')){
-				$attr_price = I('post.attr_price','');
-				$attrData = array();
-				foreach ($attr_id as $key => $value) {
-					foreach ($value as $key1 => $value1) {
-						if(!$value1) continue;
-						$price = isset($attr_price[$key][$key1])?$attr_price[$key][$key1]:0;
-						$attrData[] = array(
-							'goods_id'=>$data['id'],
-							'attr_id'=>$key1,
-							'attr_value'=>$value1,
-							'attr_price'=>$price,
-						);
-					}
-				}
-				$goodsAttr->addAll($attrData);
-			}
-
 			if($old_attr_id=I('get.old_attr_id','')){
 				$old_attr_price = I('post.old_attr_price','');
 				$attrOldData = array();
@@ -270,10 +252,29 @@
 				}
 			}else
 				D('GoodsAttr')->where('goods_id='.$data['id'])->delete();
+			if($attr_id = I('get.attr_id','')){
+				$attr_price = I('post.attr_price','');
+				$attrData = array();
+				foreach ($attr_id as $key => $value) {
+					foreach ($value as $key1 => $value1) {
+						if(!$value1) continue;
+						$price = isset($attr_price[$key][$key1])?$attr_price[$key][$key1]:0;
+						$attrData[] = array(
+							'goods_id'=>$data['id'],
+							'attr_id'=>$key1,
+							'attr_value'=>$value1,
+							'attr_price'=>$price,
+						);
+					}
+				}
+				$goodsAttr->addAll($attrData);
+			}
+
+		
 
 
-			$memberPrice = D('MemberPrice');
 			if( $memberPrice = I('post.member_price','') ){
+				$
 				$memberPriceData = array();
 				foreach ($memberPrice as $key => $value) {
 					if(!$value)  continue;
