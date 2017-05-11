@@ -2,50 +2,41 @@
 namespace Home\Controller;
 use Think\Controller;
 class LoginController extends Controller {
+	/**
+	*['登录页面']
+	*/
 	public function login(){
 		if(IS_POST){
-			//var_dump($_POST);
+			$code = I('code');
+			$verify = new \Think\Verify();  
+			$result = $verify->check($code);//判断验证码
+			if(!$result) $this->ajaxReturn("验证码不正确！","eval");
+			
 			$rule = array(
 				array('account','checkAcc','用户名不存在！',0,'function'),
 				array('password','checkPwd','密码不正确！',0,'function'),
-				array('code','checkCode','验证码不正确！',0,'function'),
 			);
 			$user = D('user');
-			$info = $user->validate($rule)->create();
-			//var_dump($info);
+			$info = $user->validate($rule)->create();//判断用户信息
 
 			$map['account'] = I('account');
-			//$map['pwd'] = md5(I('password'));
-			//var_dump($map);
-			$userInfo = $user->where($map)->find();
-			//var_dump($userInfo);
-			$time = time();
+			$userInfo = $user->where($map)->find();//查找用户信息
 
-			if($info){
-				$_SESSION['info'] = $userInfo;
-				//var_dump($_SESSION);
-
-				$data['errorlogin'] = 0;
-				$data['lastregtime'] = $time;
-				$user->where("id={$userInfo['id']}")->save($data);
-
+			$check = new \Home\Model\LoginModel();
+			$res = $check->checkErrorlogin($info,$userInfo);//获取检测结果
+			if($res == 1){
 				$this->ajaxReturn(1);
 			}else{
-				$data['errorlogin'] = $userInfo['errorlogin'] + 1;
-				$data['errortime'] = $time;
-				$user->where("id={$userInfo['id']}")->save($data);
-
-				if($time - $errortime < 1800 && $userInfo['errorlogin'] > 5){
-					$this->ajaxReturn("账户名或密码输入错误超过5次，你的账户已被锁定30分钟。","eval");
-				}else{
-					$this->ajaxReturn($user->getError(),"eval");
-				}
+				$this->ajaxReturn($res,"eval");
 			}
 		}else{
 			$this->display();
 		}
 	}
 
+	/**
+	*['验证码显示']
+	*/
 	public function code(){
 		$config = array(
 			'fontSize'       =>    15,  // 验证码字体大小    
