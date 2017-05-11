@@ -332,6 +332,8 @@
 
 		public function search($is_del=0){
 			$where = array('is_delete'=>array('eq',$is_del));
+
+			var_dump($_POST);
 			$order = 'id desc';
 			$field = 'a.id,goods_name,cat_name,brand_name,market_price,shop_price,is_sale,is_hot,is_new,is_best,is_on_sale,type_name,sort_num,a.logo,addtime';
 			$join = 'left JOIN brand b on a.brand_id=b.id LEFT JOIN cat c on a.cat_id=c.id LEFT JOIN type d on a.type_id=d.id';
