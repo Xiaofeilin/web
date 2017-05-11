@@ -2,42 +2,77 @@
 <form >
        <p>
              搜索内容：
-             <input type="text">
-             <select name="" id="">
+             <input type="text"  name="search_val">
+             <select name="search_key" id="">
                     <option value="">请选择</option>
-                    <option value="">商品名称</option>
-                    <option value="">分类</option>
-                    <option value="">品牌</option>
-                    <option value="">类型</option>
+                    <option value="goods_name">商品名称</option>
+                    <option value="cat_name">分类</option>
+                    <option value="brand_name">品牌</option>
+                    <option value="type_name">类型</option>
              </select>
        </p>
+
        <p>
              添加时间：
-             <input type="text">~~<input type="text">
+             <input type="text" class="popupDatepicker" name="start_time">~~<input type="text" class="popupDatepicker" name="last_time">
        </p>
+
        <p>
              搜索价格：
-             <input type="text">~~<input type="text">
+             <input type="text" name="min_price">~~<input type="text" name="max_price">
              <select name="" id="">
                     <option value="">请选择</option>
-                    <option value="">市场价</option>
-                    <option value="">本店价 </option>
+                    <option value="market_price">市场价</option>
+                    <option value="shop_price">本店价 </option>
              </select>
        </p>
+
+       <p>
+             是否上架：
+             <input type="radio">上架
+             <input type="radio">下架
+             &nbsp; &nbsp; ||&nbsp; &nbsp;
+             是否促销：
+             <input type="radio">是
+             <input type="radio">否
+       </p>
+
+       <p>
+             是否最热：
+             <input type="radio">是
+             <input type="radio">否
+             &nbsp; &nbsp; ||&nbsp; &nbsp;
+             是否最新：
+             <input type="radio">是
+             <input type="radio">否
+             &nbsp; &nbsp; ||&nbsp; &nbsp;
+             是否精品：
+             <input type="radio">是
+             <input type="radio">否
+       </p>
        
+       <p>
+             排 &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;序：
+             <input type="radio">是
+             <input type="radio">是
+             <input type="radio">是
+             <input type="radio">是
+             <input type="radio">是
+       </p>
        <input type="submit" value="搜索">
 </form>
+
 <form method="post" action="" name="listForm">
        <div class="list-div" id="listDiv">
              <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
                     <tr>
-                          <th>商品名称</th>      
+                          <th>商品名称{$num}</th>      
                           <th>分类</th>
                            <th>品牌</th>
                           <th>市场价</th>
                            <th>本店价</th>
                           <th>类型</th>      
-                          <th>是否上架</th>
+                          <th><a name="is_on_sale"  num={$num===false?$num:2} href="javascript:void(0)">是否上架</a></th>
                            <th>是否最热</th>
                           <th>是否最新</th>
                            <th>是否精品</th>
@@ -94,4 +129,10 @@
              })
         });
 
+       $('a[name="is_on_sale"]').click(function(){
+             var num = $(this).attr('num');
+             var is_name = $(this).attr('name');
+             window.location.href = "{:U('list','',false)}/num/"+num+'/is_name/'+ is_name;
+       });
+      
 </script>

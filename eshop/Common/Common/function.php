@@ -76,7 +76,7 @@
 			$upload = new \Think\Upload($config);
 			$info = $upload->upload(array($imgName=>$_FILES[$imgName]) );
 			if($info){
-				$data['logo'] = $info[$imgName]['savepath'] . $info[$imgName]['savename'];
+				$data[$imgName] = $info[$imgName]['savepath'] . $info[$imgName]['savename'];
 				$logoPath = C('UpLoad_Config')['rootPath'];
 				$smlogoName = $info[$imgName]['savepath'] . 'sm_' . $info[$imgName]['savename'];
 				$image = new \Think\Image();
@@ -84,7 +84,8 @@
 				$width = empty($size)?C('Img_width'):$size[0];
 				$height = empty($size)?C('Img_height'):$size[1];
 				$image->thumb($width,$height)->save($logoPath . $smlogoName);
-				$data['sm_logo'] = $smlogoName;
+				$imgName = 'sm_'.$imgName;
+				$data[$imgName] = $smlogoName;
 			}else{
 				$data['error'] = $upload->getError();
 			}
@@ -94,8 +95,7 @@
 		return $data;
 	}
 
-
-
+$savepath = $data['logo']
 	/**
 	*[删除上传图片和缩略图]
 	*@param object 	$obj[删除图片路径所在表实例化的对象]

@@ -331,9 +331,43 @@
 		}
 
 		public function search($is_del=0){
+
+			//********************************搜索*********************************************
 			$where = array('is_delete'=>array('eq',$is_del));
 
-			var_dump($_POST);
+			//搜索 商品名称，分类，品牌，类型
+			if( ( $search_val = I('get.search_val','') ) && ( $search_key = I('get.search_key','') ) )
+				$where[$search_key] = array( 'like' , '%'.$search_val.'%' );
+
+			//搜索添加时间
+			$start_time = I('get.start_time')?strtotime( I('get.start_time').' 00:00:01'):0;
+			$last_time = I('get.last_time')?strtotime( I('get.last_time').' 23:59:59'):0;
+			if( $start_time && $last_time )
+				$where['addtime'] = array('between',array($start_time,$last_time) );
+			elseif($start_time)
+				$where['addtime'] = array('egt',$start_time);
+			elseif($last_time)
+				$where['addtime'] = array('elt',$last_time);
+			
+			//搜索市场价，本店价
+			$min_price = I('get.min_price',0);
+			$max_price = I('get.max_price',0);
+			if( $min_price && $max_price )
+				$where['price'] = array( 'between' , array( $min_price , $max_price ) );
+			elseif( $min_price )
+				$where['price'] = array( 'egt' , $min_price );
+			elseif( $max_price )
+				$where['price'] = array( 'elt' , $max_price );
+
+			var_dump($_GET);
+			if( $is_name = I('get.is_name','') ){
+				$num = I('get.num',0);
+				if( $num==2 || $num=1 )
+					$where[$is_name] = array('eq',1);
+				elseif( $num==0 )
+					$where[$is_name] = array('eq',0);
+			}
+			//*****************************************连表查询分页***********************************
 			$order = 'id desc';
 			$field = 'a.id,goods_name,cat_name,brand_name,market_price,shop_price,is_sale,is_hot,is_new,is_best,is_on_sale,type_name,sort_num,a.logo,addtime';
 			$join = 'left JOIN brand b on a.brand_id=b.id LEFT JOIN cat c on a.cat_id=c.id LEFT JOIN type d on a.type_id=d.id';

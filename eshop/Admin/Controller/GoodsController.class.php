@@ -11,6 +11,15 @@
 		}
 
 		public function list(){
+			var_dump($_GET['num']);
+			$num = I('get.num',false);
+			if( $num==2 || $num==1 ){
+				$data['num'] = 0;
+			}
+			elseif($num===0)
+				$data['num'] = 1;
+			
+			$this->assign('num',$num);
 			$data = $this->model->search();
 			$this->assign($data);
 			$this->assignHead('商品列表',U('add'),'商品添加');
