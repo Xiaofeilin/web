@@ -6,7 +6,7 @@
                     <input type="hidden" name="id" value="{$adminOne['id']}">
                     <tr>
                           <td class="label">管理员账号:</td>
-                          <td><input type='text' name='admin_name' maxlength="20" value='{$adminOne["admin_name"]}' size='27' disabled /> <font color="red">*</font></td>
+                          <td><input type='text' name='admin_name' maxlength="20" value='{$adminOne["admin_name"]}' size='27' readonly /> <font color="red">*</font></td>
                     </tr>
 
                     <tr>
@@ -26,7 +26,7 @@
 
                     <tr>
                           <td class="label">头像:</td>
-                          <td id="localImag"><img id="preview" width="30" src="__ROOT__/Uploads/Admin/Icon/{$adminOne['icon']}"><input type='file' name='icon' id="doc" onchange="javascript:setImagePreview();" /></td>
+                          <td id="localImag"><img id="preview" width="30" src="__ROOT__/Uploads/{$adminOne['icon']}"><input type='file' name='icon' /></td>
                     </tr>
 
               </table>

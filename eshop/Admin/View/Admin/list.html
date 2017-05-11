@@ -37,7 +37,7 @@
                     <foreach name="adminList" item="val">
                     <tr align="center" class="0" id="0_1" id = 'tr_1'>
                           <td align="center">{$val['id']}</td>
-                          <td align="center" {$val['icon']}><img width="30" src="__ROOT__/Uploads/Admin/Icon/{$val['icon']}"></td>
+                          <td align="center" {$val['icon']}><img width="30" src="__ROOT__/Uploads/{$val['icon']}"></td>
                           <td align="center">{$val['admin_name']}</td>
                           <td align="center">{$val['admin_nick']}</td>
                           <td align="center">{$val['tel']}</td>
@@ -69,7 +69,7 @@
                     dataType:'json',
                     success:function(data){
                           if(data!=null){
-                                  str =(data==1)? 'yes':'no';
+                                  str =(data==1)? 1:0;
                                   td.children().attr('src','__PUBLIC__/Admin/images/'+str+'.gif');
                            }
                     }
