@@ -95,7 +95,6 @@
 		return $data;
 	}
 
-$savepath = $data['logo']
 	/**
 	*[删除上传图片和缩略图]
 	*@param object 	$obj[删除图片路径所在表实例化的对象]
@@ -104,11 +103,12 @@ $savepath = $data['logo']
 	*$goods = D('goods');
 	*imgDel($goods,1);
 	*/
-	 function imgDel($obj,$id){
+	 function imgDel($obj,$id,$imgName="logo"){
 		$path = C('UpLoad_Config')['rootPath'];
 		$data = $obj->find($id);
-		$logo =  $path . $data['logo'];
-		$sm_logo = $path . $data['sm_logo'];
+		$logo =  $path . $data[$imgName];
+		$imgName = 'sm_'.$imgName;
+		$sm_logo = $path . $data[$imgName];
 		unlink($logo);
 		unlink($sm_logo);
 	}
