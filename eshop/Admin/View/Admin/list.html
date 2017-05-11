@@ -37,7 +37,7 @@
                     <foreach name="adminList" item="val">
                     <tr align="center" class="0" id="0_1" id = 'tr_1'>
                           <td align="center">{$val['id']}</td>
-                          <td align="center">{$val['icon']}</td>
+                          <td align="center" {$val['icon']}><img width="30" src="__ROOT__/Uploads/Admin/Icon/{$val['icon']}"></td>
                           <td align="center">{$val['admin_name']}</td>
                           <td align="center">{$val['admin_nick']}</td>
                           <td align="center">{$val['tel']}</td>
@@ -52,6 +52,7 @@
                           </td>
                     </tr>
                     </foreach>
+                    <tr><td height="30" colspan="9" align="center">{$show}</td></tr>
             </table>
       </div>
 </form>
