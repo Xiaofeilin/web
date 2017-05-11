@@ -80,12 +80,11 @@
 				$logoPath = C('UpLoad_Config')['rootPath'];
 				$smlogoName = $info[$imgName]['savepath'] . 'sm_' . $info[$imgName]['savename'];
 				$image = new \Think\Image();
-				$image->open($logoPath.$data['logo']);
+				$image->open($logoPath.$data[$imgName]);
 				$width = empty($size)?C('Img_width'):$size[0];
 				$height = empty($size)?C('Img_height'):$size[1];
 				$image->thumb($width,$height)->save($logoPath . $smlogoName);
-				$imgName = 'sm_'.$imgName;
-				$data[$imgName] = $smlogoName;
+				$data['sm_'.$imgName] = $smlogoName;
 			}else{
 				$data['error'] = $upload->getError();
 			}
@@ -107,8 +106,7 @@
 		$path = C('UpLoad_Config')['rootPath'];
 		$data = $obj->find($id);
 		$logo =  $path . $data[$imgName];
-		$imgName = 'sm_'.$imgName;
-		$sm_logo = $path . $data[$imgName];
+		$sm_logo = $path . $data['sm_'.$imgName];
 		unlink($logo);
 		unlink($sm_logo);
 	}
