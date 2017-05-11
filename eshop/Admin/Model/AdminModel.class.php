@@ -16,11 +16,10 @@
 			array('admin_name','','账号已被使用',1,'unique'),
 			array('admin_nick','require','请填写名称',1),
 			array('admin_nick','0,32','名称超出长度',0,'length'),
-			array('password','require','请填写密码',1),
+			array('password','require','请填写密码',0),
 			array('password','/^[\\~!@#$%^&*()-_=+|{}\[\],.?\/:;\'\"\d\w]*$/','密码存在非法字符',1),
 			array('password','6,12','密码长度为6-12',0,'length'),
-			array('repass','require','请填写确认密码',1),
-			array('repass','password','两次输入的密码不一致',1,'confirm'),
+			array('repass','password','两次输入的密码不一致',0,'confirm'),
 			array('tel','require','请填写手机号码',1),
 			array('tel','number','请正确书写手机号码',1),
 			array('tel','11','请正确书写手机号码',0,'length'),
@@ -29,7 +28,7 @@
 			array('email','email','请正确填写电子邮箱',1),
 			array('email','0,128','邮箱超出长度',0,'length'),
 			array('email','','邮箱已被使用',1,'unique'),
-			array('is_use',array(0,1),'请不要乱修改html',1,'in'),
+			array('is_use',array(0,1),'请不要乱修改html',0,'in'),
 		);
 
 		/**
@@ -66,9 +65,9 @@
 
 		$adminList = $this->where($where)->limit($page->firstRow.','.$page->listRows)->select();
 		foreach($adminList as $key => $value){
-			$is_use = 'no';
+			$is_use = '0';
 			if($value['is_use'])
-				$is_use = 'yes';
+				$is_use = '1';
 			$adminList[$key]['is_use'] = $is_use;
 		}
 		$data['adminList'] = $adminList;
@@ -80,9 +79,21 @@
 		*@param int 		$id[要显示的数据id]
 		*@return array 		$adminOne[修改后的数据]
 		*/
-		public function getadminOne($id){
+		public function getAdminOne($id){
 			$adminOne = $this->find($id);
 			return $adminOne;
-	
 		}
+
+		// 上传图片
+		protected function _before_insert(&$data){
+			$imgData = imgUpLoad('icon','Admin/Icon');
+			if(isset( $imgData['error'])){
+				$this->error = $imgData['error'];
+				return false;
+			}else{
+				$data['icon'] = $imgData['icon'];
+			}
+		}
+
+
 	}
