@@ -170,6 +170,7 @@ CREATE TABLE goods(
 	integral int unsigned not null comment '积分',
 	integral_price int unsigned not null default '0' comment '如果要用积分兑换,需要积分',
 	exp int unsigned not null comment '经验',
+	is_sale tinyint unsigned not null default '0' comment '是否促销0：不促销，1:促销',
 	promote_price decimal(10,2) not null default '0' comment '促销价',
 	promote_start_time int unsigned not null default '0' comment '促销开始时间',
 	promote_end_time int unsigned not null default '0' comment '促销结束时间',
@@ -221,3 +222,85 @@ CREATE TABLE brand_cat(
 	key brand_id(brand_id),
 	key cat_id_lv3(cat_id_lv3)
 )engine=InnoDB default charset=utf8 comment'品牌分类表';
+
+
+//####################文章管理################
+广告表
+
+create table if not exists `ad`(
+	`id` int(12) unsigned not null auto_increment comment '广告id',
+	`name` varchar(60) not null comment '广告名称',
+	`link` varchar(255) not null  comment '连接',
+	`pic` varchar(255) not null default 'default.jpg' comment '图片路径',
+	`addtime` int(11) unsigned default '0' comment '添加时间',
+	`isshow` int(3) unsigned default '1' comment '是否显示',
+	primary key ('id')
+
+)engine=innodb default charset=utf8;
+
+
+
+
+轮播图表
+
+id   pic 
+
+create table if not exists `lun`(
+	`id` int(12) unsigned not null  auto_increment comment '轮播图id',
+	`pic` varchar(255) not null comment '图片路径',
+	primary key('id')
+)engine=innodb default charset=utf8;
+
+
+友情连接表
+id name url地址 isshow
+
+create table if not exists `friend_link`(
+	`id` int(12) unsigned not null auto_increment comment '友情连接id',
+	`link_name` varchar(255) not null comment '连接名字',
+	`link_url` varchar(255) not null comment '连接地址',
+	`isshow` char(3) not null comment '是否显示',
+	primary key('id')
+)engine=innodb default charset=utf8;
+
+
+
+页脚管理表
+
+id  pid  name  path
+create table if not exists `footer`(
+	`id` int(12) unsigned not null auto_increment comment '页脚id',
+	`pid` int(12) unsigned not null comment '父级id',
+	`name` varchar(255) not null comment '页脚子内容名',
+	`path` varchar(255) not null comment '页脚子内容分类路径',
+	primary key('id')
+)engine=innodb default charset=utf8;
+
+
+####################用户管理#####################
+DROP TABLE IF EXISTS `user`;
+create table `user`(
+	`id` int unsigned not null primary key auto_increment comment 'id',
+	`username` varchar(32) not null comment '用户名',
+	`pwd` varchar(32) not null comment '密码',
+	`tel` char(11) not null comment '电话',
+	`email` varchar(32) comment '邮箱', 
+	`age` int not null default 0 comment '年龄 0为保密',
+	`sex`  tinyint unsigned default 2 comment '性别 0女，1男，2保密',
+	`regtime` int unsigned not null comment '注册时间',
+	`lastregtime` int unsigned not null default 0 comment '最后一次登录时间',
+	`errorlogin` tinyint unsigned default 0 comment '登录失败次数',
+	`errortime` int unsigned comment '最后一次登录失败的时间',
+	`status` tinyint unsigned default 1 comment '用户状态 0禁用，1启用',
+	`credit` int unsigned default 0 comment '用户积分',
+	`exp` int unsigned default 0 comment '用户经验',
+	`level` int unsigned default 0 comment '用户等级',
+	key username(username),
+	key tel(tel),
+	key email(email),
+	key regtime(regtime),
+	key lastregtime(lastregtime),
+	key status(status),
+	key level(level),
+	key credit(credit)
+)engine=innodb default charset=utf8;

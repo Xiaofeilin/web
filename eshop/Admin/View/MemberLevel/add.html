@@ -1,0 +1,30 @@
+  <layout name="Index/header_foot"/>
+  <div class="main-div">
+      <form id="cat_form" method="post" name="theForm" enctype="multipart/form-data" >
+
+              <table width="100%" style="margin:0 auto" id="general-table">
+
+                    <tr>
+                          <td class="label">会员名称：</td>
+                          <td><input type='text' name='level_name' maxlength="20" value='' size='27' /> <font color="red">*</font></td>
+                    </tr>
+
+                    <tr>
+                          <td class="label">积分范围：</td>
+                          <td>
+                                <input type="text" name="bottom_num"  placeholder="下限">  
+                                &nbsp;&nbsp;~~ &nbsp;&nbsp;
+                                <input type="text" name="top_num" placeholder="上限">
+                          </td>
+                    </tr>
+                    <tr>
+                          <td class="label">折 &nbsp;扣 &nbsp;率：</td>
+                          <td><input type="text" name="rate">&nbsp;如：9折：90</td>
+                    </tr>
+              </table>
+              <div class="button-div">
+              <input type="submit" value=" 确定 " />
+              <input type="reset" value=" 重置 " />
+              </div>
+      </form>
+  </div>

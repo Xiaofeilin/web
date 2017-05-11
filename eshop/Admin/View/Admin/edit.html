@@ -1,0 +1,38 @@
+  <layout name="Index/header_foot"/>
+  <div class="main-div">
+      <form id="admin_form" method="post" name="theForm" enctype="multipart/form-data" >
+
+              <table width="100%" style="margin:0 auto" id="general-table">
+                    <input type="hidden" name="id" value="{$adminOne['id']}">
+                    <tr>
+                          <td class="label">管理员账号:</td>
+                          <td><input type='text' name='admin_name' maxlength="20" value='{$adminOne["admin_name"]}' size='27' disabled /> <font color="red">*</font></td>
+                    </tr>
+
+                    <tr>
+                          <td class="label">管理员名称:</td>
+                          <td><input type='text' name='admin_nick' maxlength="20" value='{$adminOne["admin_nick"]}' size='27' /> <font color="red">*</font></td>
+                    </tr>
+
+                    <tr>
+                          <td class="label">手机号码:</td>
+                          <td><input type='text' name='tel' maxlength="20" value='{$adminOne["tel"]}' size='27' /> <font color="red">*</font></td>
+                    </tr>
+
+                    <tr>
+                          <td class="label">电子邮箱:</td>
+                          <td><input type='email' name='email' maxlength="20" value='{$adminOne["email"]}' size='27' /> <font color="red">*</font></td>
+                    </tr>
+
+                    <tr>
+                          <td class="label">头像:</td>
+                    </tr>
+
+              </table>
+              <div class="button-div">
+              <input type="submit" value=" 确定 " />
+              <input type="reset" value=" 重置 " />
+              </div>
+      </form>
+  </div>
+

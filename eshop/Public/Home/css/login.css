@@ -2850,8 +2850,8 @@ body {
 
 .code-num {
 	float: left;
-	padding: 9px 0;
-	height: 30px;
+	/*padding: 9px 0;*/
+	height: 48px;
 	_font-size: 0;
 	margin-left: 10px;
 	width: 166px;
@@ -2859,8 +2859,8 @@ body {
 }
 
 .code-num img {
-	width: 70px;
-	height: 30px;
+	width: 166px;
+	height: 48px;
 	line-height: 0
 }
 

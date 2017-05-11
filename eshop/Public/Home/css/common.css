@@ -5536,3 +5536,12 @@ a.ng-close em {
 .life-helper dd a.insurance b {
 	background-position: -255px -42px
 }
+#top-bar-background{
+  display:none;
+  width:100%;
+  height:52px;
+  background:rgba(255,255,255,0.93);
+  position:fixed;
+  top:0;
+  z-index:99;
+}

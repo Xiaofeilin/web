@@ -1,0 +1,347 @@
+<layout name="Index/header_foot"/>
+<style>
+  ul#pics_ul li{list-style-type: none;float:left;margin: 5px;height: 18px;}
+</style>
+<script type="text/javascript">
+      function charea(a) {
+            var spans = ['general','detail','mix','level','pic'];
+                    for(i=0;i<spans.length;i++) {
+                          var o = document.getElementById(spans[i]+'-tab');
+                          var tb = document.getElementById(spans[i]+'-table');
+                          o.className = o.id==a+'-tab'?'tab-front':'tab-back';
+                          tb.style.display = tb.id==a+'-table'?'block':'none';
+                   }
+      }
+</script>
+<!-- start goods form -->
+<div class="tab-div">
+<!-- tab bar -->
+      <div id="tabbar-div">
+              <p>
+                    <span class="tab-front" id="general-tab" onclick="charea('general');">通用信息</span>
+                    <span class="tab-back" id="detail-tab" onclick="charea('detail');">详细描述</span>
+                    <span class="tab-back" id="mix-tab" onclick="charea('mix');">商品属性</span>
+                    <span class="tab-back" id="level-tab" onclick="charea('level');">会员价格</span>
+                    <span class="tab-back" id="pic-tab" onclick="charea('pic');">商品相册</span>
+              </p>
+      </div>
+
+    <!-- tab body -->
+    <div id="tabbody-div">
+      <form enctype="multipart/form-data" method="post" name="theForm"  onsubmit="return on()">
+        
+        <table width="90%" id="general-table" align="center">
+          <input type="hidden" name="id" value="{$goods['id']}">
+          <input type="hidden" name="goods_type_id" value="{$goods['type_id']}">
+             <tr>
+                      <td class="label">商品名称：</td>
+                      <td><input type="text" name="goods_name" value="{$goods['goods_name']}" style="float:left;color:;" size="30" /></td>
+             </tr>
+     
+            <tr>
+                   <td class="label">商品分类：</td>
+                   <td>
+                           <select name="cat_id"  >
+                                  <option value="">请选择...</option>
+                                  <foreach name="catTree" item="val">
+                                  <option value="{$val['id']}" <eq name="goods['cat_id']" value="$val['id']">selected</eq>>{$val['lv']|str_repeat="--",###}{$val['cat_name']}</option>
+                                  </foreach>
+                           </select>
+                   </td>
+            </tr>
+             
+             <tr>
+                   <td class="label">商品品牌：</td>
+                   <td>
+                           <select name="brand_id"  >
+                                  <option value="">请选择...</option>
+                                  <foreach name="brandData" item="val">
+                                  <option value="{$val['id']}" <eq name="goods['brand_id']" value="$val['id']">selected</eq>>{$val['brand_name']}</option>
+                                  </foreach>
+                           </select>
+                   </td>
+            </tr>
+             
+             <tr>
+                   <td class="label">市场价：</td>
+                   <td><input type="text" name="market_price" value="{$goods['market_price']}" size="20" /></td>
+             </tr>
+
+            <tr>
+                    <td class="label">本店售价：</td>
+                    <td><input type="text" name="shop_price" value="{$goods['shop_price']}" size="20" /></td>
+            </tr>
+
+            
+            
+            <tr>
+                   <td class="label">赠送积分：</td>
+                   <td><input type="text" name="integral" value="{$goods['integral']}" size="20" /></td>
+             </tr>
+
+             <tr>
+                   <td class="label">增加经验值：</td>
+                   <td><input type="text" name="exp" value="{$goods['exp']}" size="20" /></td>
+             </tr>
+              
+             <tr>
+                   <td class="label">积分兑换：</td>
+                   <td><input type="text"  value="{$goods['integral_price']}" size="20" /></td>
+             </tr>
+            
+             <tr>
+                   <td class="label"><input type="checkbox" id="promote" >促销价：</td>
+                   <td><input type="text" name="promote_price" disabled value="{$goods['promote_price']}" size="20" /></td>
+             </tr>
+            
+              <tr>
+                   <td class="label">促销时间：</td>
+                   <td>
+                          <input type="text" name="promote_start_time" disabled value="{$goods['promote_start_time']}" size="20" />
+                          ---
+                          <input type="text" name="promote_end_time" disabled value="{$goods['promote_end_time']}" size="20" />
+                    </td>
+             </tr>
+              
+              <tr>
+                   <td class="label">logo图片：</td>
+                   <td><input type="file" name="logo"  /></td>
+             </tr>
+
+             <tr>
+                   <td class="label">是否热卖：</td>
+                   <td>
+                          <input type="radio" name="is_hot" value="1" size="20" />是
+                          <input type="radio" name="is_hot" value="0" checked size="20" />否
+                   </td>
+             </tr>
+
+             <tr>
+                   <td class="label">是否新品：</td>
+                  <td>
+                          <input type="radio" name="is_new" value="1" <eq name="goods['is_new']" value="1">checked</eq>size="20" />是
+                          <input type="radio" name="is_new" value="0" <eq name="goods['is_new']" value="0">checked</eq> size="20" />否
+                   </td>
+             </tr>
+            
+               <tr>
+                   <td class="label">是否精品：</td>
+                   <td>
+                          <input type="radio" name="is_best" value="1" <eq name="goods['is_best']" value="1">checked</eq> size="20" />是
+                          <input type="radio" name="is_best" value="0" <eq name="goods['is_best']" value="0">checked</eq> size="20" />否
+                   </td>
+             </tr>
+
+             <tr>
+                   <td class="label">是否上架：</td>
+                   <td>
+                          <input type="radio" name="is_on_sale" value="1" <eq name="goods['is_on_sale']" value="1">checked</eq> size="20" />是
+                          <input type="radio" name="is_on_sale" value="0" <eq name="goods['is_on_sale']" value="0">checked</eq> size="20" />否
+                   </td>
+             </tr>
+
+              <tr>
+                   <td class="label">seo优化关键字：</td>
+                   <td><input type="text" name="seo_keyword" value="{$goods['seo_keyword']}" size="20" /></td>
+             </tr>
+
+                <tr>
+                   <td class="label">seo优化描述：</td>
+                   <td><input type="text" name="seo_description" value="{$goods['seo_description']}" size="20" /></td>
+             </tr>
+
+             <tr>
+                   <td class="label">排序数字：</td>
+                   <td><input type="text" name="sort_num" value="{$goods['sort_num']}" size="20" /></td>
+             </tr>
+        </table>
+
+        <!-- 详细描述 -->
+       <table width="90%" id="detail-table" style="display:none">
+             <tr>
+                    <td class="label">商品描述:</td>
+                   <td>
+                          <script id="editor" type="text/plain" style="width:1024px;height:500px;" name="goods_desc" >{$goods['goods_desc']}</script>
+                   </td>
+             </tr>
+       </table>
+
+        <!-- 其他信息 -->
+      <table width="90%" id="mix-table" style="display:none" align="center">
+             <tr>
+                   <td class="label"></td>
+                   <td>商品类型:
+                          <select name="type_id" id="">
+                                <option value="">选择类型</option>
+                                <foreach name="typeData" item="val">
+                                <option value="{$val['id']}"   <eq name="goods['type_id']" value="$val['id']">selected="true"</eq>>{$val['type_name']}</option>
+                                </foreach>
+                          </select>
+                   </td>
+             </tr>          
+              
+              <tr> <td class="label"></td><td class="label" id="attr">{$a}</td></tr>
+      </table>
+        
+        <table width="90%" id="level-table" style="display:none" align="center">
+             <foreach name="levelData" item="val">
+             <tr>
+                   <td class="label">{$val['level_name']}:</td>
+                   <td><input type="text" name="member_price[{$val['id']}]" value="{$val['price']}"> </td>
+             </tr>          
+            </foreach>
+      </table>
+
+
+      <table width="90%" id="pic-table" style="display:none" align="center">
+
+              <tr>
+                   <td>
+                          <ul id="pics_ul">
+                          <foreach name="goodsPicsData " item="val">
+                            <li>
+                            <input type="button" class="del_img" id="{$val['id']}" value="删除"><br>
+                            <img width="30"src="__ROOT__/Uploads/{$val['pic']}" alt="">
+                           </li>
+                           </foreach>
+                      </ul>
+                    </td>
+              </tr>
+             <tr>
+                   <td class="label"></td>
+                   <td>
+                          <input type="button" id="add_pic" value="添加一张图片">
+                   </td>
+             </tr>          
+              
+           
+      </table>
+      
+        <div class="button-div">
+                   <input type="submit" value=" 确定 " class="button" />
+                   <input type="reset" value=" 重置 " class="button" />
+        </div>
+      </form>
+    </div>
+</div>
+<!-- end goods form -->
+<div id="div_error"></div>
+</body>
+</html>
+<script>
+         $('#promote').click(function(){
+                if($(this).attr('checked')=='checked'){
+                    $("input[name='promote_price']").removeAttr("disabled");
+                    $("input[name='promote_start_time']").removeAttr("disabled");
+                    $("input[name='promote_end_time']").removeAttr("disabled");
+                }else{
+                    $("input[name='promote_price']").attr("disabled",'disabled');
+                    $("input[name='promote_start_time']").attr("disabled",'disabled');
+                    $("input[name='promote_end_time']").attr("disabled",'disabled');
+                }
+         });
+
+          $('.del_img').click(function(){
+            var id = $(this).attr('id');
+            $.ajax({
+                type:'GET',
+                url:"{:U('ajaxDelImg','',false)}/id/"+id,
+                dataType:'json',
+                success:function(data){
+                    if(data==1)
+                        $('input[id="'+id+'"]').parent().remove();
+                }
+            }) 
+           });
+
+          var attr_nav = $('#attr').html();
+         $('select[name="type_id"]').change(function(){
+                var type_id = $(this).val();
+                var new_selected = $(this).children('option:selected').html();
+                var old_selected = $(this).find('option[selected="true"]').html();
+                if(new_selected==old_selected){
+                      $('#attr').html(attr_nav);
+                }else if(type_id!=""){
+                      $.ajax({
+                        type:'GET',
+                        url:"{:U('ajaxGetAttr','',false)}/type_id/"+type_id,
+                        dataType:'json',
+                        success:function(data){
+                          var html="";
+                            $(data).each(function(key,val){
+                                    html += "<p>";
+                                    html += val.attr_name + ":";
+                                    if(val.attr_type==1)
+                                          html += "<a onclick='addnew(this)' javascript='void(0)'>[+]</a>";
+                                    if(val.attr_option_values == "")
+                                            html += "<input type='text' name='attr_id[][" + val.id + "]' />";
+                                    else{
+                                            var _attr = val.attr_option_values.split(',');
+                                            html += "<select name='attr_id[][" + val.id + "]'>";
+                                            html += "<option value=''>请选择</option> ";
+                                            for(var i=0;i<_attr.length;i++){
+                                               html += "<option value="+_attr[i]+">"+_attr[i]+"</option> ";
+                                            }
+                                            html += "</select>";
+                                            if(val.attr_type==1)
+                                                   html += "<input type='text' name='attr_price[]["+val.id+"]' />";
+                                    }
+                                    html += "</p>";
+                            });
+                          $('#attr').html(html);
+                        }
+                      });
+                }else{
+                     $('#attr').html('');
+                }
+         });
+      
+       function addnew(a){
+              var p = $(a).parent();
+              if($(a).html()=="[+]"){
+                var newP = p.clone();
+                var oldName = newP.find('select').attr('name');
+                var newName = oldName.replace('old_','');
+                newP.find('select').attr("name",newName);
+                 var oldName = newP.find('input').attr('name');
+                var newName = oldName.replace('old_','');
+                newP.find('input').attr("name",newName);
+                newP.find("a").html("['-']");
+                p.after(newP);
+              }
+              else{
+                 var id = $(a).attr('id');
+                  $.ajax({
+                        type:'GET',
+                        url:"{:U('ajaxDelAttr','',false)}/id/"+id,
+                        dataType:'json',
+                          success:function(data){
+                                 p.remove();
+                          }
+                      });
+              }
+       }
+
+       $('#add_pic').click(function(){
+              $(this).parent().parent().parent().append(
+                    '<tr><td class="label"></td><td><input type="file" name="pics[ ]" /></td></tr>'
+                )
+       });
+
+
+           //实例化编辑器
+      //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+      var ue = UE.getEditor('editor');
+   
+      function disableBtn(str) {
+          var div = document.getElementById('btns');
+          var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+          for (var i = 0, btn; btn = btns[i++];) {
+              if (btn.id == str) {
+                  UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+              } else {
+                  btn.setAttribute("disabled", "true");
+              }
+          }
+      }
+</script>

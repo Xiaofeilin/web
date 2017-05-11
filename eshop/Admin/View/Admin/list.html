@@ -1,0 +1,84 @@
+<layout name="Index/header_foot"/>
+<form>
+       <p>
+              搜索内容：
+              <input type="text" value="{$Think.get.search_val}" name="search_val">
+              <select name="search_key" >
+                   <option value="">请选择搜索类型</option>
+                   <option value="id" <eq name="Think.get.search_key" value="id">selected</eq> >ID</option>
+                   <option value="admin_name" <eq name="Think.get.search_key" value="admin_name">selected</eq>>管理员账号</option>
+                   <option value="admin_nick" <eq name="Think.get.search_key" value="admin_nick">selected</eq> >管理员名称</option>
+                   <option value="tel" <eq name="Think.get.search_key" value="tel">selected</eq> >电话号码</option>
+                   <option value="email" <eq name="Think.get.search_key" value="email">selected</eq> >电子邮箱</option>
+              </select>
+       </p>
+       <p>
+              是否启用：<input type="radio" name="is_use" value="1" <eq name="Think.get.is_use" value="1">checked</eq> >是
+                                  <input type="radio" name="is_use" value="0" <eq name="Think.get.is_use" value="0">checked</eq> >否
+       </p>
+        <input type="submit" value="搜索">
+</form>
+<br>
+<form method="post" action="" name="listForm">
+       <div class="list-div" id="listDiv">
+
+             <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
+                    <tr>
+                          <th>ID</th>
+                          <th>头像</th>
+                          <th>管理员账号</th>      
+                          <th>管理员名称</th>
+                          <th>电话号码</th>
+                          <th>电子邮箱</th>
+                          <th>是否启用</th>
+                          <th>添加时间</th>
+                          <th>操作</th>
+                    </tr>
+                    <foreach name="adminList" item="val">
+                    <tr align="center" class="0" id="0_1" id = 'tr_1'>
+                          <td align="center">{$val['id']}</td>
+                          <td align="center">{$val['icon']}</td>
+                          <td align="center">{$val['admin_name']}</td>
+                          <td align="center">{$val['admin_nick']}</td>
+                          <td align="center">{$val['tel']}</td>
+                          <td align="center">{$val['email']}</td>
+                        
+                          <td width="20%" show="{$val['is_use']}" ><img  src="__PUBLIC__/Admin/images/{$val['is_use']}.gif" /></td>
+
+                          <td align="center">{$val['addtime']}</td>
+                          <td width="24%" align="center">
+                                 <a href="{:U('edit',array('id'=>$val['id']) )}">编辑</a> |
+                                 <a href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" title="移除">移除</a>
+                          </td>
+                    </tr>
+                    </foreach>
+            </table>
+      </div>
+</form>
+<script>
+
+        //ajax无刷新修改是否显示
+        $('td[show]').click(function(){
+             var td = $(this);
+             var show = $(this).attr('show');
+             var id = td.prev().prev().prev().prev().prev().prev().html();
+             $.ajax({
+                    type:'GET',
+                    url:"{:U('ajaxIsUse','',false)}/id/" +id,
+                    dataType:'json',
+                    success:function(data){
+                          if(data!=null){
+                                  str =(data==1)? 'yes':'no';
+                                  td.children().attr('src','__PUBLIC__/Admin/images/'+str+'.gif');
+                           }
+                    }
+             })
+        });
+
+        //是否显示按钮点击提交表单
+        $('input[name="is_use"]').click(function(){
+             $(this).parent().parent().submit();
+        });
+
+
+</script>
