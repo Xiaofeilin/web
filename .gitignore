@@ -5,3 +5,6 @@
 /eshop/Public/Datepicker
 /eshop/Common/Conf
 /eshop/Common
+/eshop/Common/Conf/config.php
+/eshop/Home/Controller/TestController.class.php
+/eshop/Home/View/Test/test.html
