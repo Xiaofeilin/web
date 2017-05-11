@@ -84,14 +84,17 @@
 			return $adminOne;
 		}
 
-		// 上传图片
-		protected function _before_insert(&$data){
-			$imgData = imgUpLoad('icon','Admin/Icon');
-			if(isset( $imgData['error'])){
-				$this->error = $imgData['error'];
-				return false;
-			}else{
-				$data['icon'] = $imgData['icon'];
+		// 修改上传图片
+		protected function _before_update(&$data){
+			if($_FILES['icon']['size']){
+				imgDel($this,$data['id']);
+				$imgData = imgUpLoad('icon','Admin/Icon');
+				if(isset( $imgData['error'])){
+					$this->error = $imgData['error'];
+					return false;
+				}else{
+					$data['icon'] = $imgData['logo'];
+				}
 			}
 		}
 
