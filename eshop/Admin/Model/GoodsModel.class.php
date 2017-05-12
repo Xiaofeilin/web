@@ -78,13 +78,10 @@
 				}
 			}
 
-
 			//*******************************************商品属性*****************************************************************
 			//获取当前商品属性
 			$goodsAttr = D('GoodsAttr');
 			$data['goodsAttrList'] = $goodsAttr->field('a.*,b.attr_name,b.attr_type,b.attr_option_values,type_id')->alias('a')->join('left join attr b on a.attr_id=b.id')->where('goods_id='.$id)->order('attr_type desc')->select();
-
-
 			
 			//获取当前的所有属性id
 			$attrId = array();
@@ -100,10 +97,9 @@
 				$data['goodsAttrList']= array_merge($data['goodsAttrList'],$attrList);
 			}
 
-			//欢迎当前商品的属性表
+			//还原当前商品的属性表
 			$data['goodsAttrHtml'] = '';
 			$attrId = array();
-	
 			foreach ($data['goodsAttrList'] as $key => $val) {
 				$data['goodsAttrHtml'].= '<p>';
 				$data['goodsAttrHtml'].=$val['attr_name'].':';
@@ -139,9 +135,11 @@
 
 		/**
 		*[在添加商品前上传图片并获取上传图片路径]
+		*@param array 	$data[自动验证过滤后的form表单数据]
 		*/
 		protected function _before_insert(&$data){
 
+			//调用imgData函数上传图片，并获取上传路径
 			$imgData = imgUpLoad('logo');
 			if(isset( $imgData['error'])){
 				$this->error = $imgData['error'];
@@ -151,6 +149,7 @@
 				$data['sm_logo'] = $imgData['sm_logo'];
 			}
 
+			//判断有没有促销，将促销时间转为时间戳
 			if($data['is_sale']==1){
 				$data['promote_start_time'] = strtotime($data['promote_start_time'].' 00:00:01');
 				$data['promote_end_time'] = strtotime($data['promote_end_time'].' 23:59:59');
@@ -158,7 +157,12 @@
 
 		}
 
+		/**
+		*[在添加商品后的操作]
+		*@param array 	$data[自动验证过滤后的form表单数据]
+		*/
 		protected function _after_insert($data){
+			//处理form表单中属性数据，并插入数据库
 			if( $attr_id = I('post.attr_id','') ){
 				$attr_price = I('post.attr_price','');
 				$attrData = array();
@@ -178,6 +182,7 @@
 				$goodsAttr->addAll($attrData);
 			}
 
+			//处理相册的数据，调用函数上传图片，并把路径写进数据库
 			if( $pics = $_FILES['pics'] ){
 				$num = count( $pics['name'] );
 				$picsData = array();
@@ -202,6 +207,7 @@
 				$goodsPics->addAll($picsData);
 			}
 
+			//处理不同的会员价格
 			if( $memberPrice = I('post.member_price','') ){
 				$memberPriceData = array();
 				foreach ($memberPrice as $key => $value) {
@@ -217,9 +223,15 @@
 					$memberPrice->addAll($memberPriceData);
 				}
 			}
+
 		}
 
+		/**
+		*[数据修改前操作]
+		*@param array 	$data[自动验证过滤后的form表单数据]
+		*/
 		protected function _before_update(&$data){
+			//判断有没有上传新图片，有调用imgData函数上传图片，并获取上传路径
 			if($_FILES['logo']['size']){
 				imgDel($this,$data['id']);
 				$imgData = imgUpLoad('logo');
@@ -230,17 +242,25 @@
 					$data['logo'] = $imgData['logo'];
 					$data['sm_logo'] = $imgData['sm_logo'];
 				}
-				if($data['is_sale']==1){
-					$data['promote_start_time'] = strtotime($data['promote_start_time'].' 00:00:01');
-					$data['promote_end_time'] = strtotime($data['promote_end_time'].' 23:59:59');
-				}
+			}
+
+			//判断有没有促销，将促销时间转为时间戳
+			if($data['is_sale']==1){
+				$data['promote_start_time'] = strtotime($data['promote_start_time'].' 00:00:01');
+				$data['promote_end_time'] = strtotime($data['promote_end_time'].' 23:59:59');
 			}
 		}
 
+		/**
+		*[数据修改后操作]
+		*@param array 	$data[自动验证过滤后的form表单数据]
+		*/
 		protected function _after_update($data){
 
 			//****************************修改商品属性*****************************
 			$goodsAttr = D('GoodsAttr');
+
+			//如果没有改变类型修改属性，类型改变删除原有属性
 			if($old_attr_id=I('post.old_attr_id','')){
 				$old_attr_price = I('post.old_attr_price','');
 				$attrOldData = array();
@@ -265,6 +285,7 @@
 			}else
 				D('GoodsAttr')->where('goods_id='.$data['id'])->delete();
 
+			//将新添加的属性添加到属性表中
 			if($attr_id = I('post.attr_id','')){
 				$attr_price = I('post.attr_price','');
 				$attrData = array();
@@ -330,7 +351,15 @@
 			}
 		}
 
+		/**
+		*[搜索+分页]
+		*@param number 	$is_del[0:商品列表，1:回收站]
+		*/
 		public function search($is_del=0){
+
+			//清除搜索
+			if(I('get.unset',0))
+				$_GET='';
 
 			//********************************搜索*********************************************
 			$where = array('is_delete'=>array('eq',$is_del));
@@ -350,25 +379,36 @@
 				$where['addtime'] = array('elt',$last_time);
 			
 			//搜索市场价，本店价
+			$price = I('get.price','');
 			$min_price = I('get.min_price',0);
 			$max_price = I('get.max_price',0);
-			if( $min_price && $max_price )
-				$where['price'] = array( 'between' , array( $min_price , $max_price ) );
-			elseif( $min_price )
-				$where['price'] = array( 'egt' , $min_price );
-			elseif( $max_price )
-				$where['price'] = array( 'elt' , $max_price );
 
-			var_dump($_GET);
-			if( $is_name = I('get.is_name','') ){
-				$num = I('get.num',0);
-				if( $num==2 || $num=1 )
-					$where[$is_name] = array('eq',1);
-				elseif( $num==0 )
-					$where[$is_name] = array('eq',0);
+			if( $min_price && $max_price && $price )
+				$where[$price] = array( 'between' , array( $min_price , $max_price ) );
+			elseif( $min_price && $price)
+				$where[$price] = array( 'egt' , $min_price );
+			elseif( $max_price && $price)
+				$where[$price] = array( 'elt' , $max_price );
+
+
+			//搜索是否上架，是否促销，是否热销，是否最新，是否精品
+			if( $is_name = I('is_name',0) ){
+			 	$is_name_key = array_keys($is_name)[0]; 
+				$where[ $is_name_key ] = array( 'eq' , $is_name[$is_name_key ] ); 
 			}
-			//*****************************************连表查询分页***********************************
+
+
+			//排序 市场价 本店价	添加时间 排序
 			$order = 'id desc';
+			if($sort = I('get.sort','')){
+				$sort_val = I('get.sort_val','0');
+				$order = $sort_val?' asc':' desc';
+				$order = $sort . $order;
+			}
+
+			
+			//*****************************************连表查询分页***********************************
+			
 			$field = 'a.id,goods_name,cat_name,brand_name,market_price,shop_price,is_sale,is_hot,is_new,is_best,is_on_sale,type_name,sort_num,a.logo,addtime';
 			$join = 'left JOIN brand b on a.brand_id=b.id LEFT JOIN cat c on a.cat_id=c.id LEFT JOIN type d on a.type_id=d.id';
 			$data = parent::search($name='',$field,$where,$order ,$join);

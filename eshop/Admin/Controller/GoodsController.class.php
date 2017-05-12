@@ -11,17 +11,11 @@
 		}
 
 		public function list(){
-			var_dump($_GET['num']);
-			$num = I('get.num',false);
-			if( $num==2 || $num==1 ){
-				$data['num'] = 0;
-			}
-			elseif($num===0)
-				$data['num'] = 1;
-			
-			$this->assign('num',$num);
+			$sort_val = I('get.sort_val',false);
+			$sort_val = $sort_val?0:1;
 			$data = $this->model->search();
 			$this->assign($data);
+			$this->assign('sort_val',$sort_val);
 			$this->assignHead('商品列表',U('add'),'商品添加');
 			$this->display();
 		}
