@@ -24,6 +24,7 @@
 		   	array('is_on_sale',array(0,1),'请不要乱改html代码',1,'in'),
 		   	array('type_id','number','请不要乱改html代码',2),
 		   	array('sort_num','number','排序是正整数',2),
+		   	array('sort_num','0,99','排序1-100',2,'length'),
 		   );
 
 		/**
@@ -92,11 +93,12 @@
 			
 			//判断该类型有没有添加了新属性,有新属性添加到数组中
 			$attr = D('attr');
-			if($attrId){
-				$attrList = $attr->field('id attr_id,attr_name,attr_type,attr_option_values,type_id')->where( array( 'type_id'=>array('eq',$type_id) , 'id'=>array('not in',$attrId ) ) )->select();
-				$data['goodsAttrList']= array_merge($data['goodsAttrList'],$attrList);
-			}
+			$attrId = empty( $attrId )?array(0):$attrId;
 
+			$attrList = $attr->field('id attr_id,attr_name,attr_type,attr_option_values,type_id')->where( array( 'type_id'=>array('eq',$type_id) , 'id'=>array('not in',$attrId ) ) )->select();
+			$data['goodsAttrList']= array_merge($data['goodsAttrList'],$attrList);
+			
+			// var_dump($data['goodsAttrList']);
 			//还原当前商品的属性表
 			$data['goodsAttrHtml'] = '';
 			$attrId = array();
@@ -150,10 +152,13 @@
 			}
 
 			//判断有没有促销，将促销时间转为时间戳
+			
 			if($data['is_sale']==1){
-				$data['promote_start_time'] = strtotime($data['promote_start_time'].' 00:00:01');
+				 $data['promote_start_time'] = strtotime($data['promote_start_time'].' 00:00:01');
 				$data['promote_end_time'] = strtotime($data['promote_end_time'].' 23:59:59');
 			}
+
+			// exit;
 
 		}
 
@@ -349,6 +354,92 @@
 				$goodsPics = D('GoodsPics');
 				$goodsPics->addAll($picsData);
 			}
+		}
+
+
+		public function repertory(){
+			//debug
+			$data = array();
+			$goodsAttr = D('GoodsAttr');
+			if( $id = I('get.id','') ){
+				$goodsAttrList = $goodsAttr->field('a.*,b.attr_name,b.attr_type,b.attr_type,b.type_id')->alias('a')->join('join attr b on a.attr_id=b.id')->where('goods_id='.$id.' and ' . 'attr_type=1')->select();
+				foreach ($goodsAttrList as $key => $value) {
+					$attr_name[] = $value['attr_name'];
+
+				}
+
+				$attr_name = array_unique($attr_name);
+				$data['attr_name'] = $attr_name;
+				foreach ($goodsAttrList as $key => $value) {
+					foreach( $attr_name as $key1=>$value1){
+						if($value1==$value['attr_name']){
+							$data['repertoryAttr'][$value1][ ] =  $value;
+						}
+					}
+				}
+
+				$goodsRep=D('GoodsRep');
+				if( $data['goodsRepList'] = $goodsRep->where('goods_id='.$id)->select() )
+					$data['status'] = 'old_';
+				
+			}
+			// var_dump($goodsAttrList);
+			return $data;
+			//debug
+		}
+
+		public function repertoryNew($goods_id, $goods_attr,$goods_num){
+			if($goods_attr){
+				foreach($goods_attr as $key => $value) {
+					foreach ($value as $key1 => $value1) {
+						$goodsAttr[$key1][] = $value1;
+					}
+				}
+
+				foreach ($goodsAttr as $key => $value) {
+					$num = $goods_num[$key];
+					if(!is_numeric( $num )) continue;
+					sort($value);
+					$str = implode(',', $value);
+					$goodsRepData[] = array(
+						'goods_id'=>$goods_id,
+						'goods_number'=>$num,
+						'goods_attr_id' => $str,
+					);
+				}
+			}else{
+				$num = $goods_num[0];
+				if(!is_numeric( $num )) return;
+				$goodsRepData[] = array(
+					'goods_id'=>$goods_id,
+					'goods_number'=>$num,
+				);
+			}	
+			return $goodsRepData;
+			
+		}
+
+		public function repertoryOld($goods_id,$old_goods_attr,$old_goods_num){
+
+			foreach ($old_goods_attr  as $key => $value) {
+				foreach ($value as $key1 => $value1) {
+					$old_goods_attrArr[$key1][]=$value1[0];
+				}
+			}
+			
+			foreach ($old_goods_attrArr as $key => $value) {
+				$num = $old_goods_num[$key];
+				if( !is_numeric( $num ) ) continue;
+				sort($value);
+				$str = implode(',', $value);
+				$oldGoodsRepData[] = array(
+					'id'=>$key,
+					'goods_id'=>$goods_id,
+					'goods_number'=>$num,
+					'goods_attr_id' => $str,
+				);
+			}
+			return $oldGoodsRepData;
 		}
 
 		/**

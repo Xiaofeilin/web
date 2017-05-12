@@ -1,0 +1,78 @@
+<layout name="Index/header_foot"/>
+<br>
+<form method="post" action="{:U(repertoryEdit)}" name="listForm">
+       <div class="list-div" id="listDiv">
+
+             <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
+                    <tr>
+                          <th>添加</th>      
+                          <foreach name="attr_name" item="val">
+                          <th>{$val}</th>
+                          </foreach>
+                          <th>数量</th>
+                    </tr>
+                    <input type="hidden" name="goods_id" value="{$goods_id}">
+                    
+                    <foreach name="goodsRepList" item="val" key="key">
+                    <tr  align="center" class="0" id = {$val['id']} hand="0">
+                          <td width="10%" align="center"><input type="button" value="{$key==0?'+':'-'}"></td>
+                          <foreach name="repertoryAttr" item="val1" key="key1">
+                          <td align="center">
+                                <select name="{$status}goods_attr[{$key1}][{$val['id']}][]" id="">
+                                              <option value="">请选择</option>
+                                             <foreach name="val1" item="val2">
+                                             <option value="{$val2['id']}" <if condition="strpos(','.$val['goods_attr_id'].',' , ','.$val2['id'].',' ) nheq false" >selected</if> >{$val2['attr_value']}</option>
+                                             </foreach>
+                                </select>
+                          </td>
+                          </foreach>
+                          <td width="15%" align="center"><input name="{$status}goods_num[{$val['id']}]" value="{$val['goods_number']}" type="text"></td>
+                    </tr>
+                    </foreach>
+                    <tr><td height="30" colspan="100" align="center"><input type="submit"></td></tr>
+            </table>
+      </div>
+ </form>
+<script>
+
+       $('input[type="button"]').click(function(){
+              var tr = $(this).parent().parent();
+             if($(this).attr('value')=="+"){     
+                    var newTr = tr.clone(true);
+                    newTr.find('input[value="+"]').attr('value','-');
+                    newTr.find(':selected').removeAttr('selected');
+
+                   var trSelect =  newTr.find('select');
+                   var oldName = trSelect.attr('name');
+                   var newName = oldName.replace('old_','');
+                   var start = newName.indexOf('][')+1;
+                    var last = newName.lastIndexOf('][')+1;
+                   var newName = newName.replace(newName.slice(start,last) , '');
+                    trSelect.attr('name',newName);
+
+                   var trInput = newTr.find('input[name]');
+                    var oldName = trInput.attr('name');
+                   var newName = oldName.replace('old_','');
+                   var start = newName.indexOf('[')+1;
+                    var last = newName.lastIndexOf(']');
+                   var newName = newName.replace(newName.slice(start,last) , '');
+
+
+                    trInput.attr('name',newName);
+                    tr.after(newTr);
+             }else{
+                      var id = tr.attr('id');
+                     $.ajax({
+                                type:'GET',
+                                url:"{:U('ajaxDelRep','',false)}/id/"+id,
+                                dataType:'json',
+                                success:function(data){
+                                       if(data==1)
+                                               tr.remove();
+                                }
+                    });
+             }
+       });
+
+
+</script>

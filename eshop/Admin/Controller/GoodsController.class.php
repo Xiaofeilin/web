@@ -71,6 +71,81 @@
 			$this->error($error);
 		}
 
+		public function repertory(){
+			$goods_id = I('get.id','');
+			if(IS_POST){
+				$goods_attr = I('post.goods_attr','');
+			 	$goods_num = I('post.goods_num','');
+			 	$goodsRep = D('GoodsRep');
+			 	if($goodsrepData = $this->model->repertoryNew( $goods_id , $goods_attr , $goods_num ) ){
+			 		if($goodsRep->addAll($goodsrepData))
+			 			$this->success('添加成功',U( '' , array('id'=>$goods_id) ) );
+			 			exit;
+			 	}
+		 		$error = $goodsRep->getError();
+		 		$this->error($error);
+			}
+			
+			$data = $this->model->repertory();
+			$this->assign('goods_id',$goods_id);
+			$this->assign($data);
+			$this->assignHead('库存列表',U('list'),'商品列表');
+			if($data['goodsRepList'])
+
+				$this->display('repertoryEdit');
+			else
+				$this->display();
+		}
+
+		public function repertoryEdit(){
+			if(IS_POST){
+				$goods_id = I('post.goods_id','');
+				$old_goods_attr = I('old_goods_attr','');
+				$old_goods_num = I('old_goods_num','');
+				$goodsRepOldData = $this->model->repertoryOld( $goods_id , $old_goods_attr , $old_goods_num );
+				
+				$goodsRep = D('GoodsRep');
+				$goodsRep->startTrans();
+
+				if( $goodsRepOldData ){
+					foreach ($goodsRepOldData  as $key => $value) {
+						if( !($goodsRep->save($value)!==false ) ){
+							$goodsRep->rollback();
+							$error = $goodsRep->getError();
+				 			$this->error($error);
+				 			exit;
+						}
+					}
+				}
+				$goods_attr = I('post.goods_attr','');
+				$goods_num = I('post.goods_num','');
+				$goodsRepData = $this->model->repertoryNew( $goods_id , $goods_attr , $goods_num );
+				
+				 if($goodsRepData ){
+			 		if( $goodsRep->addAll($goodsRepData) ){
+			 			$goodsRep->commit();
+				 		$this->success('添加成功',U( 'repertory' , array('id'=>$goods_id) ) );
+				 		exit;
+				 	}
+			 	}else{
+			 		 $goodsRep->commit();
+			 		$this->success('添加成功',U( 'repertory' , array('id'=>$goods_id) ) );
+			 		exit;
+			 	}
+			}
+			$goodsRep->rollback();
+			$error = $this->model->getError();
+			$this->error($error);
+			exit;
+		}
+
+		public function ajaxDelRep(){
+			if( $id = I('get.id') ){
+				if(D('GoodsRep')->delete($id))
+					$this->ajaxReturn(1);
+			}
+		}
+
 		public function ajaxGetAttr(){
 			if( !$type_id = I('type_id','') ){
 				$this->ajaxReturn(0);

@@ -12,8 +12,8 @@
              </select>
        </p>
 
-       <p>'
-'             添加时间：
+       <p>
+             添加时间：
              <input type="text" class="popupDatepicker" value="{$_GET['start_time']}" name="start_time">~~<input type="text" class="popupDatepicker"  value="{$_GET['last_time']}" name="last_time">
        </p>
 
@@ -91,7 +91,8 @@
                           <td align="center" >{$val['addtime']}</td>
                           <td align="center" >{$val['sort_num']}</td>
                           <td  align="center" >
-                                <a href="{:U('edit',array('id'=>$val['id'],'p'=>$_GET['p']) )}">编辑</a> |
+                                 <a href="{:U('repertory',array('id'=>$val['id'],'p'=>$_GET['p']) )}">库存</a>|
+                                 <a href="{:U('edit',array('id'=>$val['id'],'p'=>$_GET['p']) )}">编辑</a> |
                                  <a href="{:U('del',array('id'=>$val['id'],'p'=>$_GET['p']) )}">回收站</a>
                           </td>
                     </tr>
@@ -105,7 +106,7 @@
         //ajax无刷新修改是否显示
         $('td[status]').click(function(){
              var td = $(this);
-             var id =  td.parent().find('input').attr('value');
+             var id =  td.parent().find('input[value]').attr('value');
              var val = td.attr('val');
              var status = td.attr('status');
              $.ajax({
