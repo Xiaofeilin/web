@@ -15,6 +15,7 @@
   <script type="text/javascript" src="__PUBLIC__/Home/js/search.min.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/sn-sidebar.min.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/chatCompat_mini.js"></script> 
+  <script type="text/javascript" src="__PUBLIC__/Home/js/jquery-1.7.1.js"></script>
  </head> 
  <body> 
   <input type="hidden" id="baseUrl" value="" /> 
@@ -342,15 +343,33 @@ function hrefLink(e) {
    <!-- 简头 ]] --> 
    <div class="main-box reg  reg-bor-top"> 
     <div class="tab-cont cont-marg clearfix bnone"> 
-     <!-- reg-type-cont [[ --> 
-     <div class="reg-main reg-main-two" style="min-height: 360px;"> 
-      <div class="reg-suc  reg-suc1"> 
-       <i class="logo"></i> 
-       <p class="tip">恭喜您，<span class="reg-phone-num">180******38</span>账号注册成功！</p> 
-       <p class="relocation">本页将在<span id="countdown">5</span>秒后自动跳转，您可以点此链接<a href="http://www.sucaihuo.com/" name="Preg_sucessTz_none_info001">手动跳转</a></p> 
-      </div> 
-     </div> 
-     <!-- reg-type-cont ]] --> 
+
+	<!-- reg-type-cont [[ --> 
+	<div class="reg-main reg-main-two" style="min-height: 360px;"> 
+		<div class="reg-suc  reg-suc1"> 
+			<i class="logo"></i> 
+			<p class="tip">恭喜您，<span class="reg-phone-num">180******38</span>账号注册成功！</p> 
+			<p class="relocation">本页将在<span id="countdown">5</span>秒后自动跳转，您可以点此链接<a href="http://www.sucaihuo.com/" name="Preg_sucessTz_none_info001">手动跳转</a></p> 
+		</div> 
+	</div> 
+	<!-- reg-type-cont ]] --> 
+	<script type="text/javascript">
+		$(window).load(function(){
+			$.ajax({
+				url:"__CONTROLLER__/checkEmail",
+				data:{email:ema},
+				type:"POST",
+				dataType:"json",
+				success:function(res){
+					if(!res.info == ""){
+						$("#emailError").html(res.info);
+					}else{
+						x = 1;
+					}
+				}
+			});
+		});
+	</script>
     </div> 
    </div> 
   </div> 

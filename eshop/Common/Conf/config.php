@@ -44,4 +44,14 @@ return array(
 
 	 'SHOW_PAGE_TRACE'   	=>	true,
 
+	/*******************email发信设置******************/
+	'email_config' => array(
+		'secure'	=>	 'tls',     //链接加密方式 Options: "", "ssl" or "tls"; 为空时, 端口一般是25; ssl , 端口一般为 465 ; 
+		'host'		=>	 'smtp-mail.outlook.com',     //SMTP 服务器
+		'port'		=>	 '587',    //SMTP 端口, 一般为25, QQ为465或587 
+		'username'	=>	'necomori246@outlook.com', //邮箱帐号
+		'psw'		=>	'Kuroneko2461357', //邮箱密码 QQ使用SMTP授权码 uwrfbgqqfodjfaea
+		'From'		=>	'necomori246@outlook.com', //发件人地址
+		'FromName'	=>	'Necomori', //发件人姓名
+	),       
 );
