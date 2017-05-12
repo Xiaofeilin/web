@@ -20,35 +20,29 @@ class RegController extends Controller {
 	}
 
 	public function checkAcc(){
-		$rule = array(
-			array('account','/^[a-zA-Z][a-zA-Z0-9_]*$/','账号应为英文开头的数字字母组合(不区分大小写)！',1),
-			array('account','','账号已被使用！',0,'unique'),	
-		);
-		$user = D('user');
-		$info = $user->validate($rule)->create();//判断用户信息
+		$user = new \Home\Model\RegModel();
+		$info = $user->create();//判断用户信息
 
-		$this->error(json_encode($user->getError()));
+		$_SESSION['regMsg']['account'] = I("account");
+
+		$this->error($user->getError());
 	}
 
-	public function setPass(){
-		$rule = array(
-			array('password','/^[\\~!@#$%^&*()-_=+|{}\[\],.?\/:;\'\"\d\w]*$/','密码存在非法字符！',1)
-		);
-		$user = D('user');
-		$info = $user->validate($rule)->create();//判断用户信息
+	public function checkPass(){
+		$user = new \Home\Model\RegModel();
+		$info = $user->create();//判断用户信息
 
-		$this->error(json_encode($user->getError()));
+		$_SESSION['regMsg']['pwd'] = I("password");
+
+		$this->error($user->getError());
 	}
 
-	public function setCode(){
+	public function checkCode(){
 		$code = I('code');
 		$verify = new \Think\Verify();  
 		$result = $verify->check($code);//判断验证码
 
-		if(!$result){
-			$this->ajaxError("验证码错误！","eval");
-		}else{
-			$this->ajaxError(1);
-		}
+		if(!$result) $this->error("验证码错误！");
 	}
+
 }
