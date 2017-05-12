@@ -166,20 +166,20 @@
 						}
 					}
 				});
-			})
+			});
 
 			$("a[id=submit]").click(function(){
 				if($("#account").val() && $("#password").val() && $("#validate").val()){
 					if(x == 1 && y == 1 && z == 1){
-						//location.href = "{:U('Reg/setPhone')}";
-						location.href = "{:U('Test/test')}";
+						location.href = "{:U('Reg/setPhone')}";
+						//location.href = "{:U('Test/test')}";
 					}
 				}else{
 					$("div[id=_err-msg]").removeClass("hide");
 					$("#msg").html("注册信息不能为空！");
 					return false;
 				}
-			})
+			});
 		</script>
 		<div class="clear"></div> 
 	</div> 

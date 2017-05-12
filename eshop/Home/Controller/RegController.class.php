@@ -2,6 +2,8 @@
 namespace Home\Controller;
 use Think\Controller;
 class RegController extends Controller {
+	protected $eCode;
+
 	public function reg(){
 		$this->display();
 	}
@@ -45,4 +47,38 @@ class RegController extends Controller {
 		if(!$result) $this->error("验证码错误！");
 	}
 
+	public function checkEmail(){
+		$email = new \Home\Model\RegModel();
+		$info = $email->create();
+
+		$_SESSION['regMsg']['email'] = I("email");
+
+		$this->error($email->getError());
+	}
+
+	public function sendEmailCode(){
+		$toemail = I("email");
+		$eCode = mt_rand(1,999999);
+		$content = "你的验证码为" . $eCode;
+		$sendEmail = send_email($toemail,"验证码",$content);
+
+		$_SESSION['regMsg']['eCode'] = $eCode;
+
+		if($sendEmail){
+			$this->success("邮件发送成功，请登录邮箱填写验证码！");
+		}else{
+			$this->error("邮件发送失败！");
+		}
+	}
+
+	public function checkEmailCode(){
+		$cCode = I("ecode");
+		$eCode = $_SESSION['regMsg']['eCode'];
+		if($cCode == $eCode && $eCode != null){
+			//unset($_SESSION['regMsg']['eCode']);
+			$this->success();
+		}else{
+			$this->error("验证码错误！");
+		}
+	}
 }

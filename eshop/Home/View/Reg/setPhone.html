@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
  <head> 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-  <title>注册-手机绑定</title> 
+  <title>注册-邮箱绑定</title> 
   <link rel="shortcut icon" href="__PUBLIC__/Home/images/favicon.ico" type="image/x-icon" /> 
   <!-- 引入全站公用资源文件 --> 
   <link rel="stylesheet" href="__PUBLIC__/Home/css/reg.css" /> 
@@ -102,51 +102,149 @@ function hrefLink(e) {
         <li><i class="icon-3"></i>注册成功</li> 
        </ul> 
       </div> 
-      <!-- reg-type-cont [[ --> 
-      <div class="reg-main"> 
-       <div class="error-wrap"> 
-        <div class="error-box mt10 hide"> 
-         <i class="error"></i> 
-         <span></span> 
-        </div> 
-       </div> 
-       <div class="reg-form pb85"> 
-        <!--
-                    <div class="input-tip per-input-tip perNotice sms-notice"></div>
-					--> 
-        <div class="input-tip per-input-tip mb20" style="font-size:14px;"> 
-         <p>为您的账号绑定一个手机，更安全！</p> 
-        </div> 
-        <div class="reg-txtbox mail-reg"> 
-        <!--
-         <label class="input-label">请输入您的手机</label> 
-         -->
-         <i class="ico-usename"></i> 
-         <input class="txt-input text-email yfb-acc-mark yfb-account" type="text" id="emailAlias" name="emailAlias" maxlength="50" tabindex="1" placeholder="请输入您的手机" /> 
-         <ul class="yfb-account-pannel"> 
-         </ul> 
-        </div> 
-        <div class="input-tip per-input-tip tip-error-color" id="emailAliasTip">手机格式不正确</div> 
-        <div class="reg-code reg-phone-code"> 
-         <div class="code-txtbox"> 
-          <i class="ico-code"></i> 
-          <input class="txt-input" type="text" id="emailCode" name="emailCode" maxlength="6" tabindex="4" placeholder="请输入短信验证码" /> 
-          <!--
-          <label class="input-label">请输入短信验证码</label> 
-          -->
-         </div> 
-         <a class="btn-get-code" href="javascript:void(0)" id="sendEmailCode" name="Preg_index_none_getmailnew"><span>获取短信验证码</span></a> 
-        </div> 
-        <div class="input-tip per-input-tip tip-error-color" id="emailCodeTip">验证码错误</div> 
-        <div class="btn-reg"> 
-         <a href="###" class="reg-submit" id="step22save" name="Preg_index_none_nextstep2">完&nbsp;&nbsp;&nbsp;成</a> 
-         <a href="javascript:;" class="reg-submit" id="step22saveing" style="display:none">正在提交...</a> 
-        </div> 
-        <p class="bottom-tip mt10 text-right"> <a href="/b2cregsuccjump.do?token=C167769E4288D95ACD24B316B3A6B102&amp;alias=18005151538&amp;myTargetUrl=http%3A%2F%2Fwww.suning.com%2F" id="regsucc" name="Preg_index_none_skip2">不想绑定，跳过 &gt;</a> </p> 
-        <div class="clear"></div> 
-       </div> 
-      </div> 
-      <!-- reg-type-cont ]] --> 
+
+
+<!-- reg-type-cont [[ --> 
+<div class="reg-main"> 
+	<div class="error-wrap"> 
+		<div class="error-box mt10 hide" id="_err-msg"> 
+			<i class="error"></i> 
+			<span id="msg"></span> 
+		</div> 
+	</div> 
+	<div class="reg-form pb85"> 
+		<!--
+		<div class="input-tip per-input-tip perNotice sms-notice"></div>
+		--> 
+		<div class="input-tip per-input-tip mb20" style="font-size:14px;"> 
+			<!--<p>为您的账号绑定一个手机，更安全！</p> -->
+			<p>为您的账号绑定一个邮箱，更安全！</p> 
+		</div> 
+		<div class="reg-txtbox mail-reg"> 
+			<!--
+			<label class="input-label">请输入您的手机</label> 
+			-->
+			<i class="ico-usename"></i> 
+			<input class="txt-input text-email yfb-acc-mark yfb-account" type="text" id="email" name="email" maxlength="50" tabindex="1" placeholder="请输入您的邮箱" /> 
+			
+		</div> 
+		<!--
+		<div class="input-tip per-input-tip tip-error-color" id="emailAliasTip">邮箱格式不正确</div> 
+		-->
+		<div class="input-tip per-input-tip tip-error-color" id="emailError"></div> 
+
+		<div class="reg-code reg-phone-code"> 
+			<div class="code-txtbox"> 
+				<i class="ico-code"></i> 
+				<input class="txt-input" type="text" id="emailCode" name="emailCode" maxlength="6" tabindex="4" placeholder="请输入邮件验证码" /> 
+				<!--
+				<label class="input-label">请输入短信验证码</label> 
+				-->
+			</div> 
+				<a class="btn-get-code" href="javascript:void(0)" id="sendEmailCode" name="Preg_index_none_getmailnew"><span>获取邮件验证码</span></a> 
+			</div> 
+			<div class="input-tip per-input-tip tip-error-color" id="emailCodeError"></div> 
+
+			<div class="btn-reg"> 
+				<a href="###" class="reg-submit" id="submit" name="Preg_index_none_nextstep2">完&nbsp;&nbsp;&nbsp;成</a> 
+				<!--
+				<a href="javascript:;" class="reg-submit" id="step22saveing" style="display:none">正在提交...</a> 
+				-->
+			</div> 
+				<!--
+				<p class="bottom-tip mt10 text-right"> <a href="/b2cregsuccjump.do?token=C167769E4288D95ACD24B316B3A6B102&amp;alias=18005151538&amp;myTargetUrl=http%3A%2F%2Fwww.suning.com%2F" id="regsucc" name="Preg_index_none_skip2">不想绑定，跳过 &gt;</a> </p> 
+				-->
+			<div class="clear"></div> 
+		</div>
+	</div> 
+</div> 
+<!-- reg-type-cont ]] --> 
+<script type="text/javascript">
+	var x;
+	var y;
+
+	$("input[name=email]").focus(function(){
+		$("#emailError").html("");
+		$("div[id=_err-msg]").addClass("hide");
+	})
+
+	$("input[name=emailCode]").focus(function(){
+		$("#emailCodeError").html("");
+		$("div[id=_err-msg]").addClass("hide");
+	})
+
+	$("input[name=email]").blur(function(){
+		var ema = $("#email").val();
+		$.ajax({
+			url:"__CONTROLLER__/checkEmail",
+			data:{email:ema},
+			type:"POST",
+			dataType:"json",
+			success:function(res){
+				console.log(res);
+				//var res = JSON.parse(res.info);
+				console.log(res.info);
+				if(!res.info == ""){
+					$("#emailError").html(res.info);
+				}else{
+					x = 1;
+				}
+			}
+		});
+	});
+
+	$("a[id=sendEmailCode]").click(function(){
+		$("#emailCodeError").html("");
+		var ema = $("#email").val();
+		$.ajax({
+			url:"__CONTROLLER__/sendEmailCode",
+			data:{email:ema},
+			type:"POST",
+			dataType:"json",
+			success:function(res){
+				console.log(res);
+				//var res = JSON.parse(res.info);
+				console.log(res.info);
+				$("#emailCodeError").html(res.info);
+			}
+		});
+	});
+
+	$("input[name=emailCode]").blur(function(){
+		var ecode = $("#emailCode").val();
+		$.ajax({
+			url:"__CONTROLLER__/checkEmailCode",
+			data:{ecode:ecode},
+			type:"POST",
+			dataType:"json",
+			success:function(res){
+				console.log(res);
+				//var res = JSON.parse(res.info);
+				console.log(res.info);
+				if(!res.info == ""){
+					$("#emailCodeError").html(res.info);
+				}else{
+					y = 1;
+				}
+			}
+		});
+	});
+
+	$("a[id=submit]").click(function(){
+		if($("#email").val() && $("#emailCode").val()){
+			if(x == 1 && y == 1){
+				//location.href = "{:U('Reg/setSuccess')}";
+				location.href = "{:U('Test/test')}";
+			}
+		}else{
+			$("div[id=_err-msg]").removeClass("hide");
+			$("#msg").html("注册信息不能为空！");
+			return false;
+		}
+	});
+</script>
+
+
      </div> 
      <input type="hidden" id="token" name="token" value="C167769E4288D95ACD24B316B3A6B102" /> 
      <input type="hidden" id="eseqNum" value="-1" /> 
@@ -154,6 +252,7 @@ function hrefLink(e) {
    </div> 
   </div> 
   <!-- 问卷调查 [[ --> 
+  <!--
   <div class="ECode-floatBar" style="position: fixed;_position:absolute; top: auto; left: auto; z-index: 7500; right: 0px; bottom: 0px; margin-bottom: 270px;"> 
    <div id="gSideTools" class="g-sidebar"> 
     <ul> 
@@ -161,6 +260,7 @@ function hrefLink(e) {
     </ul> 
    </div> 
   </div> 
+  -->
   <!-- 问卷调查 ]] --> 
   <iframe class="screen-iframe" style="display:none;" scrolling="no" frameborder="0"></iframe> 
   <!-- 此处引入公用简尾 --> 
@@ -201,10 +301,14 @@ function hrefLink(e) {
   <script type="text/javascript" src="__PUBLIC__/Home/js/main-min.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/srs-common-min.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/srs-validate-min.js"></script> 
+  <!--
   <script type="text/javascript" src="__PUBLIC__/Home/js/perReg-bindEmail-min.js?v=201603010121"></script> 
+  -->
   <script type="text/javascript" src="__PUBLIC__/Home/js/sa-analytics.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/sa-functions.js"></script> 
+  <!--
   <script type="text/javascript" src="__PUBLIC__/Home/js/da_opt_inc-min.js?v=201603010121"></script> 
+  -->
   <script type="text/javascript">
 /**
  *2014-11-20
