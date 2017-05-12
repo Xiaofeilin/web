@@ -69,7 +69,9 @@ function hrefLink(e) {
   <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/sn_lazyload.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/lazyelem.min.js"></script> 
+  <!--
   <script type="text/javascript" src="__PUBLIC__/Home/js/SFE.base.min.js"></script> 
+  -->
   <script type="text/javascript" src="__PUBLIC__/Home/js/search.min.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/sn-sidebar.min.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/chatCompat_mini.js"></script> 
@@ -339,7 +341,9 @@ function hrefLink(e) {
     <a href="/asc/index.do" name="asc_index_navbar_logo"><span class="channel"></span></a> 
     <span class="link-cont"> <a href="/asc/index.do" name="asc_index_navbar_homepage" id="head_index">首页</a> <a href="/asc/toolservice.do" name="asc_index_securityinfo" id="head_sectool">安全工具</a> <a href="/asc/school.do" name="asc_index_navbar_school" id="head_secschool">安全学堂</a> <a href="member_index.html" name="asc_index_navbar_personal" id="head_loginhis">个人中心</a> </span> 
    </div> 
+   <!--
    <script type="text/javascript" src="https://sslres.suning.com/project/asc/style/js/da_opt_inc-min.js?v=201601280042"></script> 
+   -->
    <script type="text/javascript">
 /**
  *2014-03-03
@@ -833,8 +837,8 @@ $(document).ready(function(){
 					<div class="cop tab-cont cont-marg"> 
 						<div class="reg-nav"> 
 							<ul class="reg-step clearfix" style="text-align:center;"> 
-							<li class="current"><i class="icon-1"></i>输入账户名</li> 
-							<li><i class="icon-2"></i>验证身份</li> 
+							<li><i class="icon-1"></i>输入账户名</li> 
+							<li class="current"><i class="icon-2"></i>验证身份</li> 
 							<li><i class="icon-3"></i>重置密码</li> 
 							<li><i class="icon-4"></i>重置成功</li> 
 							</ul> 
@@ -845,9 +849,11 @@ $(document).ready(function(){
 						<div class="h50"></div> 
 
 						<div class="reg-txtbox"> 
+						<!--
 							<label class="input-label">请输入您的手机号码</label> 
+						-->
 							<i class="ico-phone"></i> 
-							<input class="txt-input text-email" type="text" id="mobileAlias" name="aliasName" value="" maxlength="11" tabindex="1" /> 
+							<input class="txt-input text-email" type="text" id="mobileAlias" name="aliasName" value="" maxlength="11" tabindex="1" placeholder="请输入您的手机号码" /> 
 						</div> 
 						<div class="input-tip per-input-tip tip-error-color" id="aliasTip" style="color:red">手机格式不正确</div> 
 
@@ -856,8 +862,10 @@ $(document).ready(function(){
 							<div class="reg-code reg-phone-code smsCodeDiv"> 
 								<div class="code-txtbox"> 
 									<i class="ico-code"></i> 
-									<input class="txt-input" type="text" id="smsCode" name="mobileCode" maxlength="6" tabindex="3" /> 
+									<input class="txt-input" type="text" id="smsCode" name="mobileCode" maxlength="6" tabindex="3" placeholder="请输入短信验证码" /> 
+									<!--
 									<label class="input-label">请输入短信验证码</label> 
+									-->
 								</div> 
 								<a class="btn-get-code" href="javascript:;" id="sendSmsCode" name="Preg_index_none_getmobilenew"><span>获取短信验证码</span></a> 
 							</div> 

@@ -87,13 +87,13 @@
 		// 修改上传图片
 		protected function _before_update(&$data){
 			if($_FILES['icon']['size']){
-				imgDel($this,$data['id']);
+				imgDel($this,$data['id'],'icon');
 				$imgData = imgUpLoad('icon','Admin/Icon');
 				if(isset( $imgData['error'])){
 					$this->error = $imgData['error'];
 					return false;
 				}else{
-					$data['icon'] = $imgData['logo'];
+					$data['icon'] = $imgData['icon'];
 				}
 			}
 		}
