@@ -6,8 +6,12 @@
               <select name="search_key" >
                    <option value="">请选择搜索类型</option>
                    <option value="id" <eq name="Think.get.search_key" value="id">selected</eq> >ID</option>
-                   <option value="role_name" <eq name="Think.get.search_key" value="role_name">selected</eq>>角色名称</option>
+                   <option value="cat_name" <eq name="Think.get.search_key" value="cat_name">selected</eq>>角色名称</option>
               </select>
+       </p>
+       <p>
+              是否显示：<input type="radio" name="is_show" value="1" <eq name="Think.get.is_show" value="1">checked</eq> >是
+                                  <input type="radio" name="is_show" value="0" <eq name="Think.get.is_show" value="0">checked</eq> >否
        </p>
         <input type="submit" value="搜索">
 </form>
@@ -19,21 +23,23 @@
                     <tr>
                           <th>ID</th>
                           <th>角色名称</th>
-                          <th>添加时间</th>
                           <th>操作</th>
                     </tr>
-                    <foreach name="roleList" item="val">
+                    <foreach name="catList" item="val">
                     <tr align="center" class="0" id="0_1" id = 'tr_1'>
                           <td align="center">{$val['id']}</td>
-                          <td width="25%"><span>{$val['role_name']}</span></td>
-                          <td width="25%"><span>{$val['addtime']}</span></td>
-                          <td width="25%" align="center">
+                          <td align="left" class="first-cell" style = 'padding-left="0"'>
+                                <img src="__PUBLIC__/Admin/images/menu_minus.gif" id="icon_0_1" width="9" height="9" border="0" style="margin-left:{$val[lv]}em" />
+                                <span><a href="#" >{$val[cat_name]}</a></span>
+                          </td>
+                          <td width="10%"><span>{$val['parent_id']}</span></td>
+                          <td width="24%" align="center">
                                  <a href="{:U('edit',array('id'=>$val['id']) )}">编辑</a> |
                                  <a href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" title="移除">移除</a>
                           </td>
                     </tr>
                     </foreach>
-                    <tr><td height="30" colspan="4" align="center">{$show}</td></tr>
+                    <tr><td height="30" colspan="3" align="center">{$show}</td></tr>
             </table>
       </div>
 </form>
