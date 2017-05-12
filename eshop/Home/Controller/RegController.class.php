@@ -21,6 +21,9 @@ class RegController extends Controller {
 		$verify->entry();
 	}
 
+	/**
+	*['验证码显示']
+	*/
 	public function checkAcc(){
 		$user = new \Home\Model\RegModel();
 		$info = $user->create();//判断用户信息
@@ -47,38 +50,54 @@ class RegController extends Controller {
 		if(!$result) $this->error("验证码错误！");
 	}
 
-	public function checkEmail(){
-		$email = new \Home\Model\RegModel();
-		$info = $email->create();
+	public function checkPhone(){
+		$phone = new \Home\Model\RegModel();
+		$info = $phone->create();
 
-		$_SESSION['regMsg']['email'] = I("email");
+		$_SESSION['regMsg']['phone'] = I("phone");
 
-		$this->error($email->getError());
+		$this->error($phone->getError());
 	}
 
-	public function sendEmailCode(){
-		$toemail = I("email");
+	public function sendPhoneCode(){
+		$tophone = I("phone");
 		$eCode = mt_rand(1,999999);
-		$content = "你的验证码为" . $eCode;
-		$sendEmail = send_email($toemail,"验证码",$content);
+		$sendPhone = send_message($eCode,$tophone);
 
 		$_SESSION['regMsg']['eCode'] = $eCode;
 
-		if($sendEmail){
-			$this->success("邮件发送成功，请登录邮箱填写验证码！");
+		if($sendPhone){
+			$this->success("短信发送成功，请打开短信填写验证码！");
 		}else{
-			$this->error("邮件发送失败！");
+			$this->error("短信发送失败！");
 		}
 	}
 
-	public function checkEmailCode(){
+	public function checkPhoneCode(){
 		$cCode = I("ecode");
 		$eCode = $_SESSION['regMsg']['eCode'];
 		if($cCode == $eCode && $eCode != null){
-			//unset($_SESSION['regMsg']['eCode']);
+			unset($_SESSION['regMsg']['eCode']);
 			$this->success();
 		}else{
 			$this->error("验证码错误！");
+		}
+	}
+
+	public function regSuccess(){
+		$user = D("user");
+		$data["account"] = $_SESSION['regMsg']['account'];
+		$data["pwd"] = md5($_SESSION['regMsg']['pwd']);
+		$data["tel"] = $_SESSION['regMsg']['phone'];
+		$data["regtime"] = time();
+
+		$result = $user->data($data)->add();
+		var_dump($result);
+
+		if($result){
+			$this->success($result);
+		}else{
+			$this->error("错误！");
 		}
 	}
 }

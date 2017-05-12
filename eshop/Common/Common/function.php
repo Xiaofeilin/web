@@ -202,5 +202,43 @@
 			//dump($mail->ErrorInfo);   
 			return false;  
 		}  
-	} 
+	}	
+
+	/**
+	*[发送验证短信]
+	*@param string 	$eCode[短信验证码]
+	*@param string 	$tophone[发送短信到该手机]
+	*@return  boolean	返回true或者false，true为发送成功，false为发送失败
+	*/
+	function send_message($eCode,$tophone){
+		$host = "http://sms.market.alicloudapi.com";
+		$path = "/singleSendSms";
+		$method = "GET";
+		$appcode = "395cbd5dac954aad99aee61a38dd1266	";
+		$headers = array();
+		array_push($headers, "Authorization:APPCODE " . $appcode);
+		$querys = "ParamString=%7B%22num%22%3A%22" . $eCode . "%22%7D&RecNum=" . $tophone . "&SignName=%E8%B6%85%E7%BA%A7%E6%98%93%E8%B4%AD%E5%BA%97&TemplateCode=SMS_66965051";
+		$bodys = "";
+		$url = $host . $path . "?" . $querys;
+
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($curl, CURLOPT_FAILONERROR, false);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HEADER, true);
+		if (1 == strpos("$".$host, "https://")){
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		}
+
+		$str = curl_exec($curl);
+		$preg = "/(true)|(false)/";
+
+		preg_match($preg, $str,$arr);
+
+		return $arr[0];
+	}
+
 	
