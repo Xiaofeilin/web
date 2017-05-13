@@ -13,6 +13,35 @@
 			
 		);
 
+
+		/**
+		*[数据插入前的操作，主要拼接父路径]
+		*@param array 	$data[经过自动验证的数据]
+		*/
+		protected function _before_insert(&$data){
+			if($data['parent_id']!=0){
+				$privilegeOne = $this->find($data['parent_id']);
+				$data['pri_path'] = $privilegeOne['pri_path'] . ',' . $privilegeOne['id'];
+			}
+		}
+
+		/**
+		*[不显示权限级别大于2的分类数据]
+		*@return array 		$catAll[处理过的分类数据]
+		*/
+		public function lvIt2(){
+			$priAll = $this->select();
+			$priAll = getTree($priAll);
+			foreach ($priAll as $key => $value) {
+				$priAll[$key]['pri_name'] = str_repeat('----', $value['lv']+1) . $value['pri_name'];
+				if($value['lv']>0)
+					unset($priAll[$key]);
+			}
+			return $priAll;
+		}
+
+
+
 		/**
 		*[搜索+分页]
 		*@return array 		$data[搜索后+分页的数据]
@@ -45,8 +74,10 @@
 		$page = new \Think\Page($count,C('YeShu'));
 		$data['show'] = $page->show();
 
-		$privilegeList = $this->where($where)->limit($page->firstRow.','.$page->listRows)->select();
-
+		$privilegeList = $this->order('concat(pri_path,id) desc')->where($where)->limit($page->firstRow.','.$page->listRows)->select();
+		foreach ($privilegeList as $key => $value) {
+				$privilegeList[$key]['lv'] = substr_count($value['pri_path'] , ',');
+			}
 		$data['privilegeList'] = $privilegeList;
 		return $data;
 		}
@@ -58,6 +89,11 @@
 		*/
 		public function getPrivilegeOne($id){
 			$privilegeOne = $this->find($id);
+			if($privilegeOne['parent_id']!=0){
+				$privilegeParent = $this->find( $privilegeOne['parent_id']);
+				$privilegeOne['parent_name']= $privilegeParent['pri_name'];
+			}else
+				$privilegeOne['parent_name'] = 'root';
 			return $privilegeOne;
 		}
 

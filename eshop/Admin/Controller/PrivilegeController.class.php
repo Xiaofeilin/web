@@ -15,8 +15,12 @@
 		*/
 		public function add(){
 			parent::add();
+			$data['priAll'] = $this->model->lvIt2();
+			$data['mvcAll'] = $this->getMVCData();
+			$this->assign($data);
 			$this->assignHead('添加权限',U('list'),'权限列表');
 			$this->display();
+			var_dump($data);
 		}
 
 
@@ -61,4 +65,79 @@
 			$this->assignHead('权限列表',U('add'),'添加权限');
 			$this->display();
 		}
+
+
+
+		/**
+		* @note 获取控制器和action存放数据库
+		*/
+	    public function getMVCData(){
+	        $modules = array('Admin');  //模块名称
+	        $i = 0;
+	        foreach ($modules as $module) {
+	            $all_controller = $this->getController($module);
+	            foreach ($all_controller as $controller) {
+	                $controller_name = $controller;
+	                $all_action = $this->getAction($module, $controller_name);
+
+	                    $data[$module][$controller] = $all_action;
+
+	            }
+	        }
+
+	        // $result = D('Author')->updata($data);
+	        // $this->assign('stat',$result);
+	        // $this->display();
+	        // var_dump($data);
+	        return $data;
+	    }
+
+	    /**
+	     * @note 获取控制器
+	     * @param $module
+	     * @return array|null
+	     */
+	    protected function getController($module){
+	        if(empty($module)) return null;
+	        $module_path = APP_PATH . '/' . $module . '/Controller/';  //控制器路径
+	        if(!is_dir($module_path)) return null;
+	        $module_path .= '/*.class.php';
+	        $ary_files = glob($module_path);
+	        foreach ($ary_files as $file) {
+	            if (is_dir($file)) {
+	                continue;
+	            }else {
+	                $files[] = basename($file, C('DEFAULT_C_LAYER').'.class.php');
+	            }
+	        }
+	        return $files;
+	    }
+
+	    /**
+	     * @note 获取方法
+	     *
+	     * @param $module
+	     * @param $controller
+	     *
+	     * @return array|null
+	     */
+	    protected function getAction($module, $controller){
+	        if(empty($controller)) return null;
+	        $content = file_get_contents(APP_PATH . '/'.$module.'/Controller/'.$controller.'Controller.class.php');
+
+	        preg_match_all("/.*?public.*?function(.*?)\(.*?\)/i", $content, $matches);
+	        $functions = $matches[1];
+
+	        //排除部分方法
+	        $inherents_functions = array('login','logout','uppassword','_initialize','__construct','getController');//如有排除方法添加此数组
+	        foreach ($functions as $func){
+	            $func = trim($func);
+	            if(!in_array($func, $inherents_functions)){
+	                if (strlen($func)>0)   $customer_functions[] = $func;
+	            }
+	        }
+	        return $customer_functions;
+	    }
+
+
 	}
