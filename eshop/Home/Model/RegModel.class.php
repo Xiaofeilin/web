@@ -17,6 +17,11 @@ class RegModel extends Model{
 		array('phone','/^((13[0-9])|(15[^4])|(18[0-9])|(17[0-8])|(147,145))\\d{8}$/','手机号码不符合规范！','0'),
 	);
 
+	/**
+	*['回调函数检测用户名是否已存在']
+	*@param string	$val[用户输入的用户名]
+	*@return  boolean	返回true或false
+	*/
 	public function checkAcc($val){
 		$map['account'] = $val;
 		$info = $this->model->where($map)->find();
@@ -26,5 +31,4 @@ class RegModel extends Model{
 			return true;
 		}
 	}
-
 }

@@ -22,34 +22,43 @@ class RegController extends Controller {
 	}
 
 	/**
-	*['验证码显示']
+	*['检查用户名']
 	*/
 	public function checkAcc(){
 		$user = new \Home\Model\RegModel();
-		$info = $user->create();//判断用户信息
+		$info = $user->create();
 
 		$_SESSION['regMsg']['account'] = I("account");
 
 		$this->error($user->getError());
 	}
 
+	/**
+	*['检查密码']
+	*/
 	public function checkPass(){
 		$user = new \Home\Model\RegModel();
-		$info = $user->create();//判断用户信息
+		$info = $user->create();
 
 		$_SESSION['regMsg']['pwd'] = I("password");
 
 		$this->error($user->getError());
 	}
 
+	/**
+	*['检查验证码']
+	*/
 	public function checkCode(){
 		$code = I('code');
 		$verify = new \Think\Verify();  
-		$result = $verify->check($code);//判断验证码
+		$result = $verify->check($code);
 
 		if(!$result) $this->error("验证码错误！");
 	}
 
+	/**
+	*['检查手机']
+	*/
 	public function checkPhone(){
 		$phone = new \Home\Model\RegModel();
 		$info = $phone->create();
@@ -59,6 +68,9 @@ class RegController extends Controller {
 		$this->error($phone->getError());
 	}
 
+	/**
+	*['发送手机验证码']
+	*/
 	public function sendPhoneCode(){
 		$tophone = I("phone");
 		$eCode = mt_rand(1,999999);
@@ -73,6 +85,9 @@ class RegController extends Controller {
 		}
 	}
 
+	/**
+	*['检查手机验证码']
+	*/
 	public function checkPhoneCode(){
 		$cCode = I("ecode");
 		$eCode = $_SESSION['regMsg']['eCode'];
@@ -84,6 +99,9 @@ class RegController extends Controller {
 		}
 	}
 
+	/**
+	*['记录注册信息']
+	*/
 	public function regSuccess(){
 		$user = D("user");
 		$data["account"] = $_SESSION['regMsg']['account'];
@@ -92,12 +110,7 @@ class RegController extends Controller {
 		$data["regtime"] = time();
 
 		$result = $user->data($data)->add();
-		var_dump($result);
-
-		if($result){
-			$this->success($result);
-		}else{
-			$this->error("错误！");
-		}
+		
+		unset($_SESSION['regMsg']);
 	}
 }

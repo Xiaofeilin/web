@@ -846,31 +846,105 @@ $(document).ready(function(){
 					</div> 
 
 					<div class="reg-main mt0"> 
-						<div class="h50"></div> 
+						<div class="h50">
+							<div class="error-wrap"> 
+								<div class="error-box mt10 hide" id="_err-msg"> 
+									<i class="error"></i> 
+									<span id="msg"></span>
+								</div> 
+							</div> 
+						</div> 
 
 						<div class="reg-txtbox"> 
 							<!--
 							<label class="input-label" style="display: block;">请输入您的密码</label> 
 							-->
 							<i class="ico-pwd"></i> 
-							<i class="ms-ico ms-ico-ok" id="errorIcon" style="display:none"></i> 
-							<input class="txt-input" type="text" id="mobileAlias" name="userName" value="" tabindex="1" placeholder="请输入您的密码" /> 
+							<i class="ms-ico ms-ico-ok" id="passwordIcon" style="display:none"></i> 
+							<input class="txt-input" type="password" id="password" name="password" value="" tabindex="1" placeholder="请输入您的密码" /> 
 						</div> 
-						<div class="input-tip per-input-tip" id="tipMessage" style="color:red">密码格式不正确</div> 
+						<div class="input-tip per-input-tip" id="passwordError" style="color:red"></div> 
 
 						<div class="reg-txtbox"> 
 							<!--
 							<label class="input-label" style="display: block;">请重复输入您的密码</label> 
 							-->
 							<i class="ico-pwd"></i> 
-							<i class="ms-ico ms-ico-ok" id="errorIcon" style="display:none"></i> 
-							<input class="txt-input" type="text" id="mobileAlias" name="userName" value="" tabindex="1" placeholder="请重复输入您的密码" /> 
+							<i class="ms-ico ms-ico-ok" id="repasswordIcon" style="display:none"></i> 
+							<input class="txt-input" type="password" id="repassword" name="repassword" value="" tabindex="1" placeholder="请重复输入您的密码" /> 
 						</div> 
-						<div class="input-tip per-input-tip" id="tipMessage2" style="color:red">重复密码不正确</div> 
+						<div class="input-tip per-input-tip" id="repasswordError" style="color:red"></div> 
 
-						<a class="register-btn" tabindex="-1" name="asc_forgetpsw_locate_submit1" id="validateForgetPsw" onclick="nextSubmit();return false;">下一步</a> 
+						<a class="register-btn" tabindex="-1" name="asc_forgetpsw_locate_submit1" id="submit">下一步</a> 
 
 					</div> 
+					<script type="text/javascript">
+						var x;
+						var y;
+
+						$("input[name=password]").focus(function(){
+							$("#passwordError").html("");
+							$("div[id=_err-msg]").addClass("hide");
+							$("#passwordIcon").css({display:"none"});
+						});
+
+						$("input[name=repassword]").focus(function(){
+							$("#repasswordError").html("");
+							$("div[id=_err-msg]").addClass("hide");
+							$("#repasswordIcon").css({display:"none"});
+						});
+
+						$("input[name=password]").blur(function(){
+							var password = $("#password").val();
+							$.ajax({
+								url:"__CONTROLLER__/checkPassword",
+								type:"POST",
+								data:{password:password},
+								dataType:"json",
+								success:function(res){
+									if(!res.info == ""){
+										$("#passwordError").html(res.info);
+									}else{
+										$("#passwordIcon").css({display:"block"});
+										x = 1;
+									}
+								}
+							});
+						});
+
+						$("input[name=repassword]").blur(function(){
+							var password = $("#password").val();
+							var repassword = $("#repassword").val();
+							$.ajax({
+								url:"__CONTROLLER__/checkRePassword",
+								type:"POST",
+								data:{password:password,repassword:repassword},
+								dataType:"json",
+								success:function(res){
+									console.log(res);
+									if(!res.info == ""){
+										$("#repasswordError").html(res.info);
+									}else{
+										$("#repasswordIcon").css({display:"block"});
+										y = 1;
+									}
+								}
+							});
+						});
+
+						$("a[id=submit]").click(function(){
+							if($("#password").val() && $("#repassword").val()){
+								if(x == 1 && y == 1){
+									location.href = "{:U('Forget/setSuccess')}";
+									//location.href = "{:U('Test/test')}";
+								}
+							}else{
+								$("div[id=_err-msg]").removeClass("hide");
+								$("#msg").html("个人信息不能为空！");
+								return false;
+							}
+						});
+					</script>
 
 				</div> 
 			</div> 
