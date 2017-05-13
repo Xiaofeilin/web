@@ -599,6 +599,7 @@ function D($name='',$layer='') {
         $model      =   new Think\Model(basename($name));
     }
     $_model[$name.$layer]  =  $model;
+
     return $model;
 }
 

@@ -7,7 +7,7 @@
 		*/
 		public function __construct(){
 			parent::__construct();
-			$this->model = D('goods');
+			$this->model =D('goods');
 		}
 
 		public function list(){
@@ -52,10 +52,11 @@
 		public function del(){
 			if( $id = I('get.id','') ){
 				$p = I('get.p','');
-				if( $this->model->save(array('is_delete'=>1,'id'=>$id)) )
+				if( $this->model->save(array('is_del'=>1,'id'=>$id)) )
 					$this->success( '回收成功' , U( 'list' , array('p'=>$p) ) );
 				exit;
 			}
+			exit;
 			$error = $this->model->getError();
 			$this->error($error);
 		}
@@ -63,7 +64,7 @@
 		public function restore(){
 			if( $id = I('get.id','') ){
 				$p = I('get.p','');
-				if( $this->model->save(array('is_delete'=>0,'id'=>$id)) )
+				if( $this->model->save(array('is_del'=>0,'id'=>$id)) )
 					$this->success( '还原成功' , U( 'recycle' , array('p'=>$p) ) );
 				exit;
 			}

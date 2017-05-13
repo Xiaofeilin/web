@@ -6,7 +6,7 @@
 		  	 array('addtime','time',1,'function') , 
 		  );
 
-		   protected $_validate = array(
+		protected $_validate = array(
 		   	array('goods_name','require','商品名必须填',1),
 		   	array('cat_id','number','请不要乱改html代码',1),
 		   	array('brand_id','number','请不要乱改html代码',2),
@@ -140,7 +140,7 @@
 		*@param array 	$data[自动验证过滤后的form表单数据]
 		*/
 		protected function _before_insert(&$data){
-
+			
 			//调用imgData函数上传图片，并获取上传路径
 			$imgData = imgUpLoad('logo');
 			if(isset( $imgData['error'])){
@@ -158,7 +158,7 @@
 				$data['promote_end_time'] = strtotime($data['promote_end_time'].' 23:59:59');
 			}
 
-			// exit;
+			
 
 		}
 
@@ -236,6 +236,9 @@
 		*@param array 	$data[自动验证过滤后的form表单数据]
 		*/
 		protected function _before_update(&$data){
+			
+			if( ($data['is_del']==1||$data['is_del']===0) ) return true;
+			
 			//判断有没有上传新图片，有调用imgData函数上传图片，并获取上传路径
 			if($_FILES['logo']['size']){
 				imgDel($this,$data['id']);
@@ -261,6 +264,8 @@
 		*@param array 	$data[自动验证过滤后的form表单数据]
 		*/
 		protected function _after_update($data){
+
+			if( ($data['is_del']==1||$data['is_del']===0) ) return true;
 
 			//****************************修改商品属性*****************************
 			$goodsAttr = D('GoodsAttr');
@@ -355,6 +360,7 @@
 				$goodsPics->addAll($picsData);
 			}
 		}
+
 
 
 		public function repertory(){
@@ -453,7 +459,7 @@
 				$_GET='';
 
 			//********************************搜索*********************************************
-			$where = array('is_delete'=>array('eq',$is_del));
+			$where = array('is_del'=>array('eq',$is_del));
 
 			//搜索 商品名称，分类，品牌，类型
 			if( ( $search_val = I('get.search_val','') ) && ( $search_key = I('get.search_key','') ) )
