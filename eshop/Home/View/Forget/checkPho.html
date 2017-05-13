@@ -844,36 +844,46 @@ $(document).ready(function(){
 							</ul> 
 						</div> 
 					</div> 
+					
 
 					<div class="reg-main mt0"> 
-						<div class="h50"></div> 
+						<div class="h50">
+							<div class="error-wrap"> 
+								<div class="error-box mt10 hide" id="_err-msg"> 
+									<i class="error"></i> 
+									<span id="msg"></span>
+								</div> 
+							</div> 
+						</div> 	
 
 						<div class="reg-txtbox"> 
 						<!--
 							<label class="input-label">请输入您的手机号码</label> 
 						-->
 							<i class="ico-phone"></i> 
-							<input class="txt-input text-email" type="text" id="mobileAlias" name="aliasName" value="" maxlength="11" tabindex="1" placeholder="请输入您的手机号码" /> 
+							<i class="ms-ico ms-ico-ok" id="telIcon" style="display:none"></i> 
+							<input class="txt-input text-email" type="text" id="tel" name="tel" value="" maxlength="11" tabindex="1" placeholder="请输入您的手机号码" /> 
 						</div> 
-						<div class="input-tip per-input-tip tip-error-color" id="aliasTip" style="color:red">手机格式不正确</div> 
+						<div class="input-tip per-input-tip tip-error-color" id="telError" style="color:red"></div> 
 
 						<div class="issetgray setgray"> 
 							<div class="shadow"></div> 
 							<div class="reg-code reg-phone-code smsCodeDiv"> 
 								<div class="code-txtbox"> 
 									<i class="ico-code"></i> 
-									<input class="txt-input" type="text" id="smsCode" name="mobileCode" maxlength="6" tabindex="3" placeholder="请输入短信验证码" /> 
+									<i class="ms-ico ms-ico-ok" id="codeIcon" style="display:none"></i> 
+									<input class="txt-input" type="text" id="telCode" name="telCode" maxlength="6" tabindex="3" placeholder="请输入短信验证码" /> 
 									<!--
 									<label class="input-label">请输入短信验证码</label> 
 									-->
 								</div> 
-								<a class="btn-get-code" href="javascript:;" id="sendSmsCode" name="Preg_index_none_getmobilenew"><span>获取短信验证码</span></a> 
+								<input class="btn-get-code" type="button" id="sendTelCode"  value="获取短信验证码"  /> 
 							</div> 
-							<div class="input-tip per-input-tip tip-error-color" id="tipMessage2" style="color:red">验证码错误</div> 
+							<div class="input-tip per-input-tip tip-error-color" id="telCodeError" style="color:red"></div> 
 						</div>
 
 
-						<a class="register-btn" tabindex="-1" name="asc_forgetpsw_locate_submit1" id="validateForgetPsw" onclick="nextSubmit();return false;">下一步</a> 
+						<a class="register-btn" tabindex="-1" name="asc_forgetpsw_locate_submit1" id="submit">下一步</a> 
 					</div> 
 					
 					<div class="mess-tip"> 
@@ -882,6 +892,112 @@ $(document).ready(function(){
 						<p>2.请检查您的垃圾信息或广告信息，并在手机设置中，将苏宁发件人设置为白名单</p> 
 						<p>3.一个账号一天最多可以发送5封验证信息</p> 
 					</div> 
+					<script type="text/javascript">
+						var x;
+						var y;
+						var timer;
+						var num;
+
+						$("input[name=tel]").focus(function(){
+							$("#telError").html("");
+							$("div[id=_err-msg]").addClass("hide");
+							$("#telIcon").css({display:"none"});
+						});
+
+						$("input[name=telCode]").focus(function(){
+							$("#telCodeError").html("");
+							$("div[id=_err-msg]").addClass("hide");
+							$("#codeIcon").css({display:"none"});
+						});
+
+						$("input[name=tel]").blur(function(){
+							var tel = $("#tel").val();
+							$.ajax({
+								url:"__CONTROLLER__/checkTel",
+								type:"POST",
+								data:{tel:tel},
+								dataType:"json",
+								success:function(res){
+									if(!res.info == ""){
+										$("#telError").html(res.info);
+									}else{
+										$("#telIcon").css({display:"block"});
+										x = 1;
+									}
+								}
+							});
+						});
+
+						$("input[id=sendTelCode]").click(function(){
+							$("#sendTelCode").attr("disabled",true);
+
+							clearInterval(timer);
+							timer = undefined;
+
+							$("#telCodeError").html("");
+							var tel = $("#tel").val();
+							var num = 20;
+
+							if(tel){
+								if(timer == undefined){
+									$.ajax({
+										url:"__CONTROLLER__/sendTelCode",
+										data:{tel:tel},
+										type:"POST",
+										dataType:"json",
+										success:function(res){
+											$("#telCodeError").html(res.info);
+											if(res.info != "短信发送失败！"){
+												timer = setInterval(function(){
+													num--;
+													$("#sendTelCode").val("等待" + num + "秒后重新发送");
+													if(num == 0){
+														clearInterval(timer);
+														timer = undefined;
+														$("#sendTelCode").removeAttr("disabled",false);
+														$("#sendTelCode").val("获取短信验证码");
+													}
+												},1000);
+											}
+										}
+									});
+								}
+							}else{
+								$("#telCodeError").html("请输入您的手机号码！");
+							}
+						});
+
+						$("input[name=telCode]").blur(function(){
+							var tCode = $("#telCode").val();
+							$.ajax({
+								url:"__CONTROLLER__/checkCode",
+								type:"POST",
+								data:{tCode:tCode},
+								dataType:"json",
+								success:function(res){
+									if(!res.info == ""){
+										$("#telCodeError").html(res.info);
+									}else{
+										$("#codeIcon").css({display:"block"});
+										y = 1;
+									}
+								}
+							});
+						});
+
+						$("a[id=submit]").click(function(){
+							if($("#tel").val() && $("#telCode").val()){
+								if(x == 1 && y == 1){
+									location.href = "{:U('Forget/setPass')}";
+									//location.href = "{:U('Test/test')}";
+								}
+							}else{
+								$("div[id=_err-msg]").removeClass("hide");
+								$("#msg").html("个人信息不能为空！");
+								return false;
+							}
+						});
+					</script>
 					
 				</div> 
 			</div> 

@@ -9,75 +9,13 @@
   <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/sn_lazyload.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/lazyelem.min.js"></script>
-  <!-- 
-  <script type="text/javascript" src="__PUBLIC__/Home/js/SFE.base.min.js"></script> 
-  -->
   <script type="text/javascript" src="__PUBLIC__/Home/js/search.min.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/sn-sidebar.min.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/chatCompat_mini.js"></script> 
  </head> 
  <body> 
   <input type="hidden" id="baseUrl" value="" /> 
-  <script type="text/javascript">
-  /*
-        //全局变量
-        var sn = sn || {
-            "context": "/emall",
-            "domain": "www.suning.com",
-            "storeId": "10052",
-            "catalogId": "10051",
-            "memberDomain": "member.suning.com",
-            "sslDomain": "ssl.suning.com",
-            "imgssl": "imgssl.suning.com",
-            "online": "online.suning.com",
-            "cookieDomain": ".suning.com",
-            "categoryId": "0",
-            "searchDomain": "http://search.suning.com/emall/"
-        };
-*/
-//跳转到passport登录
-/*
-*url 登录成功后跳转 目标 URL
-*logonType  passport 的登录皮肤  
-*  b2c 主站      默认值
-*  sop 苏宁云商
-*/
-/*
-function logonUrl(url,logonType,userVal){
-   if(url == "" || typeof(url) == "undefined"){
-     url = "http://www.suning.com";
-   }
-   if(logonType == "" || typeof(logonType) == "undefined"){
-     logonType = "b2c";
-   }
- var targetUrl = encodeURIComponent(url);
- var logonurl = "https://passport.suning.com/ids/login?service="
-			 + encodeURIComponent("https://reg.suning.com/auth?targetUrl="+ targetUrl)
-			 + "&method=GET&loginTheme="+logonType;
-  if("" !=userVal && "undefined" != typeof(userVal) ){
-     logonurl = logonurl+"&username="+userVal;
-  }
- hrefLink(logonurl);
-}
-
-function hrefLink(e) {
-		if (navigator.userAgent.indexOf("Firefox") > 0) {
-			window.location = e
-		} else {
-			var f = document.createElement("a");
-			f.href = e;
-			document.body.appendChild(f);
-			if (/msie/i.test(navigator.userAgent.toLowerCase())) {
-				f.click()
-			} else {
-				var d = document.createEvent("MouseEvent");
-				d.initEvent("click", false, false);
-				f.dispatchEvent(d)
-			}
-		}
-	};
-*/
-</script> 
+ 
   <!-- 引入项目资源文件 --> 
   <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/snAccount_v2-min.css" /> 
   <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/style-min.css" /> 
@@ -125,6 +63,7 @@ function hrefLink(e) {
 			<label class="input-label">请输入您的手机</label> 
 			-->
 			<i class="ico-usename"></i> 
+			<i class="ms-ico ms-ico-ok" id="phoneIcon" style="display:none"></i> 
 			<input class="txt-input text-email yfb-acc-mark yfb-account" type="text" id="phone" name="phone" maxlength="50" tabindex="1" placeholder="请输入您的手机号码" /> 
 			
 		</div> 
@@ -136,24 +75,19 @@ function hrefLink(e) {
 		<div class="reg-code reg-phone-code"> 
 			<div class="code-txtbox"> 
 				<i class="ico-code"></i> 
+				<i class="ms-ico ms-ico-ok" id="codeIcon" style="display:none"></i> 
 				<input class="txt-input" type="text" id="phoneCode" name="phoneCode" maxlength="6" tabindex="4" placeholder="请输入短信验证码" /> 
 				<!--
 				<label class="input-label">请输入短信验证码</label> 
 				-->
 			</div> 
-				<a class="btn-get-code" href="javascript:void(0)" id="sendPhoneCode" name="Preg_index_none_getmailnew"><span>获取短信验证码</span></a> 
-			</div> 
+			<input class="btn-get-code" type="button" id="sendPhoneCode"  value="获取短信验证码"  /> 
+			
 			<div class="input-tip per-input-tip tip-error-color" id="phoneCodeError"></div> 
 
 			<div class="btn-reg"> 
 				<a class="reg-submit" id="submit" name="Preg_index_none_nextstep2">完&nbsp;&nbsp;&nbsp;成</a> 
-				<!--
-				<a href="javascript:;" class="reg-submit" id="step22saveing" style="display:none">正在提交...</a> 
-				-->
 			</div> 
-				<!--
-				<p class="bottom-tip mt10 text-right"> <a href="/b2cregsuccjump.do?token=C167769E4288D95ACD24B316B3A6B102&amp;alias=18005151538&amp;myTargetUrl=http%3A%2F%2Fwww.suning.com%2F" id="regsucc" name="Preg_index_none_skip2">不想绑定，跳过 &gt;</a> </p> 
-				-->
 			<div class="clear"></div> 
 		</div>
 	</div> 
@@ -162,15 +96,19 @@ function hrefLink(e) {
 <script type="text/javascript">
 	var x;
 	var y;
+	var timer;
+	var num;
 
 	$("input[name=phone]").focus(function(){
 		$("#phoneError").html("");
 		$("div[id=_err-msg]").addClass("hide");
+		$("#phoneIcon").css({display:"none"});
 	})
 
 	$("input[name=phoneCode]").focus(function(){
 		$("#phoneCodeError").html("");
 		$("div[id=_err-msg]").addClass("hide");
+		$("#codeIcon").css({display:"none"});
 	})
 
 	$("input[name=phone]").blur(function(){
@@ -181,35 +119,50 @@ function hrefLink(e) {
 			type:"POST",
 			dataType:"json",
 			success:function(res){
-				console.log(res);
-				//var res = JSON.parse(res.info);
-				console.log(res.info);
 				if(!res.info == ""){
 					$("#phoneError").html(res.info);
 				}else{
+					$("#phoneIcon").css({display:"block"});
 					x = 1;
 				}
 			}
 		});
 	});
 
-	$("a[id=sendPhoneCode]").click(function(){
+	$("input[id=sendPhoneCode]").click(function(){
+		$("#sendPhoneCode").attr("disabled",true);
+		
+		clearInterval(timer);
+		timer = undefined;
+		
 		$("#phoneCodeError").html("");
 		var phone = $("#phone").val();
-		console.log(phone);
+		var num = 20;
+		
 		if(phone){
-			$.ajax({
-				url:"__CONTROLLER__/sendPhoneCode",
-				data:{phone:phone},
-				type:"POST",
-				dataType:"json",
-				success:function(res){
-					console.log(res);
-					//var res = JSON.parse(res.info);
-					console.log(res.info);
-					$("#phoneCodeError").html(res.info);
-				}
-			});
+			if(timer == undefined){
+				$.ajax({
+					url:"__CONTROLLER__/sendPhoneCode",
+					data:{phone:phone},
+					type:"POST",
+					dataType:"json",
+					success:function(res){
+						$("#phoneCodeError").html(res.info);
+						if(res.info != "短信发送失败！"){
+							timer = setInterval(function(){
+								num--;
+								$("#sendPhoneCode").val("等待" + num + "秒后重新发送");
+								if(num == 0){
+									clearInterval(timer);
+									timer = undefined;
+									$("#sendPhoneCode").removeAttr("disabled",false);
+									$("#sendPhoneCode").val("获取短信验证码");
+								}
+							},1000);
+						}
+					}
+				});
+			}
 		}else{
 			$("#phoneCodeError").html("请输入您的手机号码！");
 		}
@@ -223,12 +176,10 @@ function hrefLink(e) {
 			type:"POST",
 			dataType:"json",
 			success:function(res){
-				console.log(res);
-				//var res = JSON.parse(res.info);
-				console.log(res.info);
 				if(!res.info == ""){
 					$("#phoneCodeError").html(res.info);
 				}else{
+					$("#codeIcon").css({display:"block"});
 					y = 1;
 				}
 			}
@@ -256,17 +207,7 @@ function hrefLink(e) {
     </form> 
    </div> 
   </div> 
-  <!-- 问卷调查 [[ --> 
-  <!--
-  <div class="ECode-floatBar" style="position: fixed;_position:absolute; top: auto; left: auto; z-index: 7500; right: 0px; bottom: 0px; margin-bottom: 270px;"> 
-   <div id="gSideTools" class="g-sidebar"> 
-    <ul> 
-     <li> <a name="Preg_index_none_info016" target="_blank" href="http://ued.suning.com/survey/express/d0RrZlNT" class="i-side-survey"><em>问卷调查</em><i></i></a> </li> 
-    </ul> 
-   </div> 
-  </div> 
-  -->
-  <!-- 问卷调查 ]] --> 
+
   <iframe class="screen-iframe" style="display:none;" scrolling="no" frameborder="0"></iframe> 
   <!-- 此处引入公用简尾 --> 
   <div class="clear"></div> 
@@ -293,160 +234,14 @@ function hrefLink(e) {
 .ng-s-footer p.ng-copyright{float:none;width:100%;}
 .root1200 .ng-s-footer p.ng-copyright{width:100%;}
 </style> 
-  <script> 
-  /*
-    var passport_config = { 
-        base: "/", 
-        loginTheme: "b2c_pop" 
-    }; 
-    */
-</script> 
+
   <script src="__PUBLIC__/Home/js/passport.js?v=201603010121"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/snAccount_v2-min.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/main-min.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/srs-common-min.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/srs-validate-min.js"></script> 
-  <!--
-  <script type="text/javascript" src="__PUBLIC__/Home/js/perReg-bindEmail-min.js?v=201603010121"></script> 
-  -->
   <script type="text/javascript" src="__PUBLIC__/Home/js/sa-analytics.js"></script> 
   <script type="text/javascript" src="__PUBLIC__/Home/js/sa-functions.js"></script> 
-  <!--
-  <script type="text/javascript" src="__PUBLIC__/Home/js/da_opt_inc-min.js?v=201603010121"></script> 
-  -->
-  <script type="text/javascript">
-/**
- *2014-11-20
- *
- * 更新记录：
- * 1.
- */
- 
-/**
- * 第一步：在页面引入基础代码
- * 埋点前请检查页面是否已经埋入此代码，避免重复引入代码
- * 此部分代码不允许修改，若私自修改源码导致出现的问题，后果自负
- */
- /*
-var sa;if(!sa){sa={}}if(!sa.click){sa.click={}}(function(){var t=/^\w*?.suning.com$/,s=document.location.hostname,g=(("https:"==document.location.protocol)?"https://":"http://"),o=h(),b="|",c=location.href,m=l(p(c));function q(Z,M){var Y=Z.name?l(Z.name):"name undefined";if(Y=="name undefined"){var aa=Z.attributes.name;if(aa!=undefined&&aa!=null){Y=aa.value?l(aa.value):"name undefined"}}if(M!=undefined&&M!=null&&M!=""){var J=Z.attributes[M];if(J!=undefined&&J!=null){Y=J.value?l(J.value):M+" undefined"}}var N=Z.id?l(Z.id):"id undefined",Q=new Array(),z=(e(Z,Q),Q)?l(Q.join("").replace(/\s|\|/ig,"")):"text undefined",T=(T=document.getElementById("resourceType"))?T.value:"",A=N+b+Y+b+z,R=(R=document.getElementById("errorCode"))?R.value:"",W=g+o+"/ajaxClick.gif",y=u(),k="_snck";i(k,y,"/","","");var X=n("_snmp"),D=typeof sn=="object"?sn.cityId:"can not get cityId",I=y+b+X+b+A+b+m,V=Z.href?Z.href:"",H=(V?w(V):"-"),K=document.getElementById("URLPattern"),P=(K?K.value:"");var C="";var F=n("logonStatus");if(F!=undefined&&F!=null){C=F}var E="";var j=n("_snma");if(j!=undefined&&j!=null&&j.indexOf("|")>=0){try{E=j.split("|")[1]}catch(U){}}var B="";var x=n("idsLoginUserIdLastTime");if(x!=undefined&&x!=null){B=x}var S="";var O=n("custno");if(O!=undefined&&O!=null){S=O}var L="";var ab=n("_snmb");if(ab!=undefined&&ab!=null&&ab.indexOf("|")>=0){try{L=ab.split("|")[0]}catch(U){}}var G=W+"?_snmk="+I+"&_snme="+R+"&_type="+T+"&_cId="+D+"&_sid="+H+"&urlPattern="+P+"&vid="+E+"&lu="+B+"&sid="+L+"&mid="+S+"&ls="+C;v(G)}function u(){var k=new Date(),j=Math.round(100000*Math.random()),x=k.getTime().toString().concat(j);return x}function n(k){var j=document.cookie.split("; ");for(var x=0;x<j.length;x++){var y=j[x].split("=");if(y[0]==k){return unescape(y[1])}}}function v(j){var x="log_"+(new Date()).getTime();var k=window[x]=new Image();k.onload=(k.onerror=function(){window[x]=null});k.src=j+"&iId="+x;k=null}function h(){if(t.test(s)){return"click.suning.cn/sa"}else{return"clicksit.suning.cn/sa"}}function d(){return document.domain}function i(k,j,C,B,A){var z=k+"="+escape(j);if(B!=""){var y=new Date();y.setTime(y.getTime()+B);z+=";expires="+y.toGMTString()}if(C!=""){z+=";path="+C}var x=d();if(x.indexOf(".suning.com")!=-1){z+=";domain=.suning.com"}else{if(x.indexOf(".cnsuning.com")!=-1){z+=";domain=.cnsuning.com"}else{z+=";domain="+A}}document.cookie=z}function w(k){var j="-";if(!a(k)){j=f(k,"tid","&")}return j}function p(j){if(j.length>301){j=j.substring(0,300)}while(j.indexOf(b)!=-1){j=j.replace(b,"--")}return j}function e(x,k){if(x.nodeType==3){k.push(x.nodeValue)}else{if(x.nodeType==1){for(var j=x.firstChild;j!=null;j=j.nextSibling){e(j,k)}}}}function l(j){return j!=null?encodeURIComponent(j):""}function f(x,k,A){var z="-",j;if(!a(x)&&!a(k)&&!a(A)){j=x.indexOf(k);if(j>-1){var y=x.indexOf(A,j);if(y<0){y=x.length}z=x.substring(j+k.length+1,y)}}return z}function a(j){return(undefined==j||""==j||"-"==j)}var r=sa.click;r.sendDatasIndex=q})();
-*/
-/**
- * 第二步：为元素绑定click事件
- * 技术支持：此方案需要jQuery支持，使用此方案前请确认使用的jquery版本对live方法的支持性
- * 功能：为点击对象添加点击事件处理函数
- * 示例解释：下面的示例中是为标签的name以test_dac_index_开头的元素埋点，实际生产中的name属性命名约束请联系贺婷芳(12061488)确认；未经确认不得埋点，否则引起冲突后果自负
- * 示例修改：在具体埋点过程中请开发人员根据具体的name修改a[name^=\*需要埋点的name*\]或者input[name^=\*需要埋点的name*\]
- * 命名技术规范：标签的name,id属性不能含有"|"
- */
 
-/*
-$(document).ready(function(){
-	// 企业用户注册页面
-	$("a[name*=Creg_index_none_],input[name*=Creg_index_none_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	// 注册成功页
-	$("a[name*=Creg_sucess_none_],input[name*=Creg_sucess_none_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	// 记得密码验证公司卡信息页面
-	$("a[name*=VerCocard_index_none_],input[name*=VerCocard_index_none_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	// 忘记密码验证公司卡信息页面
-	$("a[name*=FVerCocard_index_none_],input[name*=FVerCocard_index_none_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	// 验证公司卡中的手机页面
-	$("a[name*=VerCocard_cellphone_none_],input[name*=VerCocard_cellphone_none_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	// 创建易购账号页面
-	$("a[name*=MobCreg_index_none_],input[name*=MobCreg_index_none_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	// 验证注册成功页面
-	$("a[name*=MerCocard_sucess_none_],input[name*=MerCocard_sucess_none_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	//个人注册页面
-	$("a[name*=Preg_index_none_],input[name*=Preg_index_none_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	//个人注册弹框页面
-	$("a[name*=Treg_info_none_],input[name*=Treg_info_none_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	//个人注册成功页面
-	$("a[name*=Preg_sucess_none_],input[name*=Preg_sucess_none_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	//个人注册成功跳转页面
-	$("a[name*=Preg_sucessTz_none_],input[name*=Preg_sucessTz_none_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	//新版物流企业用户注册页面
-	$("a[name*=ClpsReg_index_none_],input[name*=ClpsReg_index_none_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	// wap注册
-	$("a[name*=Wap_reg_person_],input[name*=Wap_reg_person_],span[name*=Wap_reg_person_],em[name*=Wap_reg_person_],img[name*=Wap_reg_person_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	// PC联合登录
-	$("a[name*=PClogin_weixin],a[name*=PClogin_qq]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	// Wap联合登录
-	$("a[name*=WAPlogin_qq],span[name*=WAPlogin_qq],em[name*=WAPlogin_qq]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	// Wap信任登录--PPTV
-	$("a[name*=WAPlogin_pptv],span[name*=WAPlogin_pptv],em[name*=WAPlogin_pptv]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	// Wap企业会员注册
-	$("a[name*='wap_companystep1.do_'],a[name*='wap_companystep2.do_'],a[name*='wap_companystep3.do_'],a[name*='wap_compregsucc.do_']").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	// Wap端POS扫码验证
-	$("a[name*=reg_scan_],span[name*=reg_scan_],em[name*=reg_scan_],input[name*=reg_scan_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	// Wap端门店快捷登陆
-	$("a[name*=reg_shortcut_],span[name*=reg_shortcut_],em[name*=reg_shortcut_],input[name*=reg_shortcut_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	// wap端和pc端 门店会员卡首次登录
-	$("a[name*=reg_fusion_],span[name*=reg_fusion_],a[name*=PCreg_card_offline_],span[name*=PCreg_card_offline_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-	
-	// wap端和pc端 我的易购绑定会员卡
-	$("a[name*=my_fusion_],span[name*=my_fusion_],a[name*=PCreg_card_online_],span[name*=PCreg_card_online_]").live("click",function(){
-		sa.click.sendDatasIndex(this);
-	});
-});
-*/
-</script>  
  </body>
 </html>

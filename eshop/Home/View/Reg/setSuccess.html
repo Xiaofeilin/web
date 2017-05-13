@@ -247,7 +247,7 @@
 		<div class="reg-suc  reg-suc1"> 
 			<i class="logo"></i> 
 			<p class="tip">恭喜您，<span class="reg-phone-num" id="accName"></span>账号注册成功！</p> 
-			<p class="relocation">本页将在<span id="countdown">5</span>秒后自动跳转，您可以点此链接<a href="http://www.sucaihuo.com/" name="Preg_sucessTz_none_info001">手动跳转</a></p> 
+			<p class="relocation">本页将在<span id="countdown">5</span>秒后自动跳转，您可以点此链接<a href="{:U('Login/login')}" name="Preg_sucessTz_none_info001">手动跳转进行登录</a></p> 
 		</div> 
 	</div> 
 	<!-- reg-type-cont ]] --> 
@@ -261,6 +261,16 @@
 					$("#accName").html(res.info);
 				}
 			});
+
+			var num = 5;
+			timer = setInterval(function(){
+				num--;
+				$("#countdown").html(num);
+				if(num == 0){
+					clearInterval(timer);
+					location.href = "{:U('Login/login')}";
+				}
+			},1000);
 		});
 	</script>
     </div> 

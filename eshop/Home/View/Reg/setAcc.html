@@ -32,7 +32,7 @@
    </div> 
    <!-- 简头 ]] --> 
    <div class="main-box reg mart reg-bor-top"> 
-    <p class="tr lh36 notice login-bor"> 我已经注册，马上<a href="javascript:logonUrl('','','');" name="Preg_index_none_log">登录 &gt;</a></p> 
+    <p class="tr lh36 notice login-bor"> 我已经注册，马上<a href="{:U('Login/login')}" name="Preg_index_none_log">登录 &gt;</a></p> 
     <form id="enterReg_form" action="reg_bind_email.html" method="post" autocomplete="off"> 
      <div class="tab-cont cont-marg" id="step1"> 
       <div class="reg-nav"> 
@@ -46,7 +46,6 @@
 <!-- reg-type-cont [[ --> 
 <div class="reg-main" style=" min-height: 560px;height: auto!important;height: 560px;"> 
 	<div class="error-wrap"> 
-		<!--<div class="error-box mb10 mt10 hide"> -->
 		<div class="error-box mb10 mt10 hide" id="_err-msg"> 
 			<i class="error"></i> 
 			<span id="msg"></span> 
@@ -58,6 +57,7 @@
 			<label class="input-label">请输入您的用户名</label> 
 			-->
 			<i class="ico-person"></i> 
+			<i class="ms-ico ms-ico-ok" id="accountIcon" style="display:none"></i> 
 			<input class="txt-input text-email" type="text" id="account" name="account" value="" maxlength="16" tabindex="1" placeholder="请输入您的用户名" /> 
 		</div> 
 		<div class="input-tip per-input-tip tip-error-color" id="aliasTip1"></div> 
@@ -67,6 +67,7 @@
 			<label class="input-label">请输入您的密码</label> 
 			-->
 			<i class="ico-code"></i> 
+			<i class="ms-ico ms-ico-ok" id="passwordIcon" style="display:none"></i> 
 			<input class="txt-input text-email" type="password" id="password" name="password" value="" maxlength="16" tabindex="1" placeholder="请输入您的密码" /> 
 		</div> 
 		<div class="input-tip per-input-tip tip-error-color" id="aliasTip2"></div> 
@@ -74,6 +75,7 @@
 		<div class="reg-code imgCodeDiv"> 
 			<div class="code-txtbox"> 
 				<i class="ico-code"></i> 
+				<i class="ms-ico ms-ico-ok" id="codeIcon" style="display:none"></i> 
 				<input class="txt-input" type="text" id="validate" name="validate" maxlength="4" tabindex="2" placeholder="请输入验证码" /> 
 				<!--
 				<label class="input-label">请输入验证码</label> 
@@ -113,6 +115,17 @@
 				$("div[id=_err-msg]").addClass("hide");
 				$('#msg').html('');
 			});
+
+			$('input[name=account]').focus(function(){
+				$("#accountIcon").css({display:"none"});
+			});
+
+			$('input[name=password]').focus(function(){
+				$("#passwordIcon").css({display:"none"});
+			});
+			$('input[name=validate]').focus(function(){
+				$("#codeIcon").css({display:"none"});
+			});
 			
 			$("input[name=account]").blur(function(){
 				var acc = $("#account").val();
@@ -126,6 +139,7 @@
 							$("div[id=_err-msg]").removeClass("hide");
 							$("#msg").html(res.info);
 						}else{
+							$("#accountIcon").css({display:"block"});
 							x = 1;
 						}
 					}
@@ -144,6 +158,7 @@
 							$("div[id=_err-msg]").removeClass("hide");
 							$("#msg").html(res.info);
 						}else{
+							$("#passwordIcon").css({display:"block"});
 							y = 1;
 						}
 					}
@@ -162,6 +177,7 @@
 							$("div[id=_err-msg]").removeClass("hide");
 							$("#msg").html(res.info);
 						}else{
+							$("#codeIcon").css({display:"block"});
 							z = 1;
 						}
 					}
