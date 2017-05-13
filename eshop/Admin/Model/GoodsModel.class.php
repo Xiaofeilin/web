@@ -6,26 +6,26 @@
 		  	 array('addtime','time',1,'function') , 
 		  );
 
-		protected $_validate = array(
-		   	array('goods_name','require','商品名必须填',1),
-		   	array('cat_id','number','请不要乱改html代码',1),
-		   	array('brand_id','number','请不要乱改html代码',2),
-		   	array('market_price','is_numeric','市场价是正整数',1,'function'),
-		   	array('market_price','require','市场价必须填',1),
-		   	array('shop_price','is_numeric','本店价是正整数',1,'function'),
-		   	array('shop_price','require','本店价必须填',1),
-		   	array('integral','number','积分是正整数',2),
-		   	array('integral_price','number','积分兑换是正整数',2),
-		   	array('exp','number','经验值是正整数',2),
-		   	array('is_sale',array(0,1),'请不要乱改html代码',2,'in'),
-		   	array('is_hot',array(0,1),'请不要乱改html代码',1,'in'),
-		   	array('is_new',array(0,1),'请不要乱改html代码',1,'in'),
-		   	array('is_best',array(0,1),'请不要乱改html代码',1,'in'),
-		   	array('is_on_sale',array(0,1),'请不要乱改html代码',1,'in'),
-		   	array('type_id','number','请不要乱改html代码',2),
-		   	array('sort_num','number','排序是正整数',2),
-		   	array('sort_num','0,99','排序1-100',2,'length'),
-		   );
+		// protected $_validate = array(
+		//    	array('goods_name','require','商品名必须填',1),
+		//    	array('cat_id','number','请不要乱改html代码',1),
+		//    	array('brand_id','number','请不要乱改html代码',2),
+		//    	array('market_price','is_numeric','市场价是正整数',1,'function'),
+		//    	array('market_price','require','市场价必须填',1),
+		//    	array('shop_price','is_numeric','本店价是正整数',1,'function'),
+		//    	array('shop_price','require','本店价必须填',1),
+		//    	array('integral','number','积分是正整数',2),
+		//    	array('integral_price','number','积分兑换是正整数',2),
+		//    	array('exp','number','经验值是正整数',2),
+		//    	array('is_sale',array(0,1),'请不要乱改html代码',2,'in'),
+		//    	array('is_hot',array(0,1),'请不要乱改html代码',1,'in'),
+		//    	array('is_new',array(0,1),'请不要乱改html代码',1,'in'),
+		//    	array('is_best',array(0,1),'请不要乱改html代码',1,'in'),
+		//    	array('is_on_sale',array(0,1),'请不要乱改html代码',1,'in'),
+		//    	array('type_id','number','请不要乱改html代码',2),
+		//    	array('sort_num','number','排序是正整数',2),
+		//    	array('sort_num','0,99','排序1-100',2,'length'),
+		//    );
 
 		/**
 		*[查询商品表关联的其他表]
@@ -153,13 +153,16 @@
 
 			//判断有没有促销，将促销时间转为时间戳
 			
+
 			if($data['is_sale']==1){
-				 $data['promote_start_time'] = strtotime($data['promote_start_time'].' 00:00:01');
-				$data['promote_end_time'] = strtotime($data['promote_end_time'].' 23:59:59');
+				if( ($start = I('post.promote_start_time','')) && ($end = I('post.promote_end_time','')) ){
+					 $data['promote_start_time'] = strtotime($start.' 00:00:01');
+					 $data['promote_end_time'] = strtotime($end.' 23:59:59');
+				}
+				
+				
 			}
-
 			
-
 		}
 
 		/**
@@ -401,12 +404,13 @@
 						$goodsAttr[$key1][] = $value1;
 					}
 				}
-
+	
 				foreach ($goodsAttr as $key => $value) {
 					$num = $goods_num[$key];
 					if(!is_numeric( $num )) continue;
 					sort($value);
 					$str = implode(',', $value);
+					
 					$goodsRepData[] = array(
 						'goods_id'=>$goods_id,
 						'goods_number'=>$num,
@@ -438,12 +442,15 @@
 				if( !is_numeric( $num ) ) continue;
 				sort($value);
 				$str = implode(',', $value);
+				
+				
 				$oldGoodsRepData[] = array(
 					'id'=>$key,
 					'goods_id'=>$goods_id,
 					'goods_number'=>$num,
 					'goods_attr_id' => $str,
 				);
+
 			}
 			return $oldGoodsRepData;
 		}

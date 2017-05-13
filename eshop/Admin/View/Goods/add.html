@@ -11,9 +11,10 @@
       }
 </script>
 <!-- start goods form -->
+<if condition="empty($catAll) neq true">
 <div class="tab-div">
-<!-- tab bar -->
-      <div id="tabbar-div">
+       <!-- tab bar -->
+       <div id="tabbar-div">
               <p>
                     <span class="tab-front" id="general-tab" onclick="charea('general');">通用信息</span>
                     <span class="tab-back" id="detail-tab" onclick="charea('detail');">详细描述</span>
@@ -21,193 +22,195 @@
                     <span class="tab-back" id="level-tab" onclick="charea('level');">会员价格</span>
                     <span class="tab-back" id="pic-tab" onclick="charea('pic');">商品相册</span>
               </p>
-      </div>
+       </div>
 
-    <!-- tab body -->
-    <div id="tabbody-div">
-      <form enctype="multipart/form-data" method="post" name="theForm"  onsubmit="return on()">
-        
-        <table width="90%" id="general-table" align="center">
-             <tr>
-                      <td class="label">商品名称：</td>
-                      <td><input type="text" name="goods_name" value="" style="float:left;color:;" size="30" /></td>
-             </tr>
-     
-            <tr>
-                   <td class="label">商品分类：</td>
-                   <td>
-                           <select name="cat_id"  >
-                                  <option value="">请选择...</option>
-                                  <foreach name="catAll" item="val">
-                                  <option value="{$val['id']}"  {$val['lv']==2?'':'disabled'}>{$val['lv']|str_repeat="--",###}{$val['cat_name']}</option>
-                                  </foreach>
-                           </select>
-                   </td>
-            </tr>
+       <!-- tab body -->
+       <div id="tabbody-div">
+              <form enctype="multipart/form-data" method="post" name="theForm"  onsubmit="return on()">
+                
+                <table width="90%" id="general-table" align="center">
+                     <tr>
+                              <td class="label">商品名称：</td>
+                              <td><input type="text" name="goods_name" value="" style="float:left;color:;" size="30" /></td>
+                     </tr>
              
-             <tr>
-                   <td class="label">商品品牌：</td>
-                   <td>
-                           <select name="brand_id"  >
-                                  <option value="">请选择...</option>
-                                  <foreach name="brandAll" item="val">
-                                  <option value="{$val['id']}">{$val['brand_name']}</option>
-                                  </foreach>
-                           </select>
-                   </td>
-            </tr>
-             
-             <tr>
-                   <td class="label">市场价：</td>
-                   <td><input type="text" name="market_price" value="0" size="20" /></td>
-             </tr>
+                    <tr>
+                           <td class="label">商品分类：</td>
+                           <td>
+                                   <select name="cat_id"  >
+                                          <option value="">请选择...</option>
+                                          <foreach name="catAll" item="val">
+                                          <option value="{$val['id']}"  {$val['lv']==2?'':'disabled'}>{$val['lv']|str_repeat="--",###}{$val['cat_name']}</option>
+                                          </foreach>
+                                   </select>
+                           </td>
+                    </tr>
+                     
+                     <tr>
+                           <td class="label">商品品牌：</td>
+                           <td>
+                                   <select name="brand_id"  >
+                                          <option value="">请选择...</option>
+                                          <foreach name="brandAll" item="val">
+                                          <option value="{$val['id']}">{$val['brand_name']}</option>
+                                          </foreach>
+                                   </select>
+                           </td>
+                    </tr>
+                     
+                     <tr>
+                           <td class="label">市场价：</td>
+                           <td><input type="text" name="market_price" value="0" size="20" /></td>
+                     </tr>
 
-            <tr>
-                    <td class="label">本店售价：</td>
-                    <td><input type="text" name="shop_price" value="0" size="20" /></td>
-            </tr>
+                    <tr>
+                            <td class="label">本店售价：</td>
+                            <td><input type="text" name="shop_price" value="0" size="20" /></td>
+                    </tr>
 
-            
-            
-            <tr>
-                   <td class="label">赠送积分：</td>
-                   <td><input type="text" name="integral" value="0" size="20" /></td>
-             </tr>
+                    
+                    
+                    <tr>
+                           <td class="label">赠送积分：</td>
+                           <td><input type="text" name="integral" value="0" size="20" /></td>
+                     </tr>
 
-             <tr>
-                   <td class="label">增加经验值：</td>
-                   <td><input type="text" name="exp" value="0" size="20" /></td>
-             </tr>
+                     <tr>
+                           <td class="label">增加经验值：</td>
+                           <td><input type="text" name="exp" value="0" size="20" /></td>
+                     </tr>
+                      
+                     <tr>
+                           <td class="label">积分兑换：</td>
+                           <td><input type="text" name="integral_price" value="0" size="20" /></td>
+                     </tr>
+                    
+                     <tr>
+                           <td class="label"><input type="checkbox" name="is_sale" value="1" id="promote" >促销价：</td>
+                           <td><input type="text" name="promote_price" disabled value="" size="20" /></td>
+                     </tr>
+                    
+                      <tr>
+                           <td class="label">促销时间：</td>
+                           <td>
+                                  <input type="text" name="promote_start_time" class="popupDatepicker" disabled value="" size="20" />
+                                  ---
+                                  <input type="text" name="promote_end_time" class="popupDatepicker" disabled value="" size="20" />
+                            </td>
+                     </tr>
+                      
+                      <tr>
+                           <td class="label">logo图片：</td>
+                           <td><input type="file" name="logo"  /></td>
+                     </tr>
+
+                     <tr>
+                           <td class="label">是否热卖：</td>
+                           <td>
+                                  <input type="radio" name="is_hot" value="1" size="20" />是
+                                  <input type="radio" name="is_hot" value="0" checked size="20" />否
+                           </td>
+                     </tr>
+
+                     <tr>
+                           <td class="label">是否新品：</td>
+                          <td>
+                                  <input type="radio" name="is_new" value="1" size="20" />是
+                                  <input type="radio" name="is_new" value="0" checked size="20" />否
+                           </td>
+                     </tr>
+                    
+                       <tr>
+                           <td class="label">是否精品：</td>
+                           <td>
+                                  <input type="radio" name="is_best" value="1" size="20" />是
+                                  <input type="radio" name="is_best" value="0" checked size="20" />否
+                           </td>
+                     </tr>
+
+                     <tr>
+                           <td class="label">是否上架：</td>
+                           <td>
+                                  <input type="radio" name="is_on_sale" value="1" size="20" />是
+                                  <input type="radio" name="is_on_sale" value="0" checked size="20" />否
+                           </td>
+                     </tr>
+
+                      <tr>
+                           <td class="label">seo优化关键字：</td>
+                           <td><input type="text" name="seo_keyword" value="" size="20" /></td>
+                     </tr>
+
+                        <tr>
+                           <td class="label">seo优化描述：</td>
+                           <td><input type="text" name="seo_description" value="" size="20" /></td>
+                     </tr>
+
+                     <tr>
+                           <td class="label">排序数字：</td>
+                           <td><input type="text" name="sort_num" value="" size="20" /></td>
+                     </tr>
+                </table>
+
+                <!-- 详细描述 -->
+               <table width="90%" id="detail-table" style="display:none">
+                     <tr>
+                            <td class="label">商品描述:</td>
+                           <td>
+                                  <script id="editor" type="text/plain" style="width:1024px;height:500px;" name="goods_desc" ></script>
+                           </td>
+                     </tr>
+               </table>
+
+                <!-- 其他信息 -->
+               <table width="90%" id="mix-table" style="display:none" align="center">
+                     <tr>
+                           <td class="label"></td>
+                           <td>商品类型:
+                                  <select name="type_id" id="">
+                                        <option value="">选择类型</option>
+                                        <foreach name="typeAll" item="val">
+                                        <option value="{$val['id']}">{$val['type_name']}</option>
+                                        </foreach>
+                                  </select>
+                           </td>
+                     </tr>          
+                      
+                      <tr> <td class="label"></td><td class="label" id="attr"></td></tr>
+               </table>
+                
+              <table width="90%" id="level-table" style="display:none" align="center">
+                     <foreach name="memberLevelAll" item="val">
+                     <tr>
+                           <td class="label">{$val['level_name']}:</td>
+                           <td><input type="text" name="member_price[{$val['id']}]"> </td>
+                     </tr>          
+                    </foreach>
+              </table>
+
+
+               <table width="90%" id="pic-table" style="display:none" align="center">
+                     <tr>
+                           <td class="label"></td>
+                           <td>
+                                  <input type="button" id="add_pic" value="添加一张图片">
+                           </td>
+                     </tr>          
+                      
+                   
+               </table>
               
-             <tr>
-                   <td class="label">积分兑换：</td>
-                   <td><input type="text" name="integral_price" value="0" size="20" /></td>
-             </tr>
-            
-             <tr>
-                   <td class="label"><input type="checkbox" name="is_sale" value="1" id="promote" >促销价：</td>
-                   <td><input type="text" name="promote_price" disabled value="" size="20" /></td>
-             </tr>
-            
-              <tr>
-                   <td class="label">促销时间：</td>
-                   <td>
-                          <input type="text" name="promote_start_time" class="popupDatepicker" disabled value="" size="20" />
-                          ---
-                          <input type="text" name="promote_end_time" class="popupDatepicker" disabled value="" size="20" />
-                    </td>
-             </tr>
-              
-              <tr>
-                   <td class="label">logo图片：</td>
-                   <td><input type="file" name="logo"  /></td>
-             </tr>
-
-             <tr>
-                   <td class="label">是否热卖：</td>
-                   <td>
-                          <input type="radio" name="is_hot" value="1" size="20" />是
-                          <input type="radio" name="is_hot" value="0" checked size="20" />否
-                   </td>
-             </tr>
-
-             <tr>
-                   <td class="label">是否新品：</td>
-                  <td>
-                          <input type="radio" name="is_new" value="1" size="20" />是
-                          <input type="radio" name="is_new" value="0" checked size="20" />否
-                   </td>
-             </tr>
-            
-               <tr>
-                   <td class="label">是否精品：</td>
-                   <td>
-                          <input type="radio" name="is_best" value="1" size="20" />是
-                          <input type="radio" name="is_best" value="0" checked size="20" />否
-                   </td>
-             </tr>
-
-             <tr>
-                   <td class="label">是否上架：</td>
-                   <td>
-                          <input type="radio" name="is_on_sale" value="1" size="20" />是
-                          <input type="radio" name="is_on_sale" value="0" checked size="20" />否
-                   </td>
-             </tr>
-
-              <tr>
-                   <td class="label">seo优化关键字：</td>
-                   <td><input type="text" name="seo_keyword" value="" size="20" /></td>
-             </tr>
-
-                <tr>
-                   <td class="label">seo优化描述：</td>
-                   <td><input type="text" name="seo_description" value="" size="20" /></td>
-             </tr>
-
-             <tr>
-                   <td class="label">排序数字：</td>
-                   <td><input type="text" name="sort_num" value="" size="20" /></td>
-             </tr>
-        </table>
-
-        <!-- 详细描述 -->
-       <table width="90%" id="detail-table" style="display:none">
-             <tr>
-                    <td class="label">商品描述:</td>
-                   <td>
-                          <script id="editor" type="text/plain" style="width:1024px;height:500px;" name="goods_desc" ></script>
-                   </td>
-             </tr>
-       </table>
-
-        <!-- 其他信息 -->
-      <table width="90%" id="mix-table" style="display:none" align="center">
-             <tr>
-                   <td class="label"></td>
-                   <td>商品类型:
-                          <select name="type_id" id="">
-                                <option value="">选择类型</option>
-                                <foreach name="typeAll" item="val">
-                                <option value="{$val['id']}">{$val['type_name']}</option>
-                                </foreach>
-                          </select>
-                   </td>
-             </tr>          
-              
-              <tr> <td class="label"></td><td class="label" id="attr"></td></tr>
-      </table>
-        
-        <table width="90%" id="level-table" style="display:none" align="center">
-             <foreach name="memberLevelAll" item="val">
-             <tr>
-                   <td class="label">{$val['level_name']}:</td>
-                   <td><input type="text" name="member_price[{$val['id']}]"> </td>
-             </tr>          
-            </foreach>
-      </table>
-
-
-      <table width="90%" id="pic-table" style="display:none" align="center">
-             <tr>
-                   <td class="label"></td>
-                   <td>
-                          <input type="button" id="add_pic" value="添加一张图片">
-                   </td>
-             </tr>          
-              
-           
-      </table>
-      
-        <div class="button-div">
-                   <input type="submit" value=" 确定 " class="button" />
-                   <input type="reset" value=" 重置 " class="button" />
-        </div>
-      </form>
-    </div>
+                <div class="button-div">
+                           <input type="submit" value=" 确定 " class="button" />
+                           <input type="reset" value=" 重置 " class="button" />
+                </div>
+               </form>
+       </div>
 </div>
+<else/>
+ <span>请先添加分类</span>
+</if>
 <!-- end goods form -->
-<div id="div_error"></div>
 </body>
 </html>
 <script>
@@ -268,7 +271,7 @@
               var p = $(a).parent();
               if($(a).html()=="[+]"){
                 var newP = p.clone();
-                newP.find("a").html("['-']");
+                newP.find("a").html("[-]");
                 p.after(newP);
               }
               else

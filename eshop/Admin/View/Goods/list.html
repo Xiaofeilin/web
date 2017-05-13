@@ -53,54 +53,59 @@
        <input type="submit" value="搜索">
        <a href="{:U('list','',false)}?unset=1"><input type="button" value="重置条件"></a>
 </form>
-<form method="post" action="" name="listForm">
-       <div class="list-div" id="listDiv">
-             <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
-                    <tr>
-                          <th>商品名称</th>      
-                          <th>分类</th>
-                           <th>品牌</th>
-                          <th><a name="market_price"  class="sort"   sort_val="{$sort_val===null?1:$sort_val}"  href="javascript:void(0)" >市场价</a></th>
-                           <th><a name="shop_price"  class="sort"   sort_val="{$sort_val===null?1:$sort_val}"  href="javascript:void(0)" >本店价</a></th>
-                          <th>类型</th>      
-                          <th>是否上架</th>
-                           <th>是否最热</th>
-                          <th>是否最新</th>
-                           <th>是否精品</th>
-                          <th>是否促销</th>      
-                          <th>logo</th>
-                           <th><a name="id"  class="sort"   sort_val="{$sort_val===null?1:$sort_val}"  href="javascript:void(0)" >添加时间</a></th>
-                           <th><a name="sort_num"  class="sort"  sort_val="{$sort_val===null?1:$sort_val}" href="javascript:void(0)" >排序</a></th>
-                          <th>操作</th>
-                    </tr>
-                    <foreach name="goodsList" item="val">
-                    <tr align="center" class="0" id="0_1" id = 'tr_1'>
-                          <input type="hidden" value="{$val['id']}">
-                          <td align="center">{$val['goods_name']}</td>
-                          <td align="center" >{$val['cat_name']}</td>
-                          <td align="center" >{$val['brand_name']}</td>
-                          <td align="center" >{$val['market_price']}</td>
-                          <td align="center" >{$val['shop_price']}</td>
-                          <td align="center" >{$val['type_name']}</td>
-                          <td align="center" status="is_on_sale" val= {$val['is_on_sale']} ><img  src="__PUBLIC__/Admin/images/{$val['is_on_sale']}.gif" /></td>
-                          <td align="center" status="is_hot"  val = {$val['is_hot']} ><img  src="__PUBLIC__/Admin/images/{$val['is_hot']}.gif" /></td>
-                          <td align="center" status="is_new" val = {$val['is_new']}><img  src="__PUBLIC__/Admin/images/{$val['is_new']}.gif" /></td>
-                          <td align="center" status="is_best" val = {$val['is_best']}><img  src="__PUBLIC__/Admin/images/{$val['is_best']}.gif" /></td>
-                          <td align="center" status="is_sale" val = {$val['is_sale']}><img  src="__PUBLIC__/Admin/images/{$val['is_sale']}.gif" /></td>
-                          <td align="center" {$val['logo']}><img width="30" src="__ROOT__/Uploads/{$val['logo']}"></td>
-                          <td align="center" >{$val['addtime']}</td>
-                          <td align="center" >{$val['sort_num']}</td>
-                          <td  align="center" >
-                                 <a href="{:U('repertory',array('id'=>$val['id'],'p'=>$_GET['p']) )}">库存</a>|
-                                 <a href="{:U('edit',array('id'=>$val['id'],'p'=>$_GET['p']) )}">编辑</a> |
-                                 <a href="{:U('del',array('id'=>$val['id'],'p'=>$_GET['p']) )}">回收站</a>
-                          </td>
-                    </tr>
-                    </foreach>
-                    <tr><td height="30" colspan="15" align="center">{$show}</td></tr>
-             </table>
-      </div>
-</form>
+<div class="list-div" id="listDiv">
+   <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
+          <if condition="empty($goodsList) neq true">
+          <tr>
+                <th>商品名称</th>      
+                <th>分类</th>
+                 <th>品牌</th>
+                <th><a name="market_price"  class="sort"   sort_val="{$sort_val===null?1:$sort_val}"  href="javascript:void(0)" >市场价</a></th>
+                 <th><a name="shop_price"  class="sort"   sort_val="{$sort_val===null?1:$sort_val}"  href="javascript:void(0)" >本店价</a></th>
+                <th>类型</th>      
+                <th>是否上架</th>
+                 <th>是否最热</th>
+                <th>是否最新</th>
+                 <th>是否精品</th>
+                <th>是否促销</th>      
+                <th>logo</th>
+                 <th><a name="id"  class="sort"   sort_val="{$sort_val===null?1:$sort_val}"  href="javascript:void(0)" >添加时间</a></th>
+                 <th><a name="sort_num"  class="sort"  sort_val="{$sort_val===null?1:$sort_val}" href="javascript:void(0)" >排序</a></th>
+                <th>操作</th>
+          </tr>
+          <foreach name="goodsList" item="val">
+          <tr align="center" class="0" id="0_1" id = 'tr_1'>
+                <input type="hidden" value="{$val['id']}">
+                <td align="center">{$val['goods_name']}</td>
+                <td align="center" >{$val['cat_name']}</td>
+                <td align="center" >{$val['brand_name']}</td>
+                <td align="center" >{$val['market_price']}</td>
+                <td align="center" >{$val['shop_price']}</td>
+                <td align="center" >{$val['type_name']}</td>
+                <td align="center" status="is_on_sale" val= {$val['is_on_sale']} ><img  src="__PUBLIC__/Admin/images/{$val['is_on_sale']}.gif" /></td>
+                <td align="center" status="is_hot"  val = {$val['is_hot']} ><img  src="__PUBLIC__/Admin/images/{$val['is_hot']}.gif" /></td>
+                <td align="center" status="is_new" val = {$val['is_new']}><img  src="__PUBLIC__/Admin/images/{$val['is_new']}.gif" /></td>
+                <td align="center" status="is_best" val = {$val['is_best']}><img  src="__PUBLIC__/Admin/images/{$val['is_best']}.gif" /></td>
+                <td align="center" status="is_sale" val = {$val['is_sale']}><img  src="__PUBLIC__/Admin/images/{$val['is_sale']}.gif" /></td>
+                <td align="center" {$val['logo']}><img width="30" src="__ROOT__/Uploads/{$val['logo']}"></td>
+                <td align="center" >{$val['addtime']}</td>
+                <td align="center" >{$val['sort_num']}</td>
+                <td  align="center" >
+                       <a href="{:U('repertory',array('id'=>$val['id'],'p'=>$_GET['p']) )}">库存</a>|
+                       <a href="{:U('edit',array('id'=>$val['id'],'p'=>$_GET['p']) )}">编辑</a> |
+                       <a href="{:U('del',array('id'=>$val['id'],'p'=>$_GET['p']) )}">回收站</a>
+                </td>
+          </tr>
+          </foreach>
+          <tr><td height="30" colspan="15" align="center">{$show}</td></tr>
+          <else/>
+          <tr><td  align="center">查无数据</td></tr>
+          </if>
+   </table>
+</div>
+
+  
+
 <script>
 
         //ajax无刷新修改是否显示

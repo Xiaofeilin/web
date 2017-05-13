@@ -9,33 +9,37 @@
              </select>
        </p>
 </form>
-<form method="post" action="" name="listForm">
-       <div class="list-div" id="listDiv">
-             <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
-                    <tr>
-                          <th>ID</th>
-                          <th>属性名</th>
-                          <th>属性类型</th>
-                          <th>属性值</th>  
-                          <th>操作</th>
-                    </tr>
-                    <foreach name="attrList" item="val">
-                    <tr align="center" class="0" id="0_1" id = 'tr_1'>
-                          <td align="center">{$val['id']}</td>
-                          <td align="center" class="first-cell" style = 'padding-left="0"'>
-                                <span><a href="#" >{$val['attr_name']}</a></span>
-                          </td>
-                          <td align="center">{$val['attr_type_name']}</td>
-                          <td align="center"><span>{$val['attr_option_values']}</span></td>
-                          <td width="24%" align="center">
-                                 <a href="{:U('edit',array('id'=>$val['id'],'type_id'=>$type_id) )}">编辑</a> |
-                                 <a href="{:U('del',array('id'=>$val['id'],'type_id'=>$type_id,'p'=>$p) )}" title="移除">移除</a>
-                          </td>
-                    </tr>
-                    </foreach>
-            </table>
-      </div>
-</form>
+
+ <div class="list-div" id="listDiv">
+       <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
+              <if condition="empty($attrList) neq true">
+              <tr>
+                    <th>ID</th>
+                    <th>属性名</th>
+                    <th>属性类型</th>
+                    <th>属性值</th>  
+                    <th>操作</th>
+              </tr>
+              <foreach name="attrList" item="val">
+              <tr align="center" class="0" id="0_1" id = 'tr_1'>
+                    <td align="center">{$val['id']}</td>
+                    <td align="center" class="first-cell" style = 'padding-left="0"'>
+                          <span><a href="#" >{$val['attr_name']}</a></span>
+                    </td>
+                    <td align="center">{$val['attr_type_name']}</td>
+                    <td align="center"><span>{$val['attr_option_values']}</span></td>
+                    <td width="24%" align="center">
+                           <a href="{:U('edit',array('id'=>$val['id'],'type_id'=>$type_id) )}">编辑</a> |
+                           <a href="{:U('del',array('id'=>$val['id'],'type_id'=>$type_id,'p'=>$p) )}" title="移除">移除</a>
+                    </td>
+              </tr>
+              </foreach>
+             <else/>
+             <tr><td  align="center">查无数据</td></tr>
+             </if>
+      </table>
+</div>
+
 <script>
         $('select[name="type_id"]').change(function(){
                     $(this).parent().parent().submit();

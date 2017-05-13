@@ -21,6 +21,7 @@
 		}
 
 		public function add(){
+
 			parent::add();
 			$data = $this->model->goodsLink();
 			$this->assign($data);
@@ -121,7 +122,6 @@
 				$goods_attr = I('post.goods_attr','');
 				$goods_num = I('post.goods_num','');
 				$goodsRepData = $this->model->repertoryNew( $goods_id , $goods_attr , $goods_num );
-				
 				 if($goodsRepData ){
 			 		if( $goodsRep->addAll($goodsRepData) ){
 			 			$goodsRep->commit();

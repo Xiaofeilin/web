@@ -14,6 +14,7 @@
 </form>
  <div class="list-div" id="listDiv">
        <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
+              <if condition="empty($brandList) neq true">
               <tr>
                     <th>ID</th>
                     <th>品牌名称</th>      
@@ -33,9 +34,13 @@
                            <a href="{:U('edit',array('id'=>$val['id']) )}">编辑</a> |
                            <a href="{:U('del',array('id'=>$val['id'],'p'=>$p) )}" title="移除">移除</a>
                     </td>
-              </tr>
-              </foreach>
-                <tr><td height="30" colspan="5" align="center">{$show}</td></tr>
+            </tr>
+            </foreach>
+             <tr><td height="30" colspan="5" align="center">{$show}</td></tr>
+
+             <else/>
+             <tr><td  align="center">查无数据</td></tr>
+             </if>
       </table>
 </div>
         

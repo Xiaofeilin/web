@@ -20,6 +20,7 @@
 </form>
  <div class="list-div" id="listDiv">
        <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
+             <if condition="empty($MemberLevelList) neq true">
               <tr>
                     <th>ID</th>
                     <th>级别名称</th>      
@@ -43,7 +44,10 @@
                     </td>
               </tr>
               </foreach>
-                <tr><td height="30" colspan="6" align="center">{$show}</td></tr>
+             <tr><td height="30" colspan="6" align="center">{$show}</td></tr>
+             <else/>
+             <tr><td  align="center">查无数据</td></tr>
+             </if>
       </table>
 </div>
 

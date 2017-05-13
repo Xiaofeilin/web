@@ -19,6 +19,20 @@
 		*@param array 	$data[经过自动验证的数据]
 		*/
 		protected function _before_insert(&$data){
+			if( !empty($data['search_attr_id']) ){
+				if(!is_array($data['search_attr_id']) ){
+					$this->error = '筛选属性错误';
+					return false;
+				}
+
+				$search_attr_id = "";
+				foreach($data['search_attr_id'] as $key=>$val){
+					if( is_numeric($val) )
+						$search_attr_id.= $val . ',';
+				}
+				$data['search_attr_id'] = rtrim( $search_attr_id , ',' );
+			}
+			
 			if($data['parent_id']!=0){
 				$catOne = $this->find($data['parent_id']);
 				$data['cat_path'] = $catOne['cat_path'] . ',' . $catOne['id'];
@@ -26,6 +40,21 @@
 		}
 
 
+		protected function _before_update(&$data){
+			if( !empty($data['search_attr_id']) ){
+				if(!is_array($data['search_attr_id']) ){
+					$this->error = '筛选属性错误';
+					return false;
+				}
+
+				$search_attr_id = "";
+				foreach($data['search_attr_id'] as $key=>$val){
+					if( is_numeric($val) )
+						$search_attr_id.= $val . ',';
+				}
+				$data['search_attr_id'] = rtrim( $search_attr_id , ',' );
+			}
+		}
 
 		/**
 		*[不显示分类级别大于3的分类数据]
@@ -42,6 +71,52 @@
 			return $catAll;
 		}
 
+
+		public function restore($id){
+			$attr = D('attr');
+			$type = D('type');
+			$typeList = $type->select();
+			$search_attr_id = $this->field('search_attr_id')->where('id='.$id)->find();
+			if(!empty($search_attr_id['search_attr_id']) ){
+				$attrList = $attr->where('id in('. $search_attr_id['search_attr_id'] .')' )->select();
+				$type_ids = '';
+				foreach ($attrList as $key => $value) {
+					$type_ids .= $value['type_id'] . ',';
+				}
+				$type_ids = rtrim($type_ids,',');
+				$attrTypeList = $attr->where('type_id in ('. $type_ids .')')->select();
+				$html = '';
+				foreach ($attrList as $key => $value) {
+					$str = $key==0 ? '+': '-';
+					$html .= '<p><a onclick="addnew(this)"" javascript="void(0)">[' . $str . ']</a><select type="type" ><option value="">请选择</option>';
+					
+					foreach ($typeList as $key1 => $value1) {
+						$selected = $value['type_id']==$value1['id']?'selected':'';
+						$html.='<option  value=' . $value1['id'] . ' ' . $selected.' >'.$value1['type_name'].'</option>';
+					}
+					$html .= '</select>';
+
+					$html .= '  <span name="attr_span"><select name="search_attr_id[ ]">';
+					foreach ($attrTypeList as $key1 => $value1) {
+						$selected = $value['id']==$value1['id']?'selected':'';
+						if($value['type_id']==$value1['type_id'])
+							$html .= '<option value='.$value1['id'].' '. $selected .'>'.$value1['attr_name'].'</option>';
+					}
+					$html.="</select></span></p>";
+				}
+			}else{
+				$html = '<a onclick="addnew(this)"" javascript="void(0)">[+]</a><select type="type" ><option value="">请选择</option>';
+					if($typeAll){
+						foreach( $typeAll as $val){
+							$html.='<option value=' .$val["id"] . '">' . $val["type_name"] . '</option>';
+							
+						}
+					}
+				$html .='</select><span name="attr_span"></span>';
+			}
+			
+			return $html;
+		}
 
 
 		/**
@@ -66,12 +141,14 @@
 				$where['is_show'] = array('eq' , $is_show);
 
 			
+
 			//*****************************分页*******************************
 			$data = array();
+			$join = "";
 			$count = $this->where($where)->count();
 			$page = new \Think\Page($count,C('YeShu'));
 			$data['show'] = $page->show();
-			$catList = $this->order('concat(cat_path,id) desc')->where($where)->limit($page->firstRow.','.$page->listRows)->select();
+			$catList = $this->where($where)->order('concat(cat_path,id) desc')->limit($page->firstRow.','.$page->listRows)->select();
 			foreach ($catList as $key => $value) {
 				$catList[$key]['lv'] = substr_count($value['cat_path'] , ',');
 			}
