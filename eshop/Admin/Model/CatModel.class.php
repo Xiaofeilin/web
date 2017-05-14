@@ -30,7 +30,7 @@
 					if( is_numeric($val) )
 						$search_attr_id.= $val . ',';
 				}
-				$data['search_attr_id'] = rtrim( $search_attr_id , ',' );
+				$data['search_attr_id'] = $search_attr_id;
 			}
 			
 			if($data['parent_id']!=0){
@@ -148,7 +148,7 @@
 			$count = $this->where($where)->count();
 			$page = new \Think\Page($count,C('YeShu'));
 			$data['show'] = $page->show();
-			$catList = $this->where($where)->order('concat(cat_path,id) desc')->limit($page->firstRow.','.$page->listRows)->select();
+			$catList = $this->where($where)->order('concat(cat_path,id) asc')->limit($page->firstRow.','.$page->listRows)->select();
 			foreach ($catList as $key => $value) {
 				$catList[$key]['lv'] = substr_count($value['cat_path'] , ',');
 			}
