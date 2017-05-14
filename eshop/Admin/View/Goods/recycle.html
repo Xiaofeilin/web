@@ -53,10 +53,13 @@
        <input type="submit" value="搜索">
        <a href="{:U('recycle','',false)}?unset=1"><input type="button" value="重置条件"></a>
 </form>
+<form action="{:U('restoreOrDel',array('p'=>$_GET['p'],'is_del'=>0) )}" method="post" id="formeDel"  >
+<input type="submit" value="批量还原">
 <div class="list-div" id="listDiv">
      <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
              <if condition="empty($goodsList) neq true">
             <tr>
+                  <th><input type="button" id="check_all" value="全选"> <input type="button" id="Inverse" value="反选"></th>     
                   <th>商品名称</th>      
                   <th>分类</th>
                    <th>品牌</th>
@@ -76,6 +79,7 @@
             <foreach name="goodsList" item="val">
             <tr align="center" class="0" id="0_1" id = 'tr_1'>
                   <input type="hidden" value="{$val['id']}">
+                  <td align="center"><input type="checkbox" name="id[ ]" value="{$val['id']}"></td>
                   <td align="center">{$val['goods_name']}</td>
                   <td align="center" >{$val['cat_name']}</td>
                   <td align="center" >{$val['brand_name']}</td>
@@ -101,6 +105,7 @@
              </if>
      </table>
 </div>
+</form>
 <script>
            $('.sort').click(function(){
              var sort = $(this).attr('name');
@@ -111,5 +116,20 @@
        //是否显示按钮点击提交表单
         $('input[type="radio"]').click(function(){
              $(this).parent().parent().submit();
+        });
+
+         //全选
+        $('#check_all').click(function(){
+              $('#formeDel').find('input[name="id[ ]"]').attr('checked',true);
+        });
+
+        //反选
+        $('#Inverse').click(function(){
+              var inputs =  $('#formeDel').find('input[name="id[ ]"]');
+              inputs.each(function(key,val){
+                  var valed = !($(this).attr('checked')) ;
+                  $(this).attr('checked',valed);
+              })
+              
         });
 </script>

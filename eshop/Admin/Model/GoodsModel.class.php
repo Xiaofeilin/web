@@ -2,31 +2,34 @@
 	namespace Admin\Model;
 	class GoodsModel extends EqualModel{
 
-		  protected $_auto = array( 
+		//自动填充
+		protected $_auto = array( 
 		  	 array('addtime','time',1,'function') , 
-		  );
+		);
+   
+		//自动验证
+		protected $_validate = array(
+		   	array('goods_name','require','商品名必须填',1),
+		   	array('cat_id','number','请不要乱改html代码',1),
+		   	array('brand_id','number','请不要乱改html代码',2),
+		   	array('market_price','is_numeric','市场价是正整数',1,'function'),
+		   	array('market_price','require','市场价必须填',1),
+		   	array('shop_price','is_numeric','本店价是正整数',1,'function'),
+		   	array('shop_price','require','本店价必须填',1),
+		   	array('integral','number','积分是正整数',2),
+		   	array('integral_price','number','积分兑换是正整数',2),
+		   	array('exp','number','经验值是正整数',2),
+		   	array('is_sale',array(0,1),'请不要乱改html代码',2,'in'),
+		   	array('is_hot',array(0,1),'请不要乱改html代码',1,'in'),
+		   	array('is_new',array(0,1),'请不要乱改html代码',1,'in'),
+		   	array('is_best',array(0,1),'请不要乱改html代码',1,'in'),
+		   	array('is_on_sale',array(0,1),'请不要乱改html代码',1,'in'),
+		   	array('type_id','number','请不要乱改html代码',2),
+		   	array('sort_num','number','排序是正整数',2),
+		   	array('sort_num','0,99','排序1-100',2,'length'),
+		);
 
-		// protected $_validate = array(
-		//    	array('goods_name','require','商品名必须填',1),
-		//    	array('cat_id','number','请不要乱改html代码',1),
-		//    	array('brand_id','number','请不要乱改html代码',2),
-		//    	array('market_price','is_numeric','市场价是正整数',1,'function'),
-		//    	array('market_price','require','市场价必须填',1),
-		//    	array('shop_price','is_numeric','本店价是正整数',1,'function'),
-		//    	array('shop_price','require','本店价必须填',1),
-		//    	array('integral','number','积分是正整数',2),
-		//    	array('integral_price','number','积分兑换是正整数',2),
-		//    	array('exp','number','经验值是正整数',2),
-		//    	array('is_sale',array(0,1),'请不要乱改html代码',2,'in'),
-		//    	array('is_hot',array(0,1),'请不要乱改html代码',1,'in'),
-		//    	array('is_new',array(0,1),'请不要乱改html代码',1,'in'),
-		//    	array('is_best',array(0,1),'请不要乱改html代码',1,'in'),
-		//    	array('is_on_sale',array(0,1),'请不要乱改html代码',1,'in'),
-		//    	array('type_id','number','请不要乱改html代码',2),
-		//    	array('sort_num','number','排序是正整数',2),
-		//    	array('sort_num','0,99','排序1-100',2,'length'),
-		//    );
-
+		
 		/**
 		*[查询商品表关联的其他表]
 		*/
@@ -47,6 +50,7 @@
 	
 			return $data;
 		}
+
 
 		/**
 		*[还原商品的属性值，商品价格，商品相册]
@@ -135,6 +139,7 @@
 			return $data;
 		}
 
+
 		/**
 		*[在添加商品前上传图片并获取上传图片路径]
 		*@param array 	$data[自动验证过滤后的form表单数据]
@@ -152,18 +157,14 @@
 			}
 
 			//判断有没有促销，将促销时间转为时间戳
-			
-
 			if($data['is_sale']==1){
 				if( ($start = I('post.promote_start_time','')) && ($end = I('post.promote_end_time','')) ){
 					 $data['promote_start_time'] = strtotime($start.' 00:00:01');
 					 $data['promote_end_time'] = strtotime($end.' 23:59:59');
-				}
-				
-				
+				}	
 			}
-			
 		}
+
 
 		/**
 		*[在添加商品后的操作]
@@ -231,14 +232,15 @@
 					$memberPrice->addAll($memberPriceData);
 				}
 			}
-
 		}
+
 
 		/**
 		*[数据修改前操作]
 		*@param array 	$data[自动验证过滤后的form表单数据]
 		*/
 		protected function _before_update(&$data){
+			
 			
 			if( ($data['is_del']==1||$data['is_del']===0) ) return true;
 			
@@ -261,6 +263,7 @@
 				$data['promote_end_time'] = strtotime($data['promote_end_time'].' 23:59:59');
 			}
 		}
+
 
 		/**
 		*[数据修改后操作]
@@ -365,9 +368,33 @@
 		}
 
 
+		/**
+		*[回收与还原的id和is_del数据判断]
+		*@param number	$id[商品id]
+		*@param number	$is_del[1:回收 , 0:还原]
+		*/
+		public function idAndIs_del($id,$is_del){
+			$data = array();
+			if($is_del==0||$is_del==1){
+				if(is_numeric( $id )){
+					$data['id'] = $id;
+					$data['is_del'] = $is_del;
+				}
+				elseif(is_array( I('post.id','') ) ){
+					$ids =  I('post.id','') ;
+					$data['id'] = implode(',', $ids);
+					$data['is_del'] = $is_del;
+				}
+				return $data;
+			}
+			return false;
+		}
 
+
+		/**
+		*[还原库存表]
+		*/
 		public function repertory(){
-			//debug
 			$data = array();
 			$goodsAttr = D('GoodsAttr');
 			if( $id = I('get.id','') ){
@@ -392,11 +419,17 @@
 					$data['status'] = 'old_';
 				
 			}
-			// var_dump($goodsAttrList);
 			return $data;
-			//debug
 		}
 
+
+		/**
+		*[处理库存新添加的数据]
+		*@param number 	$goods_id[商品id]
+		*@param array 	$goods_attr[商品属性]
+		*@param array 	$goods_num[商品数]
+		*@return array 		$goodsRepData[商品属性与商品数一一对应的数组]
+		*/
 		public function repertoryNew($goods_id, $goods_attr,$goods_num){
 			if($goods_attr){
 				foreach($goods_attr as $key => $value) {
@@ -425,10 +458,17 @@
 					'goods_number'=>$num,
 				);
 			}	
-			return $goodsRepData;
-			
+			return $goodsRepData;	
 		}
 
+
+		/**
+		*[处理库存旧数据]
+		*@param number 	$goods_id[商品id]
+		*@param array 	$old_goods_attr[旧商品属性]
+		*@param array 	$old_goods_num[旧商品数]
+		*@return array 		$goodsRepData[商品属性与商品数一一对应的数组]
+		*/
 		public function repertoryOld($goods_id,$old_goods_attr,$old_goods_num){
 
 			foreach ($old_goods_attr  as $key => $value) {
@@ -455,9 +495,11 @@
 			return $oldGoodsRepData;
 		}
 
+
 		/**
 		*[搜索+分页]
 		*@param number 	$is_del[0:商品列表，1:回收站]
+		*@return array 		$data[搜索+分页的数组]
 		*/
 		public function search($is_del=0){
 
