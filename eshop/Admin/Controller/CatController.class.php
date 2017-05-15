@@ -14,7 +14,9 @@
 		*[cat数据表添加数据]
 		*/
 		public function add(){
+			
 			parent::add();
+			$data['typeAll'] = D('type')->select();
 			$data['catAll'] = $this->model->lvIt3();
 			$this->assign($data);
 			$this->assignHead('添加分类',U('list'),'分类列表');
@@ -27,9 +29,11 @@
 		*[cat数据表字段修改]
 		*/
 		public function edit(){
+
 			parent::edit();
 			$id = I('get.id','');
 			$data = array();
+			$data['html'] = $this->model->restore($id);
 			$data['catOne'] = $this->model->getCatOne($id);
 			$this->assign($data);
 			$this->assignHead('修改分类',U('list'),'分类列表');
@@ -49,7 +53,12 @@
 				$this->ajaxReturn( $catOne['is_show'] );
 		}
 
-
+		public function ajaxGetAttr(){
+			if($type_id=I('get.type_id','')){
+				$attrList = D('attr')->field('id,attr_name')->where('type_id='.$type_id)->select();
+				$this->ajaxReturn($attrList);
+			}
+		}
 
 		/**
 		*[cat数据删除]

@@ -1,50 +1,135 @@
 <layout name="Index/header_foot"/>
 <form >
+       <p>
+             搜索内容：
+             <input type="text" value="{$_GET['search_val']}" name="search_val">
+             <select name="search_key" id="">
+                    <option value="">请选择</option>
+                    <option value="goods_name" {$_GET['search_key']=='goods_name'?'selected':''}>商品名称</option>
+                    <option value="cat_name" {$_GET['search_key']=='cat_name'?'selected':''}>分类</option>
+                    <option value="brand_name" {$_GET['search_key']=='brand_name'?'selected':''}>品牌</option>
+                    <option value="type_name" {$_GET['search_key']=='type_name'?'selected':''}>类型</option>
+             </select>
+       </p>
 
+       <p>
+             添加时间：
+             <input type="text" class="popupDatepicker" value="{$_GET['start_time']}" name="start_time">~~<input type="text" class="popupDatepicker"  value="{$_GET['last_time']}" name="last_time">
+       </p>
+
+       <p>
+             搜索价格：
+             <input type="text" name="min_price" value="{$_GET['min_price']}">~~<input type="text" name="max_price" value="{$_GET['max_price']}">
+             <select name="price" id="">
+                    <option value="">请选择</option>
+                    <option value="market_price" {$_GET['price']=='market_price'?'selected':''}>市场价</option>
+                    <option value="shop_price" {$_GET['price']=='shop_price'?'selected':''}>本店价 </option>
+             </select>
+       </p>
+
+       <p>
+             是否上架：
+             <input type="radio" name="is_name[is_on_sale]" {$_GET['is_name']['is_on_sale']==1?'checked':''} value="1">上架
+             <input type="radio" name="is_name[is_on_sale]"  {$_GET['is_name']['is_on_sale']==='0'?'checked':''} value="0">下架
+             &nbsp; &nbsp; ||&nbsp; &nbsp;
+             是否促销：
+             <input type="radio" name="is_name[is_sale]"  {$_GET['is_name']['is_sale']==1?'checked':''} value="1">是
+             <input type="radio" name="is_name[is_sale]"  {$_GET['is_name']['is_sale']==='0'?'checked':''} value="0">否
+       </p>
+       <p>
+             是否最热：
+             <input type="radio"  name="is_name[is_hot]"  {$_GET['is_name']['is_hot']==1?'checked':''} value="1">是
+             <input type="radio"  name="is_name[is_hot]"  {$_GET['is_name']['is_hot']==='0'?'checked':''} value="0">否
+             &nbsp; &nbsp; ||&nbsp; &nbsp;
+             是否最新：
+             <input type="radio"  name="is_name[is_new]"  {$_GET['is_name']['is_new']==1?'checked':''} value="1">是
+             <input type="radio"  name="is_name[is_new]"  {$_GET['is_name']['is_new']==='0'?'checked':''} value="0">否
+             &nbsp; &nbsp; ||&nbsp; &nbsp;
+             是否精品：
+             <input type="radio"  name="is_name[is_best]"  {$_GET['is_name']['is_best']==1?'checked':''} value="1">是
+             <input type="radio" name="is_name[is_best]"  {$_GET['is_name']['is_best']==='0'?'checked':''} value="0" >否
+       </p>
+  
+       <input type="submit" value="搜索">
+       <a href="{:U('recycle','',false)}?unset=1"><input type="button" value="重置条件"></a>
 </form>
-<form method="post" action="" name="listForm">
-       <div class="list-div" id="listDiv">
-             <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
-                    <tr>
-                          <th>商品名称</th>      
-                          <th>分类</th>
-                           <th>品牌</th>
-                          <th>市场价</th>
-                           <th>本店价</th>
-                          <th>类型</th>      
-                          <th>是否上架</th>
-                           <th>是否最热</th>
-                          <th>是否最新</th>
-                           <th>是否精品</th>
-                          <th>是否促销</th>      
-                          <th>logo</th>
-                           <th>添加时间</th>
-                           <th>排序</th>
-                          <th>操作</th>
-                    </tr>
-                    <foreach name="goodsList" item="val">
-                    <tr align="center" class="0" id="0_1" id = 'tr_1'>
-                          <input type="hidden" value="{$val['id']}">
-                          <td align="center">{$val['goods_name']}</td>
-                          <td align="center" >{$val['cat_name']}</td>
-                          <td align="center" >{$val['brand_name']}</td>
-                          <td align="center" >{$val['market_price']}</td>
-                          <td align="center" >{$val['shop_price']}</td>
-                          <td align="center" >{$val['type_name']}</td>
-                          <td align="center" status="is_on_sale" val= {$val['is_on_sale']} ><img  src="__PUBLIC__/Admin/images/{$val['is_on_sale']}.gif" /></td>
-                          <td align="center" status="is_hot"  val = {$val['is_hot']} ><img  src="__PUBLIC__/Admin/images/{$val['is_hot']}.gif" /></td>
-                          <td align="center" status="is_new" val = {$val['is_new']}><img  src="__PUBLIC__/Admin/images/{$val['is_new']}.gif" /></td>
-                          <td align="center" status="is_best" val = {$val['is_best']}><img  src="__PUBLIC__/Admin/images/{$val['is_best']}.gif" /></td>
-                          <td align="center" status="is_sale" val = {$val['is_sale']}><img  src="__PUBLIC__/Admin/images/{$val['is_sale']}.gif" /></td>
-                          <td align="center" {$val['logo']}><img width="30" src="__ROOT__/Uploads/{$val['logo']}"></td>
-                          <td align="center" >{$val['addtime']}</td>
-                          <td align="center" >{$val['sort_num']}</td>
-                          <td  align="center" >
-                                 <a href="{:U('restore',array('id'=>$val['id'],'p'=>$_GET['p']) )}">还原</a>
-                          </td>
-                    </tr>
-                    </foreach>
-                    <tr><td height="30" colspan="15" align="center">{$show}</td></tr>
-             </table>
-      </div>
+<form action="{:U('restoreOrDel',array('p'=>$_GET['p'],'is_del'=>0) )}" method="post" id="formeDel"  >
+<input type="submit" value="批量还原">
+<div class="list-div" id="listDiv">
+     <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
+             <if condition="empty($goodsList) neq true">
+            <tr>
+                  <th><input type="button" id="check_all" value="全选"> <input type="button" id="Inverse" value="反选"></th>     
+                  <th>商品名称</th>      
+                  <th>分类</th>
+                   <th>品牌</th>
+                  <th><a name="market_price"  class="sort"   sort_val="{$sort_val===null?1:$sort_val}"  href="javascript:void(0)" >市场价</a></th>
+                   <th><a name="shop_price"  class="sort"   sort_val="{$sort_val===null?1:$sort_val}"  href="javascript:void(0)" >本店价</a></th>
+                  <th>类型</th>      
+                  <th>是否上架</th>
+                   <th>是否最热</th>
+                  <th>是否最新</th>
+                   <th>是否精品</th>
+                  <th>是否促销</th>      
+                  <th>logo</th>
+                   <th><a name="id"  class="sort"   sort_val="{$sort_val===null?1:$sort_val}"  href="javascript:void(0)" >添加时间</a></th>
+                   <th><a name="sort_num"  class="sort"  sort_val="{$sort_val===null?1:$sort_val}" href="javascript:void(0)" >排序</a></th>
+                  <th>操作</th>
+            </tr>
+            <foreach name="goodsList" item="val">
+            <tr align="center" class="0" id="0_1" id = 'tr_1'>
+                  <input type="hidden" value="{$val['id']}">
+                  <td align="center"><input type="checkbox" name="id[ ]" value="{$val['id']}"></td>
+                  <td align="center">{$val['goods_name']}</td>
+                  <td align="center" >{$val['cat_name']}</td>
+                  <td align="center" >{$val['brand_name']}</td>
+                  <td align="center" >{$val['market_price']}</td>
+                  <td align="center" >{$val['shop_price']}</td>
+                  <td align="center" >{$val['type_name']}</td>
+                  <td align="center" status="is_on_sale" val= {$val['is_on_sale']} ><img  src="__PUBLIC__/Admin/images/{$val['is_on_sale']}.gif" /></td>
+                  <td align="center" status="is_hot"  val = {$val['is_hot']} ><img  src="__PUBLIC__/Admin/images/{$val['is_hot']}.gif" /></td>
+                  <td align="center" status="is_new" val = {$val['is_new']}><img  src="__PUBLIC__/Admin/images/{$val['is_new']}.gif" /></td>
+                  <td align="center" status="is_best" val = {$val['is_best']}><img  src="__PUBLIC__/Admin/images/{$val['is_best']}.gif" /></td>
+                  <td align="center" status="is_sale" val = {$val['is_sale']}><img  src="__PUBLIC__/Admin/images/{$val['is_sale']}.gif" /></td>
+                  <td align="center" {$val['logo']}><img width="30" src="__ROOT__/Uploads/{$val['logo']}"></td>
+                  <td align="center" >{$val['addtime']}</td>
+                  <td align="center" >{$val['sort_num']}</td>
+                  <td  align="center" >
+                         <a href="{:U('restore',array('id'=>$val['id'],'p'=>$_GET['p']) )}">还原</a>
+                  </td>
+            </tr>
+            </foreach>
+            <tr><td height="30" colspan="15" align="center">{$show}</td></tr>
+             <else/>
+             <tr><td  align="center">查无数据</td></tr>
+             </if>
+     </table>
+</div>
 </form>
+<script>
+           $('.sort').click(function(){
+             var sort = $(this).attr('name');
+             var sort_val = $(this).attr('sort_val');
+             window.location.href = "{:U('recycle','',false)}/sort/"+sort+"/sort_val/"+sort_val;
+       });
+      
+       //是否显示按钮点击提交表单
+        $('input[type="radio"]').click(function(){
+             $(this).parent().parent().submit();
+        });
+
+         //全选
+        $('#check_all').click(function(){
+              $('#formeDel').find('input[name="id[ ]"]').attr('checked',true);
+        });
+
+        //反选
+        $('#Inverse').click(function(){
+              var inputs =  $('#formeDel').find('input[name="id[ ]"]');
+              inputs.each(function(key,val){
+                  var valed = !($(this).attr('checked')) ;
+                  $(this).attr('checked',valed);
+              })
+              
+        });
+</script>

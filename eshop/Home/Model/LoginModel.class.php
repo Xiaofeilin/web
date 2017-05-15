@@ -31,7 +31,7 @@ class LoginModel extends Model{
 
 		if($info){
 			if($userInfo['status'] == 1){
-				$_SESSION['info'] = $userInfo;
+				$_SESSION['info'] = $userInfo;//把用户信息存入$_SESSION
 
 				$data['errorlogin'] = 0;
 				$data['lastregtime'] = $time;

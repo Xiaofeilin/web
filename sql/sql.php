@@ -154,7 +154,7 @@ CREATE TABLE goods_rep(
 DROP TABLE IF EXISTS num_price;
 CREATE TABLE num_price(
 	goods_id mediumint unsigned not null comment'商品id',
-	num int unsigned not null comment'数量'，
+	num int unsigned not null comment'数量',
 	num_price decimal(10,2) not null comment '优惠价格',
 	key goods(goods_id)
 );
@@ -225,7 +225,7 @@ CREATE TABLE brand_cat(
 
 
 //####################文章管理################
-广告表
+#广告表
 
 create table if not exists `ad`(
 	`id` int(12) unsigned not null auto_increment comment '广告id',
@@ -234,38 +234,38 @@ create table if not exists `ad`(
 	`pic` varchar(255) not null default 'default.jpg' comment '图片路径',
 	`addtime` int(11) unsigned default '0' comment '添加时间',
 	`isshow` int(3) unsigned default '1' comment '是否显示',
-	primary key ('id')
+	primary key (id)
 
 )engine=innodb default charset=utf8;
 
 
 
 
-轮播图表
+#轮播图表
 
-id   pic 
+ 
 
 create table if not exists `lun`(
 	`id` int(12) unsigned not null  auto_increment comment '轮播图id',
 	`pic` varchar(255) not null comment '图片路径',
-	primary key('id')
+	primary key(id)
 )engine=innodb default charset=utf8;
 
 
-友情连接表
-id name url地址 isshow
+#友情连接表
+
 
 create table if not exists `friend_link`(
 	`id` int(12) unsigned not null auto_increment comment '友情连接id',
 	`link_name` varchar(255) not null comment '连接名字',
 	`link_url` varchar(255) not null comment '连接地址',
 	`isshow` char(3) not null comment '是否显示',
-	primary key('id')
+	primary key(id)
 )engine=innodb default charset=utf8;
 
 
 
-页脚管理表
+#页脚管理表
 
 id  pid  name  path
 create table if not exists `footer`(
@@ -273,7 +273,7 @@ create table if not exists `footer`(
 	`pid` int(12) unsigned not null comment '父级id',
 	`name` varchar(255) not null comment '页脚子内容名',
 	`path` varchar(255) not null comment '页脚子内容分类路径',
-	primary key('id')
+	primary key(id)
 )engine=innodb default charset=utf8;
 
 

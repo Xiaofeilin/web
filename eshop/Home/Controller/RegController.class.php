@@ -2,6 +2,8 @@
 namespace Home\Controller;
 use Think\Controller;
 class RegController extends Controller {
+	protected $eCode;
+
 	public function reg(){
 		$this->display();
 	}
@@ -19,36 +21,96 @@ class RegController extends Controller {
 		$verify->entry();
 	}
 
+	/**
+	*['检查用户名']
+	*/
 	public function checkAcc(){
-		$rule = array(
-			array('account','/^[a-zA-Z][a-zA-Z0-9_]*$/','账号应为英文开头的数字字母组合(不区分大小写)！',1),
-			array('account','','账号已被使用！',0,'unique'),	
-		);
-		$user = D('user');
-		$info = $user->validate($rule)->create();//判断用户信息
+		$user = new \Home\Model\RegModel();
+		$info = $user->create();
 
-		$this->error(json_encode($user->getError()));
+		$_SESSION['regMsg']['account'] = I("account");
+
+		$this->error($user->getError());
 	}
 
-	public function setPass(){
-		$rule = array(
-			array('password','/^[\\~!@#$%^&*()-_=+|{}\[\],.?\/:;\'\"\d\w]*$/','密码存在非法字符！',1)
-		);
-		$user = D('user');
-		$info = $user->validate($rule)->create();//判断用户信息
+	/**
+	*['检查密码']
+	*/
+	public function checkPass(){
+		$user = new \Home\Model\RegModel();
+		$info = $user->create();
 
-		$this->error(json_encode($user->getError()));
+		$_SESSION['regMsg']['pwd'] = I("password");
+
+		$this->error($user->getError());
 	}
 
-	public function setCode(){
+	/**
+	*['检查验证码']
+	*/
+	public function checkCode(){
 		$code = I('code');
 		$verify = new \Think\Verify();  
-		$result = $verify->check($code);//判断验证码
+		$result = $verify->check($code);
 
-		if(!$result){
-			$this->ajaxError("验证码错误！","eval");
+		if(!$result) $this->error("验证码错误！");
+	}
+
+	/**
+	*['检查手机']
+	*/
+	public function checkPhone(){
+		$phone = new \Home\Model\RegModel();
+		$info = $phone->create();
+
+		$_SESSION['regMsg']['phone'] = I("phone");
+
+		$this->error($phone->getError());
+	}
+
+	/**
+	*['发送手机验证码']
+	*/
+	public function sendPhoneCode(){
+		$tophone = I("phone");
+		$eCode = mt_rand(1,999999);
+		$sendPhone = send_message($eCode,$tophone);
+
+		$_SESSION['regMsg']['eCode'] = $eCode;
+
+		if($sendPhone){
+			$this->success("短信发送成功，请打开短信填写验证码！");
 		}else{
-			$this->ajaxError(1);
+			$this->error("短信发送失败！");
 		}
+	}
+
+	/**
+	*['检查手机验证码']
+	*/
+	public function checkPhoneCode(){
+		$cCode = I("ecode");
+		$eCode = $_SESSION['regMsg']['eCode'];
+		if($cCode == $eCode && $eCode != null){
+			unset($_SESSION['regMsg']['eCode']);
+			$this->success();
+		}else{
+			$this->error("验证码错误！");
+		}
+	}
+
+	/**
+	*['记录注册信息']
+	*/
+	public function regSuccess(){
+		$user = D("user");
+		$data["account"] = $_SESSION['regMsg']['account'];
+		$data["pwd"] = md5($_SESSION['regMsg']['pwd']);
+		$data["tel"] = $_SESSION['regMsg']['phone'];
+		$data["regtime"] = time();
+
+		$result = $user->data($data)->add();
+		
+		unset($_SESSION['regMsg']);
 	}
 }

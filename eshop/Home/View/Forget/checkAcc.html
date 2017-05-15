@@ -21,9 +21,6 @@
  </head> 
  <body> 
   <input type="hidden" id="baseUrl" value="/asc" /> 
-  <script>
-        //var sn = sn || {}
-    </script> 
   <!-- 引入项目css资源文件 --> 
   <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/safepc.css" /> 
   <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/head.css?v=201601280042" /> 
@@ -37,9 +34,6 @@
    <div class="ng-toolbar-con wrapper"> 
     <div class="ng-toolbar-left"> 
      <a href="index.html" class="ng-bar-node ng-bar-node-backhome" id="ng-bar-node-backhome" name="public0_none_dbgjt_fhyisy01"> <i class="ng-iconfont ng-backhome"></i><span>返回易购首页</span> <i class="ng-line ng-iconfont ml10"></i> </a> 
-     <script type="text/javascript">
-	//if (!sn.isHome){document.getElementById('ng-bar-node-backhome').style.display = "block";};
-</script> 
      <!--网站导航 [[--> 
      <div class="ng-bar-node-box ng-site-nav-box"> 
       <a href="javascript:void(0);" class="ng-bar-node ng-bar-node-site" name="public0_none_dbgjt_wzdh03"> <span>网站导航</span><em class="ng-iconfont down"></em> </a> 
@@ -272,7 +266,14 @@
 					</div> 
 
 					<div class="reg-main mt0"> 
-						<div class="h50"></div> 
+						<div class="h50">
+							<div class="error-wrap"> 
+								<div class="error-box mt10 hide" id="_err-msg"> 
+									<i class="error"></i> 
+									<span id="msg"></span>
+								</div> 
+							</div> 
+						</div> 
 
 						<div class="reg-txtbox"> 
 							<!--

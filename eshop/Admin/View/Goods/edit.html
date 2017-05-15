@@ -32,6 +32,7 @@
         
         <table width="90%" id="general-table" align="center">
           <input type="hidden" name="id" value="{$goodsOne['id']}">
+          <input type="hidden" name="type_id" value="{$goodsOne['type_id']}">
           <input type="hidden" name="p" value="{$_GET['p']}">
              <tr>
                       <td class="label">商品名称：</td>
@@ -274,7 +275,7 @@
                                 success:function(data){
                                        var html="";
                                        $(data).each(function(key,val){
-                                             html += "<p>";
+                                             html += "<p >";
                                              html += val.attr_name + ":";
                                              if(val.attr_type==1)
                                              html += "<a onclick='addnew(this)' javascript='void(0)'>[+]</a>";
@@ -342,8 +343,7 @@
                     '<tr><td class="label"></td><td><input type="file" name="pics[ ]" /></td></tr>'
                 )
        });
-
-
+       
 
 
            //实例化编辑器

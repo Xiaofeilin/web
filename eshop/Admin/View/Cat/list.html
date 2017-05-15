@@ -16,37 +16,40 @@
        </p>
         <input type="submit" value="搜索">
 </form>
-<br>
-<form method="post" action="" name="listForm">
-       <div class="list-div" id="listDiv">
 
-             <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
-                    <tr>
-                          <th>ID</th>
-                          <th>分类名称</th>      
-                          <th>是否显示</th>
-                           <th>父id</th>
-                          <th>操作</th>
-                    </tr>
-                    <foreach name="catList" item="val">
-                    <tr align="center" class="0" id="0_1" id = 'tr_1'>
-                          <td align="center">{$val['id']}</td>
-                          <td align="left" class="first-cell" style = 'padding-left="0"'>
-                                <img src="__PUBLIC__/Admin/images/menu_minus.gif" id="icon_0_1" width="9" height="9" border="0" style="margin-left:{$val[lv]}em" />
-                                <span><a href="#" >{$val[cat_name]}</a></span>
-                          </td>
-                          <td width="20%" show="{$val['is_show']}" ><img  src="__PUBLIC__/Admin/images/{$val['is_show']}.gif" /></td>
-                          <td width="10%"><span>{$val['parent_id']}</span></td>
-                          <td width="24%" align="center">
-                                 <a href="{:U('edit',array('id'=>$val['id']) )}">编辑</a> |
-                                 <a href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" title="移除">移除</a>
-                          </td>
-                    </tr>
-                    </foreach>
-                    <tr><td height="30" colspan="5" align="center">{$show}</td></tr>
-            </table>
-      </div>
-</form>
+<div class="list-div" id="listDiv">
+      
+       <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
+              <if condition="empty($catList) neq true">
+              <tr>
+                    <th>ID</th>
+                    <th>分类名称</th>      
+                    <th>是否显示</th>
+                     <th>父id</th>
+                    <th>操作</th>
+              </tr>
+              <foreach name="catList" item="val">
+              <tr align="center" class="0" id="0_1" id = 'tr_1'>
+                    <td align="center">{$val['id']}</td>
+                    <td align="left" class="first-cell" style = 'padding-left="0"'>
+                          <img src="__PUBLIC__/Admin/images/menu_minus.gif" id="icon_0_1" width="9" height="9" border="0" style="margin-left:{$val[lv]}em" />
+                          <span><a href="#" >{$val[cat_name]}</a></span>
+                    </td>
+                    <td width="20%" show="{$val['is_show']}" ><img  src="__PUBLIC__/Admin/images/{$val['is_show']}.gif" /></td>
+                    <td width="10%"><span>{$val['parent_id']}</span></td>
+                    <td width="24%" align="center">
+                           <a href="{:U('edit',array('id'=>$val['id']) )}">编辑</a> |
+                           <a href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" title="移除">移除</a>
+                    </td>
+              </tr>
+              </foreach>
+              <tr><td height="30" colspan="5" align="center">{$show}</td></tr>
+             <else/>
+             <tr><td  align="center">查无数据</td></tr>
+             </if>
+    </table>
+</div>
+
 <script>
 
         //ajax无刷新修改是否显示

@@ -37,23 +37,29 @@
 
 			<div class="login-txtbox"> 
 				<i class="ico-usename"></i> 
-				<input class="txt-input text-email" type="text" id="account" name="account" autocomplete="off" tabindex="1" /> 
+				<input class="txt-input text-email" type="text" id="account" name="account" autocomplete="off" tabindex="1" placeholder="用户名" />
+				<!-- 
 				<label class="input-label">用户名</label> 
+				-->
 			</div> 
 			<div class="login-txtbox"> 
 				<i class="ico-pwd"></i> 
-				<input class="txt-input" type="password" id="password" name="password" maxlength="20" autocomplete="off" tabindex="2" /> 
+				<input class="txt-input" type="password" id="password" name="password" maxlength="20" autocomplete="off" tabindex="2" placeholder="密码" /> 
+				<!--
 				<label class="input-label">密码</label> 
+				-->
 			</div> 
 			<!--验证码 [[--> 
 			<div class="login-code" id="imageVerifyArea"> 
 				<div id="code-txtboxId" class="code-txtbox"> 
-					<i class="ico-code"></i> 
-					<input class="txt-input" type="text" id="validate" autocomplete="off" maxlength="4" name="validate" tabindex="3" /> 
+					<i class="ico-code"></i>
+					<input class="txt-input" type="text" id="validate" autocomplete="off" maxlength="4" name="validate" tabindex="3" placeholder="验证码" /> 
 					<!--
 					<em id="imageVerifytip" class="st-ico"></em> 
 					-->
+					<!--
 					<label class="input-label">验证码</label> 
+					-->
 				</div> 
 				<div class="code-num"> 
 					<img id="codeimg" name="vcodeimg1" onclick="flush()" src="{:U('Login/code')}" /> 
@@ -81,9 +87,9 @@
 				<a href="javascript:prepareLogonSubmit();" id="submit" name="Logon_index_denglu002" class="login-submit">登　录</a> 
 			</div> 
 			<div class="links-text"> 
-				<a href="javascript:void(0);" class="link-left" id="Logon_index_denglu001" name="Logon_index_denglu001">忘记密码</a> 
+				<a href="{:U('Forget/checkAcc')}" class="link-left" id="Logon_index_denglu001" name="Logon_index_denglu001">忘记密码</a> 
 				<span class="link-left mid-line"></span> 
-				<a href="reg.html" class="link-left" name="Logon_index_denglu003" id="Logon_index_denglu003">免费注册</a> 
+				<a href="{:U('Reg/setAcc')}" class="link-left" name="Logon_index_denglu003" id="Logon_index_denglu003">免费注册</a> 
 			</div> 
 			<script type="text/javascript">
 				$('input[name=account],input[name=password],input[name=validate]').focus(function(){
@@ -102,8 +108,8 @@
 						dataType:"text",
 						success:function(res){
 							if(res == 1){
-								location.href = "{:U('Index/index')}";
-								//location.href = "{:U('Test/test')}";
+								//location.href = "{:U('Index/index')}";
+								location.href = "{:U('Test/test')}";
 							}else{
 								$("div[id=_err-msg]").removeClass("hide");
 								$("#msg").html(res);

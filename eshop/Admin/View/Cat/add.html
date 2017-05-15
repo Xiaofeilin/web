@@ -20,7 +20,10 @@
                                 </select>
                           </td>
                     </tr>
-
+                    <tr>
+                          <td class="label">价格区间：</td>
+                          <td><input type="text" name="price_section"></td>
+                    </tr>
                     <tr>
                           <td class="label">分类描述：</td>
                           <td><textarea name="cat_desc" id="" cols="40" rows="10" placeholder="最大128字,可以为空"></textarea></td>
@@ -33,7 +36,23 @@
                                 <input type="radio" name="is_show" value="0" checked>否
                           </td>
                     </tr>
+                      <tr>
+                        
+                    <td class="label"><br>属性筛选：</td>
 
+                        <td>
+                                <p>
+                                <a onclick='addnew(this)' javascript='void(0)'>[+]</a>
+                                <select type="type" name="">
+                                       <option value="">请选择</option>
+                                       <foreach name="typeAll" item="val">
+                                       <option value="{$val['id']}">{$val['type_name']}</option>
+                                       </foreach>
+                                </select>
+                                <span name="attr_span"></span>
+                                </p>
+                        </td>
+                    </tr>
               </table>
               <div class="button-div">
               <input type="submit" value=" 确定 " />
@@ -41,4 +60,35 @@
               </div>
       </form>
   </div>
+<script>
+             $('select[type="type"]').change(function(){
+                    var type_id = $(this).val();
+                    var _type = $(this);
+                    $.ajax({
+                            type:'GET',
+                            url:"{:U('ajaxGetAttr','',false)}/type_id/"+type_id,
+                            dataType:'json',
+                            success:function(data){
+                                    var html = "<select name='search_attr_id[ ]'>";
+                                    var num = data.length;
+                                    for(var i=0;i<num;i++){
+                                        html+="<option value="+ data[i]['id'] +">"+ data[i]['attr_name'] +"</option>";
+                                    } 
+                                    html+="</select>";
+                                    _type.next().html(html);
+                            }
+                  })
+             });
 
+        function addnew(a){
+              var p = $(a).parent();
+              if($(a).html()=="[+]"){
+                      var newP = p.clone(true);
+                      newP.find("a").html("[-]");
+                      newP.find("select[name='search_attr_id[ ]']").remove();
+                      p.after(newP);
+              }
+              else
+                     p.remove();
+        }
+</script>
