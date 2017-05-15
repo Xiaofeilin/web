@@ -14,6 +14,20 @@
 		);
 
 		/**
+		*[查询关联的其他表]
+		*/
+		public function roleLink(){
+			$data = array();
+			$pri = D('privilege');
+			$priAll = $pri->field('id,pri_name,parent_id,pri_path')->select();
+			$data['priAll'] = getTree($priAll);
+
+			return $data;
+		}
+
+
+
+		/**
 		*[搜索+分页]
 		*@return array 		$data[搜索后+分页的数据]
 		*/

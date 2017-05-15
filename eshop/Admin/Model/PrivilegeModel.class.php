@@ -10,7 +10,7 @@
 
 		//post表单自动验证的规则
 		protected $_validate = array(
-			
+			array('pri_name','require','请填写权限名称',1),
 		);
 
 
@@ -21,20 +21,20 @@
 		protected function _before_insert(&$data){
 			if($data['parent_id']!=0){
 				$privilegeOne = $this->find($data['parent_id']);
-				$data['pri_path'] = $privilegeOne['pri_path'] . ',' . $privilegeOne['id'];
+				$data['pri_path'] = $privilegeOne['pri_path'] .  $privilegeOne['id'] . ',';
 			}
 		}
 
 		/**
-		*[不显示权限级别大于2的分类数据]
+		*[不显示权限级别大于3的分类数据]
 		*@return array 		$catAll[处理过的分类数据]
 		*/
-		public function lvIt2(){
+		public function lvIt3(){
 			$priAll = $this->select();
 			$priAll = getTree($priAll);
 			foreach ($priAll as $key => $value) {
 				$priAll[$key]['pri_name'] = str_repeat('----', $value['lv']+1) . $value['pri_name'];
-				if($value['lv']>0)
+				if($value['lv']>1)
 					unset($priAll[$key]);
 			}
 			return $priAll;
@@ -63,9 +63,6 @@
 			elseif($search_key=='id' || $search_key=='parent_id')
 				$where[$search_key] = array('eq',$search_val);
 		}
-		//按is_use是否显示搜索
-		if( ($is_use=I('get.is_use',false))!==false )
-			$where['is_use'] = array('eq' , $is_use);
 
 		
 		//*****************************分页*******************************
@@ -74,7 +71,7 @@
 		$page = new \Think\Page($count,C('YeShu'));
 		$data['show'] = $page->show();
 
-		$privilegeList = $this->order('concat(pri_path,id) desc')->where($where)->limit($page->firstRow.','.$page->listRows)->select();
+		$privilegeList = $this->order('concat(pri_path,id) asc')->where($where)->limit($page->firstRow.','.$page->listRows)->select();
 		foreach ($privilegeList as $key => $value) {
 				$privilegeList[$key]['lv'] = substr_count($value['pri_path'] , ',');
 			}

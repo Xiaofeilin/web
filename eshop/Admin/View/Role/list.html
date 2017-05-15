@@ -19,15 +19,17 @@
                     <tr>
                           <th>ID</th>
                           <th>角色名称</th>
+                          <th>拥有权限</th>
                           <th>添加时间</th>
                           <th>操作</th>
                     </tr>
                     <foreach name="roleList" item="val">
                     <tr align="center" class="0" id="0_1" id = 'tr_1'>
                           <td align="center">{$val['id']}</td>
-                          <td width="25%"><span>{$val['role_name']}</span></td>
-                          <td width="25%"><span>{$val['addtime']}</span></td>
-                          <td width="25%" align="center">
+                          <td align="center"><span>{$val['role_name']}</span></td>
+                          <td align="center"><span>{$val['pri_name']}</span></td>
+                          <td align="center"><span>{$val['addtime']}</span></td>
+                          <td align="center">
                                  <a href="{:U('edit',array('id'=>$val['id']) )}">编辑</a> |
                                  <a href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" title="移除">移除</a>
                           </td>

@@ -15,8 +15,11 @@
 		*/
 		public function add(){
 			parent::add();
+			$data = $this->model->roleLink();
+			$this->assign($data);
 			$this->assignHead('添加角色',U('list'),'角色列表');
 			$this->display();
+			var_dump($data);
 		}
 
 

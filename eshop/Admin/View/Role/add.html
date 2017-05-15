@@ -8,6 +8,33 @@
                           <td class="label">角色名称:</td>
                           <td><input type='text' name='role_name' maxlength="20" value='' size='27' /> <font color="red">*</font></td>
                     </tr>
+                                
+                    <foreach name="priAll" item="val">
+                        <if condition="$val.lv eq 0">
+                            <tr style="background:#f4fafb;">
+                                  <td colspan="2">
+                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      <input type="checkbox" name="pri_1" value="{$val.id}" pid="{$val.parent_id}">{$val.pri_name}
+                                  </td>
+                            </tr>
+                        </if>
+                        <if condition="$val.lv eq 1">
+                            <tr style="background:#f4fafb;">
+                                  <td colspan="2">
+                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      <input type="checkbox" name="pri_2" value="{$val.id}" pid="{$val.parent_id}">{$val.pri_name}
+                                  </td>
+                            </tr>
+                        </if>
+                        <if condition="$val.lv eq 2">
+                            <tr>
+                                  <td colspan="2">
+                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      <input type="checkbox" name="pri_3" value="{$val.id}" pid="{$val.parent_id}">{$val.pri_name}
+                                  </td>
+                            </tr>
+                        </if>
+                    </foreach>
 
               </table>
               <div class="button-div">
@@ -17,3 +44,23 @@
       </form>
   </div>
 
+  <script type="text/javascript">
+    $(function(){
+      $(':checkbox').click(function(){
+        var pid = $(this).attr('pid');
+        if ($(this)) {};
+    });
+
+
+    //判断子权限是否被选中
+    function isSel(){
+      $(':checkbox').each(function(){
+        
+      });
+    }
+
+    // 全选子权限
+    function selAll(){
+
+    }
+  </script>

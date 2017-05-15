@@ -15,12 +15,18 @@
 		*/
 		public function add(){
 			parent::add();
-			$data['priAll'] = $this->model->lvIt2();
+			$data['priAll'] = $this->model->lvIt3();
 			$data['mvcAll'] = $this->getMVCData();
 			$this->assign($data);
 			$this->assignHead('添加权限',U('list'),'权限列表');
 			$this->display();
-			var_dump($data);
+		}
+
+		public function ajaxC(){
+			$c = I('get.controller_name','');
+			$data['mvcAll'] = $this->getMVCData();
+			$result = $data['mvcAll']['Admin'][$c]?$data['mvcAll']['Admin'][$c]:'';
+			$this->ajaxReturn( $result );
 		}
 
 
@@ -31,9 +37,9 @@
 			parent::edit();
 			$id = I('get.id','');
 			$data = array();
-			$data['privilegeOne'] = $this->model->getPrivilegeOne($id);
-			$this->assign($data);
+			$data = $this->model->getPrivilegeOne($id);
 			$this->assignHead('修改权限资料',U('list'),'权限列表');
+			$this->assign($data);
 			$this->display();
 		}
 
@@ -84,11 +90,6 @@
 
 	            }
 	        }
-
-	        // $result = D('Author')->updata($data);
-	        // $this->assign('stat',$result);
-	        // $this->display();
-	        // var_dump($data);
 	        return $data;
 	    }
 
@@ -129,7 +130,7 @@
 	        $functions = $matches[1];
 
 	        //排除部分方法
-	        $inherents_functions = array('login','logout','uppassword','_initialize','__construct','getController');//如有排除方法添加此数组
+	        $inherents_functions = array('login','logout','uppassword','_initialize','__construct','getController','ajaxC');//如有排除方法添加此数组
 	        foreach ($functions as $func){
 	            $func = trim($func);
 	            if(!in_array($func, $inherents_functions)){
