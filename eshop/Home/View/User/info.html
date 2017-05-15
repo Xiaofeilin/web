@@ -1,0 +1,979 @@
+<?php session_start();?>
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <title>个人信息</title> 
+  <script type="text/javascript" src="http://res.suning.cn/project/msIndex/js/siteAnalytics.min.js?v=2016030101"></script> 
+  <script type="text/javascript">
+        //全局变量
+        var sn = sn || {
+            "context": "/emall",
+            "domain": "www.suning.com",
+            "storeId": "10052",
+            "catalogId": "10051",
+            "memberDomain": "member.suning.com",
+            "online": "online.suning.com",
+            "cookieDomain": ".suning.com",
+            "categoryId": "20089",
+            "searchDomain": "http://search.suning.com/emall/",
+            "msiDomain":"my.suning.com",
+            "scriptDomianDir":""
+        };
+		// 定义当前页面在我的易购下的类别标识
+		var mySuningSideBarSign = "personMyInfoMenuFlag";
+		var mySuningSideMenuType = "short";
+    </script> 
+  <link rel="stylesheet" href="__PUBLIC__/Home/css/common.css" /> 
+  <link rel="stylesheet" href="__PUBLIC__/Home/css/search.css" /> 
+  <link rel="stylesheet" href="__PUBLIC__/Home/css/sn-sidebar.css" /> 
+  <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.js"></script> 
+  <script type="text/javascript" src="__PUBLIC__/Home/js/sn_lazyload.js"></script> 
+  <script type="text/javascript" src="__PUBLIC__/Home/js/lazyelem.min.js"></script> 
+  <script type="text/javascript" src="__PUBLIC__/Home/js/SFE.base.min.js"></script> 
+  <script type="text/javascript" src="__PUBLIC__/Home/js/search.min.js"></script> 
+  <script type="text/javascript" src="__PUBLIC__/Home/js/sn-sidebar.min.js"></script> 
+  <script type="text/javascript" src="__PUBLIC__/Home/js/chatCompat_mini.js"></script> 
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/reset.min.css?v=2016030101" /> 
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/ms-style.min.css?v=2016030101" /> 
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/personal_member.min.css?v=2016030101" /> 
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/calendar.min.css?v=2016030101" /> 
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/Snaddress.min.css?v=2016030101" /> 
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/imgareaselect-default.min.css?v=2016030101" /> 
+ </head> 
+ <!--[if lt IE 7 ]><body class="ie ie6"><![endif]--> 
+ <!--[if IE 7 ]><body class="ie ie7"><![endif]--> 
+ <!--[if IE 8 ]><body class="ie8"><![endif]--> 
+ <!--[if IE 9 ]><body class="ie9"><![endif]--> 
+ <!--[if (gt IE 9)|!(IE)]><!--> 
+ <body class="ms-body"> 
+  <!--<![endif]--> 
+  <!-- 此处引入公用头部 --> 
+  <div id="_TOP_BANNER_" class="ng-top-banner"></div> 
+  <div class="ng-toolbar"> 
+   <div class="ng-toolbar-con wrapper"> 
+    <div class="ng-toolbar-left"> 
+     <a name="public0_none_dbgjt_fhyisy01" id="ng-bar-node-backhome" class="ng-bar-node ng-bar-node-backhome" href="index.html" style="display: block;"> <i class="ng-iconfont ng-backhome"></i><span>返回易购首页</span> <i class="ng-line ng-iconfont ml10"></i> </a> 
+     <!--网站导航 [[--> 
+     <div class="ng-bar-node-box ng-site-nav-box"> 
+      <a href="javascript:void(0);" class="ng-bar-node ng-bar-node-site" name="public0_none_dbgjt_wzdh03"> <span>网站导航</span><em class="ng-iconfont down"></em> </a> 
+      <div class="ng-sn-site-nav ng-d-box site-nav-child" style="display:none;"> 
+       <dl class="sn-site-list lnb"> 
+        <dt>
+          特色购物 
+        </dt> 
+        <dd> 
+         <p><a name="public0_none_dbgjt_wzdh030101" href="http://10035.suning.com/" target="_blank">苏宁互联</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030102" href="http://store.suning.com/v.htm" target="_blank">苏宁V购</a></p> 
+         <p><a name="public0_none_dbgjft_wzdh030103" href="http://ka.suning.com/" target="_blank">苏宁卡</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030104" href="http://g.suning.com/" target="_blank">海外购</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030105" href="http://b.suning.com/" target="_blank">政企采购</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030106" href="coupon.html" target="_blank">大聚惠</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030107" href="http://try.suning.com/" target="_blank">0元试用</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030108" href="http://tv.suning.com/" target="_blank">视频购物</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030111" href="http://sale.suning.com/images/advertise/mdr/oabangong526/index.html" target="_blank">办公直通车</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030112" href="http://pai.suning.com/shanpai/" target="_blank">闪拍</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030113" href="http://yushou.suning.com" target="_blank">预售</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030114" href="http://new.suning.com" target="_blank">新发现</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030115" href="http://2.suning.com" target="_blank">二手优品</a></p> 
+        </dd> 
+       </dl> 
+       <dl class="sn-site-list"> 
+        <dt>
+          主题频道 
+        </dt> 
+        <dd> 
+         <p><a name="public0_none_dbgjt_wzdh030201" href="http://channel.suning.com/dianqicheng.html" target="_blank">电器城</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030202" href="supermarket.html" target="_blank">苏宁超市</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030203" href="http://shouji.suning.com/" target="_blank">手机</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030204" href="http://sports.suning.com/" target="_blank">运动馆</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030205" href="http://book.suning.com/" target="_blank">图书</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030207" href="child.html?/" target="_blank">红孩子母婴</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030208" href="http://binggo.suning.com/" target="_blank">美妆个护</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030209" href="http://pindao.suning.com/city/diannao.htm" target="_blank">电脑</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030210" href="clothes.html" target="_blank">服装城</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030213" href="http://smarthome.suning.com/" target="_blank">智能生活</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030214" href="http://pindao.suning.com/city/jiazhuang.htm" target="_blank">家装馆</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030215" href="http://pindao.suning.com/city/qiche.htm" target="_blank">汽车用品</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030216" href="http://re.suning.com/?utm_source=daohang" target="_blank">苏宁热卖</a></p> 
+        </dd> 
+       </dl> 
+       <dl class="sn-site-list"> 
+        <dt>
+          生活助手 
+        </dt> 
+        <dd> 
+         <p><a name="public0_none_dbgjt_wzdh030301" href="https://passport.suning.com/ids/trustLogin?sysCode=epp&amp;targetUrl=https://licai.suning.com/bof/bofIndex.htm" target="_blank">零钱宝<i class="hot"></i></a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030302" href="http://chong.suning.com/eppscrp/mobile/fill.htm" target="_blank">手机充值</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030303" href="http://huochepiao.suning.com/" target="_blank">火车票</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030304" href="http://sh.suning.com/life/at/memtrans!input.action" target="_blank">转账还款</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030305" href="http://assss.suning.com/assss-web/pc/helper/appointmentStep1.do" target="_blank">约服务</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030306" href="http://sh.suning.com/life/2-1.html" target="_blank">水电煤</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030307" href="http://baoxian.suning.com/ins/index.htm" target="_blank">保险</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030308" href="http://caipiao.suning.com/" target="_blank">彩票</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030309" href="http://jipiao.suning.com/" target="_blank">机票</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030509" href="http://store.suning.com/" target="_blank">门店查询</a></p> 
+        </dd> 
+       </dl> 
+       <dl class="sn-site-list"> 
+        <dt>
+          会员服务 
+        </dt> 
+        <dd> 
+         <p><a name="public0_none_dbgjt_wzdh030401" href="http://vip.suning.com" target="_blank">会员联盟<i class="hot"></i></a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030402" href="http://club.suning.com/" target="_blank">苏宁社区</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030403" href="http://baoxian.suning.com/ins/jiaDian.htm" target="_blank">延长保修</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030404" href="http://snbook.suning.com/web/index.htm" target="_blank">免费书城</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030405" href="https://passport.suning.com/ids/trustLogin?sysCode=epp&amp;targetUrl=https://pay.suning.com/epp-epw/login/login.action" target="_blank">易付宝</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030407" href="https://passport.suning.com/ids/trustLogin?sysCode=epp&amp;targetUrl=https://licai.suning.com/bof/licaiIndex.htm" target="_blank">苏宁理财</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030406" href="http://jinrong.suning.com" target="_blank">苏宁金融</a></p> 
+        </dd> 
+       </dl> 
+       <dl class="sn-site-list rnb"> 
+        <dt>
+          更多热点 
+        </dt> 
+        <dd> 
+         <p><a name="public0_none_dbgjt_wzdh030503" href="http://www.pptv.com/" target="_blank">PPTV</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030504" href="http://sale.suning.com/syb/20120419xsjkhd/index.html" target="_blank">客户端</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030505" href="http://sop.suning.com/" target="_blank">商家入驻<i class="hot"></i></a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030506" href="http://pan.suning.com/cloud-web/web2/cloud.html" target="_blank">苏宁云盘</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030507" href="http://sncs.suning.com/" target="_blank">苏宁众包</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030508" href="http://union.suning.com/" target="_blank">苏宁联盟</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030510" href="http://ued.suning.com/survey/" target="_blank">用户体验</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030511" href="http://gongyi.suning.com" target="_blank">公益频道</a></p> 
+         <p><a name="public0_none_dbgjt_wzdh030502" href="http://jiameng.suning.com/home.action" target="_blank">校园先锋</a></p> 
+         <p><a name="" href="http://jiameng.suning.com/home.action" target="_blank">苏宁加盟</a></p> 
+         <p><a name="" href="http://www.suningcloud.com/" target="_blank">苏宁云</a></p> 
+         <p><a name="" href="http://fc.suning.com/" target="_blank">苏宁足球</a></p> 
+        </dd> 
+       </dl> 
+       <a href="javascript:void(0);" class="ng-close" name="public0_none_dbgjt_wzdh030516"><em class="ng-iconfont"></em></a> 
+      </div> 
+     </div> 
+     <!--网站导航 ]]--> 
+     <!-- 消息 [[ --> 
+     <div class="ng-bar-node-box ng-msg-box"> 
+      <a href="member_message.html" class="ng-bar-node ng-bar-node-msg" name="public0_none_dbgjt_wdxx01" target="_blank"> <span>消息<i class="ng-iconfont dot"></i></span><em class="ng-iconfont down"></em> </a> 
+      <div class="ng-d-box ng-msg-child" style="display:none;"> 
+       <div class="ng-msg-list"> 
+        <div class="ng-msg-item ng-msg-item-no"> 
+         <i></i> 
+         <span>嗷~ 没有新消息...</span> 
+        </div> 
+       </div> 
+       <div class="ng-msg-bottom"> 
+        <a href="member_message.html" name="public0_none_dbgjt_wdxx01" target="_blank">查看更多</a> 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 消息 ]] --> 
+    </div> 
+    <div class="ng-toolbar-right"> 
+     <!-- 登录注册 --> 
+     <a href="javascript:void(0)" class="ng-bar-node username-bar-node username-bar-node-showside" id="username-node" rel="nofollow" style="display:none;"> <span id="usernameHtml01"></span> <em class="hasmsg ng-iconfont"></em> </a> 
+     <div class="ng-bar-node-box username-handle" id="username-node-slide" style="display:none;"> 
+      <a href="member_index.html" rel="nofollow" class="ng-bar-node username-bar-node username-bar-node-noside"> <span id="usernameHtml02"></span> <em class="hasmsg ng-iconfont"></em> <em class="ng-iconfont down"></em> </a> 
+      <div class="ng-d-box ng-down-box ng-username-slide" style="display:none;"> 
+       <a href="member_info.html" class="ng-vip-union" target="_blank" rel="nofollow">账号管理</a> 
+       <a href="javascript:SFE.base.logoff();" rel="nofollow">退出登录</a> 
+      </div> 
+     </div> 
+     <div class="ng-bar-node reg-bar-node" id="reg-bar-node"> 
+<if condition="$_SESSION['info']">
+      <a href="javascript:void(0)" name="public0_none_dbgjt_login0800" rel="nofollow" class="login"> {$Think.session.info.account} </a> 
+<else/>
+      <a href="login.html" name="public0_none_dbgjt_login0800" rel="nofollow" class="login">登录</a> 
+      <a href="https://reg.suning.com/person.do" target="_blank" class="login reg-bbb" rel="nofollow" name="public0_none_dbgjt_register09">注册</a> 
+</if>
+     </div> 
+     <script type="text/javascript">
+				function d(b) {
+					var a;
+					return (a = document.cookie.match(RegExp("(^| )" + b + "=([^;]*)(;|$)"))) ? decodeURIComponent(a[2]
+						.replace(/\+/g, "%20"))
+						: null
+				};
+				var uernameA = d("logonStatus");
+				var usernameNode = document.getElementById('username-node');
+				var usernameNodeSlide = document.getElementById('username-node-slide');
+				var usernameHtml01 = document.getElementById('usernameHtml01') , usernameHtml02 = document.getElementById('usernameHtml02');
+				var regBarNode = document.getElementById('reg-bar-node');
+				if (uernameA != null && uernameA != "") {
+					var uernameC = d("nick");
+					// if( ((window.sidebar_config && sidebar_config.enable)||sn.hasSidebar) && !sn.hasNewSidebar ){
+					// 	usernameNode.style.display = "block";
+					// }else{
+						usernameNodeSlide.style.display = "block";
+					//}
+					usernameHtml01.innerHTML = uernameC;
+					usernameHtml02.innerHTML = uernameC;
+					regBarNode.style.display = "none";
+				}else{
+					usernameNode.style.display = "none";
+					usernameNodeSlide.style.display = "none";
+					usernameHtml01.innerHTML = " ";
+					usernameHtml02.innerHTML = " ";
+					regBarNode.style.display = "block";
+				}
+			</script> 
+     <!--我的订单 [[--> 
+     <div class="ng-bar-node-box myorder-handle"> 
+      <a href="member_order.html?storeId=10052&amp;catalogId=10051" rel="nofollow" name="public0_none_dbgjt_order04" class="ng-bar-node ng-bar-node-fix touch-href ng-bar-node-pr5"><span>我的订单</span><em class="ng-iconfont down"></em></a> 
+      <div class="ng-down-box ng-d-box myorder-child" style="display:none;"> 
+       <a href="member_order.html?catalogId=10051&amp;storeId=10052&amp;selectTime=all&amp;status=M" rel="nofollow" name="public0_none_dbgjt_order0401">待支付<em id="waitPayCounts"></em></a> 
+       <a href="member_order.html?catalogId=10051&amp;storeId=10052&amp;selectTime=all&amp;status=C000" rel="nofollow" name="public0_none_dbgjt_order0402">待收货<em id="waitDeliveryCounts"></em></a> 
+       <a href="member_comments.html" rel="nofollow" name="public0_none_dbgjt_order0403">待评价<em id="waitEvaluation"></em></a> 
+       <a href="http://member.suning.com/emall/SNLingYueGoodsOrderView?storeId=10052&amp;catalogId=10051" rel="nofollow" name="public0_none_dbgjt_order0404">修改订单</a> 
+      </div> 
+     </div> 
+     <!--我的订单 ]]--> 
+     <!--我的易购 [[--> 
+     <div class="ng-bar-node-box mysuning-handle"> 
+      <a href="member_index.html" rel="nofollow" name="public0_none_dbgjt_wdyg05" class="ng-bar-node ng-bar-node-fix touch-href ng-bar-node-pr5"><span>我的易购</span><em class="ng-iconfont down"></em></a> 
+      <div class="ng-down-box ng-d-box mysuning-child" style="display:none;"> 
+       <a href="http://2.suning.com/myOrder/queryMyOrders.do" name="public0_none_dbgjt_wdyg0501" rel="nofollow" target="_blank">我的二手</a> 
+       <a href="https://passport.suning.com/ids/trustLogin?sysCode=epp&amp;targetUrl=http://my.jr.suning.com/sfp/accountAssets/index.htm" rel="nofollow" name="public0_none_dbgjt_wdyg0502" target="_blank">我的金融</a> 
+       <a href="member_collect_goods.html" rel="nofollow" name="public0_none_dbgjt_wdyg0503">我的收藏</a> 
+       <a href="https://rxf.suning.com/epps-cpf/accountMgt/assetOverview.do" rel="nofollow">我的任性付</a> 
+       <a href="member_coupon.html?storeId=10052&amp;catalogId=10051" rel="nofollow" name="public0_none_dbgjt_wdyg0504">我的优惠券</a> 
+       <a href="http://vip.suning.com/sign/welcome.do" rel="nofollow" name="public0_none_dbgjt_wdyg0505">打卡赚云钻</a> 
+       <a href="http://vip.suning.com" class="ng-vip-union" target="_blank" rel="nofollow" name="public0_none_dbgjt_wdyg0506">会员联盟<em class="ng-iconfont"></em></a> 
+      </div> 
+     </div> 
+     <!--我的易购 ]]--> 
+     <!-- 购物车 --> 
+     <a class="ng-bar-node ng-bar-node-mini-cart" name="public0_none_minicart_gouwclj" rel="nofollow" href="cart.html?langId=-7&amp;storeId=10052&amp;catalogId=10051"> <em class="ng-iconfont cart"></em><span>购物车</span> <span class="total-num-box" id="J_total_num_box"> <b class="total-num J_cart_total_num" id="showTotalQty">0</b> <span class="total-num-bg-box"> <em></em> <i></i> </span> </span> </a> 
+     <script type="text/javascript">
+				var ngCartNum =  d("totalProdQty");
+				ngCartNum = ( ngCartNum ==0 || ngCartNum == null )?0:ngCartNum;
+				ngCartNum = ngCartNum>99?'99+':ngCartNum;
+				document.getElementById('showTotalQty').innerHTML = ngCartNum;
+			</script> 
+     <!--手机苏宁 [[--> 
+     <div class="ng-bar-node-box app-down-box"> 
+      <a href="http://sale.suning.com/syb/20120419xsjkhd/index.html" target="_blank" name="public0_none_dbgjt_sjsn01" rel="nofollow" class="ng-bar-node mb-suning touch-href"> <em class="ng-iconfont mb"></em><span>手机苏宁</span><em class="ng-iconfont down"></em> </a> 
+      <div class="ng-mb-box ng-d-box mb-down-child" style="display:none;"> 
+       <div class="ng-code-box"> 
+        <p class="ng-tip"> <a href="http://sale.suning.com/syb/20120419xsjkhd/index.html" rel="nofollow" name="public0_none_dbgjt_sjsn0101" target="_blank">扫一扫，下载易购客户端</a> </p> 
+        <a href="http://sale.suning.com/syb/20120419xsjkhd/index.html" rel="nofollow" name="public0_none_dbgjt_sjsn0102" target="_blank"> <img src3="http://img.suning.cn/public/v3/images/code.png?var=07" alt="苏宁易购APP二维码" height="80" width="80" /> </a> 
+       </div> 
+       <div class="ng-app-box"> 
+        <div class="ng-app-list"> 
+         <a href="https://passport.suning.com/ids/trustLogin?sysCode=epp&amp;targetUrl=https://pay.suning.com/epp-epw/login/login.action" target="_blank" rel="nofollow" name="public0_none_dbgjt_sjsn0103" class="ng-app"><img src3="http://img.suning.cn/public/v3/images/app-ebook.png?var=01" title="易付宝钱包" /></a> 
+         <a href="http://sale.suning.com/images/advertise/zyn/TV0811sndjt/index.html" target="_blank" rel="nofollow" name="public0_none_dbgjt_sjsn0104" class="ng-app"><img src3="http://img.suning.cn/public/v3/images/app-sn.png?var=03" title="苏宁易购TV版" /></a> 
+         <a href="http://app.pptv.com/pg_get_clt" target="_blank" rel="nofollow" name="public0_none_dbgjt_sjsn0105" class="ng-app"><img src3="http://img.suning.cn/public/v3/images/app-pptv.png?var=01" title="PPTV" /></a> 
+         <a href="http://snbook.suning.com/web/index.htm" target="_blank" rel="nofollow" name="public0_none_dbgjt_sjsn0106" class="ng-app"><img src3="http://img.suning.cn/public/v3/images/app-suning.png?var=02" title="苏宁阅读" /></a> 
+        </div> 
+       </div> 
+       <a href="http://sale.suning.com/syb/yinliuye0512/index.html" target="_blank" rel="nofollow" name="public0_none_dbgjt_sjsn0108"> <img src3="http://img.suning.cn/public/v3/images/newreg.png?v=20150506" height="35" width="242" /> </a> 
+       <a href="javascript:void(0);" name="public0_none_dbgjt_sjsn0109" class="ng-close" rel="nofollow"><em class="ng-iconfont"></em></a> 
+      </div> 
+     </div> 
+     <!--手机苏宁 ]]--> 
+     <a href="https://passport.suning.com/ids/trustLogin?sysCode=epp&amp;targetUrl=https://pay.suning.com/epp-epw/login/login.action" name="public0_none_dbgjt_yfb06" class="ng-bar-node ng-bar-node-pr5" target="_blank"><span>易付宝</span></a> 
+     <a href="http://b.suning.com" class="ng-bar-node ng-bar-node-pr5" name="public0_none_dbgjt_qypd01" target="_blank"><span>政企采购</span></a> 
+     <!--服务中心 [[--> 
+     <div class="ng-bar-node-box service-handle"> 
+      <a href="javascript:void(0);" class="ng-bar-node ng-bar-node-service ng-bar-node-fix touch-href ng-bar-node-pr5" rel="nofollow" name="public0_none_dbgjt_fwzx07"><span>客户服务</span><em class="ng-iconfont down"></em> </a> 
+      <div class="ng-down-box ng-d-box service-center-child ng-ser-list" style="display:none;"> 
+       <a href="http://help.suning.com" rel="nofollow" target="_blank" name="public0_none_dbgjt_fwzx0705">帮助中心</a> 
+       <a href="http://store.suning.com" rel="nofollow" target="_blank" name="public0_none_dbgjt_fwzx0704">查找门店</a> 
+       <a href="member_aftersale.html?storeId=10052&amp;catalogId=10051" rel="nofollow" name="public0_none_dbgjt_fwzx0701" target="_blank">退换货</a> 
+       <a href="http://assss.suning.com/assss-web/pc/helper/appointmentStep1.do" target="_blank">约服务</a> 
+       <a href="member_suggest.html" rel="nofollow" name="public0_none_dbgjt_fwzx0702" target="_blank">投诉</a> 
+       <a href="http://s.suning.com" rel="nofollow" name="public0_none_dbgjt_fwzx0706" target="_blank">建议反馈</a> 
+       <a href="javascript:findpass();" rel="nofollow" name="public0_none_dbgjt_fwzx0707">在线咨询</a> 
+      </div> 
+     </div> 
+     <!--服务中心 ]]--> 
+    </div> 
+    <div id="ng-minicart-slide-box"></div> 
+   </div> 
+  </div> 
+  <!--我的易购首页头部--> 
+  <!-- 我的易购公用头 [[ --> 
+  <header class="ms-header ms-header-inner ms-head-position"> 
+   <article class="ms-header-menu"> 
+    <style type="text/css">
+	.nav-manage .list-nav-manage {
+		position: absolute;
+		padding: 15px 4px 10px 15px;
+		left: 0;
+		top: -15px;
+		width: 90px;
+		background: #FFF;
+		box-shadow: 1px 1px 2px #e3e3e3, -1px 1px 2px #e3e3e3;
+		z-index: 10;
+	}
+	.ms-nav li {
+		float: left;
+		position: relative;
+		padding: 0 20px;
+		height: 44px;
+		font: 14px/26px "Microsoft YaHei";
+		color: #FFF;
+		cursor: pointer;
+		z-index: 10;
+	}
+</style> 
+    <div class="header-menu"> 
+     <div class="ms-logo"> 
+      <a name="Myyigou_index_none_daohangLogo" href="member_index.html" class="ms-head-logo"></a> 
+     </div> 
+     <nav class="ms-nav"> 
+      <ul> 
+       <li class=""><a name="Myyigou_index_none_daohang1001" data-url="" href="member_index.html">首页</a><i class="nav-arrow"></i></li> 
+       <li class="nav-manage selected"> <a name="Myyigou_index_none_daohang1003" data-url="" href="http://www.suning.com">账户管理<em></em></a><i class="nav-arrow"></i> 
+        <div class="list-nav-manage hide"> 
+         <p class="nav-mge-hover">账户管理<em></em></p> 
+         <p><a name="Myyigou_index_none_daohang10031" data-url="" href="member_index.html/person.do">个人信息</a></p> 
+         <p><a target="_blank" name="Myyigou_index_none_daohang10032" data-url="" href="https://aq.suning.com/asc/index.do">安全设置</a></p> 
+         <p><a name="Myyigou_index_none_daohang10033" data-url="" href="https://my.suning.com/cardBind.do">门店会员卡</a></p> 
+         <p><a name="Myyigou_index_none_daohang10037" data-url="" href="https://ssl.suning.com/emall/SNB2CMergeInterconnectInfoCmd?storeId=10052&amp;catalogId=10051">关联互联号</a></p> 
+         <p><a target="_blank" name="Myyigou_index_none_daohang10034" data-url="" href="https://pay.suning.com/epp-epw/useraccount/compatible-login!login.action">我的易付宝</a></p> 
+         <p><a name="Myyigou_index_none_daohang10035" data-url="" href="member_index.html/address.do">地址管理</a></p> 
+         <p><a name="Myyigou_index_none_daohang10036" data-url="" href="member_index.html/student.do">校园用户</a></p> 
+         <p><a name="Myyigou_index_none_daohang10038" data-url="" href="member_index.html/eppBind.do">易付宝绑定设置</a></p> 
+         <p><a name="Myyigou_index_none_daohang10039" data-url="" href="member_index.html/accountBind.do">绑定管理</a></p> 
+         <p><a name="Myyigou_index_none_daohang100310" data-url="" href="member_index.html/personalVat.do">个人增票</a></p> 
+        </div> </li> 
+       <li class="ms-nav-msg"><a name="Myyigou_index_none_daohang1004" data-url="messageMenuFlag" href="http://msg.suning.com/">消息</a><i class="nav-arrow"></i></li> 
+      </ul> 
+      <div class="ms-search"> 
+       <form method="get" onsubmit="return SFE.base.onSubmitSearch(this)" id="msiSearchForm"> 
+        <span></span> 
+        <input type="hidden" value="" id="searchKeywords" /> 
+        <input type="text" value="" id="searchKeywordFixed" /> 
+        <a href="javascript:ms_common.msiOnSubmitSearch('searchKeywordFixed');" id="msiSearchKeywordOnSub"></a> 
+       </form> 
+      </div> 
+     </nav> 
+    </div> 
+   </article> 
+   <article class="ms-useinfo"> 
+    <div id="memberInfo" class="header-useinfo"> 
+     <div class="ms-avatar"> 
+      <div class="useinfo-avatar"> 
+       <img src="http://image4.suning.cn/uimg/cmf/cust_headpic/0000000000_01_60x60.jpg" /> 
+       <div class="edit-avatar"></div> 
+       <a href="member_index.html/person.do" name="Myyigou_index_info_PheadImg" class="text-edit-avatar">修改</a> 
+      </div> 
+      <a href="member_index.html/person.do" name="Myyigou_index_info_PnickName">{$Think.session.info.account}</a> 
+     </div> 
+     <!--用户名称及其他--> 
+     <div class="ms-name-info"> 
+      <div class="link-myinfo"> 
+       <a href="member_index.html/person.do" name="Myyigou_index_info_PmyDatum">我的资料</a> 
+      </div> 
+      <div class="info-member"> 
+       <!--会员等级对应类名：普通-铂金（member-1/4）--> 
+       <span class="name-member member-1"> <i></i><a href="http://vip.suning.com/ams-web/custLevel/memberLevel.htm" name="Myyigou_index_info_PmemberGrade" target="_blank">新人会员</a></span> 
+       <label class="grow-num">成长值：</label> 
+       <div class="rate-member"> 
+        <div class="text-rate"> 
+         <span>20</span>/ 
+         <span>0</span> 
+        </div> 
+        <div style="width:0%" class="bg-rate"></div> 
+       </div> 
+      </div> 
+      <div class="info-safety"> 
+       <!--安全等级文字颜色状态对应类名：低(lv-1)/中(lv-2)/高(lv-3)--> 
+       <span class="safety-lv lv-3"> <a target="_blank" href="https://aq.suning.com/asc/loginsecurityinfo.do" name="Myyigou_index_info_SecurityLv">安全等级：<span>中</span></a></span> 
+       <!--未/已绑定状态：(unbind)bind-phone/email--> 
+       <a href="https://aq.suning.com/asc/mobile/check.do?" target="_blank" name="Myyigou_index_info_PbindPhone" class="bind-phone"> <i></i>修改手机</a> 
+       <a href="https://aq.suning.com/asc/email/check.do?" target="_blank" name="Myyigou_index_info_PbindEmail" class="bind-email"> <i></i>修改邮箱</a> 
+       <a href="member_index.html/address.do" class="manage-addr" name="Myyigou_index_info_AddressManagement"><i></i>地址管理</a> 
+      </div> 
+     </div> 
+    </div> 
+   </article> 
+  </header> 
+  <!-- 我的易购公用头 ]] --> 
+  <script>
+  /*
+	$(function(){
+		getCommonHorizontalMenu();
+		getMyMemberInfo();
+	});
+	
+	function getCommonHorizontalMenu(){
+		var  _msiDomain = ms_common.getEnv('msiDomain');
+		if(!_msiDomain){
+			_msiDomain = sn.msiDomain;
+		}
+		var  _msiT = new Date().getTime();
+		try{
+			if(ms_common.getCookie('custno')){
+				_msiT = ms_common.getCookie('custno') ^ 'mySuningSideMenu';
+			}
+		}catch(e){
+		}
+		var url = "//"+ _msiDomain + "/ajax/getCommonHorizontalMenu.do?_t="+_msiT;
+		$.ajax({
+			url: url,
+			type: 'GET',
+			dataType: 'jsonp',
+			timeout: 15000,
+			cache : true,
+			jsonpCallback : "getCommonHorizontalMenuCallBack",
+			success: function(data){
+				$(".header-menu").replaceWith(data.htmlDom);
+				ms_common.userManage();
+			    ms_common.checkhHtml5();
+			    if("undefined" != typeof(mySuningSideBarSign) && "messageMenuFlag" == mySuningSideBarSign){
+					//有菜单标识且是短消息页面,不加载消息未读数量
+				}else{
+					//无菜单标识或有菜单标识且不为短消息页面，加载消息未读数量
+				    // 获取消息数量
+					getMMSMyMessageInfo();
+				}
+				//设置菜单new标识
+				//setMsiMenuNewIcon();
+			},
+			error: function(data){
+				$(".header-menu").replaceWith("<div style='text-align:center; line-height:40px;'><span></span><a href='javascript:getCommonHorizontalMenu();'>刷新</a></div>");
+	        }
+		});
+	};
+	
+	getMyMemberInfo = function(){
+		var  _msiDomain = ms_common.getEnv('msiDomain');
+		if(!_msiDomain){
+			_msiDomain = sn.msiDomain;
+		}
+		$.ajax({
+			type : "post",
+			url :"//"+ _msiDomain + "/memberInfoPageHead.do",
+			async : true,
+			dataType:'jsonp',
+			timeout : 15000,
+			success : function (data) {
+				if("error" != data.htmlDom){
+					$("#memberInfo").replaceWith("<div class='header-useinfo' id='memberInfo' >"+data.htmlDom+"</div>");
+				    ms_common.userAvatar();
+				}else{
+	
+				}
+			},
+			error : function(data) {
+			}
+		});
+	};
+	
+	
+	getMMSMyMessageInfo = function(){
+		$('.ms-header .ms-header-menu .ms-nav').find("li").each(function(){
+		var data_flag = $(this).find('a').attr('data-url');
+			if(data_flag=="messageMenuFlag"){
+				var  _mmsDomain = ms_common.getEnv('mmsDomain');
+				$.ajax({
+					type : "get",
+					url :"//"+_mmsDomain+"/service/getUnreadMessages.do",
+					async : true,
+					dataType:'jsonp',
+					timeout : 15000,
+					success : function (data) {
+						if ("error" != data.returnCode) {
+							var messageCount = data.unreadMsgTotal;
+							if (messageCount > 0) {
+								$('.ms-header-menu .ms-nav').find("li").each(function(){
+								var data_flag = $(this).find('a').attr('data-url');
+									if(data_flag=="messageMenuFlag"){
+							        	$(this).find('a').append("<span>"+messageCount+"</span>");
+									}
+								})
+							}
+						}
+					},
+					error : function(data) {
+					}
+				});	
+			}
+		})
+	};
+
+	
+	setMsiMenuNewIcon = function(){
+		$('.ms-header .ms-header-menu .ms-nav').find("li").each(function(){
+		var data_flag = $(this).find('a').attr('data-url');
+			if(data_flag=="messageMenuFlag"){
+				$(this).find('a').after('<i class="nav-new"></i>');
+			}
+		})
+	};*/
+</script> 
+  <div id="ms-center" class="personal-member"> 
+   <div class="cont"> 
+    <!-- 此处引入我的易购左侧组件 --> 
+    <!-- 我的易购左侧组件 [[ --> 
+    <div class="cont-side"> 
+     <div class="side-neck"> 
+      <i></i> 
+     </div> 
+     <div class="ms-side"> 
+      <article class="side-menu side-menu-off"> 
+       <style type="text/css">
+
+.side-hot-icon{background: url(images/hot.png?v=2016030101) no-repeat right top;
+    background-color: u;
+    padding-right: 24px;
+}
+.side-opinion-icon{
+	padding-right: 14px;
+	background: url(images/opinion.png?v=2016030101) no-repeat right center;
+}
+.news-icon{
+	background: url(images/new.png?v=2016030101) no-repeat right top;
+    padding-right: 24px;
+}
+</style> 
+       <dl style="" class="side-menu-tree"> 
+        <dt>
+          账户管理 
+        </dt> 
+        <dd> 
+         <a href="member_info.html" data-url="personMyInfoMenuFlag" name="Myyigou_index_none_daohang50011" id="50011" style="color:#f70"><span>&middot;</span>个人信息</a> 
+        </dd> 
+        <dd> 
+         <a href="https://aq.suning.com/asc/index.do" target="_blank" data-url="" name="Myyigou_index_none_daohang50012" id="50012"><span>&middot;</span>安全设置</a> 
+        </dd> 
+        <dd> 
+         <a href="https://my.suning.com/cardBind.do" data-url="BindSNCardMenuFlag" name="Myyigou_index_none_daohang50013" id="50013"><span>&middot;</span>门店会员卡</a> 
+        </dd> 
+        <dd> 
+         <a href="https://ssl.suning.com/emall/SNB2CMergeInterconnectInfoCmd?storeId=10052&amp;catalogId=10051" data-url="" name="Myyigou_index_none_daohang50014" id="50014"><span>&middot;</span>关联互联号</a> 
+        </dd> 
+        <dd> 
+         <a href="https://pay.suning.com/epp-epw/useraccount/compatible-login!login.action" target="_blank" data-url="" name="Myyigou_index_none_daohang50015" id="50015"><span>&middot;</span>我的易付宝</a> 
+        </dd> 
+        <dd> 
+         <a href="member_addr.html" data-url="myAddressMenuFlag" name="Myyigou_index_none_daohang50016" id="50016"><span>&middot;</span>地址管理</a> 
+        </dd> 
+        <dd> 
+         <a href="member_index.html/student.do" data-url="TheCampusUsersMenuFlag" name="Myyigou_index_none_daohang50017" id="50017"><span>&middot;</span>校园用户</a> 
+        </dd> 
+        <dd> 
+         <a href="member_index.html/eppBind.do" data-url="eppBindMenuFlag" name="Myyigou_index_none_daohang50018" id="50018"><span>&middot;</span>易付宝绑定设置</a> 
+        </dd> 
+        <dd> 
+         <a href="member_index.html/accountBind.do" data-url="wechatBindMenuFlag" name="Myyigou_index_none_daohang50019" id="50019"><span>&middot;</span>绑定管理</a> 
+        </dd> 
+        <dd> 
+         <a href="member_index.html/personalVat.do" data-url="personalvatFlag" name="Myyigou_index_none_daohang500110" id="500110"><span>&middot;</span>个人增票</a> 
+        </dd> 
+       </dl> 
+       <a class="switch-side-menu icon-up-side" ison="on"><i></i></a> 
+      </article> 
+     </div> 
+    </div> 
+    <!-- 我的易购左侧组件 ]] --> 
+    <script>
+    /*
+//获得纵向菜单
+$(function() {
+   		getCommonVerticalMenu();
+		window.onresize=resizeBannerImage;//当窗口改变宽度时执行此函数
+});
+function getCommonVerticalMenu(){
+	var mySuningSideMenuUrl,menuTypeFlag;
+	var  _msiDomain = ms_common.getEnv('msiDomain');//获取我的易购域名
+	var _sncfDomain = ms_common.getEnv('sncfDomain');//任性付域名
+	var _rxfDomain = ms_common.getEnv('rxfDomain');//任性付激活域名
+	var _passportDomain = ms_common.getEnv('passportDomain');//passport域名
+	if(!_msiDomain){
+		_msiDomain = sn.msiDomain;//如果取不到默认去全局变量SN的
+	}
+	var  _msiT = new Date().getTime();
+	try{
+		if(ms_common.getCookie('custno')){
+			_msiT = ms_common.getCookie('custno') ^ 'mySuningSideMenu';
+		}
+	}catch(e){
+	}
+	//获取菜单类型是否为账户管理下菜单
+	if("undefined" != typeof(mySuningSideMenuType) && "short" == mySuningSideMenuType){
+		mySuningSideMenuUrl = "//"+ _msiDomain+'/ajax/getCommonVerticalMenu.do?menuType=short&_t='+_msiT;
+		menuTypeFlag = 1;//1为账户管理
+	}else{
+		mySuningSideMenuUrl = "//"+ _msiDomain+'/ajax/getCommonVerticalMenu.do?_t='+_msiT;
+		menuTypeFlag = 0;//0为交易管理
+	}
+	$.ajax({
+	    	url : mySuningSideMenuUrl,
+	        type : 'GET',
+	        dataType : 'jsonp',
+			timeout : 15000,
+			cache : true,
+			jsonpCallback : "getCommonVerticalMenuCallBack",
+	        success : function(data){
+	        	$(".side-menu-tree").replaceWith(data.htmlDom);
+	        	if(1==menuTypeFlag){
+					$(".side-menu-tree dt").html("账户管理");
+				}
+	       		ms_common.treeOrder();
+				if("undefined" != typeof(mySuningSideBarSign)){
+					if("" != mySuningSideBarSign){
+						$('.side-menu-tree').find("a").each(function(){
+						var data_flag = $(this).attr('data-url');
+							if(data_flag==mySuningSideBarSign){
+								$(this).attr("style","color:#f70");
+							}
+						})	
+					}
+				}
+				var _wWidth = $(window).width();
+				if(_wWidth>880){
+					//$(".switch-side-menu").click();
+					$(".side-menu-tree").show();
+				}
+			},
+	        error : function (){
+				$(".side-menu-tree").html("<div style='text-align:center; line-height:40px;'><span></span><a href='javascript:getCommonVerticalMenu();'>刷新</a></div>");
+	        }
+	});
+};
+function resizeBannerImage(){
+    var _wWidth = $(window).width();
+	var _menuIsOn = $('.switch-side-menu').attr("ison");
+	if(_wWidth>880){
+		if('off'==_menuIsOn){
+	   		$(".switch-side-menu").click();
+		}
+	}
+	if(_wWidth<880){
+		if ('on' == _menuIsOn) {
+			$(".switch-side-menu").click();
+		}
+	}
+}
+*/
+</script> 
+
+<foreach name="userinfo" item="val">
+    <div class="cont-main"> 
+     <div class="main-wrap mt15"> 
+      <!-- head [[ --> 
+      <h3> 
+<!--      <span>其他说明：您的会员编号为：6150131542，您可以凭此编号到苏宁任一门店消费。
+      </span>
+--> 
+      <strong>个人信息</strong> </h3> 
+      <div class="user-profile clearfix"> 
+       <div class="user-profile-wrap"> 
+        <div class="profile-avatar"> 
+         <img src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_01_120x120.jpg" height="120" width="120" /> 
+         <a href="javascript:;" name="person_index_info_head01">编辑头像</a> 
+         <div class="edit_bg"></div> 
+        </div> 
+        <a href="http://vip.suning.com/ams-web/custLevel/memberLevel.htm" target="_blank" class="vip vip-new"></a> 
+       </div> 
+       <div class="profile-info"> 
+        <div class="control-group clearfix "> 
+         <!--<label class="control-label"><em>*</em>用户名：</label>--> 
+         <div class="controls lh26"> 
+          <input id="userName" name="userName" maxlength="25" onblur="checkPersonMemberInfo.isValidUserName()" onfocus="checkPersonMemberInfo.showUserNameTypeInfo()" type="text" class="text" value="{$val.username}" placeholder="请设置用户名" /> 
+          <!--<span class="tips-words">请设置用户名</span> -->
+         </div> 
+         <!-- 报错位 [[ --> 
+         <div id="userNameErr" class="error-place l">
+          <!--<i class="error"></i>--><span class="err-msg">报错位</span>
+         </div> 
+         <!-- 报错位 ]] --> 
+        </div> 
+        <p class="profile-member"> <a href="https://aq.suning.com/asc/index.do" class="profile-link" target="_blank">立即查看</a>账户安全状态 </p> 
+       </div> 
+      </div> 
+      <input id="uuid" type="hidden" autocomplete="off" value="df19853c-1ec3-4c46-bbe6-87960fd7ab77" /> 
+      <!-- head ]] --> 
+      <!-- 基本信息 [[--> 
+      <!-- 表单 [[ --> 
+      <div class="form-list tab-switch personal-wrap-show"> 
+       <!-- form表单 [[ --> 
+       <form> 
+
+        <div class="control-group clearfix"> 
+         <label class="control-label"><em>*</em>真实姓名：</label> 
+         <input id="serverName" type="hidden" autocomplete="off" value="{$val.realname}" /> 
+         <input id="hasBirth" type="hidden" autocomplete="off" value="no" /> 
+         <div class="controls"> 
+          <input id="name" type="text" class="text" maxlength="12" onblur="checkPersonMemberInfo.checkName()" onfocus="checkPersonMemberInfo.showNameTypeInfo()" value="{$val.realname}" /> 
+         </div> 
+         <!-- 报错位 [[ --> 
+         <div id="nameErr" class="error-place"> 
+         <span class="err-msg">报错位</span>
+         </div> 
+         <!-- 报错位 ]] --> 
+        </div> 
+        <!--
+        <div class="control-group clearfix"> 
+         <label class="control-label">昵称：</label> 
+         <input id="serverNickName" type="hidden" autocomplete="off" value="" /> 
+         <div class="controls"> 
+          <input id="nickName" type="text" class="text" maxlength="20" onblur="checkPersonMemberInfo.isValidNickName()" onfocus="checkPersonMemberInfo.showNickNameTypeInfo()" value="" /> 
+         </div> 
+          报错位 [[ 
+         <div id="nickNameErr" class="error-place"> 
+         </div> 
+          报错位 ]] 
+        </div> 
+        -->
+        <div class="control-group clearfix"> 
+         <label class="control-label"><em>*</em>性别：</label> 
+         <div id="gender" class="controls"> 
+          <label class="sex-label"> <input type="radio" name="sex" value="女" {$val[sex] == 女?'checked':''} /> <span>女</span> </label> 
+          <label class="sex-label"> <input type="radio" name="sex" value="男" {$val[sex] == 男?'checked':''} /> <span>男</span> </label> 
+          <label class="sex-label"> <input type="radio" name="sex" value="保密" {$val[sex] == 保密?'checked':''} /> <span>保密</span> </label> 
+         </div> 
+        </div> 
+        <div class="control-group clearfix"> 
+         <label class="control-label">手机：</label> 
+         <div class="controls lh26"> 
+          <span>{$val.tel}</span> 
+          <a href="https://aq.suning.com/asc/mobile/check.do" name="person_index_info_data02">修改</a> 
+         </div> 
+        </div> 
+        <div class="control-group clearfix"> 
+         <label class="control-label">邮箱：</label> 
+         <div class="controls lh26"> 
+          <span>{$val.email}</span>
+          <if condition="$val.email">
+          <a href="https://aq.suning.com/asc/email/check.do" name="person_index_info_data04">添加</a> 
+          <else/> 
+          <a href="https://aq.suning.com/asc/email/check.do" name="person_index_info_data04">修改</a> 
+          </if>
+         </div> 
+        </div> 
+        <div class="control-group clearfix"> 
+         <label class="control-label">出生日期：</label> 
+         <div class="controls"> 
+          <span id="date01" class="dateSelector"> <input id="birthdate" value="请选择" type="text" class="text date-color" readonly="readonly" onblur="personalMember.cleanBirthdateTips();" /> <i class="date-icons"></i> </span> 
+          <i class="date-line">－</i> 
+          <input id="constellation" type="text" class="text constellation default" readonly="readonly" value="星座" /> 
+         </div> 
+         <!-- 报错位 [[  
+         <div id="birthdateErr" class="error-place"> 
+          <i class="tips"></i> 
+          <span><a target="_blank" href="http://vip.suning.com/ams-web/custLevel/showCustPrivDetailPageById.htm">填写生日日期，享受特权好礼</a></span> 
+         </div> 
+          报错位 ]] --> 
+        </div> 
+<!--
+        <div class="control-group clearfix priority-high"> 
+         <input type="hidden" autocomplete="off" class="hid_state" value="" /> 
+         <input type="hidden" autocomplete="off" class="hid_city" value="" /> 
+         <input type="hidden" autocomplete="off" class="hid_town" value="" /> 
+         <input type="hidden" autocomplete="off" class="hid_street" value="" /> 
+         <input type="hidden" autocomplete="off" class="hidCode_state" value="" /> 
+         <input type="hidden" autocomplete="off" class="hidCode_city" value="" /> 
+         <input type="hidden" autocomplete="off" class="hidCode_town" value="" /> 
+         <input type="hidden" autocomplete="off" class="hidCode_street" value="" /> 
+         <input type="hidden" autocomplete="off" class="hid_datas" value="" /> 
+         <label class="control-label"><em>*</em>居住地址：</label> 
+         <div class="controls"> 
+          <div id="zhen" datas-id=""></div> 
+          <p class="adress-detail"> <input type="text" class="text" maxlength="30" onblur="checkPersonMemberInfo.checkAddress()" onfocus="checkPersonMemberInfo.showAddressInfo()" value="" /> <span class="tips-words">街道名称或小区名称</span> </p> 
+          报错位 [[ 
+          <div id="addressErr" class="error-place ml0"> 
+          </div> 
+         报错位 ]] 
+         </div> 
+        </div>
+--> 
+        <div id="vcsDiv" class="control-group clearfix" style="display:block;"> 
+         <input id="vscUuid" type="hidden" autocomplete="off" value="df19853c-1ec3-4c46-bbe6-87960fd7ab77" /> 
+         <label class="control-label"><em>*</em>验证码：</label> 
+         <div class="controls"> 
+          <input id="imgCode" type="text" class="text" maxlength="4" autocomplete="off" name="imgCode" style="width:150px" value="" /> 
+          <span class="tips-words"></span> 
+          <img src="{:U('User/code')}" id="codeimg" width="62" height="24" class="authCode" onclick="flush()" /> 
+          <span class="changeAuthCode">看不清<br /><a href="javascript:void(0);" onclick="flush()">换一张</a></span> 
+         </div> 
+         <div id="imgCodeErr" class="error-place"> 
+         <span class="err-msg">报错位</span>
+         </div> 
+        </div> 
+	<script type="text/javascript">
+		function flush(){
+			var codeimg = document.getElementById('codeimg');
+			codeimg.src = "{:U('User/code')}?tmp=" + Math.random();
+		}
+	</script>
+        <div class="control-group clearfix priority-low"> 
+         <label class="control-label">&nbsp;</label> 
+         <div style="float:left;"> 
+          <a href="javascript:void(0);" onclick="personalMember.submitBasicInfo();return false;" class="ms-stand-btn1" name="person_index_info_data05">保 存</a> 
+          <!--<a href="#" class="btn-sub btn-sub-ing">保存中...</a>--> 
+         </div> 
+         <!-- 报错位 [[ --> 
+         <div id="basicInfoErr" class="error-place"></div> 
+         <div class="error-place mt29"></div> 
+         <!-- 报错位 ]] --> 
+        </div> 
+       </form> 
+
+       <!-- form表单 ]] --> 
+      </div> 
+      <!-- 表单 ]] --> 
+      <!-- 基本信息 ]]--> 
+      <!-- 头像修改 [[ --> 
+      <!-- 基本信息 [[ --> 
+      <!--#include virtual="basic_information.html"--> 
+      <!-- 基本信息 ]] --> 
+      <div class="avatar-container"> 
+       <div class="edit-avatar"> 
+        <div class="avatar-chooseItem"> 
+         <a href="javascript:;" id="custTab" name="person_index_info_head05" class="selected" hidefocus="true">自定义头像</a> 
+         <!--
+         <a href="javascript:;" id="sysTab" name="person_index_info_head06" hidefocus="true">系统推荐头像</a> 
+         -->
+         <i class="selected-line"></i> 
+        </div> 
+        <div class="avatar-chooseContent"> 
+         <div class="chooseContent avatar-user-defined clearfix"> 
+          <div class="upload-wrapper"> 
+           <input type="hidden" id="scale" value="1" /> 
+           <form method="post" id="originalForm" enctype="multipart/form-data"> 
+            <div id="originBox" class="upload-box" style="display:none;"> 
+             <img id="originImg" src="" alt="未上传" /> 
+            </div> 
+            <div id="hideDiv"></div> 
+            <div id="chooseBox" class="upload-box"> 
+             <a href="javascript:;" class="upload-btn"> <i></i>点击上传 </a> 
+             <p class="upload-tip">仅支持JPG、JPEG、GIF、PNG、BMP图片文件，且文件小于3M</p> 
+             <div id="uploadTempDiv" class="upload-file"> 
+              <input type="file" class="file" id="uploadTemp" name="uploadTemp" multiple="multiple" hidefocus="true" /> 
+             </div> 
+            </div> 
+            <p class="option-wrapper"> <a href="javascript:;" id="saveCustHead" name="person_index_info_head03" class="option-btn option-btn-save">保存</a> <a href="javascript:;" class="option-btn option-btn-cancel close">取消</a> <span id="customHeadError" class="option-tip option-error"> </span> </p> 
+           </form> 
+          </div> 
+          <div class="avatar-preview"> 
+           <p class="preview-tip">头像预览120*120</p> 
+           <p id="previewBox" class="preview-box" style="overflow:hidden;"> 暂无预览 </p> 
+           <div class="select-again" style="display:none;"> 
+            <i></i> 重新选择 
+            <div class="upload-file reupload-file"> 
+             <form method="post" id="reUploadForm" enctype="multipart/form-data"> 
+              <input type="file" class="file" id="reUploadTemp" name="reUploadTemp" multiple="multiple" hidefocus="true" /> 
+              <!--<p class="file" id="reUploadTemp" hidefocus="true">&nbsp;</p>--> 
+             </form> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+</foreach>
+      <div class="chooseContent avatar-system clearfix hide"> 
+          <input id="oldSysHeadPicNum" type="hidden" autocomplete="off" value="00000001" /> 
+          <div class="avatar-system-container"> 
+           <p class="avatar-system-list"> <a href="javascript:;"> <img id="24" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_24_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="25" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_25_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="26" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_26_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="27" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_27_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="28" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_28_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="29" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_29_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="30" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_30_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="31" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_31_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="32" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_32_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="33" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_33_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="14" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_14_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="15" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_15_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="16" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_16_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="17" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_17_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="18" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_18_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="19" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_19_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="20" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_20_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="21" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_21_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="22" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_22_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> <a href="javascript:;"> <img id="23" src="http://image.suning.cn/uimg/cmf/cust_headpic/0000000000_23_120x120.jpg?t=?v=2016030101" width="60" height="60" /> </a> </p> 
+           <p class="option-wrapper"> <a href="javascript:;" id="saveSysHead" name="person_index_info_head04" class="option-btn option-btn-save">保存</a> <a href="javascript:;" class="option-btn option-btn-cancel close">取消</a> <span id="systemHeadError" class="option-tip"> </span> </p> 
+           <!--选择系统头像标识--> 
+           <div id="chooseSys" class="click J-hide"> 
+            <i></i> 
+           </div> 
+          </div> 
+          <div class="avatar-preview"> 
+           <p class="preview-tip">头像预览120*120</p> 
+           <p class="preview-box" id="sys-head-preview"> 暂无预览 </p> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <!-- 头像修改 ]] --> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+  <!-- 此处引入公用尾部 --> 
+  <div class="clear"></div> 
+  <div class="ng-s-footer"> 
+   <div class="ng-s-f-con"> 
+    <p class="ng-url-list"> <a name="public0_none_wb_yqlj0101" target="_blank" href="http://www.suning.cn/">苏宁云商</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0102" target="_blank" href="http://10035.suning.com/">苏宁互联</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0111" target="_blank" href="http://jinrong.suning.com/">苏宁金融</a><span>|</span> <a name="public0_none_wb_yqlj0103" target="_blank" rel="nofollow" href="https://passport.suning.com/ids/trustLogin?sysCode=epp&amp;targetUrl=https://pay.suning.com/epp-epw/login/login.action">易付宝</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0105" target="_blank" href="http://www.pptv.com?rcc_id=snyg">PPTV</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0106" target="_blank" href="http://redbaby.suning.com/">红孩子</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0107" target="_blank" href="http://binggo.suning.com/">缤购</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0108" target="_blank" href="http://laox.suning.com/">乐购仕</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0111" target="_blank" href="http://wuliu.suning.com/">苏宁物流</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0109" target="_blank" href="http://usa.suning.com/">苏宁美国</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0110" target="_blank" href="http://hk.suning.com/">苏宁香港</a><span>|</span> <a name="public0_none_wb_yqlj0111" target="_blank" href=" http://m.suning.com/">手机苏宁</a> </p> 
+    <p class="ng-url-list"> <a rel="nofollow" name="public0_none_wb_yqlj0201" target="_blank" href="http://club.suning.com/hr/aboutus.html">关于苏宁易购</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0202" target="_blank" href="http://help.suning.com/page/id-469.htm">联系我们</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0203" target="_blank" href="http://careers.cnsuning.com/">诚聘英才</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0204" target="_blank" href="http://sop.suning.com/">供应商入驻</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0205" target="_blank" href="http://union.suning.com/">苏宁联盟</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0206" target="_blank" href="http://zb.suning.com/">苏宁招标</a><span>|</span> <a name="public0_none_wb_yqlj0207" target="_blank" href="http://union.suning.com/aas/links.html">友情链接</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0208" target="_blank" href="http://help.suning.com/page/id-281.htm">法律申明</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0209" target="_blank" href="http://ued.suning.com/survey/">用户体验提升计划</a><span>|</span> <a rel="nofollow" name="public0_none_wb_yqlj0209" target="_blank" href="http://mrs.suning.com/mrs-web/stockholder/check.htm">股东会员认证</a> </p> 
+    <p class="ng-copyright"> Copyright&copy; 2002-2016 ，苏宁云商集团股份有限公司版权所有 <a style="color:#999" target="_blank" href="http://www.miitbeian.gov.cn">苏ICP备10207551号-4</a> <a style="color:#999" rel="nofollow" target="_blank" href="http://img.suning.cn/public/v3/images/SUB1-20130131.png">苏B1-20130131</a> <a style="color:#999" rel="nofollow" target="_blank" href="http://img.suning.cn/public/v3/images/SUB2-20130376.png">苏B2-20130376</a> <a style="color:#999" rel="nofollow" target="_blank" href="http://img.suning.cn/public/v3/images/SUB2-20130391.png">苏B2-20130391</a> 出版物经营许可证新出发苏批字第A-243号</p> 
+    <div class="ng-authentication"> 
+     <a rel="nofollow" name="public0_none_wb_zs0302" target="_blank" href="https://search.szfw.org/cert/l/CX20111018000608000610"> <img width="76" height="24" alt="诚信网站" src="http://img.suning.cn/public/v3/images/chengxin.png" /> </a> 
+     <a rel="nofollow" name="public0_none_wb_zs0303" target="_blank" href="http://image.suning.cn/uimg/snnet/snnetImg/142891196680527240.jpg"> <img width="76" height="24" alt="中国联通授权网络经营代理商" src="http://img.suning.cn/public/v3/images/unicom.png" /> </a> 
+     <a rel="nofollow" name="public0_none_wb_zs0304" target="_blank" href="http://img.suning.cn/public/v3/images/dianxin_content.jpg"> <img width="76" height="24" alt="中国电信授权网络经营代理商" src="http://img.suning.cn/public/v3/images/dianxin.jpg" /> </a> 
+     <a name="public0_none_wb_zs0303" rel="nofollow" target="_blank" href="http://www.jsgsj.gov.cn:60101/keyLicense/verifKey.jsp?serial=320000163820130117100000009630&amp;signData=0+ADYt839gp1EiqiZXnsxsyOnpO32Wg4sFePaiV9+NtTV/XCAMXGzT/AOgycGMm0EjsR/Ot661M7h9GeStpA8QyJTs1Ip1K/CSNaemthn7f1NjI03x1E6v9ZRT+3M60WZIGLBEjFs5XMliufNz1cJlYDQrTZvaZbHyJ2KzgJB4Y="> <img width="76" height="24" alt="电子营业执照" src="http://img.suning.cn/public/v3/images/dianzi.png?v=02" /> </a> 
+    </div> 
+   </div> 
+  </div> 
+  <style type="text/css">
+.ng-footer{height:130px;margin-top:0;}
+.ng-s-footer{height:130px;background:none;text-align:center;}
+.ng-s-footer p.ng-url-list{height:25px;line-height:25px;}
+.ng-s-footer p.ng-url-list a{color:#666666;}
+.ng-s-footer p.ng-url-list a:hover{color:#f60;}
+.ng-s-footer .ng-authentication{float:none;margin:0 auto;height:25px;width:990px;margin-top:5px;}
+.ng-s-footer p.ng-copyright{float:none;width:100%;}
+.root1200 .ng-s-footer p.ng-copyright{width:100%;}
+</style> 
+  <script type="text/javascript" src="https://passport.suning.com/ids/js/passport.js?v=2016030101"></script> 
+  <script type="text/javascript" src="http://res.suning.cn/project/msIndex/js/ms_common.min.js?v=2016030101"></script> 
+  <script type="text/javascript" src="http://res.suning.cn/project/msIndex/js/person/personal_member.min.js?v=2016030101"></script> 
+  <script type="text/javascript" src="http://res.suning.cn/project/msIndex/js/person/ECode.calendar.min.js?v=2016030101"></script> 
+  <script type="text/javascript" src="http://res.suning.cn/project/msIndex/js/person/SFE.dialog.dev.min.js?v=2016030101"></script> 
+  <script type="text/javascript" src="http://image.suning.cn/public/component/citySelect/1.0.0/New.CitySelect.min.js?v=2016030101"></script> 
+  <script type="text/javascript" src="http://res.suning.cn/project/msIndex/js/person/jquery.form.min.js?v=2016030101"></script> 
+  <script type="text/javascript" src="http://res.suning.cn/project/msIndex/js/person/imgUtils.min.js?v=2016030101"></script> 
+  <script type="text/javascript" src="http://res.suning.cn/project/msIndex/js/person/headPic.min.js?v=2016030101"></script> 
+  <script>
+        function eCodeCalendar(_boxID,_showID,n){
+            ECode.calendar({
+                inputBox:_boxID,
+                showbox:_showID,
+                isSelect:true,
+                isWeek:false,
+                selectRange:{
+                    min:1899,
+                    max:2099
+                },
+                range:{
+                    mindate:"1900-01-01",
+                    maxdate:"2099-12-31"
+                },
+                callback:function(){
+                    var _this = $(_showID);
+                    _this.removeClass("date-color");
+                    if(n == 1){
+                        constellation(_this);
+                    }
+                    //提示准确完善您的生日有惊喜哦~
+                    $("#birthdateErr").html("<i class='tips'></i><span>准确完善您的生日有惊喜哦~</span>");
+                }
+
+            });
+        }
+        	eCodeCalendar("#date01","#birthdate",1);
+        //eCodeCalendar("#date02","#show02",0);
+        //eCodeCalendar("#date03","#show03",0);
+        //eCodeCalendar("#date04","#show04",0);
+        
+        // 图片验证码输错三次才刷新
+		var gImgVerCdeErrorCount = 0;
+        
+        // 重新获取验证码
+		function fun_getVcode() {
+			var timenow = new Date().getTime();
+			var url="getUuidStr.do";
+			$.ajax({
+				type : "post",
+				url : url,
+				contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+				dataType : 'json',
+				async : false,
+				success : function(data) {
+					var uuid=data.uuid;
+					document.getElementById("imgSrc").src ="http://vcs.suning.com/vcs/imageCode.htm?uuid="+ uuid;
+				    $("#vscUuid").val(uuid);
+				}
+			});
+			
+		}
+    </script>  
+ </body>
+</html>
