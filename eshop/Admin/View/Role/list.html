@@ -5,8 +5,9 @@
               <input type="text" value="{$Think.get.search_val}" name="search_val">
               <select name="search_key" >
                    <option value="">请选择搜索类型</option>
-                   <option value="id" <eq name="Think.get.search_key" value="id">selected</eq> >ID</option>
+                   <option value="role.id" <eq name="Think.get.search_key" value="role.id">selected</eq> >ID</option>
                    <option value="role_name" <eq name="Think.get.search_key" value="role_name">selected</eq>>角色名称</option>
+                   <option value="pri_name" <eq name="Think.get.search_key" value="pri_name">selected</eq>>权限名称</option>
               </select>
        </p>
         <input type="submit" value="搜索">
@@ -27,7 +28,9 @@
                     <tr align="center" class="0" id="0_1" id = 'tr_1'>
                           <td align="center">{$val['id']}</td>
                           <td align="center"><span>{$val['role_name']}</span></td>
-                          <td align="center"><span>{$val['pri_name']}</span></td>
+
+                          <td align="center"><span>{$val['group_concat(pri_name)']}</span></td>
+
                           <td align="center"><span>{$val['addtime']}</span></td>
                           <td align="center">
                                  <a href="{:U('edit',array('id'=>$val['id']) )}">编辑</a> |
@@ -35,7 +38,7 @@
                           </td>
                     </tr>
                     </foreach>
-                    <tr><td height="30" colspan="4" align="center">{$show}</td></tr>
+                    <tr><td height="30" colspan="5" align="center">{$show}</td></tr>
             </table>
       </div>
 </form>

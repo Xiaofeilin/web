@@ -17,9 +17,9 @@
 			parent::add();
 			$data = $this->model->roleLink();
 			$this->assign($data);
+			$data['pri_id'] = array();
 			$this->assignHead('添加角色',U('list'),'角色列表');
 			$this->display();
-			var_dump($data);
 		}
 
 
@@ -30,7 +30,8 @@
 			parent::edit();
 			$id = I('get.id','');
 			$data = array();
-			$data['roleOne'] = $this->model->getAdminOne($id);
+			$data = $this->model->roleLink();
+			$data['roleOne'] = $this->model->getRoleOne($id);
 			$this->assign($data);
 			$this->assignHead('修改角色资料',U('list'),'角色列表');
 			$this->display();
@@ -39,7 +40,15 @@
 		/**
 		*[role数据删除]
 		*/
+		public function del(){
+			$id = I('get.id','');
+			$lv = I('get.lv','0');
+			$p = I('get.p',0);
 
+			$this->model->delete($id);
+
+			$this->success( '删除成功',U('list',array('p'=>$p)) );
+		}
 
 
 		/**

@@ -58,7 +58,23 @@
 		/**
 		*[privilege数据删除]
 		*/
-
+		public function del(){
+			$id = I('get.id','');
+			$lv = I('get.lv','0');
+			$p = I('get.p',0);
+			if($lv<=2){
+				$priList = $this->model->where('parent_id='.$id)->select();
+				if (!empty($priList)) {
+					$this->error('此权限含有子权限');
+					exit;
+				}
+			}
+				
+			D('role_pri')->where('pri_id='.$id)->delete();
+			$this->model->delete($id);
+			$this->success( '删除成功',U('list',array('p'=>$p)) );
+			
+		}
 
 
 		/**
