@@ -1,0 +1,54 @@
+<div class="long-title"><span class="all-goods">全部分类</span></div>
+<div class="nav-cont">
+	<ul>
+		<li class="index"><a href="#">首页</a></li>
+           					<li class="qc"><a href="#">闪购</a></li>
+           					<li class="qc"><a href="#">限时抢</a></li>
+            					<li class="qc"><a href="#">团购</a></li>
+            					<li class="qc last"><a href="#">大包装</a></li>
+	</ul>
+	 <div class="nav-extra">
+	    	<i class="am-icon-user-secret am-icon-md nav-user"></i><b></b>我的福利
+	    	<i class="am-icon-angle-right" style="padding-left: 10px;"></i>
+	</div>
+</div>					
+			
+<!--侧边导航 -->
+<div id="nav" class="navfull" >
+	<div class="area clearfix" >
+		<div class="category-content" id="guide_2">
+			<div class="category" style="height:450px;">
+				<ul class="category-list" id="js_climit_li">
+					<foreach name="catAll" item="val">
+					<li class="appliance js_toggle relative first">
+						<div class="category-info">
+							<h3 class="category-name b-category-name"><i><img src="__PUBLIC__/Home/images/cake.png"></i><a class="ml-22" title="点心">{$val['cat_name']}</a></h3>
+							<em>&gt;</em>
+						</div>
+						<div class="menu-item menu-in top">
+							<div class="area-in">
+								<div class="area-bg">
+									<div class="menu-srot">
+										<div class="sort-side">
+											<foreach name="val['cat2']" item="val1">
+											<dl class="dl-sort">
+												<dt><span title="蛋糕">{$val1['cat_name']}</span></dt>
+												<foreach name="val1['cat3']" item="val2">
+												<dd><a title="{$val2['cat_name']}" href="#"><span>{$val2['cat_name']}</span></a></dd>
+												</foreach>
+											</dl>
+											</foreach>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						<b class="arrow"></b>	
+					</li>
+					</foreach>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

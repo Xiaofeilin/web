@@ -1,1 +1,0 @@
-$(function(){var a=$("#initial-hl-nav-item").val();$(".main-list li a").each(function(){var b=$(this).data("tag");if(a==b){$(this).addClass("active")}});$("#nav-bar a").each(function(){$(this).text($.trim($(this).text()))})});
