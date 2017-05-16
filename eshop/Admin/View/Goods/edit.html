@@ -91,7 +91,7 @@
              </tr>
             
              <tr>
-                   <td class="label"><input type="checkbox" id="promote" {$goodsOne['is_sale']==1?'checked':''}>促销价：</td>
+                   <td class="label"><input type="checkbox" id="promote"name="is_sale" value="1" {$goodsOne['is_sale']==1?'checked':''}>促销价：</td>
                    <td><input type="text" name="promote_price" disabled value="{$goodsOne['promote_price']}" size="20" /></td>
              </tr>
             

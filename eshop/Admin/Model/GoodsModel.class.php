@@ -145,7 +145,12 @@
 		*@param array 	$data[自动验证过滤后的form表单数据]
 		*/
 		protected function _before_insert(&$data){
-			
+			if(!empty($data['sort_num'])){
+				if($data['sort_num']>100||$data['sort_num']<=0){
+					$this->error="排序大于100或小于0";
+					return false;
+				}
+			}
 			//调用imgData函数上传图片，并获取上传路径
 			$imgData = imgUpLoad('logo');
 			if(isset( $imgData['error'])){
@@ -259,8 +264,10 @@
 
 			//判断有没有促销，将促销时间转为时间戳
 			if($data['is_sale']==1){
-				$data['promote_start_time'] = strtotime($data['promote_start_time'].' 00:00:01');
-				$data['promote_end_time'] = strtotime($data['promote_end_time'].' 23:59:59');
+				if( ($start = I('post.promote_start_time','')) && ($end = I('post.promote_end_time','')) ){
+					 $data['promote_start_time'] = strtotime($start.' 00:00:01');
+					 $data['promote_end_time'] = strtotime($end.' 23:59:59');
+				}
 			}
 		}
 

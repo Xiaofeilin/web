@@ -8,40 +8,7 @@ function isLogined(fn) {
 	}
 }
 
-var talkDomain = (function() {
-	var hostname = window.location.hostname;
-	if (hostname.indexOf('pre.cnsuning') > -1) {
-		return 'http://talk8pre.cnsuning.com';
-	} else if(hostname.indexOf('sit.cnsuning') > -1){
-		return 'http://talk8sit.cnsuning.com/yunxin-web';
-	} else {
-		return 'http://talk8.suning.com';
-	}
-})();
 
-function getWebcallParam(prdurl, pn, or, sc, prodNo) {
-	var p = [];
-	if (prdurl) {
-		p[p.length] = ("prodUrl=" + encodeURIComponent(prdurl));
-	}
-	if (pn) {
-		p[p.length] = ("pn=" + encodeURIComponent(pn));
-	}
-	if (or) {
-		p[p.length] = ("r=" + encodeURIComponent(or));
-	}
-	if (sc) {
-		p[p.length] = ("sc=" + encodeURIComponent(sc));
-	}
-	if (prodNo) {
-		p[p.length] = ("prodNo=" + encodeURIComponent(prodNo));
-	}
-	p[p.length] = "url=" + encodeURIComponent(document.location.href);
-
-	p[p.length] = "_t=" + Math.round(Math.random() * 1000000);
-
-	return p.join("&");
-}
 
 /**
  * 打开苏宁在线客服

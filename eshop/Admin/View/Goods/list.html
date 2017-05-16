@@ -63,7 +63,8 @@
           <if condition="empty($goodsList) neq true">
           <tr>
                 <th><input type="button" id="check_all" value="全选"> <input type="button" id="Inverse" value="反选"></th>
-                <th>商品名称</th>      
+                <th>商品名称</th>    
+                <th>logo</th>  
                 <th>分类</th>
                  <th>品牌</th>
                 <th><a name="market_price"  class="sort"   sort_val="{$sort_val===null?1:$sort_val}"  href="javascript:void(0)" >市场价</a></th>
@@ -74,7 +75,7 @@
                 <th>是否最新</th>
                  <th>是否精品</th>
                 <th>是否促销</th>      
-                <th>logo</th>
+                
                  <th><a name="id"  class="sort"   sort_val="{$sort_val===null?1:$sort_val}"  href="javascript:void(0)" >添加时间</a></th>
                  <th><a name="sort_num"  class="sort"  sort_val="{$sort_val===null?1:$sort_val}" href="javascript:void(0)" >排序</a></th>
                 <th>操作</th>

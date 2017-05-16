@@ -458,7 +458,7 @@
 .btn-get-code {
 	float: left;
 	width: 158px;
-	height: 48px;
+	height: 50px;
 	background: #f6f6f6;
 	font: 14px/48px "����";
 	color: #333;
@@ -638,7 +638,7 @@
 
 .reg-suc .tip {
 	margin-top: 12px;
-	font-size: 18px;
+	font:18px "Microsoft YaHei";
 	text-align: center;
 	color: #666
 }
@@ -1484,4 +1484,23 @@
 	color: #333;
 	padding: 15px 0;
 	line-height: 22px
+}
+
+.reg-suc .logo {
+	background: url(../images/lion.png) no-repeat;
+	display: block;
+	width: 120px;
+	height: 161px;
+	margin: 40px auto 0
+}
+
+.reg-suc1 .logo {
+	background: url(../images/lion-run.gif) no-repeat
+}
+
+.relocation {
+	text-align: center;
+	font-size: 14px;
+	color: #999;
+	padding-top: 20px
 }
