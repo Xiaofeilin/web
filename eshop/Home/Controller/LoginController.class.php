@@ -7,23 +7,36 @@ class LoginController extends Controller {
 	*/
 	public function login(){
 		if(IS_POST){
+			/*
 			$code = I('code');
 			$verify = new \Think\Verify();  
 			$result = $verify->check($code);//判断验证码
 			if(!$result) $this->ajaxReturn("验证码不正确！","eval");
+			*/
 			
 			$rule = array(
-				array('account','checkAcc','用户名不存在！',0,'function'),
+				array('account','checkAcc','用户名或手机不存在！',0,'function'),
 				array('password','checkPwd','密码不正确！',0,'function'),
 			);
 			$user = D('user');
 			$info = $user->validate($rule)->create();//判断用户信息
+			//var_dump($info);
 
-			$map['account'] = I('account');
+			$str = I('account');
+			$preg = "/^((13[0-9])|(15[^4])|(18[0-9])|(17[0-8])|(147,145))\\d{8}$/";
+			$res = preg_match($preg, $str);
+			if($res){
+				$map['tel'] = I('account');
+			}else{
+				$map['account'] = I('account');
+			}
+			//$map['pwd'] = md5(I('password'));
 			$userInfo = $user->where($map)->find();//查找用户信息
 
+			//var_dump($userInfo);
+
 			$check = new \Home\Model\LoginModel();
-			$res = $check->checkErrorlogin($info,$userInfo);//获取检测结果
+			$res = $check->checkErrorlogin($info,$userInfo,$map);//获取检测结果
 			if($res == 1){
 				$this->ajaxReturn(1);
 			}else{
@@ -37,6 +50,7 @@ class LoginController extends Controller {
 	/**
 	*['验证码显示']
 	*/
+	/*
 	public function code(){
 		$config = array(
 			'fontSize'       =>    15,  // 验证码字体大小    
@@ -46,4 +60,5 @@ class LoginController extends Controller {
 		$verify = new \Think\Verify($config);
 		$verify->entry();
 	}
+	*/
 }

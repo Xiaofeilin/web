@@ -1,0 +1,161 @@
+<include file="Public/personHeader"/>
+
+		<div class="center">
+			<div class="col-main">
+				<div class="main-wrap">
+
+					<div class="am-cf am-padding">
+						<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">绑定邮箱</strong> / <small>Email</small></div>
+					</div>
+					<hr/>
+					<!--进度条-->
+					<div class="m-progress">
+						<div class="m-progress-list">
+							<span class="step-1 step">
+                                <em class="u-progress-stage-bg"></em>
+                                <i class="u-stage-icon-inner">1<em class="bg"></em></i>
+                                <p class="stage-name">验证邮箱</p>
+                            </span>
+							<span class="step-2 step">
+                                <em class="u-progress-stage-bg"></em>
+                                <i class="u-stage-icon-inner">2<em class="bg"></em></i>
+                                <p class="stage-name">完成</p>
+                            </span>
+							<span class="u-progress-placeholder"></span>
+						</div>
+						<div class="u-progress-bar total-steps-2">
+							<div class="u-progress-bar-inner"></div>
+						</div>
+					</div>
+					<form class="am-form am-form-horizontal">
+						<div class="am-form-group">
+							<label for="user-email" class="am-form-label">验证邮箱</label>
+							<div class="am-form-content">
+								<input type="text" id="email" name="email" placeholder="请输入邮箱地址">
+							</div>
+						</div>
+						<div id="emailError" style="color:red;margin-bottom:5px;position:relative;top:-20px"></div>
+						<div class="am-form-group code">
+							<label for="user-code" class="am-form-label">验证码</label>
+							<div class="am-form-content">
+								<input type="text" id="emailcode" name="emailcode" placeholder="验证码">
+							</div>
+							<a class="btn" href="javascript:void(0);" id="sendEmailCode">
+								<div class="am-btn am-btn-danger">验证码</div>
+							</a>
+						</div>
+						<div id="emailCodeError" style="color:red;margin-bottom:5px;position:relative;top:-20px"></div>
+
+						<div class="info-btn">
+							<div class="am-btn am-btn-danger" id="submit">保存修改</div>
+						</div>
+					</form>
+					<script type="text/javascript">
+						var x;
+						var y;
+						var timer;
+						var num;
+
+						$("input[name=email]").focus(function(){
+							$("#emailError").html("");
+						});
+
+						$("input[name=email]").blur(function(){
+							var email = $("#email").val();
+							$.ajax({
+								url:"__CONTROLLER__/checkEmail",
+								data:{email:email},
+								type:"POST",
+								dataType:"json",
+								success:function(res){
+									if(!res.info == ""){
+										$("#emailError").html(res.info);
+									}else{
+										x = 1;
+									}
+								}
+							});
+						});
+
+						$("a[id=sendEmailCode]").click(function(){
+							$("#sendEmailCode").attr("disabled",true);
+							
+							clearInterval(timer);
+							timer = undefined;
+							
+							$("#emailCodeError").html("");
+							var email = $("#email").val();
+							var num = 20;
+							
+							if(email){
+								if(timer == undefined){
+									$.ajax({
+										url:"__CONTROLLER__/sendEmailCode",
+										data:{email:email},
+										type:"POST",
+										dataType:"text",
+										success:function(res){
+											$("#emailCodeError").html(res);
+											if(res != "短信发送失败！"){
+												timer = setInterval(function(){
+													num--;
+													$("#sendEmailCode").val("等待" + num + "秒");
+													if(num == 0){
+														clearInterval(timer);
+														timer = undefined;
+														$("#sendEmailCode").removeAttr("disabled",false);
+														$("#sendEmailCode").val("验证码");
+													}
+												},1000);
+											}
+										}
+									});
+								}
+							}else{
+								$("#emailCodeError").html("请输入您的邮箱地址！");
+							}
+						});
+
+						$("input[name=emailcode]").blur(function(){
+							var code = $("#emailcode").val();
+							$.ajax({
+								url:"__CONTROLLER__/checkEmailCode",
+								data:{code:code},
+								type:"POST",
+								dataType:"json",
+								success:function(res){
+									if(!res.info == ""){
+										$("#emailCodeError").html(res.info);
+									}else{
+										y = 1;
+									}
+								}
+							});
+						});
+
+						$("div[id=submit]").click(function(){
+							if($("#email").val() && $("#emailcode").val()){
+								if(x == 1 && y == 1){
+									$.ajax({
+										url:"__CONTROLLER__/changeEmail",
+										dataType:"text",
+										type:"POST",
+										success:function(res){
+											if(res == 1){
+												alert("修改成功！");
+												location.href = "{:U('Safe/safety')}";
+											}else{
+												return false;
+											}
+										}
+									});
+								}
+							}else{
+								return false;
+							}
+						});
+					</script>
+
+				</div>
+
+<include file="Public/personFooter"/>
