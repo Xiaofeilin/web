@@ -11,6 +11,7 @@ class RegController extends Controller {
 	/**
 	*['验证码显示']
 	*/
+	/*
 	public function code(){
 		$config = array(
 			'fontSize'       =>    15,  // 验证码字体大小    
@@ -20,6 +21,7 @@ class RegController extends Controller {
 		$verify = new \Think\Verify($config);
 		$verify->entry();
 	}
+	*/
 
 	/**
 	*['检查用户名']
@@ -48,6 +50,7 @@ class RegController extends Controller {
 	/**
 	*['检查验证码']
 	*/
+	/*
 	public function checkCode(){
 		$code = I('code');
 		$verify = new \Think\Verify();  
@@ -55,24 +58,25 @@ class RegController extends Controller {
 
 		if(!$result) $this->error("验证码错误！");
 	}
+	*/
 
 	/**
 	*['检查手机']
 	*/
-	public function checkPhone(){
-		$phone = new \Home\Model\RegModel();
-		$info = $phone->create();
+	public function checkTel(){
+		$tel = new \Home\Model\RegModel();
+		$info = $tel->create();
 
-		$_SESSION['regMsg']['phone'] = I("phone");
+		$_SESSION['regMsg']['tel'] = I("tel");
 
-		$this->error($phone->getError());
+		$this->error($tel->getError());
 	}
 
 	/**
 	*['发送手机验证码']
 	*/
-	public function sendPhoneCode(){
-		$tophone = I("phone");
+	public function sendTelCode(){
+		$tophone = I("tel");
 		$eCode = mt_rand(1,999999);
 		$sendPhone = send_message($eCode,$tophone);
 
@@ -88,7 +92,7 @@ class RegController extends Controller {
 	/**
 	*['检查手机验证码']
 	*/
-	public function checkPhoneCode(){
+	public function checkTelCode(){
 		$cCode = I("ecode");
 		$eCode = $_SESSION['regMsg']['eCode'];
 		if($cCode == $eCode && $eCode != null){
@@ -106,11 +110,18 @@ class RegController extends Controller {
 		$user = D("user");
 		$data["account"] = $_SESSION['regMsg']['account'];
 		$data["pwd"] = md5($_SESSION['regMsg']['pwd']);
-		$data["tel"] = $_SESSION['regMsg']['phone'];
+		$data["tel"] = $_SESSION['regMsg']['tel'];
 		$data["regtime"] = time();
+		$data["usernum"] = mt_rand(1,99999).uniqid();
 
 		$result = $user->data($data)->add();
 		
 		unset($_SESSION['regMsg']);
+
+		if($result){
+			$this->success("注册成功！正在跳转到登录页面！",U('Login/login'),4);
+		}else{
+			$this->error("注册失败！正在返回注册页面！",U('Reg/regisuter'),4);
+		}
 	}
 }

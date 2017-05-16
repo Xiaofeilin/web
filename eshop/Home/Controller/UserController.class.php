@@ -2,16 +2,17 @@
 namespace Home\Controller;
 use Think\Controller;
 class UserController extends Controller {
-	protected $pCode;
+	//protected $pCode;
 
-	public function info(){
+	public function information(){
 		$user = D('User');
-		$map['account'] = $_SESSION['info']['account'];
+		$map['usernum'] = $_SESSION['info']['usernum'];
 		$userinfo = $user->where($map)->getAll();
 		$this->assign('userinfo',$userinfo);
 		$this->display();
 	}
 
+	/*
 	public function code(){
 		$config = array(
 			'fontSize'       =>    15,  // 验证码字体大小    
@@ -21,4 +22,5 @@ class UserController extends Controller {
 		$verify = new \Think\Verify($config);
 		$verify->entry();
 	}
+	*/
 }

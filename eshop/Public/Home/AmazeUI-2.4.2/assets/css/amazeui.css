@@ -2341,7 +2341,7 @@ output {
 .am-form input[type="color"],
 .am-form-field {
   display: block;
-  width: 100%;
+  width: 80%;
   padding: 0.5em;
   font-size: 1.6rem;
   line-height: 1.2;

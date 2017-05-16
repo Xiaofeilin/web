@@ -116,6 +116,14 @@
 	*@param string 	$val[用户输入的密码]
 	*/
 	function checkPwd($val){
+		$str = I("account");
+		$preg = "/^((13[0-9])|(15[^4])|(18[0-9])|(17[0-8])|(147,145))\\d{8}$/";
+		$res = preg_match($preg, $str);
+		if($res){
+			$map['tel'] = $str;
+		}else{
+			$map['account'] =$str;
+		}
 		$map['pwd'] = md5($val);
 		$user = M('user')->where($map)->find();
 		if($user){
@@ -126,11 +134,17 @@
 	}
 
 	/**
-	*[验证用户名是否存在]
-	*@param string 	$val[用户输入的用户名]
+	*[验证用户名或手机是否存在]
+	*@param string 	$val[用户输入的用户名或手机]
 	*/
 	function checkAcc($val){
-		$map['account'] = $val;
+		$preg = "/^((13[0-9])|(15[^4])|(18[0-9])|(17[0-8])|(147,145))\\d{8}$/";
+		$res = preg_match($preg, $val);
+		if($res){
+			$map['tel'] = $val;
+		}else{
+			$map['account'] = $val;
+		}		
 		$user = M('user')->where($map)->find();
 		if($user){
 			return true;
