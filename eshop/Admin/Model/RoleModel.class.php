@@ -54,6 +54,27 @@
 		}
 
 		/**
+		*[在修改角色后的操作]
+		*@param array 	$data[自动验证过滤后的form表单数据]
+		*/
+		protected function _after_update($data){
+			// 出来form表单数据，插入数据库
+			if($pri_id = I('post.pri_id','')){
+				foreach ($pri_id as $key => $value) {
+					if(!$value) continue;
+					$attrData[] = array(
+						'pri_id' => $value,
+						'role_id'=>$data['id'],
+					);
+				}
+				$RolePri = D('RolePri');
+				$RolePri->where("role_id = {$data['id']}")->delete();
+				$RolePri->addAll($attrData);
+			}
+
+		}
+
+		/**
 		*[搜索+分页]
 		*@return array 		$data[搜索后+分页的数据]
 		*/
@@ -73,7 +94,7 @@
 				$page = new \Think\Page($count,C('YeShu'));
 				$data['show'] = $page->show();
 
-				$data['roleList'] = $this->query("SELECT role.id,`role_name`,GROUP_CONCAT(pri_name),role.addtime FROM `role` left join role_pri on role.id = role_pri.role_id left join privilege on role_pri.pri_id = privilege.id where role.id in ( SELECT role.id FROM `role` left join role_pri on role.id = role_pri.role_id left join privilege on role_pri.pri_id = privilege.id where privilege.pri_name LIKE '%{$search_val}%' GROUP BY role.id ) GROUP BY role.id");
+				$data['roleList'] = $this->query("SELECT role.id,`role_name`,GROUP_CONCAT(pri_name),role.addtime FROM `role` left join role_pri on role.id = role_pri.role_id left join privilege on role_pri.pri_id = privilege.id where role.id in ( SELECT role.id FROM `role` left join role_pri on role.id = role_pri.role_id left join privilege on role_pri.pri_id = privilege.id where privilege.pri_name LIKE '%{$search_val}%' GROUP BY role.id ) GROUP BY role.id limit " . $page->firstRow.','.$page->listRows );
 				return $data;
 			}
 			elseif($search_key=='role.id'){
@@ -100,7 +121,7 @@
 		*@return array 		$roleOne[修改后的数据]
 		*/
 		public function getRoleOne($id){
-			$roleOne = $this->find($id);
+			$roleOne = $this->query("SELECT role.id,`role_name`,GROUP_CONCAT(pri_id),role.addtime FROM `role` left join role_pri on role.id = role_pri.role_id left join privilege on role_pri.pri_id = privilege.id where role.id in ( SELECT role.id FROM `role` left join role_pri on role.id = role_pri.role_id left join privilege on role_pri.pri_id = privilege.id where role.id = '{$id}' GROUP BY role.id ) GROUP BY role.id");
 			return $roleOne;
 		}
 

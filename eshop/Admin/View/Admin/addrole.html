@@ -1,0 +1,27 @@
+  <layout name="Index/header_foot"/>
+  <div class="main-div">
+      <form id="role_form" method="post" name="theForm" enctype="multipart/form-data" >
+
+              <table width="100%" style="margin:0 auto" id="general-table">
+                    <input type="hidden" name="id" value="{$adminOne.id}">
+                    <tr>
+                          <td class="label">管理员名称:</td>
+                          <td><input type='text' name='admin_name' maxlength="20" value='{$adminOne.admin_name}' size='27' readonly/> <font color="red">*</font></td>
+                    </tr>
+                                
+                    <foreach name="roleAll" item="val">
+                          <tr style="background:#f4fafb;" >
+                                <td colspan="2">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="role_id[]" value="{$val.id}" {:in_array($val['id'],explode(',',$adminOne['role_list']))?'checked':''}>{$val.role_name}
+                                </td>
+                          </tr>
+                    </foreach>
+
+              </table>
+              <div class="button-div">
+              <input type="submit" value=" 确定 " />
+              <input type="reset" value=" 重置 " />
+              </div>
+      </form>
+  </div>

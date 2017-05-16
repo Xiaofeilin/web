@@ -31,7 +31,7 @@
 
                           <td align="center"><span>{$val['group_concat(pri_name)']}</span></td>
 
-                          <td align="center"><span>{$val['addtime']}</span></td>
+                          <td align="center"><span>{$val['addtime'] |date='Y-m-d H:i:s',###}</span></td>
                           <td align="center">
                                  <a href="{:U('edit',array('id'=>$val['id']) )}">编辑</a> |
                                  <a href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" title="移除">移除</a>

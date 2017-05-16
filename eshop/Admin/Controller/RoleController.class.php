@@ -32,6 +32,8 @@
 			$data = array();
 			$data = $this->model->roleLink();
 			$data['roleOne'] = $this->model->getRoleOne($id);
+			$data['roleOne'] = $data['roleOne'][0];
+			$data['roleOne']['pri_list'] = $data['roleOne']['group_concat(pri_id)'];
 			$this->assign($data);
 			$this->assignHead('修改角色资料',U('list'),'角色列表');
 			$this->display();

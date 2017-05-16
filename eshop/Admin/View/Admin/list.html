@@ -30,6 +30,7 @@
                           <th>管理员名称</th>
                           <th>电话号码</th>
                           <th>电子邮箱</th>
+                          <th>拥有角色</th>
                           <th>是否启用</th>
                           <th>添加时间</th>
                           <th>操作</th>
@@ -42,17 +43,20 @@
                           <td align="center">{$val['admin_nick']}</td>
                           <td align="center">{$val['tel']}</td>
                           <td align="center">{$val['email']}</td>
-                        
-                          <td width="20%" show="{$val['is_use']}" ><img  src="__PUBLIC__/Admin/images/{$val['is_use']}.gif" /></td>
 
-                          <td align="center">{$val['addtime']}</td>
+                          <td align="center"><span>{$val['group_concat(role_name)']}</span></td>
+                        
+                          <td align="center" show="{$val['is_use']}" ><img  src="__PUBLIC__/Admin/images/{$val['is_use']}.gif" /></td>
+
+                          <td align="center">{$val['addtime'] |date='Y-m-d H:i:s',###}</td>
                           <td width="24%" align="center">
+                                 <a href="{:U('addrole',array('id'=>$val['id']) )}">编辑角色</a> |
                                  <a href="{:U('edit',array('id'=>$val['id']) )}">编辑</a> |
                                  <a href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" title="移除">移除</a>
                           </td>
                     </tr>
                     </foreach>
-                    <tr><td height="30" colspan="9" align="center">{$show}</td></tr>
+                    <tr><td height="30" colspan="10" align="center">{$show}</td></tr>
             </table>
       </div>
 </form>

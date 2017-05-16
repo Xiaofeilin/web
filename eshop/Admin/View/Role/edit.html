@@ -3,7 +3,7 @@
       <form id="role_form" method="post" name="theForm" enctype="multipart/form-data" >
 
               <table width="100%" style="margin:0 auto" id="general-table">
-                    <input type="hidden" name="id" value="{$roleOne.role_name}">
+                    <input type="hidden" name="id" value="{$roleOne.id}">
                     <tr>
                           <td class="label">角色名称:</td>
                           <td><input type='text' name='role_name' maxlength="20" value='{$roleOne.role_name}' size='27' /> <font color="red">*</font></td>
@@ -11,10 +11,10 @@
                                 
                     <foreach name="priAll" item="val">
                         <if condition="$val.lv eq 0">
-                            <tr style="background:#f4fafb;">
+                            <tr style="background:#f4fafb;" >
                                   <td colspan="2">
                                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                      <input type="checkbox" name="pri_id[]" value="{$val.id}" pid="{$val.parent_id}" >{$val.pri_name}
+                                      <input type="checkbox" name="pri_id[]" value="{$val.id}" pid="{$val.parent_id}" {:in_array($val['id'],explode(',',$roleOne['pri_list']))?'checked':''}>{$val.pri_name}
                                   </td>
                             </tr>
                         </if>
@@ -22,7 +22,7 @@
                             <tr style="background:#f4fafb;">
                                   <td colspan="2">
                                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                      <input type="checkbox" name="pri_id[]" value="{$val.id}" pid="{$val.parent_id}">{$val.pri_name}
+                                      <input type="checkbox" name="pri_id[]" value="{$val.id}" pid="{$val.parent_id}" {:in_array($val['id'],explode(',',$roleOne['pri_list']))?'checked':''}>{$val.pri_name}
                                   </td>
                             </tr>
                         </if>
@@ -30,7 +30,7 @@
                             <tr >
                                   <td colspan="2">
                                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                      <input type="checkbox" name="pri_id[]" value="{$val.id}" pid="{$val.parent_id}">{$val.pri_name}
+                                      <input type="checkbox" name="pri_id[]" value="{$val.id}" pid="{$val.parent_id}" {:in_array($val['id'],explode(',',$roleOne['pri_list']))?'checked':''}>{$val.pri_name}
                                   </td>
                             </tr>
                         </if>
