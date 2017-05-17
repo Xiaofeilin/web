@@ -6,10 +6,28 @@ class UserController extends Controller {
 
 	public function information(){
 		$user = D('User');
-		$map['usernum'] = $_SESSION['info']['usernum'];
+		$map['id'] = $_SESSION['info']['id'];
 		$userinfo = $user->where($map)->getAll();
 		$this->assign('userinfo',$userinfo);
 		$this->display();
+	}
+
+	public function checkAcc(){
+		$user = D('User');
+		$info = $user->create();
+
+		$_SESSION['infoMsg']['account'] = I("account");
+
+		$this->error($user->getError());
+	}
+
+	public function checkTel(){
+		$user = D('User');
+		$info = $user->create();
+
+		//$_SESSION['addMsg']['tel'] = I("tel");
+
+		$this->error($user->getError());
 	}
 
 	/*

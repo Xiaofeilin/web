@@ -112,7 +112,7 @@ class RegController extends Controller {
 		$data["pwd"] = md5($_SESSION['regMsg']['pwd']);
 		$data["tel"] = $_SESSION['regMsg']['tel'];
 		$data["regtime"] = time();
-		$data["usernum"] = mt_rand(1,99999).uniqid();
+		//$data["usernum"] = mt_rand(1,99999).uniqid();
 
 		$result = $user->data($data)->add();
 		

@@ -31,7 +31,7 @@ class SafeModel extends Model{
 
 	public function checkOldPwd($val){
 		$map['pwd'] = md5($val);
-		$map['usernum'] = $_SESSION['info']['usernum'];
+		$map['id'] = $_SESSION['info']['id'];
 		$info = $this->model->where($map)->find();
 		if($info){
 			return true;
