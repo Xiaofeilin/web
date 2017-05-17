@@ -145,6 +145,7 @@
 		*@param array 	$data[自动验证过滤后的form表单数据]
 		*/
 		protected function _before_insert(&$data){
+
 			if(!empty($data['sort_num'])){
 				if($data['sort_num']>100||$data['sort_num']<=0){
 					$this->error="排序大于100或小于0";
@@ -176,6 +177,7 @@
 		*@param array 	$data[自动验证过滤后的form表单数据]
 		*/
 		protected function _after_insert($data){
+
 			//处理form表单中属性数据，并插入数据库
 			if( $attr_id = I('post.attr_id','') ){
 				$attr_price = I('post.attr_price','');
@@ -246,6 +248,7 @@
 		*/
 		protected function _before_update(&$data){
 			
+			if(count($data)) return;
 			
 			if( ($data['is_del']==1||$data['is_del']===0) ) return true;
 			
@@ -277,7 +280,8 @@
 		*@param array 	$data[自动验证过滤后的form表单数据]
 		*/
 		protected function _after_update($data){
-
+			if(count($data)) return;
+			
 			if( ($data['is_del']==1||$data['is_del']===0) ) return true;
 
 			//****************************修改商品属性*****************************

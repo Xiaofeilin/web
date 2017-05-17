@@ -14,12 +14,10 @@
 		*[cat数据表添加数据]
 		*/
 		public function add(){
-			
 			parent::add();
 			$data['typeAll'] = D('type')->select();
 			$data['catAll'] = $this->model->lvIt3();
 			$this->assign($data);
-			$this->assignHead('添加分类',U('list'),'分类列表');
 			$this->display();
 		}
 
@@ -30,13 +28,13 @@
 		*/
 		public function edit(){
 
-			parent::edit();
+			
 			$id = I('get.id','');
+			parent::edit('',array('id'=>$id));
 			$data = array();
 			$data['html'] = $this->model->restore($id);
 			$data['catOne'] = $this->model->getCatOne($id);
 			$this->assign($data);
-			$this->assignHead('修改分类',U('list'),'分类列表');
 			$this->display();
 		}
 
@@ -89,7 +87,7 @@
 		public function list(){
 			$data = $this->model->search();
 			$this->assign($data);
-			$this->assignHead('分类列表',U('add'),'添加分类');
+			$this->assignHead('添加分类',U('add'),'管理员列表');
 			$this->display();
 		}
 	}

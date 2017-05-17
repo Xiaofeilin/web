@@ -13,7 +13,6 @@
 
 		public function add(){
 			parent::add();
-			$this->assignHead('品牌添加',U('list'),'品牌列表');
 			$this->display();
 		}
 
@@ -21,17 +20,17 @@
 			$data = array();
 			$data = $this->model->search();
 			$this->assign($data);
-			$this->assignHead('品牌列表',U('add'),'添加品牌');
+			$this->assignHead('添加品牌',U('add'),'品牌列表');
 			$this->display();
 		}
 
 		public function edit(){
-			parent::edit();
+			
 			$data = array();
 			$id = I('get.id','');
+			parent::edit('',array('id'=>$id));
 			$data['brandOne'] = $this->model->find($id);
 			$this->assign($data);
-			$this->assignHead('品牌修改',U('list'),'品牌列表');
 			$this->display();
 		}
 

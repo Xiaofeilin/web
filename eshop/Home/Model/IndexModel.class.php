@@ -13,4 +13,13 @@
 			$data['goods_is_sale_list'] = $goods->field($field)->where('is_sale=1 and is_on_sale=1 and promote_start_time<'.time().' and promote_end_time>'.time())->limit(4)->select();
 			return $data;
 		}
+
+		public function floorSelect(){
+			$data = array();
+			$floor = D('floor');
+			$data['floorList'] = $floor->where('is_show=1 and (one_cat !=0 or two_cat!=0)')->select();
+
+			return $data;
+			
+		}
 	}

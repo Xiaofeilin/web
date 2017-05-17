@@ -1,30 +1,46 @@
-  <layout name="Index/header_foot"/>
-  <div class="main-div">
-      <form id="cat_form" method="post" name="theForm" enctype="multipart/form-data" >
+<layout name="Index/header_foot"/>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" method="post" id="form-admin-add">
+	 <input type="hidden" name="id" value="{$memberLevelOne['id']}">
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>会员名称：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="text"  value={$memberLevelOne['level_name']} class="input-text"   name='level_name'>
+		</div>
+	</div>
+	
 
-              <table width="100%" style="margin:0 auto" id="general-table">
-                    <input type="hidden" name="id" value="{$memberLevelOne['id']}">
-                    <tr>
-                          <td class="label">会员名称：</td>
-                          <td><input type='text' name='level_name' maxlength="20" value={$memberLevelOne['level_name']} size='27' /> <font color="red">*</font></td>
-                    </tr>
-
-                    <tr>
-                          <td class="label">积分范围：</td>
-                          <td>
-                                <input type="text" name="bottom_num" value="{$memberLevelOne['bottom_num']}"  placeholder="下限">  
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">积分范围：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="number"  class="input-text" value="{$memberLevelOne['bottom_num']}"   name="bottom_num"  placeholder="下限">  
                                 &nbsp;&nbsp;~~ &nbsp;&nbsp;
-                                <input type="text" name="top_num" value="{$memberLevelOne['top_num']}" placeholder="上限">
-                          </td>
-                    </tr>
-                    <tr>
-                          <td class="label">折 &nbsp;扣 &nbsp;率：</td>
-                          <td><input type="text" name="rate" value="{$memberLevelOne['rate']}">&nbsp;如：9折：90，默认为100</td>
-                    </tr>
-              </table>
-              <div class="button-div">
-              <input type="submit" value=" 确定 " />
-              <input type="reset" value=" 重置 " />
-              </div>
-      </form>
-  </div>
+                                <input type="number"  class="input-text" value="{$memberLevelOne['top_num']}"  name="top_num" placeholder="上限">
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>折 扣 率：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="number" class="input-text"    value="{$memberLevelOne['rate']}" name="rate">如：9折：90，默认为100
+		</div>
+	</div>
+	
+
+	<div class="row cl">
+		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+		</div>
+	</div>
+	</form>
+</article>
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
