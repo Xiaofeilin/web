@@ -9,7 +9,6 @@
 
 		public function add(){
 			parent::add();
-			$this->assignHead('等级添加',U('list'),'等级列表');
 			$this->display();
 		}
 
@@ -21,12 +20,11 @@
 		}
 
 		public function edit(){
-			parent::edit();
 			$id = I('get.id','');
+			parent::edit('',array('id'=>$id));
 			$data = array();
 			$data['memberLevelOne'] = $this->model->find($id);
 			$this->assign($data);
-			$this->assignHead('等级修改',U('list'),'等级列表');
 			$this->display();
 		}
 

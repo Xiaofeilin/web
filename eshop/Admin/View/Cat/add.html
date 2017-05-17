@@ -1,94 +1,126 @@
-  <layout name="Index/header_foot"/>
-  <div class="main-div">
-      <form id="cat_form" method="post" name="theForm" enctype="multipart/form-data" >
+<layout name="Index/header_foot"/>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" method="post" id="form-admin-add">
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>分类名称：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="text" class="input-text"   name='cat_name'>
+		</div>
+	</div>
+	
 
-              <table width="100%" style="margin:0 auto" id="general-table">
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">上级分类：</label>
+		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
+			<select class="select"  name="parent_id" size="1">
+				<option value="0" >顶级分类</option>
+				<foreach name="catAll" item="val">
+				<option value="{$val['id']}">{$val['cat_name']}</option>
+				</foreach>
+			</select>
+			</span> </div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>价格区间：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="number" class="input-text"    name="price_section">
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>是否在前台显示：</label>
+		<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+			<div class="radio-box">
+				<input  type="radio"  name="is_show"   value="1">
+				<label for="sex-1">是</label>
+			</div>
+			<div class="radio-box">
+				<input type="radio" name="is_show" value="0"  checked>
+				<label for="sex-2">否</label>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">分类描述：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<textarea name="cat_desc" cols="" rows="" class="textarea"  placeholder="说点什么...100个字符以内" dragonfly="true" onKeyUp="$.Huitextarealength(this,100)"></textarea>
+			<p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+		</div>
+	</div>
 
-                    <tr>
-                          <td class="label">分类名称:</td>
-                          <td><input type='text' name='cat_name' maxlength="20" value='' size='27' /> <font color="red">*</font></td>
-                    </tr>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">属性筛选：</label>
+		<div class="formControls col-xs-8 col-sm-9"> 
+			 <a onclick='addnew(this)' javascript='void(0)'>[+]</a>
+			<span class="select-box" style="width:150px;">
+			<select class="select"  type="type"  size="1">
+				 <option value="">请选择</option>
+	                                       <foreach name="typeAll" item="val">
+	                                       <option value="{$val['id']}">{$val['type_name']}</option>
+	                                       </foreach>
+			</select>
+			</span>
+		 </div>
+	</div>
 
-                    <tr>
-                          <td class="label">上级分类:</td>
-                          <td>
-                                <select name="parent_id">
-                                      <option value="0" >顶级分类</option>
-                                      <foreach name="catAll" item="val">
-                                        <option value="{$val['id']}">{$val['cat_name']}</option>
-                                      </foreach>
-                                </select>
-                          </td>
-                    </tr>
-                    <tr>
-                          <td class="label">价格区间：</td>
-                          <td><input type="text" name="price_section"></td>
-                    </tr>
-                    <tr>
-                          <td class="label">分类描述：</td>
-                          <td><textarea name="cat_desc" id="" cols="40" rows="10" placeholder="最大128字,可以为空"></textarea></td>
-                    </tr>
+	<div class="row cl">
+		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+		</div>
+	</div>
+	</form>
+</article>
 
-                    <tr>
-                          <td class="label">是否在前台显示：</td>
-                          <td>
-                                <input type="radio" name="is_show" value="1">是
-                                <input type="radio" name="is_show" value="0" checked>否
-                          </td>
-                    </tr>
-                      <tr>
-                        
-                    <td class="label"><br>属性筛选：</td>
 
-                        <td>
-                                <p>
-                                <a onclick='addnew(this)' javascript='void(0)'>[+]</a>
-                                <select type="type" name="">
-                                       <option value="">请选择</option>
-                                       <foreach name="typeAll" item="val">
-                                       <option value="{$val['id']}">{$val['type_name']}</option>
-                                       </foreach>
-                                </select>
-                                <span name="attr_span"></span>
-                                </p>
-                        </td>
-                    </tr>
-              </table>
-              <div class="button-div">
-              <input type="submit" value=" 确定 " />
-              <input type="reset" value=" 重置 " />
-              </div>
-      </form>
-  </div>
-<script>
-             $('select[type="type"]').change(function(){
-                    var type_id = $(this).val();
-                    var _type = $(this);
-                    $.ajax({
-                            type:'GET',
-                            url:"{:U('ajaxGetAttr','',false)}/type_id/"+type_id,
-                            dataType:'json',
-                            success:function(data){
-                                    var html = "<select name='search_attr_id[ ]'>";
-                                    var num = data.length;
-                                    for(var i=0;i<num;i++){
-                                        html+="<option value="+ data[i]['id'] +">"+ data[i]['attr_name'] +"</option>";
-                                    } 
-                                    html+="</select>";
-                                    _type.next().html(html);
-                            }
-                  })
-             });
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+<script type="text/javascript">
 
-        function addnew(a){
-              var p = $(a).parent();
-              if($(a).html()=="[+]"){
-                      var newP = p.clone(true);
-                      newP.find("a").html("[-]");
-                      newP.find("select[name='search_attr_id[ ]']").remove();
-                      p.after(newP);
-              }
-              else
-                     p.remove();
-        }
-</script>
+
+$('select[type="type"]').change(function(){
+
+	var type_id = $(this).val();
+	var _type = $(this);
+	_type.parent().next().remove();
+	$.ajax({
+		type:'GET',
+		url:"{:U('ajaxGetAttr','',false)}/type_id/"+type_id,
+		dataType:'json',
+		success:function(data){
+			var html = "<span class='select-box' style='width:150px;'><select class='select' name='search_attr_id[ ]'   size='1'>";
+			var num = data.length;
+			for(var i=0;i<num;i++){
+				html+="<option value="+ data[i]['id'] +">"+ data[i]['attr_name'] +"</option>";
+			} 
+			html+="</select></span>";
+			_type.parent().after(html);
+		}
+
+
+	})
+});
+
+function addnew(a){
+	var p = $(a).parent().parent();
+	if($(a).html()=="[+]"){
+
+		var newP = p.clone(true);
+
+		newP.find('label ').html('');
+		newP.find("a").html("[-]");
+		newP.find("select[name='search_attr_id[ ]']").remove();
+		p.after(newP);
+	}
+	else
+		p.remove();
+}
+
+
+
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

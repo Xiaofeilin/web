@@ -14,13 +14,11 @@
 			$data = array();
 			$type = D('type');
 			$data['typeAll'] = $type->select();
-
 			$type_id = I('type_id','');
 			$data['type_id'] = $type_id?$type_id: I('id','');
 			$data['attrList'] = $this->model->handle($data['type_id']);
 			$this->assign($data);
-
-			$this->assignHead('属性列表',U('add',array('type_id'=>$data['type_id'])),'添加属性');
+			$this->assignHead('属性添加',U('add',array('type_id'=>$data['type_id'])),'属性列表');
 			$this->display();
 		}
 
@@ -29,18 +27,17 @@
 			parent::add('',array('type_id'=>$type_id) );
 			$data = array();
 			$data['type_id'] = $type_id;
-			$this->assignHead('添加属性',U('list',array('id'=>$data['type_id'])),'属性列表');
 			$this->assign($data);
 			$this->display();
 		}
 
 		public function edit(){
-			parent::edit( 'list' , array( 'id'=>I('post.type_id','' ) ) );
+			
 			$data = array();
 			$data['id'] = I('get.id','');
+			parent::edit( '' , array( 'id'=>$data['id']  ) );
 			$data['type_id'] = I('get.type_id','');
 			$data['attrOne'] = $this->model->find( $data['id'] );
-			$this->assignHead('修改属性',U('list',array('id'=>$data['type_id'])),'属性列表');
 			$this->assign($data);
 			$this->display();
 		}

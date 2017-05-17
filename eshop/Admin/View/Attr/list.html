@@ -1,48 +1,82 @@
-<layout name="Index/header_foot"/>
-<form>
-       <p>
-             选择类型：
-             <select name="type_id"  style="width:150px">
-                   <foreach name="typeAll" item="val">
-                   <option value="{$val['id']}" <eq name="type_id" value="$val['id']">selected</eq> >{$val['type_name']}</option>
-                   </foreach>
-             </select>
-       </p>
-</form>
-
- <div class="list-div" id="listDiv">
-       <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
-              <if condition="empty($attrList) neq true">
-              <tr>
-                    <th>ID</th>
-                    <th>属性名</th>
-                    <th>属性类型</th>
-                    <th>属性值</th>  
-                    <th>操作</th>
-              </tr>
-              <foreach name="attrList" item="val">
-              <tr align="center" class="0" id="0_1" id = 'tr_1'>
-                    <td align="center">{$val['id']}</td>
-                    <td align="center" class="first-cell" style = 'padding-left="0"'>
-                          <span><a href="#" >{$val['attr_name']}</a></span>
-                    </td>
-                    <td align="center">{$val['attr_type_name']}</td>
-                    <td align="center"><span>{$val['attr_option_values']}</span></td>
-                    <td width="24%" align="center">
-                           <a href="{:U('edit',array('id'=>$val['id'],'type_id'=>$type_id) )}">编辑</a> |
-                           <a href="{:U('del',array('id'=>$val['id'],'type_id'=>$type_id,'p'=>$p) )}" title="移除">移除</a>
-                    </td>
-              </tr>
-              </foreach>
-             <else/>
-             <tr><td  align="center">查无数据</td></tr>
-             </if>
-      </table>
+﻿<layout name="Index/header_foot"/>
+<include file="index/list" />	
+<div class="page-container">
+	<form >
+		<p>搜索内容：
+			<span class="select-box" style="width:150px;">
+			<select  class="select"   size="1" name="type_id" >
+				<foreach name="typeAll" item="val">
+				<option value="{$val['id']}" <eq name="type_id" value="$val['id']">selected</eq> >{$val['type_name']}</option>
+				</foreach>
+			</select>
+			</span>
+		</p>
+	</form>
+		
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="add('{$title}','{$url}','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> {$title}</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+	<table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr>
+				<th scope="col" colspan="9">{$title}</th>
+			</tr>
+			<tr class="text-c">
+				<th width="25"><input type="checkbox" name="" value=""></th>
+				<th>ID</th>
+				<th>属性名</th>
+				<th>属性类型</th>
+				<th>属性值</th>  
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+		<foreach name="attrList" item="val">
+		<tr class="text-c">
+			<td><input type="checkbox" value="1" name=""></td>
+			<td>{$val['id']}</td>
+			<td >{$val['attr_name']}</td>
+			<td >{$val['attr_type_name']}</td>
+			<td>{$val['attr_option_values']}</td>
+			<td class="td-manage"> 
+				<a title="编辑" href="javascript:;" onclick="edit('管理员编辑','{:U('edit',array('id'=>$val['id'],'type_id'=>$type_id) )}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+				<a title="删除" href="{:U('del',array('id'=>$val['id'],'type_id'=>$type_id,'p'=>$p) )}" onclick="del()" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+			</td>
+		</tr>
+		</foreach>
+		</tbody>
+	</table>
 </div>
 
-<script>
-        $('select[name="type_id"]').change(function(){
-                    $(this).parent().parent().submit();
-        });
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+	$('select[name="type_id"]').change(function(){
+                    $(this).parent().parent().parent().submit();
+        	});
+
+	/*
+	参数解释：
+	title	标题
+	url		请求的url
+	id		需要操作的数据id
+	w		弹出层宽度（缺省调默认值）
+	h		弹出层高度（缺省调默认值）
+*/
+/*管理员-增加*/
+function add(title,url,w,h){
+	layer_show(title,url,w,h);
+}
+function del() { 
+	var msg = "您真的确定要删除吗？\n\n请确认！"; 
+	if (confirm(msg)==true){ 
+		return true; 
+	}else{ 
+		return false; 
+	} 
+} 
+
+/*管理员-编辑*/
+function edit(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
 </script>
-       
+</body>
+</html>

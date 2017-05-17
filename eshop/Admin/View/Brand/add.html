@@ -1,39 +1,57 @@
-  <layout name="Index/header_foot"/>
-  <div class="main-div">
-      <form id="cat_form" method="post" name="theForm" enctype="multipart/form-data" >
+<layout name="Index/header_foot"/>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" method="post" id="form-admin-add" enctype="multipart/form-data">
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>品牌名称：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="text" name='brand_name'  class="input-text"   >
+		</div>
+	</div>
+	
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>品牌url：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<textarea name="site_url"   class="textarea"  placeholder="100个字符以内" dragonfly="true" onKeyUp="$.Huitextarealength(this,100)"></textarea>
+			<p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+		</div>
+	</div>
+	
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>品牌logo：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="file" name="logo">
+		</div>
+	</div>
 
-              <table width="100%" style="margin:0 auto" id="general-table">
+	<div class="row cl">
+		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+		</div>
+	</div>
+	</form>
+</article>
 
-                    <tr>
-                          <td class="label">品牌名称:</td>
-                          <td><input type='text' name='brand_name' maxlength="20" value='' size='27' /> <font color="red">*</font></td>
-                    </tr>
 
-                    <tr>
-                          <td class="label">品牌url：</td>
-                          <td><textarea name="site_url" id="" cols="40" rows="10" placeholder="最大128字,可以为空"></textarea></td>
-                    </tr>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+<script type="text/javascript">
 
-                    <tr>
-                          <td class="label">品牌logo：</td>
-                          <td><input type="file" name="logo"></td>
-                    </tr>
-                    <tr> 
-                          <td class="label"></td>
-                          <td name="pic"></td>
-                    </tr>
-              </table>
-              <div class="button-div">
-              <input type="submit" value=" 确定 " />
-              <input type="reset" value=" 重置 " />
-              </div>
-      </form>
-  </div>
-<script>
-            $('input[name="logo"]').change(function(){
-                      var pic = document.getElementsByName('logo')[0].files[0];
-                      var url = window.URL.createObjectURL(pic);
-                      var td_pic = $('td[name="pic"]');
-                      td_pic.html('<img name="logo" src="'+url+'" width="100">');
-            });
-</script>
+
+$('input[name="logo"]').change(function(){
+	var pic = document.getElementsByName('logo')[0].files[0];
+	var url = window.URL.createObjectURL(pic);
+	if($(this).next().attr('src'))
+		$(this).next().attr('src', url);
+	else
+		$(this).after('<img name="logo" src="'+url+'" width="100">');
+});
+
+
+
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

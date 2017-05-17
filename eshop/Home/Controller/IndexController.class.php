@@ -10,9 +10,9 @@
 		}
 
 	    	public function index(){
-	    		$data = $this->model->goodsSelect();
+	    		$data['goods'] = $this->model->goodsSelect();
 	    		$data['catAll'] = $this->model->catSelect();
-	    		
+	    		$data['floorGoods'] = $this->model->floorSelect();
 	      		$this->assign($data);
 	      		$this->display();
 	   	}

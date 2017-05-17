@@ -10,9 +10,17 @@
 			array('cat_name','','分类名唯一',1,'unique'),
 			array('cat_desc','0,128','超出长度',0,'length'),
 			array('is_show',array(0,1),'请不要乱修改html',1,'in'),
+			array('price_section','sortIt100','排序只能大于0小于等于100',1,'callback'),
 		);
-
-
+		//
+		public function sortIt100($sort_num){
+			if( I('post.price_section','') ){
+				if(I('post.price_section','')>100||I('post.price_section','')<0){
+					$this->error = "排序只能大于0小于等于100";
+					return false;	
+				}
+			}
+		}
 
 		/**
 		*[数据插入前的操作，主要拼接父路径]
@@ -33,10 +41,11 @@
 				$data['search_attr_id'] = $search_attr_id;
 			}
 			
-			if($data['parent_id']!=0){
+			if($data['parent_id']!==0){
 				$catOne = $this->find($data['parent_id']);
-				$data['cat_path'] = $catOne['cat_path'] . ',' . $catOne['id'];
-			}
+				$data['cat_path'] = $catOne['cat_path']  . $catOne['id'] . ',';
+			}else
+				$data['cat_path'] = '0,';
 		}
 
 

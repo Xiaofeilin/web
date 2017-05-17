@@ -9,7 +9,6 @@
 
 		public function add(){
 			parent::add();
-			$this->assignHead('添加类型',U('list'),'类型列表');
 			$this->display();
 		}
 
@@ -22,12 +21,11 @@
 		}
 
 		public function edit(){
-			parent::edit();
 			$id = I('get.id','');
+			parent::edit('',array('id'=>$id));
 			$data = array();
 			$data['typeOne'] = $this->model->find();
 			$this->assign($data);
-			$this->assignHead('修改类型',U('list'),'类型列表');
 			$this->display();
 		}
 

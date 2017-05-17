@@ -1,84 +1,117 @@
-  <layout name="Index/header_foot"/>
-  <div class="main-div">
-      <form id="cat_form" method="post" name="theForm" enctype="multipart/form-data" >
+<layout name="Index/header_foot"/>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" method="post" id="form-admin-add">
 
-              <table width="100%" style="margin:0 auto" id="general-table">
-                    
-                    <input type="hidden" name="id" value="{$catOne['id']}">
-                    <input type="hidden" name="parent_id" value="{$catOne['parent_id']}">
-                    <tr>
-                          <td class="label">分类名称:</td>
-                          <td><input type='text' name='cat_name' maxlength="20" value='{$catOne["cat_name"]}' size='27' /> <font color="red">*</font></td>
-                    </tr>
+		<input type="hidden" name="id" value="{$catOne['id']}">
+		<input type="hidden" name="parent_id" value="{$catOne['parent_id']}">
 
-                    <tr>
-                          <td class="label">上级分类:</td>
-                          <td>
-                                <input type="text" value="{$catOne['parent_name']}" disabled>
-                          </td>
-                    </tr>
-                    <tr>
-                          <td class="label">价格区间：</td>
-                          <td><input type="text" name="price_section" value="{$catOne['price_section']}"></td>
-                    </tr>
-                    <tr>
-                          <td class="label">分类描述：</td>
-                          <td><textarea name="cat_desc" id="" cols="40" rows="10" placeholder="最大128字,可以为空">{$catOne['cat_desc']}</textarea></td>
-                    </tr>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>分类名称：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="text" class="input-text"  value='{$catOne["cat_name"]}'  name='cat_name'>
+		</div>
+	</div>
+	
 
-                    <tr>
-                          <td class="label">是否在前台显示：</td>
-                          <td>
-                                <input type="radio" name="is_show" value="1" <eq name="catOne['is_show']" value="1">checked</eq> >是
-                                <input type="radio" name="is_show" value="0" <eq name="catOne['is_show']" value="0">checked</eq> >否
-                          </td>
-                    </tr>
-                     <td class="label"><br>属性筛选：</td>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">上级分类：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="text" class="input-text" value="{$catOne['parent_name']}" disabled  name='cat_name'>
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>价格区间：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="number" class="input-text"   value="{$catOne['price_section']}" name="price_section">
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>是否在前台显示：</label>
+		<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+			<div class="radio-box">
+				<input  type="radio"  name="is_show" {$catOne['is_show']==1?'checked':''}  value="1">
+				<label for="sex-1">是</label>
+			</div>
+			<div class="radio-box">
+				<input type="radio" name="is_show" value="0" {$catOne['is_show']==0?'checked':''}>
+				<label for="sex-2">否</label>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">分类描述：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<textarea name="cat_desc" cols="" rows="" class="textarea"  placeholder="说点什么...100个字符以内" dragonfly="true" onKeyUp="$.Huitextarealength(this,100)"></textarea>
+			<p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+		</div>
+	</div>
 
-                        <td>
-                                <p>
-                                    {$html}
-                                </p>
-                        </td>
-              </table>
-              <div class="button-div">
-              <input type="submit" value=" 确定 " />
-              <input type="reset" value=" 重置 " />
-              </div>
-      </form>
-  </div>
-<script>
-             $('select[type="type"]').change(function(){
-                    var type_id = $(this).val();
-                    var _type = $(this);
-                    $.ajax({
-                            type:'GET',
-                            url:"{:U('ajaxGetAttr','',false)}/type_id/"+type_id,
-                            dataType:'json',
-                            success:function(data){
-                                    var html = "<select name='search_attr_id[ ]'>";
-                                    var num = data.length;
-                                    for(var i=0;i<num;i++){
-                                        html+="<option value="+ data[i]['id'] +">"+ data[i]['attr_name'] +"</option>";
-                                    } 
-                                    html+="</select>";
-                                    _type.next().html(html);
-                            }
-                  })
-             });
+	<div class="row cl">
+			{$html}
+	</div>
 
-            function addnew(a){
-              var p = $(a).parent();
-              if($(a).html()=="[+]"){
-                      var newP = p.clone(true);
-                      newP.find(':selected').removeAttr('selected');
-                      newP.find("a").html("[-]");
-                      newP.find("select[name='search_attr_id[ ]']").remove();
-                      p.parent().append(newP);
-              }
-              else{
-                    alert('该数据正式提交才会删除');
-                     p.remove();
-            }
-        }
-</script>
+	<div class="row cl">
+		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+		</div>
+	</div>
+	</form>
+</article>
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+<script type="text/javascript">
+
+
+$('select[type="type"]').change(function(){
+
+	var type_id = $(this).val();
+	var _type = $(this);
+	_type.parent().next().remove();
+	$.ajax({
+		type:'GET',
+		url:"{:U('ajaxGetAttr','',false)}/type_id/"+type_id,
+		dataType:'json',
+		success:function(data){
+			var html = "<span class='select-box' style='width:150px;'><select class='select' name='search_attr_id[ ]'   size='1'>";
+			var num = data.length;
+			for(var i=0;i<num;i++){
+				html+="<option value="+ data[i]['id'] +">"+ data[i]['attr_name'] +"</option>";
+			} 
+			html+="</select></span>";
+			_type.parent().after(html);
+		}
+
+
+	})
+});
+
+function addnew(a){
+	var p = $(a).parent().parent();
+	if($(a).html()=="[+]"){
+
+		var newP = p.clone(true);
+
+		newP.find('label ').html('');
+		 newP.find(':selected').removeAttr('selected');
+		newP.find("a").html("[-]");
+		newP.find("span[name='attr_span']").remove();
+		 p.parent().append(newP);
+	}
+	else{
+		alert('该数据正式提交才会删除');
+		p.remove();
+	}
+}
+
+
+
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
