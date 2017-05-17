@@ -48,7 +48,9 @@
 		/**
 		*[admin数据删除]
 		*/
+		public function del(){
 
+		}
 
 
 		/**
@@ -60,5 +62,21 @@
 			$this->assign($data);
 			$this->assignHead('管理员列表',U('add'),'添加管理员');
 			$this->display();
+		}
+
+
+		//添加角色
+		public function addrole(){
+			parent::edit();
+			$id = I('get.id','');
+			$data = array();
+			$data['adminOne'] = $this->model->getAdminOne($id);
+			$data['adminOne'] = $data['adminOne'][0];
+			$data['roleAll'] = D('role')->select();
+			$data['adminOne']['role_list'] = $data['adminOne']['group_concat(pri_id)'];
+			$this->assign($data);
+			$this->assignHead('编辑管理员角色',U('list'),'管理员列表');
+			$this->display();
+			var_dump($data);
 		}
 	}

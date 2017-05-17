@@ -1,0 +1,55 @@
+<layout name="Index/header_foot"/>
+<form>
+       <p>
+              搜索内容：
+              <input type="text" value="{$Think.get.search_val}" name="search_val">
+              <select name="search_key" >
+                   <option value="">请选择搜索类型</option>
+                   <option value="id" <eq name="Think.get.search_key" value="id">selected</eq> >ID</option>
+                   <option value="pri_name" <eq name="Think.get.search_key" value="pri_name">selected</eq>>权限名称</option>
+                   <option value="moduel_name" <eq name="Think.get.search_key" value="moduel_name">selected</eq>>模块名称</option>
+                   <option value="controller_name" <eq name="Think.get.search_key" value="controller_name">selected</eq>>控制器名称</option>
+                   <option value="action_name" <eq name="Think.get.search_key" value="action_name">selected</eq>>方法名称</option>
+              </select>
+       </p>
+        <input type="submit" value="搜索">
+</form>
+<br>
+<form method="post" action="" name="listForm">
+       <div class="list-div" id="listDiv">
+
+             <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
+                    <tr>
+                          <th>ID</th>
+                          <th>权限名称</th>
+                          <th>模块名称</th>
+                          <th>控制器名称</th>
+                          <th>方法名称</th>
+                          <th>父级权限id</th>
+                          <th>添加时间</th>
+                          <th>操作</th>
+                    </tr>
+                    <foreach name="privilegeList" item="val">
+                    <tr align="center" class="0" id="0_1" id = 'tr_1'>
+                          <td align="center">{$val['id']}</td>
+                          <td align="left" class="first-cell" style = 'padding-left="0"'>
+                                <img src="__PUBLIC__/Admin/images/menu_minus.gif" id="icon_0_1" width="9" height="9" border="0" style="margin-left:{$val[lv]}em" />
+                                <span><a href="#" >{$val[pri_name]}</a></span>
+                          </td>
+                          <td align="center">{$val['moduel_name']}</td>
+                          <td align="center">{$val['controller_name']}</td>
+                          <td align="center">{$val['action_name']}</td>
+                          <td align="center">{$val['parent_id']}</td>
+                          <td align="center">{$val['addtime'] |date='Y-m-d H:i:s',###}</td>
+                          
+                          <td align="center">
+                                 <a href="{:U('edit',array('id'=>$val['id']) )}">编辑</a> |
+                                 <a href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" title="移除">移除</a>
+                          </td>
+                    </tr>
+                    </foreach>
+                    <tr><td height="30" colspan="8" align="center">{$show}</td></tr>
+            </table>
+      </div>
+</form>
+

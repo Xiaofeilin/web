@@ -47,6 +47,7 @@ class ForgetController extends Controller {
 	*['检测手机号码规范']
 	*/
 	public function checkTel(){
+		var_dump($_POST);
 		$tel = new \Home\Model\ForgetModel();
 		$info = $tel->create();
 

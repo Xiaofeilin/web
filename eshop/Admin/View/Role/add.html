@@ -1,0 +1,79 @@
+  <layout name="Index/header_foot"/>
+  <div class="main-div">
+      <form id="role_form" method="post" name="theForm" enctype="multipart/form-data" >
+
+              <table width="100%" style="margin:0 auto" id="general-table">
+
+                    <tr>
+                          <td class="label">角色名称:</td>
+                          <td><input type='text' name='role_name' maxlength="20" value='' size='27' /> <font color="red">*</font></td>
+                    </tr>
+                                
+                    <foreach name="priAll" item="val">
+                        <if condition="$val.lv eq 0">
+                            <tr style="background:#f4fafb;">
+                                  <td colspan="2">
+                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      <input type="checkbox" name="pri_id[]" value="{$val.id}" pid="{$val.parent_id}">{$val.pri_name}
+                                  </td>
+                            </tr>
+                        </if>
+                        <if condition="$val.lv eq 1">
+                            <tr style="background:#f4fafb;">
+                                  <td colspan="2">
+                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      <input type="checkbox" name="pri_id[]" value="{$val.id}" pid="{$val.parent_id}">{$val.pri_name}
+                                  </td>
+                            </tr>
+                        </if>
+                        <if condition="$val.lv eq 2">
+                            <tr >
+                                  <td colspan="2">
+                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      <input type="checkbox" name="pri_id[]" value="{$val.id}" pid="{$val.parent_id}">{$val.pri_name}
+                                  </td>
+                            </tr>
+                        </if>
+                    </foreach>
+
+              </table>
+              <div class="button-div">
+              <input type="submit" value=" 确定 " />
+              <input type="reset" value=" 重置 " />
+              </div>
+      </form>
+  </div>
+
+  <script type="text/javascript">
+    $(function(){
+      $(':checkbox').click(function(){
+          selLink($(this).attr('pid'));
+          selAll($(this).val(),$(this).is(':checked'));
+      });
+    });
+
+    //选择关联选项
+    function selLink(a){
+      $(':checkbox').each(function(){
+        var b = $(this).attr('pid');
+        if($(this).val() == a){
+          $(this).prop('checked','true');
+          selLink(b);
+        }
+      });
+    }
+
+    // 全选子权限
+    function selAll(a,b){
+      $(':checkbox').each(function(){
+        var c = $(this).attr('pid');
+        if(c == a && b){
+          $(this).prop('checked','true');
+          selAll($(this).val(),$(this).is(':checked'));
+        }else if(c == a && b == false){
+          $(this).removeProp('checked');
+          selAll($(this).val(),$(this).is(':checked'));
+        }
+      });
+    }
+  </script>

@@ -1,0 +1,41 @@
+  <layout name="Index/header_foot"/>
+  <div class="main-div">
+      <form id="cat_form" method="post" name="theForm" enctype="multipart/form-data">
+
+              <table width="100%" style="margin:0 auto" id="general-table">
+                    <input type="hidden" name="id" value="{$id}">
+                    <tr>
+                          <td class="label">权限名称:</td>
+                          <td><input type='text' name='pri_name' maxlength="20" value='{$pri_name}' size='27' /> <font color="red">*</font></td>
+                    </tr>
+
+                    <tr>
+                          <td class="label">模块名称:</td>
+                          <td>
+                                <input type="text" name="moduel_name" disabled value="{$moduel_name}">
+                          </td>
+                    </tr>
+
+                    <tr>
+                          <td class="label">控制器名称:</td>
+                          <td>
+                                <input type="text" name="controller_name" disabled value="{$controller_name}">
+                          </td>
+                    </tr>
+
+                    <tr>
+                          <td class="label">方法名称:</td>
+                          <td>
+                                <input type="text" name="action_name" disabled value="{$action_name}">
+                          </td>
+                    </tr>
+
+              </table>
+              <div class="button-div">
+              <input type="submit" value=" 确定 " />
+              <input type="reset" value=" 重置 " />
+              </div>
+      </form>
+  </div>
+
+

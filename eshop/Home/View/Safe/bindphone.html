@@ -1,0 +1,250 @@
+<include file="Public/personHeader"/>
+
+		<div class="center">
+			<div class="col-main">
+				<div class="main-wrap">
+
+					<div class="am-cf am-padding">
+						<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">绑定手机</strong> / <small>Bind&nbsp;Phone</small></div>
+					</div>
+					<hr/>
+					<!--进度条-->
+					<div class="m-progress">
+						<div class="m-progress-list">
+							<span class="step-1 step">
+                                <em class="u-progress-stage-bg"></em>
+                                <i class="u-stage-icon-inner">1<em class="bg"></em></i>
+                                <p class="stage-name">绑定手机</p>
+                            </span>
+							<span class="step-2 step">
+                                <em class="u-progress-stage-bg"></em>
+                                <i class="u-stage-icon-inner">2<em class="bg"></em></i>
+                                <p class="stage-name">完成</p>
+                            </span>
+							<span class="u-progress-placeholder"></span>
+						</div>
+						<div class="u-progress-bar total-steps-2">
+							<div class="u-progress-bar-inner"></div>
+						</div>
+					</div>
+					<form class="am-form am-form-horizontal">
+						
+						<if condition="$_SESSION['info']['tel']">
+						<div class="am-form-group bind">
+							<label for="user-phone" class="am-form-label">验证手机</label>
+							<div class="am-form-content">
+								<span id="user-phone">{$Think.session.info.tel}</span>
+								<input type="hidden" value="{$Think.session.info.tel}" id="oldtel" name="oldtel">
+							</div>
+						</div>
+
+						<div class="am-form-group code">
+							<label for="user-code" class="am-form-label">验证码</label>
+							<div class="am-form-content">
+								<input type="text" id="oldCode" name="oldCode" placeholder="短信验证码">
+							</div>
+							<a class="btn" href="javascript:void(0);" id="sendOldTelCode">
+								<div class="am-btn am-btn-danger">验证码</div>
+							</a>
+						</div>
+						<div id="oldCodeError" style="color:red;margin-bottom:5px;position:relative;top:-20px"></div>
+						<else/>
+						</if>
+						
+						<div class="am-form-group">
+							<label for="user-new-phone" class="am-form-label">验证手机</label>
+							<div class="am-form-content">
+								<input type="text" id="newTel" name="newTel" maxlength="11" tabindex="1" value="" placeholder="绑定新手机号">
+							</div>
+						</div>
+						<div id="newTelError" style="color:red;margin-bottom:5px;position:relative;top:-20px"></div>
+
+						<div class="am-form-group code">
+							<label for="user-new-code" class="am-form-label">验证码</label>
+							<div class="am-form-content">
+								<input type="tel" id="newCode" name="newCode" placeholder="短信验证码">
+							</div>
+							<a class="btn" href="javascript:void(0);" id="sendNewTelCode">
+								<div class="am-btn am-btn-danger">验证码</div>
+							</a>
+						</div>
+						<div id="newCodeError" style="color:red;margin-bottom:5px;position:relative;top:-20px"></div>
+
+						<div class="info-btn">
+							<div class="am-btn am-btn-danger" id="submit">保存修改</div>
+						</div>
+
+					</form>
+					<script type="text/javascript">
+						var x ;
+						var y;
+						var z;
+						var timer;
+						var num;
+
+						$("input[name=oldCode]").focus(function(){
+							$("#oldCodeError").html("");
+						});
+
+						$("input[name=newTel]").focus(function(){
+							$("#newTelError").html("");
+						});
+
+						$("input[name=newCode]").focus(function(){
+							$("#newCodeError").html("");
+						});
+
+						$("a[id=sendOldTelCode]").click(function(){
+							$("#sendOldTelCode").attr("disabled",true);
+							
+							clearInterval(timer);
+							timer = undefined;
+							
+							$("#oldCodeError").html("");
+							var tel = $("#oldtel").val();
+							var num = 20;
+							
+							if(tel){
+								if(timer == undefined){
+									$.ajax({
+										url:"__CONTROLLER__/sendOldTelCode",
+										data:{tel:tel},
+										type:"POST",
+										dataType:"json",
+										success:function(res){
+											$("#oldCodeError").html(res.info);
+											if(res.info != "短信发送失败！"){
+												timer = setInterval(function(){
+													num--;
+													$("#sendOldTelCode").val("等待" + num + "秒");
+													if(num == 0){
+														clearInterval(timer);
+														timer = undefined;
+														$("#sendOldTelCode").removeAttr("disabled",false);
+														$("#sendOldTelCode").val("验证码");
+													}
+												},1000);
+											}
+										}
+									});
+								}
+							}
+						});
+
+						$("input[name=oldCode]").blur(function(){
+							var oldCode = $("#oldCode").val();
+							$.ajax({
+								url:"__CONTROLLER__/checkOldCode",
+								data:{oldcode:oldCode},
+								type:"POST",
+								dataType:"json",
+								success:function(res){
+									if(!res.info == ""){
+										$("#oldCodeError").html(res.info);
+									}else{
+										x = 1;
+									}
+								}
+							});
+						});
+
+						$("input[name=newTel]").blur(function(){
+							var newTel = parseInt($("#newTel").val());
+							$.ajax({
+								url:"__CONTROLLER__/checkNewTel",
+								dataType:"json",
+								data:{tel:newTel},
+								type:"POST",
+								success:function(res){
+									if(!res.info == ""){
+										$("#newTelError").html(res.info);
+									}else{
+										y = 1;
+									}
+								}
+							});
+						});
+
+						$("a[id=sendNewTelCode]").click(function(){
+							$("#sendNewTelCode").attr("disabled",true);
+							
+							clearInterval(timer);
+							timer = undefined;
+							
+							$("#newCodeError").html("");
+							var tel = $("#newTel").val();
+							var num = 20;
+							
+							if(tel){
+								if(timer == undefined){
+									$.ajax({
+										url:"__CONTROLLER__/sendNewTelCode",
+										data:{tel:tel},
+										type:"POST",
+										dataType:"json",
+										success:function(res){
+											$("#newCodeError").html(res.info);
+											if(res.info != "短信发送失败！"){
+												timer = setInterval(function(){
+													num--;
+													$("#sendNewTelCode").val("等待" + num + "秒");
+													if(num == 0){
+														clearInterval(timer);
+														timer = undefined;
+														$("#sendNewTelCode").removeAttr("disabled",false);
+														$("#sendNewTelCode").val("验证码");
+													}
+												},1000);
+											}
+										}
+									});
+								}
+							}else{
+								$("#newCodeError").html("请输入您的手机号码！");
+							}
+						});
+
+						$("input[name=newCode]").blur(function(){
+							var newCode = $("#newCode").val();
+							$.ajax({
+								url:"__CONTROLLER__/checkNewCode",
+								dataType:"json",
+								data:{newcode:newCode},
+								type:"POST",
+								success:function(res){
+									if(!res.info == ""){
+										$("#newCodeError").html(res.info);
+									}else{
+										z = 1;
+									}
+								}
+							});
+						});
+
+						$("div[id=submit]").click(function(){
+							if( ($("#oldCode").val() && $("#newTel").val() && $("#newCode").val()) ||  ($("#newTel").val() && $("#newCode").val()) ){
+								if( (x == 1 && y == 1 && z == 1) || (y == 1 && z == 1) ){
+									$.ajax({
+										url:"__CONTROLLER__/changeTel",
+										type:"POST",
+										dataType:"text",
+										success:function(res){
+											//console.log(res);
+											if(res == 1){
+												alert("修改成功！");
+												location.href = "{:U('Safe/safety')}"
+											}else{
+												return false;
+											}
+										}
+									});
+								}
+							}else{
+								return false;
+							}
+						});
+					</script>
+
+				</div>
+
+<include file="Public/personFooter"/>

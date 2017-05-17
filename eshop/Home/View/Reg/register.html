@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+
+	<head lang="en">
+		<meta charset="UTF-8">
+		<title>注册</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+		<link rel="stylesheet" href="__PUBLIC__/Home/AmazeUI-2.4.2/assets/css/amazeui.min.css" />
+		<link href="__PUBLIC__/Home/css/dlstyle.css" rel="stylesheet" type="text/css">
+		<script src="__PUBLIC__/Home/AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
+		<script src="__PUBLIC__/Home/AmazeUI-2.4.2/assets/js/amazeui.min.js"></script>
+		
+
+	</head>
+
+	<body>
+
+		<div class="login-boxtitle">
+			<a href="{:U('Index/index')}"><img alt="" src="__PUBLIC__/Home/images/logobig.png" /></a>
+		</div>
+
+		<div class="res-banner">
+			<div class="res-main">
+				<div class="login-banner-bg"><span></span><img src="__PUBLIC__/Home/images/big.jpg" /></div>
+				<div class="login-box">
+
+						<div class="am-tabs" id="doc-my-tabs">
+							<ul class="am-tabs-nav am-nav am-nav-tabs am-nav-justify">
+								<li class="am-active"><a href="">账号注册</a></li>
+								<li><a href="">手机号注册</a></li>
+							</ul>
+
+							<!--<div id="msgError" style="color:red"></div>-->
+
+							<div class="am-tabs-bd">
+								<div class="am-tab-panel am-active">
+									<form method="post">
+										
+							   <div class="user-email">
+										<label for="email"><i class="am-icon-envelope-o"></i></label>
+										<input type="text" name="account" id="account" placeholder="请输入用户名"> 
+                 </div>						
+							<div id="accountError" style="color:red"></div>
+                 <div class="user-pass">
+								    <label for="password"><i class="am-icon-lock"></i></label>
+								    <input type="password" name="passwordone" id="passwordone" placeholder="设置密码">						   
+                 </div>	
+                 							  <div id="pwdoneError" style="color:red"></div>
+<!--                 <div class="user-pass">
+								    <label for="passwordRepeat"><i class="am-icon-lock"></i></label>
+								    <input type="password" name="" id="passwordRepeat" placeholder="确认密码">						     
+                 </div>	
+                 						<div id="accountError" style="color:red">fafafafaf</div>
+-->
+                 </form>
+                 
+								 <div class="login-links">
+										<label for="reader-me">
+											<input id="reader-me" type="checkbox"> 点击表示您同意商城《服务协议》
+										</label>
+							  	</div>
+										<div class="am-cf">
+											<input type="submit" name="submitReg" value="注册" id="" class="am-btn am-btn-primary am-btn-sm am-fl">
+										</div>
+
+								</div>
+
+								<div class="am-tab-panel">
+									<form method="post">
+                 <div class="user-phone">
+								    <label for="phone"><i class="am-icon-mobile-phone am-icon-md"></i></label>
+								    <input type="tel" name="tel" id="tel" placeholder="请输入手机号">
+								     
+                 </div>							
+                 							<div id="telError" style="color:red"></div>												
+										<div class="verification">
+											<label for="code"><i class="am-icon-code-fork"></i></label>
+											<input type="tel" name="code" id="code" placeholder="请输入验证码">
+											<a class="btn" href="javascript:void(0);" id="sendTelCode">
+												<span id="dyMobileButton">获取</span></a>
+										</div>
+										 <div id="telErrorCode" style="color:red"></div>
+                 <div class="user-pass">
+								    <label for="password"><i class="am-icon-lock"></i></label>
+								    <input type="password" name="passwordtwo" id="passwordtwo" placeholder="设置密码">
+
+                 </div>			
+                 							 <div id="pwdtwoError" style="color:red"></div>							
+<!--                 <div class="user-pass">
+								    <label for="passwordRepeat"><i class="am-icon-lock"></i></label>
+								    <input type="password" name="" id="passwordRepeat" placeholder="确认密码">
+                 </div>	
+                 							 <div id="accountError" style="color:red">dadadaad</div>
+-->
+									</form>
+								 <div class="login-links">
+										<label for="reader-me">
+											<input id="reader-me" type="checkbox"> 点击表示您同意商城《服务协议》
+										</label>
+							  	</div>
+										<div class="am-cf">
+											<input type="submit" name="submitReg" value="注册" id="" class="am-btn am-btn-primary am-btn-sm am-fl">
+										</div>
+								
+									<hr>
+								</div>
+
+								<script>
+									$(function() {
+									    $('#doc-my-tabs').tabs();
+									  })
+								</script>
+
+							</div>
+						</div>
+
+				</div>
+			</div>
+			
+					<div class="footer ">
+						<div class="footer-hd ">
+							<p>
+								<a href="# ">恒望科技</a>
+								<b>|</b>
+								<a href="# ">商城首页</a>
+								<b>|</b>
+								<a href="# ">支付宝</a>
+								<b>|</b>
+								<a href="# ">物流</a>
+							</p>
+						</div>
+						<div class="footer-bd ">
+							<p>
+								<a href="# ">关于恒望</a>
+								<a href="# ">合作伙伴</a>
+								<a href="# ">联系我们</a>
+								<a href="# ">网站地图</a>
+								<em>© 2015-2025 Hengwang.com 版权所有</em>
+							</p>
+						</div>
+					</div>
+	</body>
+
+</html>
+<!--<script type="text/javascript" src="__PUBLIC__/Home/js/jquery-1.7.2.min.js"></script>-->
+<script type="text/javascript">
+	var x;
+	var y;
+	var z;
+	var w;
+	var v;
+	var timer;
+	var num;
+
+	$("input[name=account]").focus(function(){
+		$("#accountError").html("");
+	});
+
+	$("input[name=passwordone]").focus(function(){
+		$("#pwdoneError").html("");
+		$("#pwdtwoError").html("");
+	});
+
+	$("input[name=passwordtwo]").focus(function(){
+		$("#pwdtwoError").html("");
+	});
+
+	$("input[name=tel]").focus(function(){
+		$("#telError").html("");
+	});
+
+	$("input[name=account]").blur(function(){
+		var acc = $("#account").val();
+		$.ajax({
+			url:"__CONTROLLER__/checkAcc",
+			type:"POST",
+			data:{account:acc},
+			dataType:"json",
+			success:function(res){
+				if(!res.info == ""){
+					//$("div[id=_err-msg]").removeClass("hide");
+					$("#accountError").html(res.info);
+				}else{
+					//$("#accountIcon").css({display:"block"});
+					x = 1;
+				}
+			}
+		});
+	});
+
+	$("input[name=passwordone]").blur(function(){
+		var pwd = $("#passwordone").val();
+		$.ajax({
+			url:"__CONTROLLER__/checkPass",
+			type:"POST",
+			data:{password:pwd},
+			dataType:"json",
+			success:function(res){
+				if(!res.info == ""){
+					//$("div[id=_err-msg]").removeClass("hide");
+					$("#pwdoneError").html(res.info);
+				}else{
+					//$("#accountIcon").css({display:"block"});
+					y = 1;
+				}
+			}
+		});
+	});
+
+	$("input[name=tel]").blur(function(){
+		var tel = $("#tel").val();
+		$.ajax({
+			url:"__CONTROLLER__/checkTel",
+			data:{tel:tel},
+			type:"POST",
+			dataType:"json",
+			success:function(res){
+				if(!res.info == ""){
+					$("#telError").html(res.info);
+				}else{
+					z = 1;
+				}
+			}
+		});
+	});
+
+	$("a[id=sendTelCode]").click(function(){
+		$("#sendTelCode").attr("disabled",true);
+		
+		clearInterval(timer);
+		timer = undefined;
+		
+		$("#telErrorCode").html("");
+		var tel = $("#tel").val();
+		var num = 20;
+		
+		if(tel){
+			if(timer == undefined){
+				$.ajax({
+					url:"__CONTROLLER__/sendTelCode",
+					data:{tel:tel},
+					type:"POST",
+					dataType:"json",
+					success:function(res){
+						$("#telErrorCode").html(res.info);
+						if(res.info != "短信发送失败！"){
+							timer = setInterval(function(){
+								num--;
+								$("#sendTelCode").val("等待" + num + "秒后重新发送");
+								if(num == 0){
+									clearInterval(timer);
+									timer = undefined;
+									$("#sendTelCode").removeAttr("disabled",false);
+									$("#sendTelCode").val("获取短信验证码");
+								}
+							},1000);
+						}
+					}
+				});
+			}
+		}else{
+			$("#telErrorCode").html("请输入您的手机号码！");
+		}
+	});
+
+	$("input[name=code]").blur(function(){
+		var code = $("#code").val();
+		$.ajax({
+			url:"__CONTROLLER__/checkTelCode",
+			data:{ecode:code},
+			type:"POST",
+			dataType:"json",
+			success:function(res){
+				if(!res.info == ""){
+					$("#telErrorCode").html(res.info);
+				}else{
+					w = 1;
+				}
+			}
+		});
+	});
+
+	$("input[name=passwordtwo]").blur(function(){
+		var pwd = $("#passwordtwo").val();
+		$.ajax({
+			url:"__CONTROLLER__/checkPass",
+			type:"POST",
+			data:{password:pwd},
+			dataType:"json",
+			success:function(res){
+				if(!res.info == ""){
+					//$("div[id=_err-msg]").removeClass("hide");
+					$("#pwdtwoError").html(res.info);
+				}else{
+					//$("#accountIcon").css({display:"block"});
+					v = 1;
+				}
+			}
+		});
+	});
+
+	$("input[name=submitReg]").click(function(){
+		if( ($("#account").val && $("#password")) || ($("#tel").val() && $("#code").val() && $("#password").val()) ){
+			if( (x == 1 && y ==1) || (z ==1 && w == 1 && v ==1) ){
+				/*
+				$.ajax({
+					url:"__CONTROLLER__/regSuccess",
+					type:"POST",
+					dataType:"json",
+					success:function(res){
+
+					}
+				});
+				*/
+				location.href = "{:U('Reg/regSuccess')}";
+			}
+		}else{
+			//$("#msgError").html("注册信息不能为空！");
+			return false;
+		}
+	})
+</script>

@@ -29,7 +29,14 @@
 			array('email','0,128','邮箱超出长度',0,'length'),
 			array('email','','邮箱已被使用',1,'unique'),
 			array('is_use',array(0,1),'请不要乱修改html',0,'in'),
+			array('role_id','cb','请选择权限',0,'callback'),
 		);
+
+		protected function cb(){
+			if (empty(I('post.role_id',''))) {
+				return false;
+			}
+		}
 
 		/**
 		*[搜索+分页]
@@ -63,13 +70,15 @@
 		$page = new \Think\Page($count,C('YeShu'));
 		$data['show'] = $page->show();
 
-		$adminList = $this->where($where)->limit($page->firstRow.','.$page->listRows)->select();
+		$adminList = $this->field('admin.id,admin_name,GROUP_CONCAT(role_name),admin.addtime,admin_nick,tel,email,is_use,icon')->join('left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id')->group('admin.id')->where($where)->limit($page->firstRow.','.$page->listRows)->select();
+
 		foreach($adminList as $key => $value){
 			$is_use = '0';
 			if($value['is_use'])
 				$is_use = '1';
 			$adminList[$key]['is_use'] = $is_use;
 		}
+
 		$data['adminList'] = $adminList;
 		return $data;
 		}
@@ -80,14 +89,14 @@
 		*@return array 		$adminOne[修改后的数据]
 		*/
 		public function getAdminOne($id){
-			$adminOne = $this->find($id);
+			$adminOne = $this->query("SELECT admin.id,admin_name,GROUP_CONCAT(role_name),admin.addtime,admin_nick,tel,email,is_use,icon FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where admin.id in ( SELECT admin.id FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where admin.id = '{$id}' GROUP BY admin.id ) GROUP BY admin.id");
 			return $adminOne;
 		}
 
 		// 修改上传图片
 		protected function _before_update(&$data){
 			if($_FILES['icon']['size']){
-				imgDel($this,$data['id'],'icon');
+				imgDel($this,$_POST['id'],'icon');
 				$imgData = imgUpLoad('icon','Admin/Icon');
 				if(isset( $imgData['error'])){
 					$this->error = $imgData['error'];
@@ -98,5 +107,38 @@
 			}
 		}
 
+		// 添加上传图片
+		protected function _before_insert(&$data){
 
+			if($_FILES['icon']['size']){
+				$imgData = imgUpLoad('icon','Admin/Icon');
+				if(isset( $imgData['error'])){
+					$this->error = $imgData['error'];
+					return false;
+				}else{
+					$data['icon'] = $imgData['icon'];
+				}
+			}
+		}
+
+		/**
+		*[在修改角色后的操作]
+		*@param array 	$data[自动验证过滤后的form表单数据]
+		*/
+		protected function _after_update($data){
+			// 出来form表单数据，插入数据库
+			if($role_id = I('post.role_id','')){
+				foreach ($role_id as $key => $value) {
+					if(!$value) continue;
+					$attrData[] = array(
+						'role_id' => $value,
+						'role_id'=>$data['id'],
+					);
+				}
+				$RolePri = D('RolePri');
+				$RolePri->where("role_id = {$data['id']}")->delete();
+				$RolePri->addAll($attrData);
+			}
+
+		}
 	}

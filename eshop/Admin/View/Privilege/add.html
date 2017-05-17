@@ -1,0 +1,122 @@
+  <layout name="Index/header_foot"/>
+  <div class="main-div">
+      <form id="cat_form" method="post" name="theForm" enctype="multipart/form-data" onreset="none()">
+
+              <table width="100%" style="margin:0 auto" id="general-table">
+
+                    <tr>
+                          <td class="label">权限名称:</td>
+                          <td><input type='text' name='pri_name' maxlength="20" value='' size='27' /> <font color="red">*</font></td>
+                    </tr>
+
+                    <tr>
+                      <td class="label">父级权限:</td>
+                            <td>
+                                  <select name="parent_id">
+                                        <option value="0" >--请选择--</option>
+                                        <foreach name="priAll" item="val">
+                                          <option value="{$val.id}" lv="{$val.lv}" m="{$val.moduel_name}" c="{$val.controller_name}">{$val.pri_name}</option>
+                                        </foreach>
+                                  </select>
+                            </td>
+                      </tr>
+
+                    <tr id="moduel_name" style="display:none;">
+                          <td class="label">模块名称:</td>
+                          <td>
+                                <input type="hidden" name="moduel_name">
+                                <select name="moduel_name">
+                                      <option value="All" >--请选择--</option>
+                                      <foreach id="m" name="mvcAll" item="val" key="k">
+                                        <option value="{$k}">{$k}</option>
+                                      </foreach>
+                                </select>
+                          </td>
+                    </tr>
+
+                    <tr id="controller_name" style="display:none;">
+                          <td class="label">控制器名称:</td>
+                          <td>
+                                <input type="hidden" name="controller_name">
+                                <select name="controller_name">
+                                      
+                                      <foreach id="v" name="mvcAll.Admin" item="val" key="k">
+                                        <option value="{$k}">{$k}</option>
+                                      </foreach>
+                                </select>
+                          </td>
+                    </tr>
+
+                    <tr id="action_name" style="display:none;">
+                          <td class="label">方法名称:</td>
+                          <td>
+                                <select name="action_name" id="action_sel">
+                                      
+                                </select>
+                          </td>
+                    </tr>
+
+              </table>
+              <div class="button-div">
+              <input type="submit" value=" 确定 " />
+              <input type="reset" value=" 重置 " />
+              </div>
+      </form>
+  </div>
+
+  <script type="text/javascript">
+    $(function(){
+      $('select[name="parent_id"]').change(function(){
+        if($(this).children('option[lv="0"]:selected').attr('lv') == '0'){
+          var m = $(this).children('option[lv="0"]:selected').attr('m');
+
+          $('#moduel_name').css('display','table-row');
+          $('select[name="moduel_name"]').prop('disabled','true').children('option[value='+m+']').prop('selected','true');
+          $('input[name="moduel_name"]').val(m);
+          $('#controller_name').css('display','table-row');
+          $('select[name="controller_name"]').removeProp('disabled');
+          $('#action_name').css('display','none');
+        } else if ($(this).children('option[lv="1"]:selected').attr('lv') == '1'){
+          var m = $(this).children('option[lv="1"]:selected').attr('m');
+          var c = $(this).children('option[lv="1"]:selected').attr('c');
+
+          $('#moduel_name').css('display','table-row');
+          $('select[name="moduel_name"]').prop('disabled','true').children('option[value='+m+']').prop('selected','true');
+          $('input[name="moduel_name"]').val(m);
+          $('#controller_name').css('display','table-row');
+          $('select[name="controller_name"]').prop('disabled','true').children('option[value='+c+']').prop('selected','true');
+          $('input[name="controller_name"]').val(c);
+          $('#action_name').css('display','table-row');
+          ajax(c);
+        }else{
+          $('#moduel_name').css('display','none');
+          $('#controller_name').css('display','none');
+          $('#action_name').css('display','none');
+        }
+      });
+    });
+
+    function none(){
+      $('#moduel_name').css('display','none');
+      $('#controller_name').css('display','none');
+      $('#action_name').css('display','none');
+    }
+
+    function ajax(controller){
+    $.ajax({
+      url:"{:U('Privilege/ajaxC')}",
+      data:{controller_name:controller},
+      type:"GET",
+      dataType:"JSON",
+      success:function(json){
+        var b = $("#action_sel"); 
+            b.empty();
+        $.each(json,function(index,array){
+          var div = "<option value="+array+">"+array+"</option>";
+          b.append(div);
+        });
+      }
+    });
+  }
+  </script>
+
