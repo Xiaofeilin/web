@@ -17,19 +17,19 @@
 			array('admin_nick','require','请填写名称',1),
 			array('admin_nick','0,32','名称超出长度',0,'length'),
 			array('password','require','请填写密码',0),
-			array('password','/^[\\~!@#$%^&*()-_=+|{}\[\],.?\/:;\'\"\d\w]*$/','密码存在非法字符',1),
+			array('password','/^[\\~!@#$%^&*()-_=+|{}\[\],.?\/:;\'\"\d\w]*$/','密码存在非法字符',0),
 			array('password','6,12','密码长度为6-12',0,'length'),
 			array('repass','password','两次输入的密码不一致',0,'confirm'),
-			array('tel','require','请填写手机号码',1),
-			array('tel','number','请正确书写手机号码',1),
+			array('tel','require','请填写手机号码',0),
+			array('tel','number','请正确书写手机号码',0),
 			array('tel','11','请正确书写手机号码',0,'length'),
-			array('tel','','号码已被使用',1,'unique'),
-			array('email','require','请填写电子邮箱',1),
-			array('email','email','请正确填写电子邮箱',1),
+			array('tel','','号码已被使用',0,'unique'),
+			array('email','require','请填写电子邮箱',0),
+			array('email','email','请正确填写电子邮箱',0),
 			array('email','0,128','邮箱超出长度',0,'length'),
-			array('email','','邮箱已被使用',1,'unique'),
+			array('email','','邮箱已被使用',0,'unique'),
 			array('is_use',array(0,1),'请不要乱修改html',0,'in'),
-			array('role_id','cb','请选择权限',0,'callback'),
+			array('role_id','cb','请选择角色',0,'callback'),
 		);
 
 		protected function cb(){
@@ -48,16 +48,24 @@
 		$where = array();
 		//搜索type_name类型名，id号
 		if( ( $search_key=I('get.search_key','') ) && ( $search_val=I('get.search_val','') ) ){
-			if($search_key=='admin_name')
+			if($search_key=='admin_name'){
 				$where['admin_name'] = array('like','%'.$search_val.'%') ;
-			if($search_key=='admin_nick')
+			}
+			if($search_key=='admin_nick'){
 				$where['admin_nick'] = array('like','%'.$search_val.'%') ;
-			if($search_key=='tel')
+			}
+			if($search_key=='tel'){
 				$where['tel'] = array('like','%'.$search_val.'%') ;
-			if($search_key=='email')
+			}
+			if($search_key=='email'){
 				$where['email'] = array('like','%'.$search_val.'%') ;
-			elseif($search_key=='id')
+			}
+			if($search_key=='role_name'){
+				$papa = 1;
+			}
+			elseif($search_key=='id'){
 				$where[$search_key] = array('eq',$search_val);
+			}
 		}
 		//按is_use是否显示搜索
 		if( ($is_use=I('get.is_use',false))!==false )
@@ -65,22 +73,41 @@
 
 		
 		//*****************************分页*******************************
-		$data = array();
-		$count = $this->where($where)->count();
-		$page = new \Think\Page($count,C('YeShu'));
-		$data['show'] = $page->show();
+		if($papa == 1){
+			$data = array();
+				$count = $this->query("SELECT COUNT(*) FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where role.role_name LIKE '%{$search_val}%'");
+				$count = implode($count[0]);
+				$page = new \Think\Page($count,C('YeShu'));
+				$data['show'] = $page->show();
 
-		$adminList = $this->field('admin.id,admin_name,GROUP_CONCAT(role_name),admin.addtime,admin_nick,tel,email,is_use,icon')->join('left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id')->group('admin.id')->where($where)->limit($page->firstRow.','.$page->listRows)->select();
+				$adminList = $this->query("SELECT admin.id,admin_name,GROUP_CONCAT(role_name),admin.addtime,admin_nick,tel,email,is_use,icon FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where admin.id in ( SELECT admin.id FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where role.role_name LIKE '%{$search_val}%' and is_use = '{$is_use}' GROUP BY admin.id ) GROUP BY admin.id limit " . $page->firstRow.','.$page->listRows );
+				foreach($adminList as $key => $value){
+					$is_use = '0';
+					if($value['is_use'])
+						$is_use = '1';
+					$adminList[$key]['is_use'] = $is_use;
+				}
+				$data['adminList'] = $adminList;
+				return $data;
+			}else{
+				$data = array();
+				$count = $this->where($where)->count();
+				$page = new \Think\Page($count,C('YeShu'));
+				$data['show'] = $page->show();
 
-		foreach($adminList as $key => $value){
-			$is_use = '0';
-			if($value['is_use'])
-				$is_use = '1';
-			$adminList[$key]['is_use'] = $is_use;
-		}
+				$adminList = $this->field('admin.id,admin_name,GROUP_CONCAT(role_name),admin.addtime,admin_nick,tel,email,is_use,icon')->join('left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id')->group('admin.id')->where($where)->limit($page->firstRow.','.$page->listRows)->select();
 
-		$data['adminList'] = $adminList;
-		return $data;
+				foreach($adminList as $key => $value){
+					$is_use = '0';
+					if($value['is_use'])
+						$is_use = '1';
+					$adminList[$key]['is_use'] = $is_use;
+				}
+
+				$data['adminList'] = $adminList;
+				return $data;
+			}
+		
 		}
 
 		/**
@@ -89,7 +116,7 @@
 		*@return array 		$adminOne[修改后的数据]
 		*/
 		public function getAdminOne($id){
-			$adminOne = $this->query("SELECT admin.id,admin_name,GROUP_CONCAT(role_name),admin.addtime,admin_nick,tel,email,is_use,icon FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where admin.id in ( SELECT admin.id FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where admin.id = '{$id}' GROUP BY admin.id ) GROUP BY admin.id");
+			$adminOne = $this->query("SELECT admin.id,admin_name,GROUP_CONCAT(role_id),admin.addtime,admin_nick,tel,email,is_use,icon FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where admin.id in ( SELECT admin.id FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where admin.id = '{$id}' GROUP BY admin.id ) GROUP BY admin.id");
 			return $adminOne;
 		}
 
@@ -119,6 +146,11 @@
 					$data['icon'] = $imgData['icon'];
 				}
 			}
+			//密码加密
+			if ($_POST['password']) {
+				$npw = I('password','','md5');
+				$data['password'] = $npw;
+			}
 		}
 
 		/**
@@ -132,13 +164,21 @@
 					if(!$value) continue;
 					$attrData[] = array(
 						'role_id' => $value,
-						'role_id'=>$data['id'],
+						'admin_id'=>$_POST['id'],
 					);
 				}
-				$RolePri = D('RolePri');
-				$RolePri->where("role_id = {$data['id']}")->delete();
-				$RolePri->addAll($attrData);
+				$AdminRole = D('AdminRole');
+				$AdminRole->where("admin_id = {$data['id']}")->delete();
+				$AdminRole->addAll($attrData);
 			}
 
 		}
+
+		// 登录获取权限
+		public function login(){
+			$list = $this->find();
+			var_dump($list);
+			die;
+		}
+
 	}

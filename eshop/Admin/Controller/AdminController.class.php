@@ -28,6 +28,7 @@
 			$id = I('get.id','');
 			$data = array();
 			$data['adminOne'] = $this->model->getAdminOne($id);
+			$data['adminOne'] = $data['adminOne'][0];
 			$this->assign($data);
 			$this->assignHead('修改管理员资料',U('list'),'管理员列表');
 			$this->display();
@@ -49,7 +50,13 @@
 		*[admin数据删除]
 		*/
 		public function del(){
+			$id = I('get.id','');
+			$lv = I('get.lv','0');
+			$p = I('get.p',0);
 
+			$this->model->delete($id);
+
+			$this->success( '删除成功',U('list',array('p'=>$p)) );
 		}
 
 
@@ -73,10 +80,9 @@
 			$data['adminOne'] = $this->model->getAdminOne($id);
 			$data['adminOne'] = $data['adminOne'][0];
 			$data['roleAll'] = D('role')->select();
-			$data['adminOne']['role_list'] = $data['adminOne']['group_concat(pri_id)'];
+			$data['adminOne']['role_list'] = $data['adminOne']['group_concat(role_id)'];
 			$this->assign($data);
 			$this->assignHead('编辑管理员角色',U('list'),'管理员列表');
 			$this->display();
-			var_dump($data);
 		}
 	}

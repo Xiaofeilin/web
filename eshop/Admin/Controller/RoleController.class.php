@@ -47,6 +47,7 @@
 			$lv = I('get.lv','0');
 			$p = I('get.p',0);
 
+			D('admin_role')->where('role_id='.$id)->delete();
 			$this->model->delete($id);
 
 			$this->success( '删除成功',U('list',array('p'=>$p)) );

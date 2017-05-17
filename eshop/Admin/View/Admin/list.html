@@ -10,6 +10,7 @@
                    <option value="admin_nick" <eq name="Think.get.search_key" value="admin_nick">selected</eq> >管理员名称</option>
                    <option value="tel" <eq name="Think.get.search_key" value="tel">selected</eq> >电话号码</option>
                    <option value="email" <eq name="Think.get.search_key" value="email">selected</eq> >电子邮箱</option>
+                   <option value="role_name" <eq name="Think.get.search_key" value="role_name">selected</eq> >角色名称</option>
               </select>
        </p>
        <p>
@@ -66,7 +67,7 @@
         $('td[show]').click(function(){
              var td = $(this);
              var show = $(this).attr('show');
-             var id = td.prev().prev().prev().prev().prev().prev().html();
+             var id = td.prev().prev().prev().prev().prev().prev().prev().html();
              $.ajax({
                     type:'GET',
                     url:"{:U('ajaxIsUse','',false)}/id/" +id,
