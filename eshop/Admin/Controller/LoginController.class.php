@@ -17,6 +17,14 @@
 					$this->error('验证码错误');
 					exit;
 				}
+				if (empty(I('admin_name'))) {
+					$this->error('请填写账号');
+					exit;
+				}
+				if (empty(I('password'))) {
+					$this->error('请填写账号');
+					exit;
+				}
 				$map['admin_name'] = I('admin_name');
 				$map['password'] = I('password','','md5');
 				$info = $this->model->where($map)->login();

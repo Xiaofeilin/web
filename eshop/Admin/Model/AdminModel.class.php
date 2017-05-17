@@ -177,8 +177,21 @@
 		// 登录获取权限
 		public function login(){
 			$list = $this->find();
-			var_dump($list);
-			die;
+			if (empty($list)) {
+				return false;
+			}
+			//查询用户所属权限id所组成的字符串
+			$aid = $list['id'];
+			$priList = D('RolePri')->query("SELECT group_concat(distinct role_pri.pri_id) FROM `role_pri` LEFT JOIN `admin_role` ON role_pri.role_id = admin_role.role_id where admin_role.admin_id = {$aid} ");
+			$list['priList'] = $priList[0];
+
+			return $list;
+		}
+
+		//登录错误处理
+		public function errorLog(){
+			$admin_name = I('admin_name');
+			$this->where("admin_name = '{$admin_name}'")->find();
 		}
 
 	}

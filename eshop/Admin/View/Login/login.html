@@ -10,10 +10,10 @@
 <script type="text/javascript" src="lib/html5shiv.js"></script>
 <script type="text/javascript" src="lib/respond.min.js"></script>
 <![endif]-->
-<link href="static/h-ui/css/H-ui.min.css" rel="stylesheet" type="text/css" />
-<link href="static/h-ui.admin/css/H-ui.login.css" rel="stylesheet" type="text/css" />
-<link href="static/h-ui.admin/css/style.css" rel="stylesheet" type="text/css" />
-<link href="lib/Hui-iconfont/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Admin/static/h-ui/css/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Admin/static/h-ui.admin/css/H-ui.login.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Admin/static/h-ui.admin/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Admin/lib/Hui-iconfont/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 <!--[if IE 6]>
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -42,7 +42,7 @@
       <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">
           <input class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;" name="code">
-          <img src="{:U('Login/code')}" id="codeimg" onclick="refreshCode()"> <a id="kanbuq" href="javascript:;" onclick="refreshCode()">看不清，换一张</a> </div>
+          <img src="{:U('Login/code')}" id="codeimg" onclick="refreshCode()" height="41px"> <a id="kanbuq" href="javascript:;" onclick="refreshCode()">看不清，换一张</a> </div>
       </div>
       <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">
@@ -61,8 +61,8 @@
   </div>
 </div>
 <div class="footer">Copyright LGBYA by H-ui.admin v3.0</div>
-<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
-<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/static/h-ui/js/H-ui.min.js"></script>
 </body>
 </html>
 <script type="text/javascript">
