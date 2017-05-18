@@ -28,7 +28,6 @@
 		*/
 		public function edit(){
 
-			
 			$id = I('get.id','');
 			parent::edit('',array('id'=>$id));
 			$data = array();

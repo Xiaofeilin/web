@@ -107,34 +107,31 @@
 			$data['goodsAttrHtml'] = '';
 			$attrId = array();
 			foreach ($data['goodsAttrList'] as $key => $val) {
-				$data['goodsAttrHtml'].= '<p>';
-				$data['goodsAttrHtml'].=$val['attr_name'].':';
+				$data['goodsAttrHtml'].= '<div class="row cl" ><label class="form-label col-xs-4 col-sm-2">';
+				if($val['attr_type']==1){
+					if(!in_array($val['attr_id'],$attrId)){
+						$attrId[] = $val['attr_id'];
+						$data['goodsAttrHtml'].="<a onclick='addnew(this)' javascript='void(0)'>[+]</a>";
+					}else{
+						$data['goodsAttrHtml'].="<a onclick='addnew(this)' javascript='void(0)'  id=".$val['id'].">[-]</a>";
+					}
+				}
+				$data['goodsAttrHtml'].=$val['attr_name']."：</label>";
 				$str = isset($val['attr_value'])?'old_':'';
 				$str1 = isset($val['attr_value'])?'':'attr_';
 				if(!$val['attr_option_values'])
-					$data['goodsAttrHtml'].='<input type="text" name="'.$str.'attr_id[]['.$val[$str1.'id'].']" value="'.$val['attr_value'].'">';
+					$data['goodsAttrHtml'].='&nbsp;<input type="text" class="input-text" style="width:250px" attr_id='.$val['attr_id'].'  name="'.$str.'attr_id[]['.$val[$str1.'id'].']" value="'.$val['attr_value'].'">';
 				else{
 					$arr = explode(',', $val['attr_option_values']);
-					if($val['attr_type']==1){
-						if(!in_array($val['attr_id'],$attrId)){
-							$attrId[] = $val['attr_id'];
-							$data['goodsAttrHtml'].="<a onclick='addnew(this)' javascript='void(0)'>[+]</a>";
-						}else{
-							$data['goodsAttrHtml'].="<a onclick='addnew(this)' javascript='void(0)'  id=".$val['id'].">[-]</a>";
-						}
-					}
-					$data['goodsAttrHtml'].='<select name="'.$str.'attr_id[]['.$val[($str1.'id')].']"><option value="">请选择</option>';
+					$data['goodsAttrHtml'].='<span class="select-box" style="width:250px;"><select  attr_id='.$val['attr_id'].'  name="'.$str.'attr_id[]['.$val[($str1.'id')].']" class="select"><option value="">请选择</option>';
 					
 					foreach ($arr as $key1 => $val1) {
 						$data['goodsAttrHtml'].='<option value='. $val1 .  ($val['attr_value']==$val1?'  selected':'').'>'.$val1.'</option>';
 	
 					}
-					$data['goodsAttrHtml'].='</select>';
-					if($val['attr_type']==1)
-						$data['goodsAttrHtml'].='<input type="text" attr_id='.$val['attr_id'].' name='.$str.'attr_price[]['.$val[$str1.'id'].'] value='.$val['attr_price'].'>';
+					$data['goodsAttrHtml'].='</select></span>';
 				}
-				$data['goodsAttrHtml'].='</p>';
-
+				$data['goodsAttrHtml'].='</div>';
 			}
 			return $data;
 		}
@@ -145,7 +142,7 @@
 		*@param array 	$data[自动验证过滤后的form表单数据]
 		*/
 		protected function _before_insert(&$data){
-
+		
 			if(!empty($data['sort_num'])){
 				if($data['sort_num']>100||$data['sort_num']<=0){
 					$this->error="排序大于100或小于0";
@@ -165,8 +162,8 @@
 			//判断有没有促销，将促销时间转为时间戳
 			if($data['is_sale']==1){
 				if( ($start = I('post.promote_start_time','')) && ($end = I('post.promote_end_time','')) ){
-					 $data['promote_start_time'] = strtotime($start.' 00:00:01');
-					 $data['promote_end_time'] = strtotime($end.' 23:59:59');
+					 $data['promote_start_time'] = strtotime($start);
+					 $data['promote_end_time'] = strtotime($end);
 				}	
 			}
 		}
@@ -178,21 +175,16 @@
 		*/
 		protected function _after_insert($data){
 
-			//处理form表单中属性数据，并插入数据库
+		//处理form表单中属性数据，并插入数据库
 			if( $attr_id = I('post.attr_id','') ){
-				$attr_price = I('post.attr_price','');
 				$attrData = array();
 				foreach ($attr_id as $key => $value) {
-					foreach ($value as $key1 => $value1) {
-						if(!$value1) continue;
-						$price = isset($attr_price[$key][$key1])?$attr_price[$key][$key1]:0;
-						$attrData[] = array(
-							'goods_id'=>$data['id'],
-							'attr_id'=>$key1,
-							'attr_value'=>$value1,
-							'attr_price'=>$price,
-						);
-					}
+					if( !( $val = implode('', $value) ) ) continue;
+					$attrData[] = array(
+						'goods_id'=>$data['id'],
+						'attr_id'=>array_keys($value)[0],
+						'attr_value'=>$val,
+					);
 				}
 				$goodsAttr = D('GoodsAttr');
 				$goodsAttr->addAll($attrData);
@@ -248,7 +240,7 @@
 		*/
 		protected function _before_update(&$data){
 			
-			if(count($data)) return;
+			if(count($data)<=5) return;
 			
 			if( ($data['is_del']==1||$data['is_del']===0) ) return true;
 			
@@ -280,58 +272,44 @@
 		*@param array 	$data[自动验证过滤后的form表单数据]
 		*/
 		protected function _after_update($data){
-			if(count($data)) return;
+			if(count($data)<=5) return;
 			
+
 			if( ($data['is_del']==1||$data['is_del']===0) ) return true;
+
 
 			//****************************修改商品属性*****************************
 			$goodsAttr = D('GoodsAttr');
 
 			//如果没有改变类型修改属性，类型改变删除原有属性
 			if($old_attr_id=I('post.old_attr_id','')){
-				$old_attr_price = I('post.old_attr_price','');
 				$attrOldData = array();
 				foreach ($old_attr_id as $key => $value) {
-					foreach ($value as $key1 => $value1) {
-						if(!$value1) continue;
-						$price = isset($old_attr_price[$key][$key1])?$old_attr_price[$key][$key1]:0;
-						if(is_numeric( $old_attr_price[$key][$key1] ) || empty($old_attr_price[$key][$key1])){
-							$attrOldData = array(
-								'id'=>$key1,
-								'attr_value'=>$value1,
-								'attr_price'=>$price,
-							);
-							
-						}else
-							return false;
-					}
-					if($attrOldData)
-						$goodsAttr->save($attrOldData);
+					if(empty($value)) continue;
+					$attrOldData = array(
+						'id'=>array_keys($value)[0],
+						'attr_value'=>implode('', $value),
+					);
+					$goodsAttr->save($attrOldData);
 				}
-				
 			}else
-				D('GoodsAttr')->where('goods_id='.$data['id'])->delete();
+			 	D('GoodsAttr')->where('goods_id='.$data['id'])->delete();
+				
+			
 
 			//将新添加的属性添加到属性表中
 			if($attr_id = I('post.attr_id','')){
-				$attr_price = I('post.attr_price','');
 				$attrData = array();
 				foreach ($attr_id as $key => $value) {
-					foreach ($value as $key1 => $value1) {
-						if(!$value1) continue;
-						$price = isset($attr_price[$key][$key1])?$attr_price[$key][$key1]:0;
-						$attrData[] = array(
-							'goods_id'=>$data['id'],
-							'attr_id'=>$key1,
-							'attr_value'=>$value1,
-							'attr_price'=>$price,
-						);
-					}
+					$attrData[] = array(
+						'goods_id'=>$data['id'],
+						'attr_id'=>array_keys($value)[0],
+						'attr_value'=>implode(',', $value),
+					);
 				}
+				
 				$goodsAttr->addAll($attrData);
 			}
-
-		
 	
 
 			//*************************修改会员价格******************************
@@ -441,7 +419,7 @@
 		*@param array 	$goods_num[商品数]
 		*@return array 		$goodsRepData[商品属性与商品数一一对应的数组]
 		*/
-		public function repertoryNew($goods_id, $goods_attr,$goods_num){
+		public function repertoryNew($goods_id, $goods_attr,$goods_num ,  $goods_price ){
 			if($goods_attr){
 				foreach($goods_attr as $key => $value) {
 					foreach ($value as $key1 => $value1) {
@@ -451,7 +429,9 @@
 	
 				foreach ($goodsAttr as $key => $value) {
 					$num = $goods_num[$key];
+					$price = $goods_price[$key];
 					if(!is_numeric( $num )) continue;
+					if(!is_numeric( $price )) continue;
 					sort($value);
 					$str = implode(',', $value);
 					
@@ -459,14 +439,18 @@
 						'goods_id'=>$goods_id,
 						'goods_number'=>$num,
 						'goods_attr_id' => $str,
+						'goods_price' => $price,
 					);
 				}
 			}else{
 				$num = $goods_num[0];
+				$price = $goods_price[0];
 				if(!is_numeric( $num )) return;
+				if(!is_numeric( $price )) return;
 				$goodsRepData[] = array(
 					'goods_id'=>$goods_id,
 					'goods_number'=>$num,
+					'goods_price' => $price,
 				);
 			}	
 			return $goodsRepData;	
@@ -480,7 +464,7 @@
 		*@param array 	$old_goods_num[旧商品数]
 		*@return array 		$goodsRepData[商品属性与商品数一一对应的数组]
 		*/
-		public function repertoryOld($goods_id,$old_goods_attr,$old_goods_num){
+		public function repertoryOld($goods_id,$old_goods_attr,$old_goods_num,$old_goods_price){
 
 			foreach ($old_goods_attr  as $key => $value) {
 				foreach ($value as $key1 => $value1) {
@@ -490,9 +474,11 @@
 			
 			foreach ($old_goods_attrArr as $key => $value) {
 				$num = $old_goods_num[$key];
-				if( !is_numeric( $num ) ) continue;
+				$price = $old_goods_price[$key];
+				if( !is_numeric( $num ) && $price < 0 ) continue;
+				if( !is_numeric( $price ) && $price< 0 ) continue;
 				sort($value);
-				$str = implode(',', $value);
+				$str = ltrim(implode(',', $value) , ',') ;
 				
 				
 				$oldGoodsRepData[] = array(
@@ -500,6 +486,7 @@
 					'goods_id'=>$goods_id,
 					'goods_number'=>$num,
 					'goods_attr_id' => $str,
+					'goods_price'=>$price,
 				);
 
 			}
@@ -526,8 +513,8 @@
 				$where[$search_key] = array( 'like' , '%'.$search_val.'%' );
 
 			//搜索添加时间
-			$start_time = I('get.start_time')?strtotime( I('get.start_time').' 00:00:01'):0;
-			$last_time = I('get.last_time')?strtotime( I('get.last_time').' 23:59:59'):0;
+			$start_time = I('get.start_time')?strtotime( I('get.start_time')):0;
+			$last_time = I('get.last_time')?strtotime( I('get.last_time')):0;
 			if( $start_time && $last_time )
 				$where['addtime'] = array('between',array($start_time,$last_time) );
 			elseif($start_time)

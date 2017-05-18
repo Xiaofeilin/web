@@ -1,23 +1,27 @@
 <layout name="Index/header_foot"/>
-<br>
+<include file="index/list" />
 <form method="post" action="{:U(repertoryEdit)}" name="listForm">
        <div class="list-div" id="listDiv">
 
-             <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
-                    <tr>
-                          <th>添加</th>      
+              <table  class="table table-border table-bordered table-bg">
+                     <caption><h2>库存表</h2></caption>
+                  <thead>
+                          <tr class="text-c">
+                          <th><input type="button" class="btn btn-primary radius" name="none" value="添加库存" class="btn btn-primary radius"></th>      
                           <foreach name="attr_name" item="val">
                           <th>{$val}</th>
                           </foreach>
                           <th>数量</th>
-                    </tr>
+                          <th>价格</th>
+                           </tr>
+                    </thead>
                     <input type="hidden" name="goods_id" value="{$goods_id}">
                     
                     <foreach name="goodsRepList" item="val" key="key">
-                    <tr  align="center" class="0" id = {$val['id']} hand="0">
-                          <td width="10%" align="center"><input type="button" value="{$key==0?'+':'-'}"></td>
+                    <tr  class="text-c"  id = {$val['id']} hand="0">
+                          <td ><input type="button" class="btn btn-primary radius" value="{$key==0?'+':'-'}"></td>
                           <foreach name="repertoryAttr" item="val1" key="key1">
-                          <td align="center">
+                          <td >
                                 <select name="{$status}goods_attr[{$key1}][{$val['id']}][]" id="">
                                               <option value="">请选择</option>
                                              <foreach name="val1" item="val2">
@@ -26,10 +30,11 @@
                                 </select>
                           </td>
                           </foreach>
-                          <td width="15%" align="center"><input name="{$status}goods_num[{$val['id']}]" value="{$val['goods_number']}" type="text"></td>
+                          <td ><input name="{$status}goods_num[{$val['id']}]"  class="input-text" value="{$val['goods_number']}" type="text"></td>
+                            <td ><input name="{$status}goods_price[{$val['id']}]" class="input-text" value="{$val['goods_price']}" type="text"></td>
                     </tr>
                     </foreach>
-                    <tr><td height="30" colspan="100" align="center"><input type="submit"></td></tr>
+                    <tr><td height="30" colspan="100" align="center"><input type="submit"  class="btn btn-primary radius"></td></tr>
             </table>
       </div>
  </form>
@@ -51,14 +56,17 @@
                     trSelect.attr('name',newName);
 
                    var trInput = newTr.find('input[name]');
-                    var oldName = trInput.attr('name');
+                   trInput.each(function(){
+                             var oldName =  $(this).attr('name');
                    var newName = oldName.replace('old_','');
                    var start = newName.indexOf('[')+1;
                     var last = newName.lastIndexOf(']');
                    var newName = newName.replace(newName.slice(start,last) , '');
 
 
-                    trInput.attr('name',newName);
+                     $(this).attr('name',newName);
+                   });
+                 
                     tr.after(newTr);
              }else{
                       var id = tr.attr('id');
