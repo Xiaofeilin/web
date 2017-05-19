@@ -188,6 +188,9 @@
 			if (empty($list)) {
 				return false;
 			}
+			if ($list['is_use'] == '0') {
+				return false;
+			}
 			if (($list['logtime'] + 1) >= 6 && $time - $list['lasttime'] < 1800){
 				return false;
 			}
@@ -210,6 +213,10 @@
 			
 			//登录次数处理
 			if(!empty($res)){
+				if ($res['is_use'] == '0') {
+					$msg = '该用户被封禁或尚未激活';
+					return $msg;
+				}
 				if(($res['logtime'] + 1) >= 6 ){
 					if ($time - $res['lasttime'] > 1800) {
 						$this->execute("update `admin` set `logtime` = '0' where `id` = '{$res['id']}'");
