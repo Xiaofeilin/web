@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
-use Think\Controller;
-class AddressController extends Controller {
+//use Think\Controller;
+class AddressController extends EqualController {
 	public function address(){
 		$add = D("address");
 		$map['uid'] = $_SESSION['info']['id'];
@@ -16,8 +16,6 @@ class AddressController extends Controller {
 		$user = D('User');
 		$info = $user->create();
 
-		//$_SESSION['addMsg']['tel'] = I("tel");
-
 		$this->error($user->getError());
 	}
 
@@ -26,30 +24,26 @@ class AddressController extends Controller {
 
 		$add = D("address");
 		$map['uid'] = $_SESSION['info']['id'];
-		$clear = $add->where($map)->execute("update `address` set `status` = 0 where `status` = 1");
+		$data['status'] = 0;
+		//$clear = $add->where($map)->execute("update `address` set `status` = 0 where `status` = 1");
+		$clear = $add->where($map)->where('status = 1')->save($data);
 		$addinfo = $add->where($map)->select();
 
-		$map['id'] = $addinfo[$count]['id'];
+		$mp['id'] = $addinfo[$count]['id'];
 
-		$data['status'] = 1;
+		$da['status'] = 1;
 
-		$result = $add->where($map)->save($data);
+		$result = $add->where($mp)->save($da);
 	}
 
 	public function delAdd(){
 		$count = I("count");
-		//echo $count;
 
 		$add = D("address");
 		$map['uid'] = $_SESSION['info']['id'];
-		//$clear = $add->where($map)->execute("update `address` set `status` = 0 where `status` = 1");
 		$addinfo = $add->where($map)->select();
-		//var_dump($addinfo);
 
 		$map['id'] = $addinfo[$count]['id'];
-		//var_dump($map);
-
-		//$data['status'] = 1;
 
 		$result = $add->where($map)->delete();
 
@@ -62,7 +56,6 @@ class AddressController extends Controller {
 		$add = D("address");
 		$map['uid'] = $_SESSION['info']['id'];
 		$addcount = $add->where($map)->count();
-		//var_dump($addcount);
 
 		$data['name'] = I('name');
 		$data['tel'] = I('tel');
@@ -71,7 +64,6 @@ class AddressController extends Controller {
 		$data['street'] = I('street');
 		$data['detailed'] = I('detailed');
 		$data['uid'] = $_SESSION['info']['id'];
-		//var_dump($data);
 
 		if($addcount >= 5){
 			$this->ajaxReturn("你的收货地址已经超过5个，无法继续添加！","eval");
@@ -86,7 +78,6 @@ class AddressController extends Controller {
 	public function reSuccess(){
 		$add = D("address");
 		$map['id'] = I("id");
-		//var_dump($map);
 
 		$data['name'] = I('name');
 		$data['tel'] = I('tel');
@@ -94,8 +85,6 @@ class AddressController extends Controller {
 		$data['city'] = I('city');
 		$data['street'] = I('street');
 		$data['detailed'] = I('detailed');
-		//$data['uid'] = $_SESSION['info']['id'];
-		//var_dump($data);
 
 		$result = $add->where($map)->save($data);
 		if($result){

@@ -116,12 +116,12 @@
 											if(res.info != "短信发送失败！"){
 												timer = setInterval(function(){
 													num--;
-													$("#sendOldTelCode").val("等待" + num + "秒");
+													//$("#sendOldTelCode").val("等待" + num + "秒");
 													if(num == 0){
 														clearInterval(timer);
 														timer = undefined;
 														$("#sendOldTelCode").removeAttr("disabled",false);
-														$("#sendOldTelCode").val("验证码");
+														//$("#sendOldTelCode").val("验证码");
 													}
 												},1000);
 											}
@@ -187,12 +187,12 @@
 											if(res.info != "短信发送失败！"){
 												timer = setInterval(function(){
 													num--;
-													$("#sendNewTelCode").val("等待" + num + "秒");
+													//$("#sendNewTelCode").val("等待" + num + "秒");
 													if(num == 0){
 														clearInterval(timer);
 														timer = undefined;
 														$("#sendNewTelCode").removeAttr("disabled",false);
-														$("#sendNewTelCode").val("验证码");
+														//$("#sendNewTelCode").val("验证码");
 													}
 												},1000);
 											}
@@ -229,7 +229,6 @@
 										type:"POST",
 										dataType:"text",
 										success:function(res){
-											//console.log(res);
 											if(res == 1){
 												alert("修改成功！");
 												location.href = "{:U('Safe/safety')}"

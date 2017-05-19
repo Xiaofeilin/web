@@ -1,10 +1,9 @@
 <?php
 namespace Home\Controller;
-use Think\Controller;
-class SafeController extends Controller {
+//use Think\Controller;
+class SafeController extends EqualController {
 	protected $oldCode;
 	protected $newCode;
-	//protected $eCode;
 
 	public function safety(){
 		$user = D('User');
@@ -13,117 +12,6 @@ class SafeController extends Controller {
 		$this->assign('userinfo',$userinfo);
 		$this->display();
 	}
-
-/*
-	public function sendTelCode(){
-		$toTel = I("tel");
-		$pCode = mt_rand(1,999999);
-		$sendTel = send_message($pCode,$toTel);
-
-		//$_SESSION['safeMsg']['tel'] = $toTel;
-		$_SESSION['safeMsg']['pCode'] = $pCode;
-
-		if($sendTel){
-			$this->success("短信发送成功，请打开短信填写验证码！");
-		}else{
-			$this->error("短信发送失败！");
-		}
-	}
-
-	public function checkCode(){
-		$cCode = I("tCode");
-		$pCode = $_SESSION['safeMsg']['pCode'];
-		if($cCode == $pCode && $cCode != null){
-			unset($_SESSION['safeMsg']['pCode']);
-			$this->success();
-		}else{
-			$this->error("验证码错误！");
-		}
-	}
-
-	public function checkTel(){
-		$tel = new \Home\Model\SafeModel();
-		$info = $tel->create();
-
-		$_SESSION['info']['tel'] = I("tel");
-
-		$this->error($tel->getError());
-	}
-
-	public function telSuccess(){
-		$user = D('User');
-		$data["tel"] = $_SESSION['info']['tel'];
-		$where['account'] = $_SESSION['info']['account'];
-
-		$result = $user->data($data)->where($where)->save();
-	}
-
-	public function checkOldPwd(){
-		$oldpwd = new \Home\Model\SafeModel();
-		$info = $oldpwd->create();
-
-		$this->error($oldpwd->getError());
-	}
-
-	public function checkNewPwd(){
-		$newpwd = new \Home\Model\SafeModel();
-		$info = $newpwd->create();
-
-		$_SESSION['pwdMsg']['pwd'] = I("newpwd");
-
-		$this->error($newpwd->getError());
-	}
-
-	public function checkAgainPwd(){
-		$againpwd = new \Home\Model\SafeModel();
-		$info = $againpwd->create();
-
-		$this->error($againpwd->getError());
-	}
-
-	public function pwdSuccess(){
-		$user = D("User");
-		$data["pwd"] = md5($_SESSION['pwdMsg']['pwd']);
-		$where['account'] = $_SESSION['info']['account'];
-
-		$result = $user->where($where)->save($data);
-
-		unset($_SESSION['pwdMsg']);
-
-		if($result){
-			$this->success("密码修改成功！");
-		}else{
-			$this->error("密码修改失败！");
-		}
-	}
-
-	public function sendEmailCode(){
-		$toemail = I("e");
-		var_dump($toemail);
-		$eCode = mt_rand(1,999999);
-		$content = "【超级易购店】你的邮件验证码为".$eCode;
-		$email = send_email($toemail,"验证码",$content);
-
-		$_SESSION['emailMsg']['code'] = $eCode;
-
-		if($email){
-			$this->ajaxReturn("邮件发送成功！","eval");
-		}else{
-			$this->ajaxReturn("邮件发送失败！","eval");
-		}
-	}
-
-	public function checkEmailCode(){
-		$cCode = I("ecode");
-		$eCode = $_SESSION['emailMsg']['code'];
-		if($cCode == $eCode && $cCode != null){
-			unset($_SESSION['emailMsg']['code']);
-			$this->success();
-		}else{
-			$this->error("验证码错误！");
-		}
-	}
-*/
 
 	public function sendOldTelCode(){
 		$oldCode = mt_rand(1,999999);
@@ -151,11 +39,8 @@ class SafeController extends Controller {
 	}
 
 	public function checkNewTel(){
-		//var_dump($_POST);
-		//echo I("tel");
 		$tel = new \Home\Model\SafeModel();
 		$info = $tel->create();
-		//var_dump($info);
 
 		$_SESSION['safeMsg']['tel'] = I("tel");
 
@@ -193,7 +78,6 @@ class SafeController extends Controller {
 		$where['id'] = $_SESSION['info']['id'];
 
 		$result = $user->where($where)->save($data);
-		//var_dump($result);
 
 		if($result){
 			$_SESSION['info']['tel'] = $data['tel'];
@@ -246,7 +130,6 @@ class SafeController extends Controller {
 		$where['id'] = $_SESSION['info']['id'];
 
 		$result = $user->where($where)->save($data);
-		//var_dump($result);
 
 		if($result){
 			$_SESSION['info']['email'] = $data['email'];
@@ -281,13 +164,11 @@ class SafeController extends Controller {
 	}
 
 	public function changePwd(){
-		var_dump($_POST);exit;
 		$user = D("User");
 		$data['pwd'] = md5($_SESSION['safeMsg']['pwd']);
 		$where['id'] = $_SESSION['info']['id'];
 
 		$result = $user->where($where)->save($data);
-		//var_dump($result);
 
 		if($result){
 			$_SESSION['info']['pwd'] = $data['pwd'];

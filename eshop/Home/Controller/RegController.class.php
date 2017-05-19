@@ -9,21 +9,6 @@ class RegController extends Controller {
 	}
 
 	/**
-	*['验证码显示']
-	*/
-	/*
-	public function code(){
-		$config = array(
-			'fontSize'       =>    15,  // 验证码字体大小    
-			'length'          =>    4,     // 验证码位数
-			'useNoise'    =>    false, // 关闭验证码杂点;
-		);
-		$verify = new \Think\Verify($config);
-		$verify->entry();
-	}
-	*/
-
-	/**
 	*['检查用户名']
 	*/
 	public function checkAcc(){
@@ -46,19 +31,6 @@ class RegController extends Controller {
 
 		$this->error($user->getError());
 	}
-
-	/**
-	*['检查验证码']
-	*/
-	/*
-	public function checkCode(){
-		$code = I('code');
-		$verify = new \Think\Verify();  
-		$result = $verify->check($code);
-
-		if(!$result) $this->error("验证码错误！");
-	}
-	*/
 
 	/**
 	*['检查手机']
@@ -112,7 +84,6 @@ class RegController extends Controller {
 		$data["pwd"] = md5($_SESSION['regMsg']['pwd']);
 		$data["tel"] = $_SESSION['regMsg']['tel'];
 		$data["regtime"] = time();
-		//$data["usernum"] = mt_rand(1,99999).uniqid();
 
 		$result = $user->data($data)->add();
 		
