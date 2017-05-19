@@ -1,50 +1,65 @@
-  <layout name="Index/header_foot"/>
-  <div class="main-div">
-      <form id="role_form" method="post" name="theForm" enctype="multipart/form-data" >
+<layout name="Index/header_foot"/>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" method="post" id="form-admin-add" enctype="multipart/form-data">
 
-              <table width="100%" style="margin:0 auto" id="general-table">
-                    <input type="hidden" name="id" value="{$roleOne.id}">
-                    <tr>
-                          <td class="label">角色名称:</td>
-                          <td><input type='text' name='role_name' maxlength="20" value='{$roleOne.role_name}' size='27' /> <font color="red">*</font></td>
-                    </tr>
-                                
-                    <foreach name="priAll" item="val">
-                        <if condition="$val.lv eq 0">
-                            <tr style="background:#f4fafb;" >
-                                  <td colspan="2">
-                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                      <input type="checkbox" name="pri_id[]" value="{$val.id}" pid="{$val.parent_id}" {:in_array($val['id'],explode(',',$roleOne['pri_list']))?'checked':''}>{$val.pri_name}
-                                  </td>
-                            </tr>
-                        </if>
-                        <if condition="$val.lv eq 1">
-                            <tr style="background:#f4fafb;">
-                                  <td colspan="2">
-                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                      <input type="checkbox" name="pri_id[]" value="{$val.id}" pid="{$val.parent_id}" {:in_array($val['id'],explode(',',$roleOne['pri_list']))?'checked':''}>{$val.pri_name}
-                                  </td>
-                            </tr>
-                        </if>
-                        <if condition="$val.lv eq 2">
-                            <tr >
-                                  <td colspan="2">
-                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                      <input type="checkbox" name="pri_id[]" value="{$val.id}" pid="{$val.parent_id}" {:in_array($val['id'],explode(',',$roleOne['pri_list']))?'checked':''}>{$val.pri_name}
-                                  </td>
-                            </tr>
-                        </if>
-                    </foreach>
+	<input type="hidden" name="id" value="{$roleOne.id}">
 
-              </table>
-              <div class="button-div">
-              <input type="submit" value=" 确定 " />
-              <input type="reset" value=" 重置 " />
-              </div>
-      </form>
-  </div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type='text' class="input-text" name='role_name' maxlength="20" value='{$roleOne.role_name}' size='27' />
+		</div>
+	</div>
 
-  <script type="text/javascript">
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色:</label>
+		<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+			<foreach name="priAll" item="val">
+				<if condition="$val.lv eq 0">
+					<div class="check-box" style="display:block;">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="checkbox" name="pri_id[]" value="{$val.id}" pid="{$val.parent_id}" {:in_array($val['id'],explode(',',$roleOne['pri_list']))?'checked':''}>
+						<label for="{$val.role_name}">{$val.pri_name}</label>
+					</div>
+				</if>
+				<if condition="$val.lv eq 1">
+					<div class="check-box" style="display:block;">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="checkbox" name="pri_id[]" value="{$val.id}" pid="{$val.parent_id}" {:in_array($val['id'],explode(',',$roleOne['pri_list']))?'checked':''}>
+						<label for="{$val.role_name}">{$val.pri_name}</label>
+					</div>
+				</if>
+				<if condition="$val.lv eq 2">
+					<div class="check-box" style="display:block;">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="checkbox" name="pri_id[]" value="{$val.id}" pid="{$val.parent_id}" {:in_array($val['id'],explode(',',$roleOne['pri_list']))?'checked':''}>
+						<label for="{$val.role_name}">{$val.pri_name}</label>
+					</div>
+				</if>
+			</foreach>
+		</div>
+	</div>
+
+	<div class="row cl">
+		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			<input class="btn btn-danger radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;">
+		</div>
+	</div>
+	</form>
+</article>
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+
+</body>
+</html>
+
+<script type="text/javascript">
     $(function(){
       $(':checkbox').click(function(){
           selLink($(this).attr('pid'));

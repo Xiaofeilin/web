@@ -22,10 +22,11 @@
 	</div>
 
 	<div class="row cl" id="moduel_name" style="display:none;">
+		<input type="hidden" name="moduel_name">
 		<label class="form-label col-xs-4 col-sm-3">模块名称:</label>
 		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
 			<select class="select"  name="moduel_name" size="1">
-				<option value="0" >--请选择--</option>
+				<option value="All" >--请选择--</option>
 				<foreach id="m" name="mvcAll" item="val" key="k">
 					<option value="{$k}">{$k}</option>
 				</foreach>
@@ -34,6 +35,7 @@
 	</div>
 
 	<div class="row cl" id="controller_name" style="display:none;">
+		<input type="hidden" name="controller_name">
 		<label class="form-label col-xs-4 col-sm-3">控制器名称:</label>
 		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
 			<select class="select"  name="controller_name" size="1">

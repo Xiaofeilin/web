@@ -91,6 +91,7 @@
 				$data = array();
 				$count = $this->query("SELECT COUNT(*) FROM `role` left join role_pri on role.id = role_pri.role_id left join privilege on role_pri.pri_id = privilege.id where privilege.pri_name LIKE '%{$search_val}%'");
 				$count = implode($count[0]);
+				$data['count'] = $count;
 				$page = new \Think\Page($count,C('YeShu'));
 				$data['show'] = $page->show();
 
@@ -107,6 +108,7 @@
 		//*****************************分页*******************************
 		$data = array();
 		$count = $this->where($where)->count();
+		$data['count'] = $count;
 		$page = new \Think\Page($count,C('YeShu'));
 		$data['show'] = $page->show();
 

@@ -3,41 +3,33 @@
 <article class="page-container">
 	<form class="form form-horizontal" method="post" id="form-admin-add" enctype="multipart/form-data">
 
-	<input type="hidden" name="id" value="{$adminOne['id']}">
+	<input type="hidden" name="id" value="{$id}">
 
 	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"> 管理员账号:</label>
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>权限名称:</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type='text' class="input-text" name='admin_name' maxlength="20" value='{$adminOne["admin_name"]}' size='27' readonly />
+			<input type='text' class="input-text" name='pri_name' maxlength="20" value='{$pri_name}' size='27' />
 		</div>
 	</div>
 
 	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员名称:</label>
+		<label class="form-label col-xs-4 col-sm-3"> 模块名称:</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type='text' class="input-text" name='admin_nick' maxlength="20" value='{$adminOne["admin_nick"]}' size='27' />
+			<input type="text" class="input-text" name="moduel_name" disabled value="{$moduel_name}">
 		</div>
 	</div>
 
 	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机号码:</label>
+		<label class="form-label col-xs-4 col-sm-3"> 控制器名称:</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type='text' class="input-text" name='tel' maxlength="20" value='{$adminOne["tel"]}' size='27' />
+			<input type="text" class="input-text" name="controller_name" disabled value="{$controller_name}">
 		</div>
 	</div>
 
 	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>电子邮箱:</label>
+		<label class="form-label col-xs-4 col-sm-3"> 方法名称:</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type='text' class="input-text" name='email' maxlength="20" value='{$adminOne["email"]}' size='27' />
-		</div>
-	</div>
-
-	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>头像:</label>
-		<div class="formControls col-xs-8 col-sm-9">
-			<img id="preview" width="30" src="__ROOT__/Uploads/{$adminOne['icon']}" />
-			<input type='file' name='icon' id="doc" onchange="setImagePreview()" />
+			<input type="text" class="input-text" name="action_name" disabled value="{$action_name}">
 		</div>
 	</div>
 

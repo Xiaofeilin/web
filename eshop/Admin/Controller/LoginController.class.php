@@ -1,6 +1,7 @@
 <?php
 	namespace Admin\Controller;
-	class LoginController extends EqualController{
+	use Think\Controller;
+	class LoginController extends Controller{
 
 		public function __construct(){
 			parent::__construct();
