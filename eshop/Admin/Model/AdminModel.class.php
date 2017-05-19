@@ -63,7 +63,7 @@
 			if($search_key=='role_name'){
 				$papa = 1;
 			}
-			elseif($search_key=='id'){
+			elseif($search_key=='admin.id'){
 				$where[$search_key] = array('eq',$search_val);
 			}
 		}
@@ -75,12 +75,18 @@
 		//*****************************分页*******************************
 		if($papa == 1){
 			$data = array();
-				$count = $this->query("SELECT COUNT(*) FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where role.role_name LIKE '%{$search_val}%'");
+			if ($is_use != '') {
+				$and = "and is_use = '{$is_use}'";
+			}else{
+				$and = '';
+			}
+				$count = $this->query("SELECT COUNT(*) FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where role.role_name LIKE '%{$search_val}%' $and");
 				$count = implode($count[0]);
+				$data['count'] = $count;
 				$page = new \Think\Page($count,C('YeShu'));
 				$data['show'] = $page->show();
-
-				$adminList = $this->query("SELECT admin.id,admin_name,GROUP_CONCAT(role_name),admin.addtime,admin_nick,tel,email,is_use,icon FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where admin.id in ( SELECT admin.id FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where role.role_name LIKE '%{$search_val}%' and is_use = '{$is_use}' GROUP BY admin.id ) GROUP BY admin.id limit " . $page->firstRow.','.$page->listRows );
+				
+				$adminList = $this->query("SELECT admin.id,admin_name,GROUP_CONCAT(role_name),admin.addtime,admin_nick,tel,email,is_use,icon FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where admin.id in ( SELECT admin.id FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where role.role_name LIKE '%{$search_val}%' $and GROUP BY admin.id ) GROUP BY admin.id limit " . $page->firstRow.','.$page->listRows );
 				foreach($adminList as $key => $value){
 					$is_use = '0';
 					if($value['is_use'])
@@ -92,6 +98,7 @@
 			}else{
 				$data = array();
 				$count = $this->where($where)->count();
+				$data['count'] = $count;
 				$page = new \Think\Page($count,C('YeShu'));
 				$data['show'] = $page->show();
 

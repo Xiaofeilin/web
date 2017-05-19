@@ -84,7 +84,7 @@
 			$data = array();
 			$data = $this->model->search();
 			$this->assign($data);
-			$this->assignHead('权限列表',U('add'),'添加权限');
+			$this->assignHead('添加权限',U('add'),'权限列表');
 			$this->display();
 		}
 

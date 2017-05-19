@@ -1,0 +1,92 @@
+<layout name="Index/header_foot"/>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" method="post" id="form-admin-add">
+	<input type="hidden" name="id" value="{$adminOne.id}">
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"> 管理员账号:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type='text' class="input-text" name='admin_name' maxlength="20" value='{$adminOne.admin_name}' size='27' readonly/>
+		</div>
+	</div>
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"> 管理员名称:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type='text' class="input-text" name='admin_nick' maxlength="20" value='{$adminOne.admin_nick}' size='27' readonly/>
+		</div>
+	</div>
+	
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色:</label>
+		<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+			<foreach name="roleAll" item="val">
+				<div class="check-box">
+					<input type="checkbox" name="role_id[]" value="{$val.id}" {:in_array($val['id'],explode(',',$adminOne['role_list']))?'checked':''}>
+					<label for="{$val.role_name}">{$val.role_name}</label>
+				</div>
+			</foreach>
+		</div>
+	</div>
+
+	<div class="row cl">
+		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			<input class="btn btn-danger radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;">
+		</div>
+	</div>
+	</form>
+</article>
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+<script type="text/javascript">
+
+
+$('select[type="type"]').change(function(){
+
+	var type_id = $(this).val();
+	var _type = $(this);
+	_type.parent().next().remove();
+	$.ajax({
+		type:'GET',
+		url:"{:U('ajaxGetAttr','',false)}/type_id/"+type_id,
+		dataType:'json',
+		success:function(data){
+			var html = "<span class='select-box' style='width:150px;'><select class='select' name='search_attr_id[ ]'   size='1'>";
+			var num = data.length;
+			for(var i=0;i<num;i++){
+				html+="<option value="+ data[i]['id'] +">"+ data[i]['attr_name'] +"</option>";
+			} 
+			html+="</select></span>";
+			_type.parent().after(html);
+		}
+
+
+	})
+});
+
+function addnew(a){
+	var p = $(a).parent().parent();
+	if($(a).html()=="[+]"){
+
+		var newP = p.clone(true);
+
+		newP.find('label ').html('');
+		newP.find("a").html("[-]");
+		newP.find("select[name='search_attr_id[ ]']").remove();
+		p.after(newP);
+	}
+	else
+		p.remove();
+}
+
+
+
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

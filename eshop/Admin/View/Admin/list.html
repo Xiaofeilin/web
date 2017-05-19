@@ -7,7 +7,7 @@
       <span class="select-box" style="width:150px;">
       <select  class="select"   size="1" name="search_key" >
         <option value="">请选择搜索类型</option>
-        <option value="id" <eq name="Think.get.search_key" value="id">selected</eq> >ID</option>
+        <option value="admin.id" <eq name="Think.get.search_key" value="admin.id">selected</eq> >ID</option>
         <option value="admin_name" <eq name="Think.get.search_key" value="admin_name">selected</eq>>管理员账号</option>
         <option value="admin_nick" <eq name="Think.get.search_key" value="admin_nick">selected</eq> >管理员名称</option>
         <option value="tel" <eq name="Think.get.search_key" value="tel">selected</eq> >电话号码</option>
@@ -23,7 +23,7 @@
     <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"><a href="{:U('list','',false)}?unset=1">&nbsp;<input  class="btn btn-danger radius" type="button" value="重置条件"></a>
   </form>
 		
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="add('{$title}','{$url}','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> {$title}</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="add('{$title}','{$url}','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> {$title}</a></span> <span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
 	<table class="table table-border table-bordered table-bg">
 		<thead>
 			<tr>
@@ -55,8 +55,8 @@
         <td>{$val[email]}</td>
         <td style="word-wrap:break-word;word-break:break-all;width:200px;">{$val['group_concat(role_name)']}</td>
         <td align="center" show="{$val['is_use']}" ><img src="__PUBLIC__/Admin/images/{$val['is_use']}.gif" /></td>
-				<td >{$val['addtime']}</td>			
-				<td class="td-manage"> <a title="角色编辑" href="javascript:;" onclick="edit('管理员编辑','{:U('edit',array('id'=>$val['id']) )}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="编辑" href="javascript:;" onclick="edit('管理员编辑','{:U('edit',array('id'=>$val['id']) )}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" onclick="del()" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				<td >{$val['addtime'] |date='Y-m-d H:i:s',###}</td>			
+				<td class="td-manage"> <a title="角色编辑" href="javascript:;" onclick="edit('管理员角色编辑','{:U('addrole',array('id'=>$val['id']) )}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe62d;</i></a> <a title="编辑" href="javascript:;" onclick="edit('管理员编辑','{:U('edit',array('id'=>$val['id']) )}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" onclick="del()" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 			</tr>
 			</foreach>
       <tr><td height="30" colspan="10" align="center">{$show}</td></tr>
@@ -97,14 +97,15 @@ function edit(title,url,id,w,h){
 $('td[show]').click(function(){
   var td = $(this);
   var show = $(this).attr('show');
-  var id = td.prev().prev().html();
+  var id = td.prev().prev().prev().prev().prev().prev().prev().html();
   $.ajax({
     type:'GET',
-    url:"{:U('ajaxIsShow','',false)}/id/" +id,
+    url:"{:U('ajaxIsUse','',false)}/id/" +id,
     dataType:'json',
     success:function(data){
-    if(data!=null){
-        td.children().attr('src','__PUBLIC__/Admin/images/'+data+'.gif');
+      if(data!=null){
+        str =(data==1)? 1:0;
+        td.children().attr('src','__PUBLIC__/Admin/images/'+str+'.gif');
       }
     }
   })

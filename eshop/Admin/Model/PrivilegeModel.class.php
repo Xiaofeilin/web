@@ -69,6 +69,7 @@
 		$data = array();
 		$count = $this->where($where)->count();
 		$page = new \Think\Page($count,C('YeShu'));
+		$data['count'] = $count;
 		$data['show'] = $page->show();
 
 		$privilegeList = $this->order('concat(pri_path,id) asc')->where($where)->limit($page->firstRow.','.$page->listRows)->select();
