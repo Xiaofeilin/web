@@ -177,21 +177,52 @@
 		// 登录获取权限
 		public function login(){
 			$list = $this->find();
+			$time = time();
 			if (empty($list)) {
 				return false;
 			}
+			if (($list['logtime'] + 1) >= 6 && $time - $list['lasttime'] < 1800){
+				return false;
+			}
+
 			//查询用户所属权限id所组成的字符串
 			$aid = $list['id'];
 			$priList = D('RolePri')->query("SELECT group_concat(distinct role_pri.pri_id) FROM `role_pri` LEFT JOIN `admin_role` ON role_pri.role_id = admin_role.role_id where admin_role.admin_id = {$aid} ");
 			$list['priList'] = $priList[0];
-
+			$this->execute("update `admin` set `logtime` = '0',`lasttime` = '{$time}' where `id` = '{$aid}'");
 			return $list;
 		}
 
 		//登录错误处理
 		public function errorLog(){
 			$admin_name = I('admin_name');
-			$this->where("admin_name = '{$admin_name}'")->find();
+			$res = $this->where("admin_name = '{$admin_name}'")->find();
+			$time = time();
+
+
+			
+			//登录次数处理
+			if(!empty($res)){
+				if(($res['logtime'] + 1) >= 6 ){
+					if ($time - $res['lasttime'] > 1800) {
+						$this->execute("update `admin` set `logtime` = '0' where `id` = '{$res['id']}'");
+					}else{
+						$msg = '该账户已被禁止登录';
+						return $msg;
+					}
+				}
+				$res = $this->where("id = '{$res['id']}'")->find();
+				$logtime = $res['logtime'];
+				$logtime += 1;
+				$this->execute("update `admin` set `logtime` = '{$logtime}',`lasttime` = '{$time}' where `id` = '{$res['id']}'");
+				$msg = '登录错误,请确认账号密码';
+				
+				return $msg;
+			}
+			$msg = '登录错误,请确认账号密码';
+			return $msg;
+			
 		}
+
 
 	}

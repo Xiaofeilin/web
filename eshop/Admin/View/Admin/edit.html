@@ -1,41 +1,64 @@
-  <layout name="Index/header_foot"/>
-  <div class="main-div">
-      <form id="admin_form" method="post" name="theForm" enctype="multipart/form-data" >
+<layout name="Index/header_foot"/>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" method="post" id="form-admin-add" enctype="multipart/form-data">
 
-              <table width="100%" style="margin:0 auto" id="general-table">
-                    <input type="hidden" name="id" value="{$adminOne['id']}">
-                    <tr>
-                          <td class="label">管理员账号:</td>
-                          <td><input type='text' name='admin_name' maxlength="20" value='{$adminOne["admin_name"]}' size='27' readonly /> <font color="red">*</font></td>
-                    </tr>
+	<input type="hidden" name="id" value="{$adminOne['id']}">
 
-                    <tr>
-                          <td class="label">管理员名称:</td>
-                          <td><input type='text' name='admin_nick' maxlength="20" value='{$adminOne["admin_nick"]}' size='27' /> <font color="red">*</font></td>
-                    </tr>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员账号:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type='text' class="input-text" name='admin_name' maxlength="20" value='{$adminOne["admin_name"]}' size='27' readonly />
+		</div>
+	</div>
 
-                    <tr>
-                          <td class="label">手机号码:</td>
-                          <td><input type='text' name='tel' maxlength="20" value='{$adminOne["tel"]}' size='27' /> <font color="red">*</font></td>
-                    </tr>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员名称:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type='text' class="input-text" name='admin_nick' maxlength="20" value='{$adminOne["admin_nick"]}' size='27' />
+		</div>
+	</div>
 
-                    <tr>
-                          <td class="label">电子邮箱:</td>
-                          <td><input type='email' name='email' maxlength="20" value='{$adminOne["email"]}' size='27' /> <font color="red">*</font></td>
-                    </tr>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机号码:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type='text' class="input-text" name='tel' maxlength="20" value='{$adminOne["tel"]}' size='27' />
+		</div>
+	</div>
 
-                    <tr>
-                          <td class="label">头像:</td>
-                          <td id="localImag"><img id="preview" width="30" src="__ROOT__/Uploads/{$adminOne['icon']}" /><input type='file' name='icon' id="doc" onchange="setImagePreview()" /></td>
-                    </tr>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>电子邮箱:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type='text' class="input-text" name='email' maxlength="20" value='{$adminOne["email"]}' size='27' />
+		</div>
+	</div>
 
-              </table>
-              <div class="button-div">
-              <input type="submit" value=" 确定 " />
-              <input type="reset" value=" 重置 " />
-              </div>
-      </form>
-  </div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>头像:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<img id="preview" width="30" src="__ROOT__/Uploads/{$adminOne['icon']}" />
+			<input type='file' name='icon' id="doc" onchange="setImagePreview()" />
+		</div>
+	</div>
+
+
+	<div class="row cl">
+		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			<input class="btn btn-danger radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;">
+		</div>
+	</div>
+	</form>
+</article>
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+
+</body>
+</html>
 
 <script type="text/javascript">
 //下面用于图片上传预览功能

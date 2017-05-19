@@ -29,7 +29,8 @@
 				$map['password'] = I('password','','md5');
 				$info = $this->model->where($map)->login();
 				if (empty($info)) {
-					$this->error('用户名或者密码错误!');
+					$msg = $this->model->errorLog();
+					$this->error($msg);
 				}else{
 					session('admininfo',$info);
 					$this->redirect('Index/index');
