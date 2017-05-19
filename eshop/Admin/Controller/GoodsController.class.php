@@ -24,7 +24,7 @@
 			//变量模板赋值
 			$this->assign($data);
 			$this->assign('sort_val',$sort_val);
-			$this->assignHead('商品列表',U('add'),'商品添加');
+			$this->assignHead('商品添加',U('add'),'商品列表');
 			$this->display();
 		}
 
@@ -40,7 +40,6 @@
 
 			//变量模板赋值
 			$this->assign($data);
-			$this->assignHead('商品添加',U('list'),'商品列表');
 			$this->display();
 		}
 
@@ -48,12 +47,13 @@
 		*[商品修改]
 		*/
 		public function edit(){
-			//调用父类修改方法
-			parent::edit();
 
 			//获取id值
 			$id = I('get.id','');
 			$data = array();
+
+			//调用父类修改方法
+			parent::edit('',array('id'=>$id));
 
 			//将商品表的数据取出
 			$goodsOne = $this->model->find($id);
@@ -69,7 +69,6 @@
 
 			//变量模板赋值
 			$data['goodsOne'] = $goodsOne;
-			$this->assignHead('商品修改',U('list'),'商品列表');
 			$this->assign($data);
 			$this->display();
 		}
@@ -132,11 +131,10 @@
 				//获取商品库存属性，库存数量
 				$goods_attr = I('post.goods_attr','');
 			 	$goods_num = I('post.goods_num','');
-
+			 	$goods_price = I('post.goods_price');
 			 	$goodsRep = D('GoodsRep');
-
 			 	//调用repetoryNew处理传来的数据
-			 	if($goodsrepData = $this->model->repertoryNew( $goods_id , $goods_attr , $goods_num ) ){
+			 	if($goodsrepData = $this->model->repertoryNew( $goods_id , $goods_attr , $goods_num , $goods_price ) ){
 			 		
 			 		//批量添加是否成功
 			 		if($goodsRep->addAll($goodsrepData))
@@ -149,6 +147,7 @@
 			
 			//获取该商品库存信息
 			$data = $this->model->repertory();
+
 			//变量模板赋值
 			$this->assign('goods_id',$goods_id);
 			$this->assign($data);
@@ -171,7 +170,8 @@
 				$goods_id = I('post.goods_id','');
 				$old_goods_attr = I('old_goods_attr','');
 				$old_goods_num = I('old_goods_num','');
-				$goodsRepOldData = $this->model->repertoryOld( $goods_id , $old_goods_attr , $old_goods_num );
+				$old_goods_price = I('post.old_goods_price');
+				$goodsRepOldData = $this->model->repertoryOld( $goods_id , $old_goods_attr , $old_goods_num ,$old_goods_price);
 				
 				//开启事物
 				$goodsRep = D('GoodsRep');
@@ -192,8 +192,9 @@
 				//获取post新添加的数据，并处理数据
 				$goods_attr = I('post.goods_attr','');
 				$goods_num = I('post.goods_num','');
-				$goodsRepData = $this->model->repertoryNew( $goods_id , $goods_attr , $goods_num );
-				 
+				$goods_price = I('post.goods_price');
+				$goodsRepData = $this->model->repertoryNew( $goods_id , $goods_attr , $goods_num ,$goods_price);
+				
 				 //将新数据批量添加
 				 if($goodsRepData ){
 			 		if( $goodsRep->addAll($goodsRepData) ){

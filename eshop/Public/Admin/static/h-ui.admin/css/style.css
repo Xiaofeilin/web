@@ -1,3 +1,72 @@
 @charset "utf-8";
 /* 你自己的样式 */
 
+/*
+ 标签部分的样式
+ */
+.tab-div {
+  background: #EEF8F9;
+  border: 1px solid #BBDDE5;
+  margin: 0 0 10px 0;
+  padding: 1px;
+}
+#tabbar-div {
+  background: black;
+  padding-left: 10px;
+  height: 22px;
+  padding-top: 1px;
+}
+
+#tabbar-div p {
+  margin: 2px 0 0 0;
+}
+
+.tab-front {
+  background: #ccc;
+  line-height: 20px;
+  font-weight: bold;
+  padding: 4px 15px 4px 18px;
+  border-right: 2px solid #fff;
+  cursor: hand;
+  cursor: pointer;
+}
+
+.tab-back {
+  color: #FFF;
+  line-height: 20px;
+  padding: 4px 15px 4px 18px;
+  border-right: 1px solid #FFF;
+  cursor: hand;
+  cursor: pointer;
+}
+
+.tab-hover {
+  color: #FFF;
+  background: #94C9D3;
+  line-height: 20px;
+  padding: 4px 15px 4px 18px;
+  border-right: 1px solid #fff;
+  cursor: hand;
+  cursor: pointer;
+}
+
+#tabbody-div {
+  border: 2px solid #BBDDE5;
+  padding: 10px;
+  background: #FFF;
+}
+
+#tabbody-div img {
+  vertical-align: middle;
+}
+
+.tab-body {
+  border: 0px solid #BBDDE5;
+  padding: 10px;
+}
+
+
+td{
+  text-align: center;
+  margin: 0 auto;
+}

@@ -1,22 +1,26 @@
 <layout name="Index/header_foot"/>
-<br>
+<include file="index/list" />
 <form method="post" action="" name="listForm">
        <div class="list-div" id="listDiv">
-             <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
-                    <tr>
-                          <th>添加</th>      
+             <table  class="table table-border table-bordered table-bg">
+                  <caption><h2>库存表</h2></caption>
+                  <thead>
+                          <tr class="text-c">
+                          <th><input type="button" name="none" value="添加库存" class="btn btn-primary radius"></th>      
                           <foreach name="attr_name" item="val">
                           <th>{$val}</th>
                           </foreach>
                           <th>数量</th>
-                    </tr>
+                          <th>价格</th>
+                           </tr>
+                    </thead>
                     <input type="hidden" name="goods_id" value="{$goods_id}">
                     
             
-                    <tr align="center" class="0" id="0_1" id = 'tr_1' hand="0">
-                          <td width="10%" align="center"><input type="button" value="+"></td>
+                    <tr class="text-c" name="block" style="display:none">
+                          <td ><input type="button" tj='mam' value="+" class="btn btn-primary radius"></td>
                           <foreach name="repertoryAttr" item="val1" key="key1">
-                          <td align="center">
+                          <td >
                                 <select name="goods_attr[{$key1}][]" id="">
                                              <foreach name="val1" item="val2">
                                              <option value="{$val2['id']}" >{$val2['attr_value']}</option>
@@ -24,15 +28,22 @@
                                 </select>
                           </td>
                           </foreach>
-                          <td width="15%" align="center"><input name="goods_num[]" value="" type="text"></td>
+                          <td ><input name="goods_num[]" class="input-text" value="" type="text"></td>
+                          <td><input name="goods_price[]" class="input-text" value="" type="text"></td>
                     </tr>
-                    <tr><td height="30" colspan="100" align="center"><input type="submit"></td></tr>
+                  
             </table>
+            <br>
+             &nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="btn btn-primary radius">
       </div>
  </form>
 <script>
 
-       $('input[type="button"]').click(function(){
+       $('input[name="none"]').click(function(){
+                    $('tr[name="block"]').attr('style','');   
+        } )
+
+       $('input[ tj="mam"]').click(function(){
               var tr = $(this).parent().parent();
               var tdNum =tr.children().length;
               if(tdNum>2){

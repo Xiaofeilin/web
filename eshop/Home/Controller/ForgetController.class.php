@@ -11,6 +11,7 @@ class ForgetController extends Controller {
 	/**
 	*['验证码显示']
 	*/
+	/*
 	public function code(){
 		$config = array(
 			'fontSize'       =>    15,  // 验证码字体大小    
@@ -20,34 +21,37 @@ class ForgetController extends Controller {
 		$verify = new \Think\Verify($config);
 		$verify->entry();
 	}
+	*/
 
 	/**
-	*['检测用户与验证码对错']
+	*['检测用户对错']
 	*/
 	public function checkAcc(){
-		if(IS_POST){
-			$code = I('code');
-			$verify = new \Think\Verify();  
-			$result = $verify->check($code);//判断验证码
+		//if(IS_POST){
+		//$code = I('code');
+		//$verify = new \Think\Verify();  
+		//$result = $verify->check($code);//判断验证码
 
-			$user = D('user');
-			$info = $user->validate($rule)->create();//判断用户信息
+		$user = new \Home\Model\ForgetModel();
+		$info = $user->create();
+		$_SESSION['forgetMsg']['account'] = I('account');
+		$this->error($user->getError());
+		//$check = new \Home\Model\ForgetModel();
+		//$res = $check->forgetAcc($result,$info);
 
-			$check = new \Home\Model\ForgetModel();
-			$res = $check->forgetAcc($result,$info);
+		//$_SESSION['forgetMsg'] = $info;
+		//$this->ajaxReturn($res);
 
-			$_SESSION['forgetMsg'] = $info;
-			$this->ajaxReturn($res);
-		}else{
-			$this->display();
-		}
+		//}else{
+		//	$this->display();
+		//}
 	}
 
 	/**
 	*['检测手机号码规范']
 	*/
 	public function checkTel(){
-		var_dump($_POST);
+		//var_dump($_POST);
 		$tel = new \Home\Model\ForgetModel();
 		$info = $tel->create();
 
@@ -90,7 +94,7 @@ class ForgetController extends Controller {
 	/**
 	*['检测密码是否规范']
 	*/
-	public function checkPassword(){
+	public function checkPass(){
 		$password = new \Home\Model\ForgetModel();
 		$info = $password->create();
 
@@ -102,7 +106,7 @@ class ForgetController extends Controller {
 	/**
 	*['检测重复密码与密码是否一致']
 	*/
-	public function checkRePassword(){
+	public function checkRePass(){
 		$repassword = new \Home\Model\ForgetModel();
 		$info = $repassword->create();
 
@@ -116,10 +120,28 @@ class ForgetController extends Controller {
 		$user = D("user");
 		$data["pwd"] = md5($_SESSION['forgetMsg']['pwd']);
 		$where['account'] = $_SESSION['forgetMsg']['account'];
-		$where['tel'] = $_SESSION['forgetMsg']['phone'];
+		$where['tel'] = $_SESSION['forgetMsg']['tel'];
 
-		$result = $user->data($data)->where($where)->save();
+		//var_dump($where);
+		//var_dump($data);
 
-		unset($_SESSION['forgetMsg']);
+		$result = $user->where($where)->save($data);
+
+		//var_dump($result);
+
+		/*
+		if($result){
+			$this->success('1',U('Login/login'),3);
+		}else{
+			$this->error('0',U('Forget/forget'),3);
+		}
+		*/
+
+		if($result){
+			unset($_SESSION['forgetMsg']);
+			$this->ajaxReturn(1);
+		}else{
+			$this->ajaxReturn("修改错误！");
+		}
 	}
 }

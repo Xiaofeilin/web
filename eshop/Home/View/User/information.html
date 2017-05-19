@@ -12,18 +12,24 @@
 						<hr/>
 
 						<foreach name="userinfo" item="val">
+						<form class="am-form am-form-horizontal"  enctype="multipart/form-data" method="post">
 						<!--头像 -->
 						<div class="user-infoPic">
+							<input type="hidden" name="id" value="{$val.id}">
 
 							<div class="filePic">
-								<input type="file" class="inputPic" allowexts="gif,jpeg,jpg,png,bmp" accept="image/*">
-								<img class="am-circle am-img-thumbnail" src="__PUBLIC__/Home/images/{$val.icon}" alt="" />
+								<a href="javascript:void(0);" data-src="" title="更换头像"  id="localImag">
+									<!--onclick="document.getElementById('light').style.display='block';"-->
+									<!--<img class="am-circle am-img-thumbnail" src="{$val['icon'] != null ? '__ROOT__/Uploads/$val[icon]' : '__PUBLIC__/Home/images/default'}.jpg" alt="" id="preview" />-->
+									<img class="am-circle am-img-thumbnail" src="__ROOT__/Uploads/{$val.icon}" alt="" id="preview" />
+									<input type='file' name='icon' id="doc" onchange="setImagePreview()" class="inputPic" />
+								</a>
 							</div>
 
 							<p class="am-form-help">头像</p>
 
 							<div class="info-m">
-								<div><b>账户名：<i>{$Think.session.info.account}</i></b></div>
+								<div><b>账户名：<i>{$val.account}</i></b></div>
 								<div class="u-level">
 									<span class="rank r2">
 							             <s class="vip1"></s><a class="classes" href="#">铜牌会员</a>
@@ -31,7 +37,7 @@
 								</div>
 								<div class="u-safety">
 									<a href="safety.html">
-									 账户安全
+									 账户安全：
 									<span class="u-profile"><i class="bc_ee0000" style="width: 60px;" width="0">60分</i></span>
 									</a>
 								</div>
@@ -40,76 +46,69 @@
 
 						<!--个人信息 -->
 						<div class="info-main">
-							<form class="am-form am-form-horizontal">
-
+							
 								<div class="am-form-group">
 									<label for="user-name2" class="am-form-label">账户名</label>
 									<div class="am-form-content">
-										<input type="text" id="user-name2" value="{$val.account}" {$val['account'] ? "disabled" : ""}>
+										<input type="text" id="account" name="account" value="{$val.account}" {$val['account'] ? "disabled" : ""}>
 									</div>
-									<div style="position:relative;left:86px;color:red">账户名提交后便不能再次更改，请谨慎操作</div>
+									<div id="accountError" style="position:relative;left:106px;color:red"></div>
 								</div>
 
 								<div class="am-form-group">
 									<label for="user-name2" class="am-form-label">昵称</label>
 									<div class="am-form-content">
-										<input type="text" id="user-name2" placeholder="username" value="{$valusername}">
+										<input type="text" id="username" name="username" placeholder="username" value="{$val.username}">
 									</div>
 								</div>
 
 								<div class="am-form-group">
 									<label for="user-name" class="am-form-label">真实姓名</label>
 									<div class="am-form-content">
-										<input type="text" id="user-name2" placeholder="realname" value="{$valrealname}">
+										<input type="text" id="realname" name="realname" placeholder="realname" value="{$val.realname}">
 									</div>
 								</div>
 
 								<div class="am-form-group">
 									<label class="am-form-label">性别</label>
 									<div class="am-form-content sex">
-										<label class="am-radio-inline">
-											<input type="radio" name="radio10" value="女" data-am-ucheck {$val['sex'] == 女?'checked':''}> 女
+										<!--<label class="am-radio-inline">
+											<input type="radio" name="sex" value="0" data-am-ucheck > 女
 										</label>
 										<label class="am-radio-inline">
-											<input type="radio" name="radio10" value="男" data-am-ucheck {$val['sex'] == 男?'checked':''}> 男
+											<input type="radio" name="sex" value="1" data-am-ucheck > 男
 										</label>
 										<label class="am-radio-inline">
-											<input type="radio" name="radio10" value="保密" data-am-ucheck {$val['sex'] == 保密?'checked':''}> 保密
-										</label>
+											<input type="radio" name="sex" value="2" data-am-ucheck > 保密
+										</label>-->
+										<select name="sex">
+									                    <option value="0" {$val['sex'] == 女?'selected':''}>女</option>
+									                    <option value="1" {$val['sex'] == 男?'selected':''}>男</option>
+									                    <option value="2" {$val['sex'] == 保密?'selected':''}>保密</option>
+									             </select>
 									</div>
 								</div>
 
-								<!--
+								
 								<div class="am-form-group">
 									<label for="user-birth" class="am-form-label">生日</label>
-									<div class="am-form-content birth">
-										<div class="birth-select">
-											<select data-am-selected>
-												<option value="a">2015</option>
-												<option value="b">1987</option>
-											</select>
-											<em>年</em>
+
+									<div class="case">
+										<div class="calendarWarp" style="width:308px;position:relative;top:-12px;left:38px">
+											<input type="text" name="date" class='ECalendar' id="ECalendar_case3"  value="" style="width:100%" />
 										</div>
-										<div class="birth-select2">
-											<select data-am-selected>
-												<option value="a">12</option>
-												<option value="b">8</option>
-											</select>
-											<em>月</em></div>
-										<div class="birth-select2">
-											<select data-am-selected>
-												<option value="a">21</option>
-												<option value="b">23</option>
-											</select>
-											<em>日</em></div>
+										<!--<input type="hidden" name="time" id="time" value="" />-->
+										<div class="callback" style="position:relative;left:106px;color:red">
+											你选择的时间是： <span></span>
+										</div>
 									</div>
 								</div>
-								-->
+								
 
 								<div class="am-form-group">
 									<label for="user-phone" class="am-form-label">手机号码</label>
 									<div class="am-form-content">
-										<input id="user-phone" disabled type="tel" value="{$val.tel}">
+										<input id="tel" name="tel" disabled type="text" value="{$val.tel}">
 									</div>
 									<div class="am-btn am-btn-danger" style="float:left;position:relative;left:440px;top:-29px" onclick="location.href = '{:U('Safe/safety')}'">换绑</div>
 									<div style="position:relative;left:46px;color:red;text-align:left"></div>
@@ -117,46 +116,116 @@
 								<div class="am-form-group">
 									<label for="user-email" class="am-form-label">电子邮件</label>
 									<div class="am-form-content">
-										<input id="user-email" disabled type="email" value="{$val.email}">
+										<input id="email" name="email" disabled type="text" value="{$val.email}">
 									</div>
 									<div class="am-btn am-btn-danger" style="float:left;position:relative;left:440px;top:-29px" onclick="location.href = '{:U('Safe/safety')}'">换绑</div>
 									<div style="position:relative;left:46px;color:red"></div>
 								</div>
-								<!--
-								<div class="am-form-group address">
-									<label for="user-address" class="am-form-label">收货地址</label>
-									<div class="am-form-content address">
-										<a href="address.html">
-											<p class="new-mu_l2cw">
-												<span class="province">湖北</span>省
-												<span class="city">武汉</span>市
-												<span class="dist">洪山</span>区
-												<span class="street">雄楚大道666号(中南财经政法大学)</span>
-												<span class="am-icon-angle-right"></span>
-											</p>
-										</a>
-
-									</div>
-								</div>
-								<div class="am-form-group safety">
-									<label for="user-safety" class="am-form-label">账号安全</label>
-									<div class="am-form-content safety">
-										<a href="safety.html">
-
-											<span class="am-icon-angle-right"></span>
-
-										</a>
-
-									</div>
-								</div>
-								-->
 								<div class="info-btn">
-									<div class="am-btn am-btn-danger" id="submit">保存修改</div>
+									<input type="hidden" value="0" id="sub" name="sub">
+									<input type="submit" id="submit" value="保存修改" style="" class="am-btn am-btn-danger">
 								</div>
-
-							</form>
 						</div>
+						</form>
+
+						<!--<div id="light" class="white_con panel panel-primary"> 
+							<p><div onclick="document.getElementById('light').style.display='none';" class="am-btn am-btn-danger">关闭</div></p>
+
+							<form action="action.php?a=updatepic" method="post" enctype="multipart/form-data">
+								<div class="form-group">
+
+									<input type="hidden" name="id" value="{$val.id}">
+
+									<input type="hidden" name="oldpic" value="{$val.icon}">
+
+									<label>请选择新头像：</label>
+
+									<input type="file" name="picture" class="form-control">
+								</div>
+								<button type="submit" class="am-btn am-btn-danger" style="position:relative;top:160px">Submit</button>
+							</form>
+						</div> -->
+
 						</foreach>
+
+						<script src="__PUBLIC__/Home/js/Ecalendar.jquery.js"></script>
+						<script type="text/javascript">
+							//下面用于图片上传预览功能
+							function setImagePreview(avalue) {
+								var docObj=document.getElementById("doc");
+								 
+								var imgObjPreview=document.getElementById("preview");
+									if(docObj.files &&docObj.files[0]) {
+										//火狐下，直接设img属性
+										imgObjPreview.style.display = 'inline-block';
+										imgObjPreview.style.width = '100px';
+										imgObjPreview.style.height = '100px'; 
+										//imgObjPreview.src = docObj.files[0].getAsDataURL();
+										 
+										//火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+										imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
+									} else {
+										//IE下，使用滤镜
+										docObj.select();
+										var imgSrc = document.selection.createRange().text;
+										var localImagId = document.getElementById("localImag");
+										//必须设置初始大小
+										localImagId.style.width = "100px";
+										localImagId.style.height = "100px";
+										//图片异常的捕捉，防止用户修改后缀来伪造图片
+										try{
+											localImagId.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+											localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+										}
+										catch(e) {
+											alert("您上传的图片格式不正确，请重新选择!");
+											return false;
+										}
+										imgObjPreview.style.display = 'none';
+										document.selection.empty();
+									}
+								return true;
+							}
+
+							$("#submit").click(function(){
+								$("#sub").val(1);
+							});
+
+							$("#ECalendar_case3").ECalendar({
+								type:"date",//date只返回日期，time能加选时间
+								stamp:false,
+								skin:2,
+								format:"yyyy-mm-dd",
+								callback:function(v,e){
+									$(".callback span").html(v);
+									//$("#time").val(v);
+									$("input[name=date]").val(v)
+								}
+							});
+
+
+							$("input[name=account]").focus(function(){
+								$("#accountError").html("");
+							});
+
+							$("input[name=account]").blur(function(){
+								var account = $("#account").val();
+								$.ajax({
+									url:"__CONTROLLER__/checkAcc",
+									data:{account:account},
+									type:"POST",
+									dataType:"json",
+									success:function(res){
+										if(!res.info == ""){
+											$("#accountError").html(res.info);
+										}else{
+											$("#accountError").html("账户名可用，提交后便不能再次更改，请谨慎操作");
+											//x = 1;
+										}
+									}
+								});
+							});
+						</script>
 					</div>
 
 				</div>

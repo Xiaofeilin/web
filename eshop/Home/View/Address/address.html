@@ -1,0 +1,313 @@
+<include file="Public/personHeader"/>
+
+		<div class="center">
+			<div class="col-main">
+				<div class="main-wrap">
+
+					<div class="user-address">
+						
+						<div class="am-modal am-modal-no-btn" id="doc-modal-1">
+
+							<div class="add-dress">
+
+								<!--标题 -->
+								<div class="am-cf am-padding">
+									<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">新增地址</strong> / <small>Add&nbsp;address</small></div>
+								</div>
+								<hr/>
+
+
+
+								<div class="am-u-md-12 am-u-lg-8" style="margin-top: 20px;">
+									<div id="addError" style="color:red;margin:5px 100px;font-size:18px"></div>
+									<form class="am-form am-form-horizontal">
+
+										<div class="am-form-group">
+											<label for="user-name" class="am-form-label">收货人</label>
+											<div class="am-form-content">
+												<input type="text" id="name" name="name" placeholder="收货人">
+											</div>
+										</div>
+										<div id="" style="color:red;margin-bottom:5px;position:relative;top:-20px"></div>
+
+										<div class="am-form-group">
+											<label for="user-phone" class="am-form-label">手机号码</label>
+											<div class="am-form-content">
+												<input id="tel" name="tel" placeholder="手机号必填" type="text">
+											</div>
+										</div>
+										<div id="telError" style="color:red;position:relative;top:-20px;left:106px"></div>
+
+										<div class="am-form-group">
+											<label for="user-address" class="am-form-label">所在地</label>
+											<input type="text" id="city" style="width:296px;position:relative;left:36px" placeholder="省-市-区/县" />
+										</div>
+
+										<div class="am-form-group">
+											<label for="user-intro" class="am-form-label">详细地址</label>
+											<div class="am-form-content">
+												<textarea class="" rows="3" id="detailed" name="detailed" placeholder="输入详细地址"></textarea>
+											</div>
+										</div>
+
+										<div class="am-form-group">
+											<div class="am-u-sm-9 am-u-sm-push-3">
+												<a class="am-btn am-btn-danger" id="submit">保存</a>
+												<a class="am-close am-btn am-btn-danger" id="reset">重置</a>
+											</div>
+										</div>
+									</form>
+								</div>
+
+							</div>
+
+							<div class="clear"></div>
+
+							<div class="am-cf am-padding">
+								<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">地址管理</strong> / <small>Address&nbsp;list</small></div>
+							</div>
+							<hr/>
+							<ul class="am-avg-sm-1 am-avg-md-3 am-thumbnails">
+								<?php for($i = 0; $i < count($addinfo); $i++):?>
+								<li class="user-addresslist {$addinfo[$i]['status'] == 1 ? 'defaultAddr' : ''}" count="{$i}">
+									<input type="hidden" value='{$addinfo|json_encode=###}'>
+									<span class="new-option-r" id="default"><i class="am-icon-check-circle"></i>设为默认</span>
+									<p class="new-tit new-p-re">
+										<span class="new-txt">{$addinfo[$i][name]}</span>
+										<span class="new-txt-rd2">{$addinfo[$i][tel]}</span>
+									</p>
+									<div class="new-mu_l2a new-p-re">
+										<p class="new-mu_l2cw">
+											<span class="title">地址：</span>
+											<span class="province">{$addinfo[$i][province]}</span>
+											<span class="city">{$addinfo[$i][city]}</span>
+											<span class="dist">{$addinfo[$i][street]}</span>
+											<span class="street">{$addinfo[$i][detailed]}</span></p>
+									</div>
+									<div class="new-addr-btn">
+										<a href="javascript:void({$i});" class="edit"><i class="am-icon-edit" count="{$i}"></i>编辑</a>
+										<!--onclick="document.getElementById('light').style.display='block';"-->
+										<span class="new-addr-bar">|</span>
+										<a href="javascript:void({$i});" class="del" onclick="return confirm('确定删除？')"><i class="am-icon-trash" count="{$i}"></i>删除</a>
+									</div>
+								</li>
+								<?php endfor;?>
+							</ul>
+						</div>
+					</div>
+					<div id="light" class="white_content panel panel-primary"> 
+						<form class="am-form am-form-horizontal" count>
+							<p><div onclick="document.getElementById('light').style.display='none';" class="am-btn am-btn-danger">关闭</div></p>
+							<input type="hidden" id="id" value="">
+							<div class="am-form-group">
+								<label for="user-name" class="am-form-label">收货人</label>
+								<div class="am-form-content">
+									<input type="text" id="rename" name="rename" placeholder="收货人" value="">
+								</div>
+							</div>
+
+							<div class="am-form-group">
+								<label for="user-phone" class="am-form-label">手机号码</label>
+								<div class="am-form-content">
+									<input id="retel" name="retel" placeholder="手机号必填" type="text" value="">
+								</div>
+							</div>
+							<div id="retelError" style="color:red;position:relative;top:-20px;left:106px"></div>
+
+							<div class="am-form-group">
+								<label for="user-address" class="am-form-label">所在地</label>
+								<input type="text" id="city2" name="recity" style="width:296px;position:relative;left:36px" placeholder="省-市-区/县" />
+							</div>
+
+							<div class="am-form-group">
+								<label for="user-intro" class="am-form-label">详细地址</label>
+								<div class="am-form-content">
+									<textarea class="" rows="3" id="redetailed" name="redetailed" placeholder="输入详细地址"></textarea>
+								</div>
+							</div>
+
+							<div class="am-form-group">
+								<div class="am-u-sm-9 am-u-sm-push-3">
+									<a class="am-btn am-btn-danger" id="resubmit">保存</a>
+									<!--<a class="am-close am-btn am-btn-danger" id="reset">重置</a>-->
+								</div>
+							</div>
+						</form>
+					</div> 
+					<script src="__PUBLIC__/Home/js/jquery-1.11.3.min.js"></script>
+					<script src="__PUBLIC__/Home/js/Popt.js"></script>
+					<script src="__PUBLIC__/Home/js/cityJson.js"></script>
+					<script src="__PUBLIC__/Home/js/citySet.js"></script>
+					<script type="text/javascript">							
+						$(".new-option-r").click(function() {
+							$(this).parent('.user-addresslist').addClass("defaultAddr").siblings().removeClass("defaultAddr");
+							var count = $(".defaultAddr").attr("count");
+							$.ajax({
+								url:"__CONTROLLER__/setDefault",
+								data:{count:count},
+								type:"POST",
+								dataType:"json",
+								success:function(res){}
+							});
+						});
+						
+						var $ww = $(window).width();
+						if($ww>640) {
+							$("#doc-modal-1").removeClass("am-modal am-modal-no-btn")
+						}
+
+						$(".user-addresslist").mouseover(function(){
+							$(this).addClass("listLi");
+						})
+
+						$(".user-addresslist").mouseout(function(){
+							$(this).removeClass("listLi");
+						})
+
+						$(".del").click(function(){
+							var count = $(".listLi").attr("count");
+							$.ajax({
+								url:"__CONTROLLER__/delAdd",
+								data:{count:count},
+								type:"POST",
+								dataType:"json",
+								success:function(res){
+									if(res == 1){
+										window.location.reload();
+									}
+								}
+							});
+						});
+
+						$(".edit").click(function(){
+							var count = $(".listLi").attr("count");
+							var list = $("input[type=hidden]").val();
+							$("#light").css({display:"block"});
+							var obj = JSON.parse(list);
+
+							$.each(obj,function(i,item){
+								if(count == i){
+									$("#id").val(item.id);
+									$("#rename").val(item.name);
+									$("#retel").val(item.tel);
+									$("#redetailed").val(item.detailed);
+								}
+							});
+						});
+
+						$("input[name=retel]").focus(function(){
+							$("#retelError").html("");
+						});
+
+						$("input[name=retel]").blur(function(){
+							var tel = $("#retel").val();
+							$.ajax({
+								url:"__CONTROLLER__/checkTel",
+								data:{tel:tel},
+								type:"POST",
+								dataType:"json",
+								success:function(res){
+									if(!res.info == ""){
+										$("#retelError").html(res.info);
+									}
+								}
+							});
+						});
+
+						$("a[id=resubmit]").click(function(){
+							var name = $("#rename").val();
+							var tel = $("#retel").val();
+							var province = $("#city2").next().val();
+							var city = $("#city2").next().next().val();
+							var street = $("#city2").next().next().next().val();
+							var detailed = $("#redetailed").val();
+							var id = $("#id").val()
+
+							if(name && tel && province && city && street && detailed){
+								$.ajax({
+									url:"__CONTROLLER__/reSuccess",
+									data:{id:id,name:name,tel:tel,province:province,city:city,street:street,detailed:detailed,},
+									type:"POST",
+									dataType:"text",
+									success:function(res){
+										if(res == 1){
+											window.location.reload();
+										}
+									}
+								});
+							}
+						});
+
+						$("#city").click(function (e) {
+							SelCity(this,e);
+						});
+
+						$("#city2").click(function (e) {
+							SelCity(this,e);
+						});
+
+						$("input").focus(function(){
+							$("#addError").html("");
+						});
+
+						$("a[id=reset]").click(function(){
+							$("#name").val("");
+							$("#tel").val("");
+							$("#city").val("");
+							$("#detailed").val("");
+							$("#telError").html("");
+							$("#addError").html("");
+						});
+
+						$("input[name=tel]").focus(function(){
+							$("#telError").html("");
+						});
+
+						$("input[name=tel]").blur(function(){
+							var tel = $("#tel").val();
+							$.ajax({
+								url:"__CONTROLLER__/checkTel",
+								data:{tel:tel},
+								type:"POST",
+								dataType:"json",
+								success:function(res){
+									if(!res.info == ""){
+										$("#telError").html(res.info);
+									}
+								}
+							});
+						});
+
+						$("a[id=submit]").click(function(){
+							var name = $("#name").val();
+							var tel = $("#tel").val();
+							var province = $("#hcity").val();
+							var city = $("#hproper").val();
+							var street = $("#harea").val();
+							var detailed = $("#detailed").val();
+
+							if(name && tel && province && city && street && detailed){
+								$.ajax({
+									url:"__CONTROLLER__/setSuccess",
+									data:{name:name,tel:tel,province:province,city:city,street:street,detailed:detailed,},
+									type:"POST",
+									dataType:"text",
+									success:function(res){
+										if(res == 1){
+											window.location.reload();
+										}else{
+											$("#addError").html(res);
+										}
+									}
+								});
+							}else{
+								$("#addError").html("地址信息不能为空");
+							}
+						});
+					</script>
+
+					<div class="clear"></div>
+
+				</div>
+				
+<include file="Public/personFooter"/>

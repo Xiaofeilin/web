@@ -6,7 +6,11 @@ class SafeController extends Controller {
 	protected $newCode;
 	//protected $eCode;
 
-	public function safe(){
+	public function safety(){
+		$user = D('User');
+		$map['id'] = $_SESSION['info']['id'];
+		$userinfo = $user->where($map)->select();
+		$this->assign('userinfo',$userinfo);
 		$this->display();
 	}
 
@@ -186,7 +190,7 @@ class SafeController extends Controller {
 	public function changeTel(){
 		$user = D("User");
 		$data['tel'] = $_SESSION['safeMsg']['tel'];
-		$where['usernum'] = $_SESSION['info']['usernum'];
+		$where['id'] = $_SESSION['info']['id'];
 
 		$result = $user->where($where)->save($data);
 		//var_dump($result);
@@ -239,7 +243,7 @@ class SafeController extends Controller {
 	public function changeEmail(){
 		$user = D("User");
 		$data['email'] = $_SESSION['safeMsg']['email'];
-		$where['usernum'] = $_SESSION['info']['usernum'];
+		$where['id'] = $_SESSION['info']['id'];
 
 		$result = $user->where($where)->save($data);
 		//var_dump($result);
@@ -277,9 +281,10 @@ class SafeController extends Controller {
 	}
 
 	public function changePwd(){
+		var_dump($_POST);exit;
 		$user = D("User");
 		$data['pwd'] = md5($_SESSION['safeMsg']['pwd']);
-		$where['usernum'] = $_SESSION['info']['usernum'];
+		$where['id'] = $_SESSION['info']['id'];
 
 		$result = $user->where($where)->save($data);
 		//var_dump($result);

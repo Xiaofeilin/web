@@ -51,7 +51,7 @@
 
 		public function catSelect(){
 			$cat = D('cat');
-			return	$cat->where('parent_id=0')->select();
+			return	$cat->where(' LENGTH(cat_path) =6')->select();
 		}
 
 		/**
