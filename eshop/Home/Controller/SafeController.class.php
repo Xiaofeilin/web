@@ -6,7 +6,11 @@ class SafeController extends Controller {
 	protected $newCode;
 	//protected $eCode;
 
-	public function safe(){
+	public function safety(){
+		$user = D('User');
+		$map['id'] = $_SESSION['info']['id'];
+		$userinfo = $user->where($map)->select();
+		$this->assign('userinfo',$userinfo);
 		$this->display();
 	}
 
@@ -277,6 +281,7 @@ class SafeController extends Controller {
 	}
 
 	public function changePwd(){
+		var_dump($_POST);exit;
 		$user = D("User");
 		$data['pwd'] = md5($_SESSION['safeMsg']['pwd']);
 		$where['id'] = $_SESSION['info']['id'];

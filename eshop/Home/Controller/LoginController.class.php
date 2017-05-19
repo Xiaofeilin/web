@@ -47,6 +47,11 @@ class LoginController extends Controller {
 		}
 	}
 
+	public function logout(){
+		unset($_SESSION['info']);
+		$this->success("退出成功！",U('Login/login'),3);
+	}
+
 	/**
 	*['验证码显示']
 	*/

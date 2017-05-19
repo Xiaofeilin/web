@@ -34,4 +34,28 @@ class UserModel extends Model{
 			return true;
 		}
 	}
+
+	protected function _before_insert(&$data){
+		$imgData = imgUpLoad('icon','Home/Icon');
+		if(isset( $imgData['error'])){
+			$this->error = $imgData['error'];
+			return false;
+		}else{
+			$data['icon'] = $imgData['icon'];
+			$data['sm_icon'] = $imgData['sm_icon'];
+		}
+	}
+
+
+	protected function _before_update(&$data){
+		imgDel($this,$data['id'],"icon");
+		$imgData = imgUpLoad('icon','Home/Icon');
+		if(isset( $imgData['error'])){
+			$this->error = $imgData['error'];
+			return false;
+		}else{
+			$data['icon'] = $imgData['icon'];
+			$data['sm_icon'] = $imgData['sm_icon'];
+		}
+	}
 }

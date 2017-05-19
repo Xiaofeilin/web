@@ -7,7 +7,7 @@ ul.submenu li>a span{
 li.active>a{
 	color:white;
 }
-.black_overlay{  
+.black_over{  
 	display: none;  
 	position: absolute;  
 	top: 0%;  
@@ -18,7 +18,7 @@ li.active>a{
 	opacity:.80;  
 	background:rgba(0,0,0,0.7);
 }  
-.white_content {  
+.white_con {  
 	display: none;  
 	position: absolute;  
 	top: 10%;  
