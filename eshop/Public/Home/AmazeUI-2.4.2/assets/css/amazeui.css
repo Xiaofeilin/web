@@ -2782,7 +2782,8 @@ fieldset[disabled] .am-checkbox-inline {
 }
 @media only screen and (min-width:641px) {
   .am-form-horizontal .am-form-label {
-    text-align: right;
+    text-align: center;
+    padding-left:30px;
   }
 }
 /* Inline form elements */

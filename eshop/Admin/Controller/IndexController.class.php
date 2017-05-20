@@ -1,8 +1,7 @@
 <?php
 	namespace Admin\Controller;
-	use Think\Controller;
 
-	class IndexController extends Controller{
+	class IndexController extends EqualController{
 
 		// main系统信息
 		public function main(){

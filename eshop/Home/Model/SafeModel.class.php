@@ -20,7 +20,6 @@ class SafeModel extends Model{
 
 	public function checkTel($val){
 		$map['tel'] = $val;
-		//$map['usernum'] = $_SESSION['info']['usernum'];
 		$info = $this->model->where($map)->find();
 		if($info){
 			return false;

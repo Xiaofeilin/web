@@ -71,11 +71,11 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
 					$(document.body).css("overflow","hidden");
 				
 					$(this).addClass("selected");
-					$(this).parent().addClass("selected");
+					//$(this).parent().addClass("selected");
 
 									
-					$('.theme-popover-mask').show();
-					$('.theme-popover-mask').height($(window).height());
+					//$('.theme-popover-mask').show();
+					//$('.theme-popover-mask').height($(window).height());
 					$('.theme-popover').slideDown(200);																		
 					
 				})
@@ -85,7 +85,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
 					$(document.body).css("overflow","visible");
 					$('.theme-login').removeClass("selected");
 					$('.item-props-can').removeClass("selected");					
-					$('.theme-popover-mask').hide();
+					//$('.theme-popover-mask').hide();
 					$('.theme-popover').slideUp(200);
 				})
 

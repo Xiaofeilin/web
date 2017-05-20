@@ -11,17 +11,19 @@
 						</div>
 						<hr/>
 
+						<foreach name="userinfo" item="val">
 						<!--头像 -->
 						<div class="user-infoPic">
 
 							<div class="filePic">
-								<img class="am-circle am-img-thumbnail" src="__PUBLIC__/Home/images/getAvatar.do.jpg" alt="" />
+								<img class="am-circle am-img-thumbnail" src="__ROOT__/Uploads/{$val.icon}" alt=""  style="width:100px;height:100px;overflow:hidden" />
+								<!--<img class="am-circle am-img-thumbnail" src="{$val['icon'] != null ? '__ROOT__/Uploads/$val[icon]' : '__PUBLIC__/Home/images/default'}.jpg" alt="" id="preview" />-->
 							</div>
 
 							<p class="am-form-help">头像</p>
 
 							<div class="info-m">
-								<div><b>用户名：<i>{$Think.session.info.account}</i></b></div>
+								<div><b>用户名：<i>{$val.account}</i></b></div>
 								<div class="u-level">
 									<span class="rank r2">
 							             <s class="vip1"></s><a class="classes" href="#">铜牌会员</a>
@@ -68,7 +70,11 @@
 									<i class="i-safety-iphone"></i>
 									<div class="m-left">
 										<div class="fore1">手机验证</div>
+										<if condition="$_SESSION['info']['tel']" >
 										<div class="fore2"><small>您验证的手机：{$Think.session.info.tel} 若已丢失或停用，请立即更换</small></div>
+										<else/>
+										<div class="fore2"><small>您没有绑定手机，为了您的账号安全，请立即绑定</small></div>
+										</if>
 									</div>
 									<div class="fore3">
 										<a href="{:U('Safe/bindphone')}">
@@ -81,7 +87,7 @@
 									<div class="m-left">
 										<div class="fore1">邮箱验证</div>
 										<if condition="$_SESSION['info']['email']" >
-										<div class="fore2"><small>您验证的邮箱：{$Think.session.info.email} 可用于快速找回登录密码</small></div>
+										<div class="fore2"><small>您验证的邮箱：{$val.email} 可用于快速找回登录密码</small></div>
 										<else/>
 										<div class="fore2"><small>您没有绑定邮箱，为了您的账号安全，请立即绑定</small></div>
 										</if>
@@ -122,6 +128,7 @@
 								-->
 							</ul>
 						</div>
+						</foreach>
 
 					</div>
 				</div>

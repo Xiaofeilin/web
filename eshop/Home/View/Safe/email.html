@@ -34,7 +34,7 @@
 								<input type="text" id="email" name="email" placeholder="请输入邮箱地址">
 							</div>
 						</div>
-						<div id="emailError" style="color:red;margin-bottom:5px;position:relative;top:-20px"></div>
+						<div id="emailError" style="color:red;margin-bottom:5px;position:relative;top:-20px;left:106px"></div>
 						<div class="am-form-group code">
 							<label for="user-code" class="am-form-label">验证码</label>
 							<div class="am-form-content">
@@ -44,7 +44,7 @@
 								<div class="am-btn am-btn-danger">验证码</div>
 							</a>
 						</div>
-						<div id="emailCodeError" style="color:red;margin-bottom:5px;position:relative;top:-20px"></div>
+						<div id="emailCodeError" style="color:red;margin-bottom:5px;position:relative;top:-20px;left:106px"></div>
 
 						<div class="info-btn">
 							<div class="am-btn am-btn-danger" id="submit">保存修改</div>
@@ -99,12 +99,12 @@
 											if(res != "短信发送失败！"){
 												timer = setInterval(function(){
 													num--;
-													$("#sendEmailCode").val("等待" + num + "秒");
+													//$("#sendEmailCode").val("等待" + num + "秒");
 													if(num == 0){
 														clearInterval(timer);
 														timer = undefined;
 														$("#sendEmailCode").removeAttr("disabled",false);
-														$("#sendEmailCode").val("验证码");
+														//$("#sendEmailCode").val("验证码");
 													}
 												},1000);
 											}

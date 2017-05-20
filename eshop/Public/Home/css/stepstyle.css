@@ -33,7 +33,7 @@ vertical-align: top;margin-top: 5px;margin-left: -24px;color: #b5b5b5;font-size:
 
 
 @media only screen and (min-width: 640px){
-.am-form-label { width:70px; }
+.am-form-label { width:100px; }
 .am-form{width:70%;}
 	
 }

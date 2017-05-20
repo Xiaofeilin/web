@@ -27,9 +27,9 @@
 		*['admin数据表字段修改']
 		*/
 		public function edit(){
-			parent::edit();
 			$id = I('get.id','');
 			$data = array();
+			parent::edit('',array('id'=>$id));
 			$data = $this->model->roleLink();
 			$data['roleOne'] = $this->model->getRoleOne($id);
 			$data['roleOne'] = $data['roleOne'][0];
@@ -47,6 +47,7 @@
 			$lv = I('get.lv','0');
 			$p = I('get.p',0);
 
+			D('admin_role')->where('role_id='.$id)->delete();
 			$this->model->delete($id);
 
 			$this->success( '删除成功',U('list',array('p'=>$p)) );
@@ -60,7 +61,7 @@
 			$data = array();
 			$data = $this->model->search();
 			$this->assign($data);
-			$this->assignHead('角色列表',U('add'),'添加角色');
+			$this->assignHead('添加角色',U('add'),'角色列表');
 			$this->display();
 		}
 	}

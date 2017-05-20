@@ -1,89 +1,120 @@
-<layout name="Index/header_foot"/>
-<form>
-       <p>
-              搜索内容：
-              <input type="text" value="{$Think.get.search_val}" name="search_val">
-              <select name="search_key" >
-                   <option value="">请选择搜索类型</option>
-                   <option value="id" <eq name="Think.get.search_key" value="id">selected</eq> >ID</option>
-                   <option value="admin_name" <eq name="Think.get.search_key" value="admin_name">selected</eq>>管理员账号</option>
-                   <option value="admin_nick" <eq name="Think.get.search_key" value="admin_nick">selected</eq> >管理员名称</option>
-                   <option value="tel" <eq name="Think.get.search_key" value="tel">selected</eq> >电话号码</option>
-                   <option value="email" <eq name="Think.get.search_key" value="email">selected</eq> >电子邮箱</option>
-              </select>
-       </p>
-       <p>
-              是否启用：<input type="radio" name="is_use" value="1" <eq name="Think.get.is_use" value="1">checked</eq> >是
-                                  <input type="radio" name="is_use" value="0" <eq name="Think.get.is_use" value="0">checked</eq> >否
-       </p>
-        <input type="submit" value="搜索">
-</form>
-<br>
-<form method="post" action="" name="listForm">
-       <div class="list-div" id="listDiv">
+﻿<layout name="Index/header_foot"/>
+<include file="index/list" />
+<div class="page-container">
+	<form >
+    <p>搜索内容：
+      <input type="text" style="width:120px;" class="input-text"  value="{$Think.get.search_val}" name="search_val">
+      <span class="select-box" style="width:150px;">
+      <select  class="select"   size="1" name="search_key" >
+        <option value="">请选择搜索类型</option>
+        <option value="admin.id" <eq name="Think.get.search_key" value="admin.id">selected</eq> >ID</option>
+        <option value="admin_name" <eq name="Think.get.search_key" value="admin_name">selected</eq>>管理员账号</option>
+        <option value="admin_nick" <eq name="Think.get.search_key" value="admin_nick">selected</eq> >管理员名称</option>
+        <option value="tel" <eq name="Think.get.search_key" value="tel">selected</eq> >电话号码</option>
+        <option value="email" <eq name="Think.get.search_key" value="email">selected</eq> >电子邮箱</option>
+        <option value="role_name" <eq name="Think.get.search_key" value="role_name">selected</eq> >角色名称</option>
+      </select>
+      </span>
+    </p>
+    <p>
+      是否显示：<input type="radio" name="is_use" value="1" <eq name="Think.get.is_use" value="1">checked</eq> >是
+      <input type="radio" name="is_use" value="0" <eq name="Think.get.is_use" value="0">checked</eq> >否
+    </p>
+    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"><a href="{:U('list','',false)}?unset=1">&nbsp;<input  class="btn btn-danger radius" type="button" value="重置条件"></a>
+  </form>
+		
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="add('{$title}','{$url}','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> {$title}</a></span> <span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
+	<table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr>
+				<th scope="col" colspan="12"></th>
+			</tr>
+			<tr class="text-c">
+				<th width="25"><input type="checkbox" name="" value=""></th>
+				<th>ID</th>
+        <th>头像</th>
+        <th>管理员账号</th>      
+        <th>管理员名称</th>
+        <th>电话号码</th>
+        <th>电子邮箱</th>
+        <th>拥有角色</th>
+        <th>是否启用</th>
+        <th>添加时间</th>
+        <th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<foreach name="adminList" item="val">
+			<tr align="center" class="0" id="0_1" id = 'tr_1'>
+				<td style="text-align:center;"><input type="checkbox" value="{$val[id]}" name=""></td>
+        <td style="text-align:center;">{$val[id]}</td>
+				<td style="text-align:center;"><img width="30" src="__ROOT__/Uploads/{$val['icon']}" ></td>
+        <td style="text-align:center;">{$val[admin_name]}</td>
+        <td style="text-align:center;">{$val[admin_nick]}</td>
+        <td style="text-align:center;">{$val[tel]}</td>
+        <td style="text-align:center;">{$val[email]}</td>
+        <td style="word-wrap:break-word;word-break:break-all;width:200px;text-align:center;">{$val['group_concat(role_name)']}</td>
+        <td style="text-align:center;" show="{$val['is_use']}" ><img src="__PUBLIC__/Admin/images/{$val['is_use']}.gif" /></td>
+				<td style="text-align:center;">{$val['addtime'] |date='Y-m-d H:i:s',###}</td>			
+				<td class="td-manage" style="text-align:center;"> <a title="角色编辑" href="javascript:;" onclick="edit('管理员角色编辑','{:U('addrole',array('id'=>$val['id']) )}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe62d;</i></a> <a title="编辑" href="javascript:;" onclick="edit('管理员编辑','{:U('edit',array('id'=>$val['id']) )}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" onclick="del()" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+			</tr>
+			</foreach>
+      <tr><td height="30" colspan="10" align="center">{$show}</td></tr>
+		</tbody>
+	</table>
+</div>
 
-             <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
-                    <tr>
-                          <th>ID</th>
-                          <th>头像</th>
-                          <th>管理员账号</th>      
-                          <th>管理员名称</th>
-                          <th>电话号码</th>
-                          <th>电子邮箱</th>
-                          <th>拥有角色</th>
-                          <th>是否启用</th>
-                          <th>添加时间</th>
-                          <th>操作</th>
-                    </tr>
-                    <foreach name="adminList" item="val">
-                    <tr align="center" class="0" id="0_1" id = 'tr_1'>
-                          <td align="center">{$val['id']}</td>
-                          <td align="center" {$val['icon']}><img width="30" src="__ROOT__/Uploads/{$val['icon']}"></td>
-                          <td align="center">{$val['admin_name']}</td>
-                          <td align="center">{$val['admin_nick']}</td>
-                          <td align="center">{$val['tel']}</td>
-                          <td align="center">{$val['email']}</td>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+/*
+  参数解释：
+  title 标题
+  url   请求的url
+  id    需要操作的数据id
+  w   弹出层宽度（缺省调默认值）
+  h   弹出层高度（缺省调默认值）
+*/
+/*管理员-增加*/
+function add(title,url,w,h){
+  layer_show(title,url,w,h);
+}
+function del() { 
+  var msg = "您真的确定要删除吗？\n\n请确认！"; 
+  if (confirm(msg)==true){ 
+    return true; 
+  }else{ 
+    return false; 
+  } 
+} 
 
-                          <td align="center"><span>{$val['group_concat(role_name)']}</span></td>
-                        
-                          <td align="center" show="{$val['is_use']}" ><img  src="__PUBLIC__/Admin/images/{$val['is_use']}.gif" /></td>
-
-                          <td align="center">{$val['addtime'] |date='Y-m-d H:i:s',###}</td>
-                          <td width="24%" align="center">
-                                 <a href="{:U('addrole',array('id'=>$val['id']) )}">编辑角色</a> |
-                                 <a href="{:U('edit',array('id'=>$val['id']) )}">编辑</a> |
-                                 <a href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" title="移除">移除</a>
-                          </td>
-                    </tr>
-                    </foreach>
-                    <tr><td height="30" colspan="10" align="center">{$show}</td></tr>
-            </table>
-      </div>
-</form>
-<script>
-
-        //ajax无刷新修改是否显示
-        $('td[show]').click(function(){
-             var td = $(this);
-             var show = $(this).attr('show');
-             var id = td.prev().prev().prev().prev().prev().prev().html();
-             $.ajax({
-                    type:'GET',
-                    url:"{:U('ajaxIsUse','',false)}/id/" +id,
-                    dataType:'json',
-                    success:function(data){
-                          if(data!=null){
-                                  str =(data==1)? 1:0;
-                                  td.children().attr('src','__PUBLIC__/Admin/images/'+str+'.gif');
-                           }
-                    }
-             })
-        });
-
-        //是否显示按钮点击提交表单
-        $('input[name="is_use"]').click(function(){
-             $(this).parent().parent().submit();
-        });
+/*管理员-编辑*/
+function edit(title,url,id,w,h){
+  layer_show(title,url,w,h);
+}
 
 
+//ajax无刷新修改是否显示
+$('td[show]').click(function(){
+  var td = $(this);
+  var show = $(this).attr('show');
+  var id = td.prev().prev().prev().prev().prev().prev().prev().html();
+  $.ajax({
+    type:'GET',
+    url:"{:U('ajaxIsUse','',false)}/id/" +id,
+    dataType:'json',
+    success:function(data){
+      if(data!=null){
+        str =(data==1)? 1:0;
+        td.children().attr('src','__PUBLIC__/Admin/images/'+str+'.gif');
+      }
+    }
+  })
+});
+
+//是否显示按钮点击提交表单
+$('input[name="is_use"]').click(function(){
+  $(this).parent().parent().submit();
+});
 </script>
+</body>
+</html>

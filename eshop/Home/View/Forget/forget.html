@@ -3,7 +3,7 @@
 
 	<head lang="en">
 		<meta charset="UTF-8">
-		<title>注册</title>
+		<title>忘记密码</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<meta name="format-detection" content="telephone=no">
@@ -24,85 +24,58 @@
 			<a href="{:U('Index/index')}"><img alt="" src="__PUBLIC__/Home/images/logobig.png" /></a>
 		</div>
 
-		<div class="res-banner">
+		<div class="res-banner" style="height:580px">
 			<div class="res-main">
 				<div class="login-banner-bg"><span></span><img src="__PUBLIC__/Home/images/big.jpg" /></div>
-				<div class="login-box">
+				<div class="login-box" style="height:540px">
 
 						<div class="am-tabs" id="doc-my-tabs">
 							<ul class="am-tabs-nav am-nav am-nav-tabs am-nav-justify">
-								<li class="am-active"><a href="">账号注册</a></li>
-								<li><a href="">手机号注册</a></li>
+								<li><a href="" style="border-bottom:0px">找回密码</a></li>
 							</ul>
-
-							<div class="am-tabs-bd">
-								<div class="am-tab-panel am-active">
-									<form method="post">
-										
-							   <div class="user-email">
-										<label for="email"><i class="am-icon-envelope-o"></i></label>
-										<input type="text" name="account" id="account" placeholder="请输入用户名"> 
-                 </div>						
-							<div id="accountError" style="color:red"></div>
-                 <div class="user-pass">
-								    <label for="password"><i class="am-icon-lock"></i></label>
-								    <input type="password" name="passwordone" id="passwordone" placeholder="设置密码">						   
-                 </div>	
-                 							  <div id="pwdoneError" style="color:red"></div>
-
-                 </form>
-                 
-								 <div class="login-links">
-										<label for="reader-me">
-											<input id="reader-me" type="checkbox" checked> 点击表示您同意商城《服务协议》
-										</label>
-							  	</div>
-										<div class="am-cf">
-											<input type="submit" name="submitReg" value="注册" id="" class="am-btn am-btn-primary am-btn-sm am-fl">
-										</div>
-
-								</div>
+							<hr />
 
 								<div class="am-tab-panel">
 									<form method="post">
+	    <div class="user-phone">
+								    <label for="phone"><i class="am-icon-envelope-o"></i></label>
+								    <input type="text" name="account" id="account" placeholder="请输入用户名">
+								     
+                 </div>	
+                 							<div id="accountError" style="color:red"></div>
+
                  <div class="user-phone">
 								    <label for="phone"><i class="am-icon-mobile-phone am-icon-md"></i></label>
-								    <input type="tel" name="tel" id="tel" placeholder="请输入手机号">
+								    <input type="text" name="tel" id="tel" placeholder="请输入手机号">
 								     
                  </div>							
                  							<div id="telError" style="color:red"></div>												
 										<div class="verification">
 											<label for="code"><i class="am-icon-code-fork"></i></label>
-											<input type="tel" name="code" id="code" placeholder="请输入验证码">
+											<input type="text" name="code" id="code" placeholder="请输入验证码">
 											<a class="btn" href="javascript:void(0);" id="sendTelCode">
 												<span id="dyMobileButton">获取</span></a>
 										</div>
 										 <div id="telErrorCode" style="color:red"></div>
                  <div class="user-pass">
 								    <label for="password"><i class="am-icon-lock"></i></label>
-								    <input type="password" name="passwordtwo" id="passwordtwo" placeholder="设置密码">
+								    <input type="password" name="password" id="password" placeholder="设置密码">
 
                  </div>			
-                 							 <div id="pwdtwoError" style="color:red"></div>							
+                 							 <div id="pwdError" style="color:red"></div>							
+                 <div class="user-pass">
+								    <label for="passwordRepeat"><i class="am-icon-lock"></i></label>
+								    <input type="password" name="repassword" id="repassword" placeholder="确认密码">
+                 </div>	
+                 							 <div id="repwdError" style="color:red"></div>
 
 									</form>
-								 <div class="login-links">
-										<label for="reader-me">
-											<input id="reader-me" type="checkbox" checked> 点击表示您同意商城《服务协议》
-										</label>
-							  	</div>
 										<div class="am-cf">
-											<input type="submit" name="submitReg" value="注册" id="" class="am-btn am-btn-primary am-btn-sm am-fl">
+											<input type="submit" name="submitMsg" value="提交" id="" class="am-btn am-btn-primary am-btn-sm am-fl">
 										</div>
 								
 									<hr>
 								</div>
-
-								<script>
-									$(function() {
-									    $('#doc-my-tabs').tabs();
-									  })
-								</script>
 
 							</div>
 						</div>
@@ -148,17 +121,20 @@
 		$("#accountError").html("");
 	});
 
-	$("input[name=passwordone]").focus(function(){
-		$("#pwdoneError").html("");
-		$("#pwdtwoError").html("");
+	$("input[name=password]").focus(function(){
+		$("#pwdError").html("");
 	});
 
-	$("input[name=passwordtwo]").focus(function(){
-		$("#pwdtwoError").html("");
+	$("input[name=repassword]").focus(function(){
+		$("#repwdError").html("");
 	});
 
 	$("input[name=tel]").focus(function(){
 		$("#telError").html("");
+	});
+
+	$("input[name=code]").focus(function(){
+		$("#telErrorCode").html("");
 	});
 
 	$("input[name=account]").blur(function(){
@@ -178,8 +154,8 @@
 		});
 	});
 
-	$("input[name=passwordone]").blur(function(){
-		var pwd = $("#passwordone").val();
+	$("input[name=password]").blur(function(){
+		var pwd = $("#password").val();
 		$.ajax({
 			url:"__CONTROLLER__/checkPass",
 			type:"POST",
@@ -187,7 +163,7 @@
 			dataType:"json",
 			success:function(res){
 				if(!res.info == ""){
-					$("#pwdoneError").html(res.info);
+					$("#pwdError").html(res.info);
 				}else{
 					y = 1;
 				}
@@ -196,10 +172,11 @@
 	});
 
 	$("input[name=tel]").blur(function(){
-		var tel = $("#tel").val();
+		var tel = parseInt($("#tel").val());
+		var acc = $("#account").val();
 		$.ajax({
 			url:"__CONTROLLER__/checkTel",
-			data:{tel:tel},
+			data:{tel:tel,account:acc},
 			type:"POST",
 			dataType:"json",
 			success:function(res){
@@ -254,8 +231,8 @@
 	$("input[name=code]").blur(function(){
 		var code = $("#code").val();
 		$.ajax({
-			url:"__CONTROLLER__/checkTelCode",
-			data:{ecode:code},
+			url:"__CONTROLLER__/checkCode",
+			data:{tCode:code},
 			type:"POST",
 			dataType:"json",
 			success:function(res){
@@ -268,16 +245,17 @@
 		});
 	});
 
-	$("input[name=passwordtwo]").blur(function(){
-		var pwd = $("#passwordtwo").val();
+	$("input[name=repassword]").blur(function(){
+		var pwd = $("#password").val();
+		var repwd = $("#repassword").val();
 		$.ajax({
-			url:"__CONTROLLER__/checkPass",
+			url:"__CONTROLLER__/checkRePass",
 			type:"POST",
-			data:{password:pwd},
+			data:{password:pwd,repassword:repwd},
 			dataType:"json",
 			success:function(res){
 				if(!res.info == ""){
-					$("#pwdtwoError").html(res.info);
+					$("#repwdError").html(res.info);
 				}else{
 					v = 1;
 				}
@@ -285,10 +263,23 @@
 		});
 	});
 
-	$("input[name=submitReg]").click(function(){
-		if( ($("#account").val && $("#password")) || ($("#tel").val() && $("#code").val() && $("#password").val()) ){
-			if( (x == 1 && y ==1) || (z ==1 && w == 1 && v ==1) ){
-				location.href = "{:U('Reg/regSuccess')}";
+	$("input[name=submitMsg]").click(function(){
+		if($("#account").val && $("#password") && $("#tel").val() && $("#code").val() && $("#repassword").val()){
+			if(x == 1 && y ==1 && z ==1 && w == 1 && v ==1){
+				$.ajax({
+					url:"__CONTROLLER__/resetSuccess",
+					type:"POST",
+					dataType:"json",
+					success:function(res){
+						if(res == 1){
+							alert("修改成功！请登录！");
+							location.href = "{:U('Login/login')}";
+						}else{
+							alert(res);
+							location.href = "{:U('Forget/forget')}";
+						}
+					}
+				});
 			}
 		}else{
 			return false;

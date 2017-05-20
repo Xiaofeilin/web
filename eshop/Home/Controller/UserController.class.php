@@ -1,15 +1,38 @@
 <?php
 namespace Home\Controller;
-use Think\Controller;
-class UserController extends Controller {
-	//protected $pCode;
+//use Think\Controller;
+class UserController extends EqualController {
+	protected $model;
+
+	public function __construct(){
+		parent::__construct();
+		$this->model = D('User');
+	}
+
+	public function index(){
+		$time = time();
+		$this->assign('time',$time);
+		$this->display();
+	}
 
 	public function information(){
-		$user = D('User');
-		$map['id'] = $_SESSION['info']['id'];
-		$userinfo = $user->where($map)->getAll();
-		$this->assign('userinfo',$userinfo);
-		$this->display();
+		if(IS_POST){
+			$_POST['birthdate'] = strtotime(I('birthdate'));
+			$sub = I('sub',0);
+			if($sub == 1){
+				parent::information('information');
+				$id = I('id');
+				$data['userOne'] = $this->model->find($id);
+				$this->assign($data);
+				$this->display();
+			}
+		}else{
+			//$user = D('User');
+			$map['id'] = $_SESSION['info']['id'];
+			$userinfo = $this->model->where($map)->getAll();
+			$this->assign('userinfo',$userinfo);
+			$this->display();
+		}
 	}
 
 	public function checkAcc(){
@@ -20,25 +43,4 @@ class UserController extends Controller {
 
 		$this->error($user->getError());
 	}
-
-	public function checkTel(){
-		$user = D('User');
-		$info = $user->create();
-
-		//$_SESSION['addMsg']['tel'] = I("tel");
-
-		$this->error($user->getError());
-	}
-
-	/*
-	public function code(){
-		$config = array(
-			'fontSize'       =>    15,  // 验证码字体大小    
-			'length'          =>    4,     // 验证码位数
-			'useNoise'    =>    false, // 关闭验证码杂点;
-		);
-		$verify = new \Think\Verify($config);
-		$verify->entry();
-	}
-	*/
 }

@@ -15,7 +15,7 @@
 		*/
 		public function add(){
 			parent::add();
-			$this->assignHead('添加管理员',U('list'),'管理员列表');
+			$this->assignHead('添加管理员',U('list'),'添加管理员');
 			$this->display();
 		}
 
@@ -24,12 +24,13 @@
 		*['admin数据表字段修改']
 		*/
 		public function edit(){
-			parent::edit();
 			$id = I('get.id','');
 			$data = array();
+			parent::edit('',array('id'=>$id));
 			$data['adminOne'] = $this->model->getAdminOne($id);
+			$data['adminOne'] = $data['adminOne'][0];
 			$this->assign($data);
-			$this->assignHead('修改管理员资料',U('list'),'管理员列表');
+			$this->assignHead('修改管理员资料',U('list'),'修改管理员资料');
 			$this->display();
 		}
 
@@ -49,7 +50,13 @@
 		*[admin数据删除]
 		*/
 		public function del(){
+			$id = I('get.id','');
+			$lv = I('get.lv','0');
+			$p = I('get.p',0);
 
+			$this->model->delete($id);
+
+			$this->success( '删除成功',U('list',array('p'=>$p)) );
 		}
 
 
@@ -60,23 +67,22 @@
 			$data = array();
 			$data = $this->model->search();
 			$this->assign($data);
-			$this->assignHead('管理员列表',U('add'),'添加管理员');
+			$this->assignHead('添加管理员',U('add'),'管理员列表');
 			$this->display();
 		}
 
 
 		//添加角色
 		public function addrole(){
-			parent::edit();
 			$id = I('get.id','');
 			$data = array();
+			parent::edit('',array('id'=>$id));
 			$data['adminOne'] = $this->model->getAdminOne($id);
 			$data['adminOne'] = $data['adminOne'][0];
 			$data['roleAll'] = D('role')->select();
-			$data['adminOne']['role_list'] = $data['adminOne']['group_concat(pri_id)'];
+			$data['adminOne']['role_list'] = $data['adminOne']['group_concat(role_id)'];
 			$this->assign($data);
-			$this->assignHead('编辑管理员角色',U('list'),'管理员列表');
+			$this->assignHead('编辑管理员角色',U('list'),'编辑管理员角色');
 			$this->display();
-			var_dump($data);
 		}
 	}

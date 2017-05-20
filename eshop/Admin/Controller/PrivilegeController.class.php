@@ -34,9 +34,9 @@
 		*['privilege数据表字段修改']
 		*/
 		public function edit(){
-			parent::edit();
 			$id = I('get.id','');
 			$data = array();
+			parent::edit('',array('id'=>$id));
 			$data = $this->model->getPrivilegeOne($id);
 			$this->assignHead('修改权限资料',U('list'),'权限列表');
 			$this->assign($data);
@@ -84,7 +84,7 @@
 			$data = array();
 			$data = $this->model->search();
 			$this->assign($data);
-			$this->assignHead('权限列表',U('add'),'添加权限');
+			$this->assignHead('添加权限',U('add'),'权限列表');
 			$this->display();
 		}
 
