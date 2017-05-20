@@ -110,7 +110,7 @@
 				<label class="form-label col-xs-4 col-sm-2">是否热卖：</label>
 				<div class="formControls col-xs-8 col-sm-9 skin-minimal">
 					<div class="radio-box">
-						<input  type="radio"  name="is_hot" $goodsOne['is_hot']=="1"?'checked':''}   value="1">
+						<input  type="radio"  name="is_hot" {$goodsOne['is_hot']=="1"?'checked':''}   value="1">
 						<label for="sex-1">是</label>
 					</div>
 					<div class="radio-box">
@@ -152,11 +152,11 @@
 				<label class="form-label col-xs-4 col-sm-2">是否上架：</label>
 				<div class="formControls col-xs-8 col-sm-9 skin-minimal">
 					<div class="radio-box">
-						<input  type="radio" {$goodsOne['is_on_sale']=="1"?'checked':''} name="is_on_sale"  value="1">
+						<input  type="radio" {$goodsOne['is_on_sale']==1?'checked':''} name="is_on_sale"  value="1">
 						<label for="sex-1">是</label>
 					</div>
 					<div class="radio-box">
-						<input type="radio" {$goodsOne['is_on_sale']=="0"?'checked':''} name="is_on_sale" value="0"  checked>
+						<input type="radio" {$goodsOne['is_on_sale']=="0"?'checked':''} name="is_on_sale" value="0"  >
 						<label for="sex-2">否</label>
 					</div>
 				</div>

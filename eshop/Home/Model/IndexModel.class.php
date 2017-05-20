@@ -17,8 +17,28 @@
 		public function floorSelect(){
 			$data = array();
 			$floor = D('floor');
+			$goods = D('goods');
+			$brand = D('brand');
+			$cat = D('cat');
+
 			$data['floorList'] = $floor->where('is_show=1 and (one_cat !=0 or two_cat!=0)')->select();
 
+			foreach ($data['floorList'] as $key => $value) {
+				$data['floorList'][$key]['goodsList']= $goods->where('cat_id = '.$value['one_cat'].' or cat_id = '.$value['two_cat'])->limit(6)->select();
+				$data['cat'][$key] = $cat->where('id = '.$value['one_cat'].' or id = '.$value['two_cat'])->select();
+				foreach($data['cat'][$key] as $key1=>$value1){
+					$data['floorList'][$key]['catList'] = $cat->where('parent_id='.$value1['parent_id'] )->limit(6)->select();
+					if($value1['brand_id']){
+						$data['floorList'][$key]['brandList'] = $brand->where('id in('.$value1['brand_id'].')')->limit(6)->select();
+					}
+				}
+
+			}
+			// var_dump($data['cat']);
+			// echo '<pre>';
+			// print_r($data['floorList']);
+			// echo '</pre>';
+			// exit;
 			return $data;
 			
 		}

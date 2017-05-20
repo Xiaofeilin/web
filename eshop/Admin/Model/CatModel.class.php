@@ -27,20 +27,14 @@
 		*@param array 	$data[经过自动验证的数据]
 		*/
 		protected function _before_insert(&$data){
-			if( !empty($data['search_attr_id']) ){
-				if(!is_array($data['search_attr_id']) ){
-					$this->error = '筛选属性错误';
-					return false;
-				}
 
-				$search_attr_id = "";
-				foreach($data['search_attr_id'] as $key=>$val){
-					if( is_numeric($val) )
-						$search_attr_id.= $val . ',';
-				}
-				$data['search_attr_id'] = $search_attr_id;
-			}
+			if($data['search_attr_id'] = $this->join_path($data['search_attr_id']))
+				return false;
 			
+
+			if($data['brand_id'] = $this->join_path($data['brand_id']))
+				return false;
+
 			if($data['parent_id']!==0){
 				$catOne = $this->find($data['parent_id']);
 				$data['cat_path'] = $catOne['cat_path']  . $catOne['id'] . ',';
@@ -50,19 +44,31 @@
 
 
 		protected function _before_update(&$data){
-			if( !empty($data['search_attr_id']) ){
-				if(!is_array($data['search_attr_id']) ){
+
+			if(count($data)<=3) return;
+
+			if(  !$data['search_attr_id'] || !($data['search_attr_id'] = $this->join_path($data['search_attr_id']) ) )
+				
+			if( !$data['brand_id'] || !($data['brand_id'] = $this->join_path($data['brand_id'])) )
+				return false;
+		}
+
+
+
+		protected function join_path($path){
+			if( !empty($path) ){
+				if(!is_array($path) ){
 					$this->error = '筛选属性错误';
 					return false;
 				}
-
-				$search_attr_id = "";
-				foreach($data['search_attr_id'] as $key=>$val){
+				$path_str= "";
+				foreach($path as $key=>$val){
 					if( is_numeric($val) )
-						$search_attr_id.= $val . ',';
+						$path_str.= $val . ',';
 				}
-				$data['search_attr_id'] = rtrim( $search_attr_id , ',' );
+				$path_str= rtrim($path_str , ',' );
 			}
+			return $path_str;
 		}
 
 		/**
@@ -84,46 +90,73 @@
 		public function restore($id){
 			$attr = D('attr');
 			$type = D('type');
+			$brand = D('brand');
+
 			$typeList = $type->select();
-			$search_attr_id = $this->field('search_attr_id')->where('id='.$id)->find();
-			if(!empty($search_attr_id['search_attr_id']) ){
-				$attrList = $attr->where('id in('. $search_attr_id['search_attr_id'] .')' )->select();
+			$search_id = $this->field('search_attr_id,brand_id')->where('id='.$id)->find();
+			if(!empty($search_id['search_attr_id']) ){
+				$attrList = $attr->where('id in('. $search_id['search_attr_id'] .')' )->select();
 				$type_ids = '';
 				foreach ($attrList as $key => $value) {
 					$type_ids .= $value['type_id'] . ',';
 				}
 				$type_ids = rtrim($type_ids,',');
 				$attrTypeList = $attr->where('type_id in ('. $type_ids .')')->select();
-				$html = '';
+				$attrHtml = '';
 				foreach ($attrList as $key => $value) {
 					$str = $key==0 ? '+': '-';
-					$html .= '<p><a onclick="addnew(this)"" javascript="void(0)">[' . $str . ']</a><select type="type" ><option value="">请选择</option>';
+					$attrHtml .= '<p><span><a onclick="addnew(this)"" javascript="void(0)">[' . $str . ']</a><select type="type" ><option value="">请选择</option>';
 					
 					foreach ($typeList as $key1 => $value1) {
 						$selected = $value['type_id']==$value1['id']?'selected':'';
-						$html.='<option  value=' . $value1['id'] . ' ' . $selected.' >'.$value1['type_name'].'</option>';
+						$attrHtml.='<option  value=' . $value1['id'] . ' ' . $selected.' >'.$value1['type_name'].'</option>';
 					}
-					$html .= '</select>';
+					$attrHtml .= '</select>';
 
-					$html .= '  <span name="attr_span"><select name="search_attr_id[ ]">';
+					$attrHtml .= '  <span name="attr_span"><select name="search_attr_id[ ]">';
 					foreach ($attrTypeList as $key1 => $value1) {
 						$selected = $value['id']==$value1['id']?'selected':'';
 						if($value['type_id']==$value1['type_id'])
-							$html .= '<option value='.$value1['id'].' '. $selected .'>'.$value1['attr_name'].'</option>';
+							$attrHtml .= '<option value='.$value1['id'].' '. $selected .'>'.$value1['attr_name'].'</option>';
 					}
-					$html.="</select></span></p>";
+					$attrHtml.="</select></span></span></p>";
 				}
 			}else{
-				$html = '<a onclick="addnew(this)"" javascript="void(0)">[+]</a><select type="type" ><option value="">请选择</option>';
+				$typeAll = $type->select();
+				$attrHtml = '<p><span><a onclick="addnew(this)"" javascript="void(0)">[+]</a><select type="type" ><option value="">请选择</option>';
 					if($typeAll){
 						foreach( $typeAll as $val){
-							$html.='<option value=' .$val["id"] . '">' . $val["type_name"] . '</option>';
+							$attrHtml.='<option value=' .$val["id"] . '>' . $val["type_name"] . '</option>';
 							
 						}
 					}
-				$html .='</select><span name="attr_span"></span>';
+				$attrHtml .='</select><span name="attr_span"></span></p>';
 			}
-			
+
+			if(!empty($search_id['brand_id']) ){
+				$brandList =  $brand->where('id in('. $search_id['brand_id'] .')' )->select();
+				$brandAll = $brand->select();
+				$brandHtml='';
+				foreach ($brandList as $key => $value) {
+					$str = $key==0 ? '+': '-';
+					$brandHtml.= '<div class="formControls col-xs-8 col-sm-9"><a onclick="addnew(this)"" javascript="void(0)">[' . $str . ']</a><select name="brand_id[]" ><option value="">请选择</option>';
+					foreach ($brandAll as $key1 => $value1) {
+						$str = $value1['id']==$value['id']?'selected':'';
+						$brandHtml.='<option value="'.$value1['id'].'"  '.$str.'>'.$value1['brand_name'].'</option>';
+					}
+					$brandHtml .= '</select></div>';
+				}
+			}else{
+				$brandAll = $brand->select();
+				$brandHtml.= '<div class="formControls col-xs-8 col-sm-9"><a onclick="addnew(this)"" javascript="void(0)">[+]</a><select name="brand_id[]" ><option value="">请选择</option>';
+				foreach ($brandAll as $key1 => $value1) {
+					$brandHtml.='<option value="'.$value1['id'].'"  '.$str.'>'.$value1['brand_name'].'</option>';
+				}
+				$brandHtml .= '</select></div>';
+	
+			}
+			$html['attrHtml'] = $attrHtml;
+			$html['brandHtml'] = $brandHtml;
 			return $html;
 		}
 

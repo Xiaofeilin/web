@@ -18,13 +18,10 @@
 									$data[$key]['cat2'][$key1]['cat3'][] = $val2;
 							}
 						}
-					}
-					
+					}	
 				}
 			}
+			
 			return $data;
 		}
-
-
-		
 	}

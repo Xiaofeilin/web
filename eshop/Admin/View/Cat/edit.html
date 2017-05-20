@@ -49,9 +49,18 @@
 	</div>
 
 	<div class="row cl">
-			{$html}
+		<label class="form-label col-xs-4 col-sm-3">属性筛选：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			{$html['attrHtml']}
+		</div>
+		
 	</div>
-
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">品牌筛选：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			{$html['brandHtml']}
+		</div>
+	</div>
 	<div class="row cl">
 		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
 			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
@@ -78,13 +87,13 @@ $('select[type="type"]').change(function(){
 		url:"{:U('ajaxGetAttr','',false)}/type_id/"+type_id,
 		dataType:'json',
 		success:function(data){
-			var html = "<span class='select-box' style='width:150px;'><select class='select' name='search_attr_id[ ]'   size='1'>";
+			var html = "<select name='search_attr_id[ ]'  >";
 			var num = data.length;
 			for(var i=0;i<num;i++){
 				html+="<option value="+ data[i]['id'] +">"+ data[i]['attr_name'] +"</option>";
 			} 
-			html+="</select></span>";
-			_type.parent().after(html);
+			html+="</select>";
+			_type.next().html(html);
 		}
 
 
@@ -100,7 +109,7 @@ function addnew(a){
 		newP.find('label ').html('');
 		 newP.find(':selected').removeAttr('selected');
 		newP.find("a").html("[-]");
-		newP.find("span[name='attr_span']").remove();
+		newP.find("span[name='attr_span']").find('select').remove();
 		 p.parent().append(newP);
 	}
 	else{

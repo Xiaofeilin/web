@@ -5,17 +5,17 @@
  			<!--轮播 -->
 	<div class="am-slider am-slider-default scoll" data-am-flexslider id="demo-slider-0">
 		<ul class="am-slides">
-			<li class="banner1"><a href="introduction.html"><img src="images/ad1.jpg" /></a></li>
-			<li class="banner2"><a><img src="images/ad2.jpg" /></a></li>
-			<li class="banner3"><a><img src="images/ad3.jpg" /></a></li>
-			<li class="banner4"><a><img src="images/ad4.jpg" /></a></li>
+			<li class="banner1"><a href="introduction.html"><img src="__PUBLIC__/Home/images/ad1.jpg" /></a></li>
+			<li class="banner2"><a><img src="__PUBLIC__/Home/images/ad2.jpg" /></a></li>
+			<li class="banner3"><a><img src="__PUBLIC__/Home/images/ad3.jpg" /></a></li>
+			<li class="banner4"><a><img src="__PUBLIC__/Home/images/ad4.jpg" /></a></li>
 
 		</ul>
 	</div>
 	<!--轮播-->
-	
+
 	<script type="text/javascript">
-		(function() {
+		(function(){
 			$('.am-slider').flexslider();
 		});
 		$(document).ready(function() {
@@ -32,7 +32,6 @@
 	</script>
 	<div class="clear"></div>	
 </div>
-
 <div class="shopNav">
 	<div class="slideall">
 		<!--导航 -->
@@ -47,19 +46,19 @@
 
 				<ul>
 					<li class="title-first"><a target="_blank" href="#">
-						<img src="images/TJ2.jpg"></img>
+						<img src="__PUBLIC__/Home/images/TJ2.jpg"></img>
 						<span>[特惠]</span>商城爆品1分秒								
 					</a></li>
 					<li class="title-first"><a target="_blank" href="#">
 						<span>[公告]</span>商城与广州市签署战略合作协议
-					     <img src="images/TJ.jpg"></img>
+					     <img src="__PUBLIC__/Home/images/TJ.jpg"></img>
 					     <p>XXXXXXXXXXXXXXXXXX</p>
 				    </a></li>
 				    
 			<div class="mod-vip">
 				<div class="m-baseinfo">
 					<a href="person/index.html">
-						<img src="images/getAvatar.do.jpg">
+						<img src="__PUBLIC__/Home/images/getAvatar.do.jpg">
 					</a>
 					<em>
 						Hi,<span class="s-name">小叮当</span>
@@ -84,7 +83,7 @@
 					<li><a target="_blank" href="#"><span>[特惠]</span>家电狂欢千亿礼券 买1送1！</a></li>
 					
 				</ul>
-            <div class="advTip"><img src="images/advTip.jpg"/></div>
+           				 <div class="advTip"><img src="__PUBLIC__/Home/images/advTip.jpg"/></div>
 			</div>
 		</div>
 		<div class="clear"></div>
@@ -133,8 +132,8 @@
 				<h4>限时促销</h4>
 				<h3>每期活动 优惠享不停 </h3>
 				<span class="more ">
-                 					 <a href="# ">全部活动<i class="am-icon-angle-right" style="padding-left:10px ;" ></i></a>
-            						</span>
+                 				<a href="# ">全部活动<i class="am-icon-angle-right" style="padding-left:10px ;" ></i></a>
+            				</span>
 			</div>
 			<div class="am-g am-g-fixed ">
 			<foreach name="goods['goods_is_sale_list']" item="val" key='key'>
@@ -142,7 +141,7 @@
 				<div class="icon-sale one "></div>	
 					<h4><span style="font-size:1px">秒杀价：</span><br><em style="color:orange">￥{$val['promote_price']}</em></h4>							
 				<div class="activityMain ">
-					<img style="width:250px" src="__ROOT__/Uploads/{$val['logo']}"></img>
+					<a href="{:U('Goods/details',array('id'=>$val['id']))}"><img style="width:250px" src="__ROOT__/Uploads/{$val['logo']}"></img></a>
 				</div>
 				<div class="info ">
 					 {$val['goods_name']}
@@ -174,63 +173,48 @@
 	   	</script>
 		<div class="clear "></div>
 		
-		<foreach  name="floorGoods['floorList']" item="val">
+		<foreach  name="floorGoods['floorList']" item="val" key="f_key"> 
 		<div id="f1">
 			<div class="am-container ">
 				<div class="shopTitle ">
 					<h4>{$val['floor_name']}</h4>
 					<h3>{$val['floor_desc']}</h3>
 					<div class="today-brands ">
-						<a href="# ">桂花糕</a>
-						<a href="# ">奶皮酥</a>
-						<a href="# ">栗子糕 </a>
-						<a href="# ">马卡龙</a>
-						<a href="# ">铜锣烧</a>
-						<a href="# ">豌豆黄</a>
+						<foreach name='val["catList"]' item="cat_val">
+						<a href="# ">{$cat_val['cat_name']}</a>
+						</foreach>
 					</div>
 					<span class="more ">
 						<a href="# ">更多美味<i class="am-icon-angle-right" style="padding-left:10px ;" ></i></a>
 					</span>
 				</div>
 			</div>
-
 			<div class="am-g am-g-fixed floodFour">
-				<div class="am-u-sm-5 am-u-md-4 text-one list ">
+				<div class="am-u-sm-5 am-u-md-4 text-one list " }  style="background:{$color[$f_key]}">
 					<div class="word">
-						<a class="outer" href="#"><span class="inner"><b class="text">核桃</b></span></a>
-						<a class="outer" href="#"><span class="inner"><b class="text">核桃</b></span></a>
-						<a class="outer" href="#"><span class="inner"><b class="text">核桃</b></span></a>	
-						<a class="outer" href="#"><span class="inner"><b class="text">核桃</b></span></a>
-						<a class="outer" href="#"><span class="inner"><b class="text">核桃</b></span></a>
-						<a class="outer" href="#"><span class="inner"><b class="text">核桃</b></span></a>
+						<foreach name="val['brandList']" item="brand_val" >
+						<a class="outer" href="#"><span class="inner"><b class="text">{$brand_val['brand_name']}</b></span></a>
+						</foreach>
 					</div>
 					<a href="# ">
 						<div class="outer-con ">
 							<div class="title ">开抢啦！</div>
-							<div class="sub-title ">零食大礼包</div>			
+							<div class="sub-title ">零食大礼包</div>	
 						</div>
-						<img src="images/act1.png " />			
+						<img src="__ROOT__/Uploads/{$val['logo']} " />
 					</a>
-					<div class="triangle-topright"></div>						
+					<div class="triangle-topright"></div>
 				</div>
-
-				<div class="am-u-sm-7 am-u-md-4 text-two sug">
+				<foreach name="val[goodsList]" item="goods_val" key="goods_key">
+				<div class="{$css[$goods_key]}">
 					<div class="outer-con ">
-						<div class="title ">雪之恋和风大福</div>
-						<div class="sub-title ">¥13.8</div>
+						<div class="title ">{$goods_val['goods_name']}</div>
+						<div class="sub-title ">¥{$goods_val['shop_price']}</div>
 						<i class="am-icon-shopping-basket am-icon-md  seprate"></i>
 					</div>
-					<a href="# "><img src="images/2.jpg" /></a>
+					<a href="{:U('Goods/details',array('id'=>$goods_val['id']))}"><img src="__ROOT__/Uploads/{$goods_val['logo']}" /></a>
 				</div>
-
-				<div class="am-u-sm-7 am-u-md-4 text-two">
-					<div class="outer-con ">
-						<div class="title ">雪之恋和风大福</div>
-						<div class="sub-title ">¥13.8</div>
-						<i class="am-icon-shopping-basket am-icon-md  seprate"></i>
-					</div>
-					<a href="# "><img src="images/1.jpg" /></a>
-				</div>
+				</foreach>
 			</div>
 			<div class="clear "></div>  
 		</div>	
@@ -238,6 +222,8 @@
 	</div>
 </div>
 				
-
+<script>
+		
+</script>
 
 			

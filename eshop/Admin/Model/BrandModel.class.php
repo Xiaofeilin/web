@@ -9,7 +9,7 @@
 		);
 
 		protected function _before_insert(&$data){
-			$imgData = imgUpLoad('logo','Brand');
+			$imgData = imgUpLoad('logo','Floor');
 			if(isset( $imgData['error'])){
 				$this->error = $imgData['error'];
 				return false;
@@ -22,7 +22,7 @@
 
 		protected function _before_update(&$data){
 			imgDel($this,$data['id']);
-			$imgData = imgUpLoad('logo','Brand');
+			$imgData = imgUpLoad('logo','Floor');
 			if(isset( $imgData['error'])){
 				$this->error = $imgData['error'];
 				return false;

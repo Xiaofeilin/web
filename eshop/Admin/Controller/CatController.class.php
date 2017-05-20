@@ -16,6 +16,7 @@
 		public function add(){
 			parent::add();
 			$data['typeAll'] = D('type')->select();
+			$data['brandAll'] = D('brand')->select();
 			$data['catAll'] = $this->model->lvIt3();
 			$this->assign($data);
 			$this->display();
@@ -45,9 +46,11 @@
 		public function ajaxIsShow(){
 			$id = I('get.id','');
 			$catOne = $this->model->find($id);
-			$catOne['is_show'] = $catOne['is_show']?0:1;
-			if($this->model->save($catOne))
-				$this->ajaxReturn( $catOne['is_show'] );
+			$catData['id'] = $catOne['id'];
+			$catData['is_show'] = $catOne['is_show']?0:1;
+			
+			if($this->model->save($catData))
+				$this->ajaxReturn( $catData['is_show']);
 		}
 
 		public function ajaxGetAttr(){

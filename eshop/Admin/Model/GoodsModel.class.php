@@ -86,7 +86,7 @@
 			//*******************************************商品属性*****************************************************************
 			//获取当前商品属性
 			$goodsAttr = D('GoodsAttr');
-			$data['goodsAttrList'] = $goodsAttr->field('a.*,b.attr_name,b.attr_type,b.attr_option_values,type_id')->alias('a')->join('left join attr b on a.attr_id=b.id')->where('goods_id='.$id)->order('attr_type desc')->select();
+			$data['goodsAttrList'] = $goodsAttr->field('a.*,b.attr_name,b.attr_type,b.attr_option_values,type_id')->alias('a')->join('left join attr b on a.attr_id=b.id')->where('goods_id='.$id)->order('attr_type,attr_id desc')->select();
 			
 			//获取当前的所有属性id
 			$attrId = array();
@@ -99,7 +99,7 @@
 			$attr = D('attr');
 			$attrId = empty( $attrId )?array(0):$attrId;
 
-			$attrList = $attr->field('id attr_id,attr_name,attr_type,attr_option_values,type_id')->where( array( 'type_id'=>array('eq',$type_id) , 'id'=>array('not in',$attrId ) ) )->select();
+			$attrList = $attr->field('id attr_id,attr_name,attr_type,attr_option_values,type_id')->where( array( 'type_id'=>array('eq',$type_id) , 'id'=>array('not in',$attrId ) ) )->order('attr_type desc')->select();
 			$data['goodsAttrList']= array_merge($data['goodsAttrList'],$attrList);
 			
 			// var_dump($data['goodsAttrList']);
@@ -285,10 +285,10 @@
 			if($old_attr_id=I('post.old_attr_id','')){
 				$attrOldData = array();
 				foreach ($old_attr_id as $key => $value) {
-					if(empty($value)) continue;
+					if(empty( $attr_value=implode(',', $value) )) continue;
 					$attrOldData = array(
 						'id'=>array_keys($value)[0],
-						'attr_value'=>implode('', $value),
+						'attr_value'=>$attr_value,
 					);
 					$goodsAttr->save($attrOldData);
 				}
@@ -301,16 +301,17 @@
 			if($attr_id = I('post.attr_id','')){
 				$attrData = array();
 				foreach ($attr_id as $key => $value) {
+					if(empty( $attr_value=implode(',', $value) ) ) continue;
 					$attrData[] = array(
 						'goods_id'=>$data['id'],
 						'attr_id'=>array_keys($value)[0],
-						'attr_value'=>implode(',', $value),
+						'attr_value'=>$attr_value,
 					);
 				}
-				
 				$goodsAttr->addAll($attrData);
 			}
-	
+
+			
 
 			//*************************修改会员价格******************************
 			if( $memberPrice = I('post.member_price','') ){

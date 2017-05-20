@@ -1,5 +1,7 @@
 // JavaScript Document
 
+
+
 //商品规格选择
 $(function() {
 	$(".theme-options").each(function() {
@@ -13,10 +15,10 @@ $(function() {
 				$(this).addClass("selected").siblings("li").removeClass("selected");
 
 			}
-
+			a();
 		})
 	})
-
+	a();
 })
 
 
@@ -114,6 +116,10 @@ $(document).ready(function() {
 
 	//获得文本框对象
 	var t = $("#text_box");
+
+	if(parseInt($('#goods_number').html() )==0)
+		$('#add').attr('disabled', true);
+
 	//初始化数量为1,并失效减
 	$('#min').attr('disabled', true);
 	//数量增加操作
@@ -122,7 +128,8 @@ $(document).ready(function() {
 			if (parseInt(t.val()) != 1) {
 				$('#min').attr('disabled', false);
 			}
-
+			if(parseInt(t.val())>= parseInt($('#goods_number').html() ))
+				$('#add').attr('disabled', true);
 		})
 		//数量减少操作
 	$("#min").click(function() {
@@ -131,6 +138,8 @@ $(document).ready(function() {
 			$('#min').attr('disabled', true);
 		}
 
+		if(parseInt(t.val())< parseInt($('#goods_number').html() ))
+			$('#add').attr('disabled', false);
 	})
 
 })

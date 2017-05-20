@@ -1,4 +1,4 @@
-<div class="long-title"><span class="all-goods">全部分类</span></div>
+<div class="long-title"><span class="all-goods" id="catAll_css">全部分类</span></div>
 <div class="nav-cont">
 	<ul>
 		<li class="index"><a href="#">首页</a></li>
@@ -14,10 +14,10 @@
 </div>					
 			
 <!--侧边导航 -->
-<div id="nav" class="navfull" >
+<div id="nav" class="navfull" style="display:none">
 	<div class="area clearfix" >
 		<div class="category-content" id="guide_2">
-			<div class="category" style="height:450px;">
+			<div class="category" style="height:430px;z-index:100">
 				<ul class="category-list" id="js_climit_li">
 					<foreach name="catAll" item="val">
 					<li class="appliance js_toggle relative first">
@@ -52,3 +52,20 @@
 		</div>
 	</div>
 </div>
+<script>
+$('.long-title').hover(
+	function(){
+		$('#nav').show();
+	},
+	function (){
+		$('#nav').hover(
+			function(){
+				$(this).show();
+			},
+			function(){
+				$(this).hide();
+			}
+		);
+	}
+)
+</script>

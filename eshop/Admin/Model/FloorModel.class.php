@@ -10,6 +10,17 @@
 		);
 
 		public function _before_insert(&$data){
+
+			$imgData = imgUpLoad('logo','Brand');
+			if(isset( $imgData['error'])){
+				$this->error = $imgData['error'];
+				return false;
+			}else{
+				$data['logo'] = $imgData['logo'];
+				$data['sm_logo'] = $imgData['sm_logo'];
+			}
+
+
 			if( $this->sortIt100($data['sort_num']) )
 				return false;
 			if(empty($data['floor_name'])){
@@ -20,26 +31,37 @@
 
 		public function _before_update(&$data){
 
-			if(count($data)) return;
+			if(count($data)<3) return;
+
+			imgDel($this,$data['id']);
+			$imgData = imgUpLoad('logo','Brand');
+			if(isset( $imgData['error'])){
+				$this->error = $imgData['error'];
+				return false;
+			}else{
+				$data['logo'] = $imgData['logo'];
+				$data['sm_logo'] = $imgData['sm_logo'];
+			}
 
 			if( $this->sortIt100($data['sort_num']) )
 				return false;
-			if(empty($data['floor_name'])){
+
+			if(empty($data['floor_name']))
 				$data['floor_name'] =  $this->floorName($data['one_cat'],$data['two_cat']);
-			}
+			
 		}
 
 		public function floorName($one='',$two=''){
 			$cat = D('cat');
 			$name = "";
-			if(!$one && !$two ){
-				$catList = $cat->field('cat_name')->where('id='.$data['one_cat'] . ' and id='. $data['two_cat'])->getField('cat_name',true);					
-					$name = implode('/', $catList);
+			if($one && $two ){
+				$catList = $cat->field('cat_name')->where('id in ('. $one .','. $two . ')')->getField('cat_name',true);
+				$name = implode('/', $catList);
 			}elseif($data['one_cat']){
-				$catOne = $cat->field('cat_name')->where('id='.$data['one_cat'])->find();
+				$catOne = $cat->field('cat_name')->where('id='.$one)->find();
 				$name = $catOne['cat_name'];
 			}elseif($data['two_cat']){
-				$catOne = $cat->field('cat_name')->where('id='.$data['two_cat'])->find();
+				$catOne = $cat->field('cat_name')->where('id='.$two)->find();
 				$name = $catOne['cat_name'];
 			}
 			return $name;

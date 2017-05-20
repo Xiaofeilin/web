@@ -250,9 +250,10 @@
 			if($status!=='is_sale'){
 				$id = I('get.id','');
 				if( $goodsOne = $this->model->find($id) ){
-					$goodsOne[$status] = $goodsOne[$status]?0:1;
-					if($this->model->save($goodsOne) )
-						$this->ajaxReturn( $goodsOne[$status] );
+					$goodsData[$status] = $goodsOne[$status]?0:1;
+					$goodsData['id'] = $id;
+					if($this->model->save($goodsData) )
+						$this->ajaxReturn( $goodsData[$status] );
 				}
 			}
 		}
