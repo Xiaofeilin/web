@@ -1,23 +1,3 @@
-CREATE TABLE IF NOT EXISTS goods(
-	id mediumint unsigned not null auto_increment,
-	goods_name varchar(45) not null default '' comment '商品名称',
-	logo varchar(150) not null default '' comment '商品logo',
-	sm_logo varchar(150) not null default '' comment '商品缩略logo',
-	price decimal(10,2) not null default '0.00' comment '商品价格',
-	goods_desc longtext comment '商品描述',
-	is_on_sale tinyint unsigned not null default '1' comment '是否上架:1:上架 0:下架',
-	is_delete tinyint unsigned not null default '0' comment '是否删除,1:删除 0:未删除',
-	addtime int unsigned not null comment '添加时间',
-	primary key(id),
-	key price(price),
-	key is_on_sale(is_on_sale),
-	key is_delete(is_delete),
-	key addtime(addtime)
-)engine=InnoDB default charset=utf8;
-
-
-
-11
 
 #########################RBAC###########################
 CREATE TABLE privilege(
@@ -213,15 +193,66 @@ CREATE TABLE brand(
 	primary key(id)
 )engine=InnoDB default charset=utf8 comment'品牌表';
 
-DROP TABLE IF EXISTS brand_cat;
-CREATE TABLE brand_cat(
-	id smallint unsigned not null auto_increment,
-	brand_id tinyint not null comment'品牌id',
-	cat_id_lv3 tinyint not null comment '3级分类id',
+
+
+DROP TABLE IF EXISTS goods_comment;
+CREATE TABLE goods_comment(
+	id int unsigned not null auto_increment,
+	goods_comment varchar(250) not null comment'评论',
+	goods_id int unsigned not null comment '商品id',
+	user_id int unsigned not null comment '用户id',
+	score tinyint unsigned not null comment '分数：1,差评 2,中评 3,好评',
+	addtime int unsigned not null comment'添加时间',
+	is_show tinyint unsigned not null comment '是否审核 1:是，2:否'
 	primary key(id),
-	key brand_id(brand_id),
-	key cat_id_lv3(cat_id_lv3)
-)engine=InnoDB default charset=utf8 comment'品牌分类表';
+	key goods_id (goods_id),
+	key user_id (user_id)
+)engine=InnoDB default charset=utf8 comment'评论表';
+
+
+DROP TABLE IF EXISTS comment_pics;
+CREATE TABLE comment(
+	id int unsigned not null auto_increment,
+	comment_id unsigned not null comment'评论id',
+	goods_pric varchar(250) not null comment'商品图片',
+	primary key(id),
+	comment_id key(comment_id)
+)engine=InnoDB default charset=utf8 comment'评论图片表';
+
+//####################订单管理################
+
+
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders`(
+	id int unsigned not null auto_increment,
+	user_id int unsigned not null comment'用户id',
+	tel char(11) not null comment '手机号',
+	linkman varchar(11) not null comment'联系人',
+	address_id int not null comment '地址',
+	state tinyint not null default'0' comment'0新订单,1已发货,2已收货,3无效订单',
+	total decimal(8,2) not null comment'总金额',
+	buytime int not null comment'购买时间',
+	primary key(id),
+	key user_id (user_id),
+	key state(state),
+	key address_id (addres_id)
+)engine=InnoDB default charset=utf8 comment'订单表';
+
+
+DROP TABLE IF EXISTS `detail`;
+CREATE TABLE `detail`(
+	id int unsigned not null auto_increment,
+	orders_id int unsigned not null comment'订单id',
+	goods_id int unsigned not null comment '商品id',
+	goods_attr_id varchar(255) not null comment '商品属性',
+	price decimal(8,2) not null comment '价格',
+	num smallint unsigned  not null comment'数量',
+	primary key(id),
+	key orders_id(orders_id),
+	key goods_id(goods_id)
+)engine=InnoDB default charset=utf8 comment'订单表';
+
+
 
 
 //####################文章管理################
