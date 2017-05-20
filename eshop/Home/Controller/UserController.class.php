@@ -36,8 +36,8 @@ class UserController extends EqualController {
 	}
 
 	public function checkAcc(){
-		//$user = D('User');
-		$info = $this->model->create();
+		$user = D('User');
+		$info = $user->create();
 
 		$_SESSION['infoMsg']['account'] = I("account");
 
