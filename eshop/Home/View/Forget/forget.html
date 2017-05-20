@@ -31,41 +31,9 @@
 
 						<div class="am-tabs" id="doc-my-tabs">
 							<ul class="am-tabs-nav am-nav am-nav-tabs am-nav-justify">
-								<!--<li class="am-active"><a href="">账号注册</a></li>-->
 								<li><a href="" style="border-bottom:0px">找回密码</a></li>
 							</ul>
 							<hr />
-
-
-							<!--<div id="msgError" style="color:red"></div>-->
-<!--
-							<div class="am-tabs-bd">
-								<div class="am-tab-panel am-active">
-									<form method="post">
-										
-							   <div class="user-email">
-										<label for="email"><i class="am-icon-envelope-o"></i></label>
-										<input type="text" name="account" id="account" placeholder="请输入用户名"> 
-                 </div>						
-							<div id="accountError" style="color:red"></div>
-                 <div class="user-pass">
-								    <label for="password"><i class="am-icon-lock"></i></label>
-								    <input type="password" name="passwordone" id="passwordone" placeholder="设置密码">						   
-                 </div>	
-                 							  <div id="pwdoneError" style="color:red"></div>
-
-                 </form>
-                 
-								 <div class="login-links">
-										<label for="reader-me">
-											<input id="reader-me" type="checkbox" checked> 点击表示您同意商城《服务协议》
-										</label>
-							  	</div>
-										<div class="am-cf">
-											<input type="submit" name="submitReg" value="注册" id="" class="am-btn am-btn-primary am-btn-sm am-fl">
-										</div>
-
-								</div>-->
 
 								<div class="am-tab-panel">
 									<form method="post">
@@ -140,7 +108,6 @@
 	</body>
 
 </html>
-<!--<script type="text/javascript" src="__PUBLIC__/Home/js/jquery-1.7.2.min.js"></script>-->
 <script type="text/javascript">
 	var x;
 	var y;
@@ -179,10 +146,8 @@
 			dataType:"json",
 			success:function(res){
 				if(!res.info == ""){
-					//$("div[id=_err-msg]").removeClass("hide");
 					$("#accountError").html(res.info);
 				}else{
-					//$("#accountIcon").css({display:"block"});
 					x = 1;
 				}
 			}
@@ -198,10 +163,8 @@
 			dataType:"json",
 			success:function(res){
 				if(!res.info == ""){
-					//$("div[id=_err-msg]").removeClass("hide");
 					$("#pwdError").html(res.info);
 				}else{
-					//$("#accountIcon").css({display:"block"});
 					y = 1;
 				}
 			}
@@ -211,7 +174,6 @@
 	$("input[name=tel]").blur(function(){
 		var tel = parseInt($("#tel").val());
 		var acc = $("#account").val();
-		//console.log(acc)
 		$.ajax({
 			url:"__CONTROLLER__/checkTel",
 			data:{tel:tel,account:acc},
@@ -249,12 +211,12 @@
 						if(res.info != "短信发送失败！"){
 							timer = setInterval(function(){
 								num--;
-								$("#sendTelCode").val("等待" + num + "秒后重新发送");
+								//$("#sendTelCode").val("等待" + num + "秒后重新发送");
 								if(num == 0){
 									clearInterval(timer);
 									timer = undefined;
 									$("#sendTelCode").removeAttr("disabled",false);
-									$("#sendTelCode").val("获取短信验证码");
+									//$("#sendTelCode").val("获取短信验证码");
 								}
 							},1000);
 						}
@@ -293,10 +255,8 @@
 			dataType:"json",
 			success:function(res){
 				if(!res.info == ""){
-					//$("div[id=_err-msg]").removeClass("hide");
 					$("#repwdError").html(res.info);
 				}else{
-					//$("#accountIcon").css({display:"block"});
 					v = 1;
 				}
 			}
@@ -320,10 +280,8 @@
 						}
 					}
 				});
-				//location.href = "{:U('Forget/reSuccess')}";
 			}
 		}else{
-			//$("#msgError").html("注册信息不能为空！");
 			return false;
 		}
 	})

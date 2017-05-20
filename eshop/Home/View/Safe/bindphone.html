@@ -47,7 +47,7 @@
 								<div class="am-btn am-btn-danger">验证码</div>
 							</a>
 						</div>
-						<div id="oldCodeError" style="color:red;margin-bottom:5px;position:relative;top:-20px"></div>
+						<div id="oldCodeError" style="color:red;margin-bottom:5px;position:relative;top:-20px;left:106px"></div>
 						<else/>
 						</if>
 						
@@ -57,7 +57,7 @@
 								<input type="text" id="newTel" name="newTel" maxlength="11" tabindex="1" value="" placeholder="绑定新手机号">
 							</div>
 						</div>
-						<div id="newTelError" style="color:red;margin-bottom:5px;position:relative;top:-20px"></div>
+						<div id="newTelError" style="color:red;margin-bottom:5px;position:relative;top:-20px;left:106px"></div>
 
 						<div class="am-form-group code">
 							<label for="user-new-code" class="am-form-label">验证码</label>
@@ -68,7 +68,7 @@
 								<div class="am-btn am-btn-danger">验证码</div>
 							</a>
 						</div>
-						<div id="newCodeError" style="color:red;margin-bottom:5px;position:relative;top:-20px"></div>
+						<div id="newCodeError" style="color:red;margin-bottom:5px;position:relative;top:-20px;left:106px"></div>
 
 						<div class="info-btn">
 							<div class="am-btn am-btn-danger" id="submit">保存修改</div>
@@ -116,12 +116,12 @@
 											if(res.info != "短信发送失败！"){
 												timer = setInterval(function(){
 													num--;
-													$("#sendOldTelCode").val("等待" + num + "秒");
+													//$("#sendOldTelCode").val("等待" + num + "秒");
 													if(num == 0){
 														clearInterval(timer);
 														timer = undefined;
 														$("#sendOldTelCode").removeAttr("disabled",false);
-														$("#sendOldTelCode").val("验证码");
+														//$("#sendOldTelCode").val("验证码");
 													}
 												},1000);
 											}
@@ -187,12 +187,12 @@
 											if(res.info != "短信发送失败！"){
 												timer = setInterval(function(){
 													num--;
-													$("#sendNewTelCode").val("等待" + num + "秒");
+													//$("#sendNewTelCode").val("等待" + num + "秒");
 													if(num == 0){
 														clearInterval(timer);
 														timer = undefined;
 														$("#sendNewTelCode").removeAttr("disabled",false);
-														$("#sendNewTelCode").val("验证码");
+														//$("#sendNewTelCode").val("验证码");
 													}
 												},1000);
 											}
@@ -229,7 +229,6 @@
 										type:"POST",
 										dataType:"text",
 										success:function(res){
-											//console.log(res);
 											if(res == 1){
 												alert("修改成功！");
 												location.href = "{:U('Safe/safety')}"

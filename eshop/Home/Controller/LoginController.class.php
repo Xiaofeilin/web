@@ -6,21 +6,29 @@ class LoginController extends Controller {
 	*['登录页面']
 	*/
 	public function login(){
+		if(cookie('acc') && cookie('pwd')){
+			$str = cookie('acc');
+			$preg = "/^((13[0-9])|(15[^4])|(18[0-9])|(17[0-8])|(147,145))\\d{8}$/";
+			$res = preg_match($preg, $str);
+			if($res){
+				$map['tel'] = cookie('acc');
+			}else{
+				$map['account'] = cookie('acc');
+			}
+			$map['pwd'] = md5(cookie('pwd'));
+			$user = D('user');
+			$userInfo = $user->where($map)->find();
+
+			$_SESSION['info'] = $userInfo;
+			$this->redirect("Test/test");
+		}
 		if(IS_POST){
-			/*
-			$code = I('code');
-			$verify = new \Think\Verify();  
-			$result = $verify->check($code);//判断验证码
-			if(!$result) $this->ajaxReturn("验证码不正确！","eval");
-			*/
-			
 			$rule = array(
 				array('account','checkAcc','用户名或手机不存在！',0,'function'),
 				array('password','checkPwd','密码不正确！',0,'function'),
 			);
 			$user = D('user');
 			$info = $user->validate($rule)->create();//判断用户信息
-			//var_dump($info);
 
 			$str = I('account');
 			$preg = "/^((13[0-9])|(15[^4])|(18[0-9])|(17[0-8])|(147,145))\\d{8}$/";
@@ -30,14 +38,17 @@ class LoginController extends Controller {
 			}else{
 				$map['account'] = I('account');
 			}
-			//$map['pwd'] = md5(I('password'));
 			$userInfo = $user->where($map)->find();//查找用户信息
 
-			//var_dump($userInfo);
-
 			$check = new \Home\Model\LoginModel();
-			$res = $check->checkErrorlogin($info,$userInfo,$map);//获取检测结果
+			$res = $check->checkErrorlogin($info,$userInfo);//获取检测结果
+
+			$rem = I("rem");
 			if($res == 1){
+				if($rem == 1){
+					cookie('acc',I("account"),60*60*24*7);
+					cookie('pwd',I("password"),60*60*24*7);
+				}
 				$this->ajaxReturn(1);
 			}else{
 				$this->ajaxReturn($res,"eval");
@@ -48,22 +59,9 @@ class LoginController extends Controller {
 	}
 
 	public function logout(){
-		unset($_SESSION['info']);
+		session('info',null);
+		cookie('acc',null);
+		cookie('pwd',null);
 		$this->success("退出成功！",U('Login/login'),3);
 	}
-
-	/**
-	*['验证码显示']
-	*/
-	/*
-	public function code(){
-		$config = array(
-			'fontSize'       =>    15,  // 验证码字体大小    
-			'length'          =>    4,     // 验证码位数
-			'useNoise'    =>    false, // 关闭验证码杂点;
-		);
-		$verify = new \Think\Verify($config);
-		$verify->entry();
-	}
-	*/
 }

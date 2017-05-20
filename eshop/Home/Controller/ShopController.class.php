@@ -1,8 +1,12 @@
 <?php
 namespace Home\Controller;
-//use Think\Controller;
-class AddressController extends EqualController {
-	public function address(){
+use Think\Controller;
+class ShopController extends Controller {
+	public function shopcart(){
+		$this->display();
+	}
+
+	public function payment(){
 		$add = D("address");
 		$map['uid'] = $_SESSION['info']['id'];
 		$addinfo = $add->where($map)->select();
@@ -12,27 +16,17 @@ class AddressController extends EqualController {
 		$this->display();
 	}
 
-	public function checkTel(){
-		$user = D('User');
-		$info = $user->create();
-
-		$this->error($user->getError());
-	}
-
 	public function setDefault(){
 		$count = I("count");
 
 		$add = D("address");
 		$map['uid'] = $_SESSION['info']['id'];
 		$data['status'] = 0;
-		//$clear = $add->where($map)->execute("update `address` set `status` = 0 where `status` = 1");
 		$clear = $add->where($map)->where('status = 1')->save($data);
 		$addinfo = $add->where($map)->select();
 
 		$mp['id'] = $addinfo[$count]['id'];
-
 		$da['status'] = 1;
-
 		$result = $add->where($mp)->save($da);
 	}
 
@@ -50,6 +44,13 @@ class AddressController extends EqualController {
 		if($result){
 			$this->ajaxReturn(1);
 		}
+	}
+
+	public function checkTel(){
+		$user = D('User');
+		$info = $user->create();
+
+		$this->error($user->getError());
 	}
 
 	public function setSuccess(){

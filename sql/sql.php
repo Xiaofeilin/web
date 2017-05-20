@@ -119,7 +119,7 @@ CREATE TABLE member_price(
 	primary key(id)
 )engine=InnoDB default charset=utf8 comment'会员级价格';
 
-DROP TABLE IF EXISTS goods_pics
+DROP TABLE IF EXISTS goods_pics;
 CREATE TABLE goods_pics(
 	id mediumint unsigned not null auto_increment,
 	goods_id mediumint unsigned not null comment'商品id',
@@ -140,7 +140,7 @@ CREATE TABLE goods_attr(
 )engine=InnoDB default charset=utf8 comment'商品属性';
 
 
-DROP TABLE IF EXISTS goods_rep
+DROP TABLE IF EXISTS goods_rep;
 CREATE TABLE goods_rep(
 	id int unsigned not null auto_increment,
 	goods_id mediumint unsigned not null comment'商品id',
@@ -157,7 +157,7 @@ CREATE TABLE num_price(
 	num int unsigned not null comment'数量',
 	num_price decimal(10,2) not null comment '优惠价格',
 	key goods(goods_id)
-);
+)engine=InnoDB default charset=utf8;
 
 DROP TABLE IF EXISTS goods;
 CREATE TABLE goods(
@@ -235,21 +235,18 @@ create table if not exists `ad`(
 	`addtime` int(11) unsigned default '0' comment '添加时间',
 	`isshow` int(3) unsigned default '1' comment '是否显示',
 	primary key (id)
-
-)engine=innodb default charset=utf8;
+)engine=innodb default charset=utf8 comment'广告表';
 
 
 
 
 #轮播图表
 
- 
-
 create table if not exists `lun`(
 	`id` int(12) unsigned not null  auto_increment comment '轮播图id',
 	`pic` varchar(255) not null comment '图片路径',
 	primary key(id)
-)engine=innodb default charset=utf8;
+)engine=innodb default charset=utf8 comment'轮播图';
 
 
 #友情连接表
@@ -261,7 +258,7 @@ create table if not exists `friend_link`(
 	`link_url` varchar(255) not null comment '连接地址',
 	`isshow` char(3) not null comment '是否显示',
 	primary key(id)
-)engine=innodb default charset=utf8;
+)engine=innodb default charset=utf8 comment'友情链接表';
 
 
 
@@ -274,7 +271,7 @@ create table if not exists `footer`(
 	`name` varchar(255) not null comment '页脚子内容名',
 	`path` varchar(255) not null comment '页脚子内容分类路径',
 	primary key(id)
-)engine=innodb default charset=utf8;
+)engine=innodb default charset=utf8 comment'页脚管理';
 
 
 ####################用户管理#####################

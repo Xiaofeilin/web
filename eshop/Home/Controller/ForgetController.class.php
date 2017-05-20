@@ -9,49 +9,19 @@ class ForgetController extends Controller {
 	}
 
 	/**
-	*['验证码显示']
-	*/
-	/*
-	public function code(){
-		$config = array(
-			'fontSize'       =>    15,  // 验证码字体大小    
-			'length'          =>    4,     // 验证码位数
-			'useNoise'    =>    false, // 关闭验证码杂点;
-		);
-		$verify = new \Think\Verify($config);
-		$verify->entry();
-	}
-	*/
-
-	/**
 	*['检测用户对错']
 	*/
 	public function checkAcc(){
-		//if(IS_POST){
-		//$code = I('code');
-		//$verify = new \Think\Verify();  
-		//$result = $verify->check($code);//判断验证码
-
 		$user = new \Home\Model\ForgetModel();
 		$info = $user->create();
 		$_SESSION['forgetMsg']['account'] = I('account');
 		$this->error($user->getError());
-		//$check = new \Home\Model\ForgetModel();
-		//$res = $check->forgetAcc($result,$info);
-
-		//$_SESSION['forgetMsg'] = $info;
-		//$this->ajaxReturn($res);
-
-		//}else{
-		//	$this->display();
-		//}
 	}
 
 	/**
 	*['检测手机号码规范']
 	*/
 	public function checkTel(){
-		//var_dump($_POST);
 		$tel = new \Home\Model\ForgetModel();
 		$info = $tel->create();
 
@@ -122,20 +92,7 @@ class ForgetController extends Controller {
 		$where['account'] = $_SESSION['forgetMsg']['account'];
 		$where['tel'] = $_SESSION['forgetMsg']['tel'];
 
-		//var_dump($where);
-		//var_dump($data);
-
 		$result = $user->where($where)->save($data);
-
-		//var_dump($result);
-
-		/*
-		if($result){
-			$this->success('1',U('Login/login'),3);
-		}else{
-			$this->error('0',U('Forget/forget'),3);
-		}
-		*/
 
 		if($result){
 			unset($_SESSION['forgetMsg']);

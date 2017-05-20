@@ -35,8 +35,6 @@
 								<li><a href="">手机号注册</a></li>
 							</ul>
 
-							<!--<div id="msgError" style="color:red"></div>-->
-
 							<div class="am-tabs-bd">
 								<div class="am-tab-panel am-active">
 									<form method="post">
@@ -51,12 +49,7 @@
 								    <input type="password" name="passwordone" id="passwordone" placeholder="设置密码">						   
                  </div>	
                  							  <div id="pwdoneError" style="color:red"></div>
-<!--                 <div class="user-pass">
-								    <label for="passwordRepeat"><i class="am-icon-lock"></i></label>
-								    <input type="password" name="" id="passwordRepeat" placeholder="确认密码">						     
-                 </div>	
-                 						<div id="accountError" style="color:red">fafafafaf</div>
--->
+
                  </form>
                  
 								 <div class="login-links">
@@ -91,12 +84,7 @@
 
                  </div>			
                  							 <div id="pwdtwoError" style="color:red"></div>							
-<!--                 <div class="user-pass">
-								    <label for="passwordRepeat"><i class="am-icon-lock"></i></label>
-								    <input type="password" name="" id="passwordRepeat" placeholder="确认密码">
-                 </div>	
-                 							 <div id="accountError" style="color:red">dadadaad</div>
--->
+
 									</form>
 								 <div class="login-links">
 										<label for="reader-me">
@@ -147,7 +135,6 @@
 	</body>
 
 </html>
-<!--<script type="text/javascript" src="__PUBLIC__/Home/js/jquery-1.7.2.min.js"></script>-->
 <script type="text/javascript">
 	var x;
 	var y;
@@ -183,10 +170,8 @@
 			dataType:"json",
 			success:function(res){
 				if(!res.info == ""){
-					//$("div[id=_err-msg]").removeClass("hide");
 					$("#accountError").html(res.info);
 				}else{
-					//$("#accountIcon").css({display:"block"});
 					x = 1;
 				}
 			}
@@ -202,10 +187,8 @@
 			dataType:"json",
 			success:function(res){
 				if(!res.info == ""){
-					//$("div[id=_err-msg]").removeClass("hide");
 					$("#pwdoneError").html(res.info);
 				}else{
-					//$("#accountIcon").css({display:"block"});
 					y = 1;
 				}
 			}
@@ -251,12 +234,12 @@
 						if(res.info != "短信发送失败！"){
 							timer = setInterval(function(){
 								num--;
-								$("#sendTelCode").val("等待" + num + "秒后重新发送");
+								//$("#sendTelCode").val("等待" + num + "秒后重新发送");
 								if(num == 0){
 									clearInterval(timer);
 									timer = undefined;
 									$("#sendTelCode").removeAttr("disabled",false);
-									$("#sendTelCode").val("获取短信验证码");
+									//$("#sendTelCode").val("获取短信验证码");
 								}
 							},1000);
 						}
@@ -294,10 +277,8 @@
 			dataType:"json",
 			success:function(res){
 				if(!res.info == ""){
-					//$("div[id=_err-msg]").removeClass("hide");
 					$("#pwdtwoError").html(res.info);
 				}else{
-					//$("#accountIcon").css({display:"block"});
 					v = 1;
 				}
 			}
@@ -307,20 +288,9 @@
 	$("input[name=submitReg]").click(function(){
 		if( ($("#account").val && $("#password")) || ($("#tel").val() && $("#code").val() && $("#password").val()) ){
 			if( (x == 1 && y ==1) || (z ==1 && w == 1 && v ==1) ){
-				/*
-				$.ajax({
-					url:"__CONTROLLER__/regSuccess",
-					type:"POST",
-					dataType:"json",
-					success:function(res){
-
-					}
-				});
-				*/
 				location.href = "{:U('Reg/regSuccess')}";
 			}
 		}else{
-			//$("#msgError").html("注册信息不能为空！");
 			return false;
 		}
 	})

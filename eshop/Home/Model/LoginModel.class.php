@@ -25,7 +25,7 @@ class LoginModel extends Model{
 		if(!empty($userInfo)){
 			if($time - $userInfo['errortime'] > 1800){//判断时间差
 				$data['status'] = 1;
-				$this->model->where("id={$userInfo['id']}")->save($data);//符合条件则更改用户状态
+				$this->model->where("id={$userInfo['id']}")->field('status')->save($data);//符合条件则更改用户状态
 			}
 		}
 
@@ -35,8 +35,7 @@ class LoginModel extends Model{
 
 				$data['errorlogin'] = 0;
 				$data['lastregtime'] = $time;
-				$this->model->where("id={$userInfo['id']}")->save($data);
-
+				$res = $this->model->where("id={$userInfo['id']}")->field('errorlogin,lastregtime')->save($data);
 				return 1;//若用户状态为1，则用户信息写入$_SESSION和登录时间且重置登录错误次数，返回1表示登录成功
 			}else{
 				return "密码输入错误超过5次，你的账户已被锁定30分钟。";

@@ -21,8 +21,8 @@
 								<a href="javascript:void(0);" data-src="" title="更换头像"  id="localImag">
 									<!--onclick="document.getElementById('light').style.display='block';"-->
 									<!--<img class="am-circle am-img-thumbnail" src="{$val['icon'] != null ? '__ROOT__/Uploads/$val[icon]' : '__PUBLIC__/Home/images/default'}.jpg" alt="" id="preview" />-->
-									<img class="am-circle am-img-thumbnail" src="__ROOT__/Uploads/{$val.icon}" alt="" id="preview" />
-									<input type='file' name='icon' id="doc" onchange="setImagePreview()" class="inputPic" />
+									<img class="am-circle am-img-thumbnail" src="__ROOT__/Uploads/{$val.icon}" alt="" id="preview" style="width:100px;height:100px;overflow:hidden" />
+									<input type='file' name='icon' id="doc" onchange="setImagePreview()" class="inputPic" style="width:100px;height:100px" />
 								</a>
 							</div>
 
@@ -72,15 +72,6 @@
 								<div class="am-form-group">
 									<label class="am-form-label">性别</label>
 									<div class="am-form-content sex">
-										<!--<label class="am-radio-inline">
-											<input type="radio" name="sex" value="0" data-am-ucheck > 女
-										</label>
-										<label class="am-radio-inline">
-											<input type="radio" name="sex" value="1" data-am-ucheck > 男
-										</label>
-										<label class="am-radio-inline">
-											<input type="radio" name="sex" value="2" data-am-ucheck > 保密
-										</label>-->
 										<select name="sex">
 									                    <option value="0" {$val['sex'] == 女?'selected':''}>女</option>
 									                    <option value="1" {$val['sex'] == 男?'selected':''}>男</option>
@@ -94,8 +85,8 @@
 									<label for="user-birth" class="am-form-label">生日</label>
 
 									<div class="case">
-										<div class="calendarWarp" style="width:308px;position:relative;top:-12px;left:38px">
-											<input type="text" name="date" class='ECalendar' id="ECalendar_case3"  value="" style="width:100%" />
+										<div class="calendarWarp" style="width:284px;position:relative;top:-12px;left:6px">
+											<input type="text" name="birthdate" class='ECalendar' id="ECalendar_case3"  value="{$val.birthdate|date='Y-m-d',###}" style="width:100%" />
 										</div>
 										<!--<input type="hidden" name="time" id="time" value="" />-->
 										<div class="callback" style="position:relative;left:106px;color:red">
@@ -220,7 +211,6 @@
 											$("#accountError").html(res.info);
 										}else{
 											$("#accountError").html("账户名可用，提交后便不能再次更改，请谨慎操作");
-											//x = 1;
 										}
 									}
 								});
