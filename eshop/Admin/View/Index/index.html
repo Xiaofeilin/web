@@ -19,6 +19,8 @@
 		</nav>
 			<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 				<ul class="cl">
+					<li><img src="__ROOT__/Uploads/{$Think.session.admininfo.icon}" alt="加载失败" class="avatar size-M radius">  </li>
+					<li> &nbsp;&nbsp;&nbsp;&nbsp;</li>
 					<li>你好！</li>
 					<li class="dropDown dropDown_hover">
 						<a href="#" class="dropDown_A">{$Think.session.admininfo.admin_nick} <i class="Hui-iconfont">&#xe6d5;</i></a>
@@ -27,7 +29,6 @@
 							<li><a href="{:U('Login/logout')}">退出</a></li>
 					</ul>
 				</li>
-					<li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
 					<li id="Hui-skin" class="dropDown right dropDown_hover"> <a href="javascript:;" class="dropDown_A" title="换肤"><i class="Hui-iconfont" style="font-size:18px">&#xe62a;</i></a>
 						<ul class="dropDown-menu menu radius box-shadow">
 							<li><a href="javascript:;" data-val="default" title="默认（黑色）">默认（黑色）</a></li>
@@ -86,14 +87,6 @@
 			</dd>
 		</dl>
 
-		<dl id="menu-admin">
-			<dt><i class="Hui-iconfont">&#xe62d;</i> 二级位置<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<ul>
-					<li><a data-href="{:U('Role/list')}" data-title="角色管理" href="javascript:void(0)">三级位置</a></li>
-				</ul>
-			</dd>
-		</dl>
 	<!-- 左侧菜单结束 -->
 	</div>
 </aside>
