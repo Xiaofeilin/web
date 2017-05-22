@@ -1,0 +1,86 @@
+﻿<layout name="Index/header_foot"/>
+<include file="index/list" />
+<div class="page-container">
+	<form >
+    <p>搜索内容：
+      <input type="text" style="width:120px;" class="input-text"  value="{$Think.get.search_val}" name="search_val">
+      <span class="select-box" style="width:150px;">
+      <select  class="select"   size="1" name="search_key" >
+        <option value="">请选择搜索类型</option>
+        <option value="id" <eq name="Think.get.search_key" value="id">selected</eq> >ID</option>
+        <option value="username" <eq name="Think.get.search_key" value="username">selected</eq>>用户名</option>
+        <option value="tel" <eq name="Think.get.search_key" value="tel">selected</eq> >联系电话</option>
+        <option value="linkman" <eq name="Think.get.search_key" value="linkman">selected</eq> >联系人</option>
+        <option value="address" <eq name="Think.get.search_key" value="address">selected</eq> >地址</option>
+        <option value="total" <eq name="Think.get.search_key" value="total">selected</eq> >总额</option>
+      </select>
+      </span>
+    </p>
+    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"><a href="{:U('list','',false)}?unset=1">&nbsp;<input  class="btn btn-danger radius" type="button" value="重置条件"></a>
+  </form>
+		
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> </span> <span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
+	<table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr>
+				<th scope="col" colspan="9"></th>
+			</tr>
+			<tr class="text-c">
+				<th width="25"><input type="checkbox" name="" value=""></th>
+				<th>ID</th>
+        <th>详细</th>
+        <th>用户名</th>
+        <th>联系电话</th>      
+        <th>联系人</th>
+        <th>地址</th>
+        <th>总额</th>
+        <th>购买时间</th>
+			</tr>
+		</thead>
+		<tbody>
+			<foreach name="ordersList" item="val">
+			<tr align="center" class="0" id="0_1" id = 'tr_1'>
+				<td style="text-align:center;"><input type="checkbox" value="{$val[id]}" name=""></td>
+        <td style="text-align:center;"><a href="javascript:;" onclick="detail('订单详细','{:U('ordersdetail',array('id'=>$val['id']) )}')" class=" btn btn-primary radius">订单详细</a></td>
+        <td style="text-align:center;">{$val[id]}</td>
+        <td style="text-align:center;">{$val[username]}</td>
+        <td style="text-align:center;">{$val[tel]}</td>
+				<td style="text-align:center;">{$val[linkman]}</td>
+        <td style="text-align:center;">{$val[address]}</td>
+        <td style="text-align:center;">{$val[total]}</td>
+        <td style="text-align:center;">{$val[buytime] |date='Y-m-d H:i:s',###}</td>
+			</tr>
+			</foreach>
+      <tr><td height="30" colspan="9" align="center">{$show}</td></tr>
+		</tbody>
+	</table>
+</div>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+/*
+  参数解释：
+  title 标题
+  url   请求的url
+  id    需要操作的数据id
+  w   弹出层宽度（缺省调默认值）
+  h   弹出层高度（缺省调默认值）
+*/
+
+function del() { 
+  var msg = "您真的确定要删除吗？\n\n请确认！"; 
+  if (confirm(msg)==true){ 
+    return true; 
+  }else{ 
+    return false; 
+  } 
+} 
+
+/*订单详细*/
+function detail(title,url,id,w,h){
+  layer_show(title,url,w,h);
+}
+
+</script>
+</body>
+</html>
