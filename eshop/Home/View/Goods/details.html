@@ -78,7 +78,7 @@
 					});
 				</script>
 				<div class="tb-booth tb-pic tb-s310">
-					<a href=""><img src="__ROOT__/Uploads/{$goodsOne['logo']}" alt="细节展示放大镜特效" rel="__ROOT__/Uploads/{$goodsOne['sm_logo']}" class="jqzoom" /></a>
+					<a href=""><img id="logo" src="__ROOT__/Uploads/{$goodsOne['logo']}" alt="细节展示放大镜特效" rel="__ROOT__/Uploads/{$goodsOne['sm_logo']}" class="jqzoom" /></a>
 				</div>
 				<ul class="tb-thumb" id="thumblist">
 					<foreach name="goodsPicsOne" item="val">
@@ -151,7 +151,7 @@
 											<div class="cart-title">{$key}</div>
 											<ul>	
 												<foreach name="val" item="val1" key="key1">
-												<li class="sku-line {$key1==0?'selected':''}" goods_attr_id={$val1['id']}>{$val1['attr_value']}<i></i></li>
+												<li class="sku-line {$key1==0?'selected':''}" goods_attr_id={$val1['id']}><i></i>{$val1['attr_value']}</li>
 												</foreach>
 											</ul>
 										</div>
@@ -434,20 +434,29 @@
 <div class="clear"></div>
 <script>
 	
-function getAttrId(){
+function getAttrId(option){
 	var goods_attr_id = new Array();
+	var goods_attr_val = new Array();
 		$('.selected').each(function(){
 			goods_attr_id.push( $(this).attr('goods_attr_id') );
+			var str =$(this).parent().prev().html()+':'+ $(this).html().slice(7);
+			goods_attr_val.push( str );
+			
 		});
 	goods_attr_id.sort();
-	return goods_attr_id.join('.')
+	if(option==1)
+		return goods_attr_id.join('.')
+	else
+		return goods_attr_val.join('|')
+	
+	
 }
 
 function a(){
-	var str = getAttrId();
+	var str = getAttrId(1);
 	$.ajax({
 		type:'GET',
-		url:"{:U('ajaxGetRep','',false)}?goodsAttrId=" + str,
+		url:"{:U('ajaxGetRep','',false)}/id/{$goodsOne['id']}/goodsAttrId/" + str,
 		dataType:'json',
 		success:function(data){
 			if(data==null){
@@ -469,16 +478,37 @@ function a(){
 }
 
 $('#cart').click(function(){
-	var str = getAttrId();
+
+	var str = getAttrId(1)?getAttrId(1):0;
+	var str1 = getAttrId(2)?getAttrId(2):0;
+
 	var num = $('#text_box').val();
-	$.ajax({
-		type:'GET',
-		url:"{:U('Cart/ajaxGetCart','',false)}/goodsAttrId/" + str + '/goods_id/{$goodsOne["id"]}/num/' + num,
-		dataType:'json',
-		success:function(data){
-			if(data) alert('添加成功');
-		}
-	})
+	var market = $('.sys_item_mktprice').html();
+	var logo = $('#logo').attr('src');
+	  $.post(
+	  	"{:U('Cart/ajaxGetCart')}",
+	  	{
+	  		'id':{$goodsOne['id']},
+	  		'name':"{$goodsOne['goods_name']}",
+	  		'goodsAttrId':str,
+	  		'goodsAttrVal':str1,
+	  		'market':market,
+	  		'logo':logo,
+	  		'num':num,
+	  	},
+	  	function(data){
+	  		if(data) alert('添加成功');
+   	 });
+	// $.ajax({
+	// 	type:'POST',
+	// 	url:"{:U('Cart/ajaxGetCart','',false)}",
+		
+	// 	dataType:'json',
+	// 	success:function(data){
+
+	// 		if(data) alert('添加成功');
+	// 	}
+	// })
 
 })
 	
