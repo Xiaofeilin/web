@@ -39,15 +39,15 @@
 		<tbody>
 			<foreach name="privilegeList" item="val">
 			<tr align="center" class="0" id="0_1" id = 'tr_1'>
-				<td><input type="checkbox" value="1" name=""></td>
-        <td>{$val[id]}</td>
-        <td>{$val[pri_name]}</td>
-        <td>{$val[moduel_name]}</td>
-        <td>{$val[controller_name]}</td>
-        <td>{$val[action_name]}</td>
-        <td>{$val[parent_id]}</td>
-				<td >{$val['addtime'] |date='Y-m-d H:i:s',###}</td>			
-				<td class="td-manage"> <a title="编辑" href="javascript:;" onclick="edit('权限编辑','{:U('edit',array('id'=>$val['id']) )}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" onclick="del()" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				<td style="text-align:center;"><input type="checkbox" value="1" name=""></td>
+        <td style="text-align:center;">{$val[id]}</td>
+        <td style="text-align:center;">{$val[pri_name]}</td>
+        <td style="text-align:center;">{$val[moduel_name]}</td>
+        <td style="text-align:center;">{$val[controller_name]}</td>
+        <td style="text-align:center;">{$val[action_name]}</td>
+        <td style="text-align:center;">{$val[parent_id]}</td>
+				<td style="text-align:center;">{$val['addtime'] |date='Y-m-d H:i:s',###}</td>			
+				<td class="td-manage" style="text-align:center;"> <a title="编辑" href="javascript:;" onclick="edit('权限编辑','{:U('edit',array('id'=>$val['id']) )}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" onclick="del()" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 			</tr>
 			</foreach>
       <tr><td height="30" colspan="10" align="center">{$show}</td></tr>

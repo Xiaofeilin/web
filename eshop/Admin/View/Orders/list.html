@@ -51,7 +51,7 @@
 			<foreach name="ordersList" item="val">
 			<tr align="center" class="0" id="0_1" id = 'tr_1'>
 				<td style="text-align:center;"><input type="checkbox" value="{$val[id]}" name=""></td>
-        <td style="text-align:center;"><a href="javascript:;" onclick="detail('订单详细','{:U('ordersdetail',array('id'=>$val['id']) )}')" class=" btn btn-primary radius">订单详细</a></td>
+        <td style="text-align:center;"><a href="javascript:;" onclick="detail('订单详细','{:U('ordersdetail',$val )}')" class=" btn btn-primary radius">订单详细</a></td>
         <td style="text-align:center;">{$val[id]}</td>
         <td style="text-align:center;">{$val[username]}</td>
         <td style="text-align:center;">{$val[tel]}</td>
