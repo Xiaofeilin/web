@@ -232,6 +232,7 @@ CREATE TABLE `orders`(
 	state tinyint not null default'0' comment'0新订单,1已发货,2已收货,3无效订单',
 	total decimal(8,2) not null comment'总金额',
 	buytime int not null comment'购买时间',
+	com varchar(255) not null default'' comment'留言',
 	primary key(id),
 	key user_id (user_id),
 	key state(state),

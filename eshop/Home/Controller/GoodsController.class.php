@@ -52,9 +52,9 @@
 
 		public function ajaxGetRep(){
 			$goods_attr_id = I('get.goodsAttrId','');
-			
+			$id = I('get.id','');
 			$goods_attr_id = str_replace(".", ",", $goods_attr_id);
-			$goodsRepOne = D('GoodsRep')->where('goods_attr_id="'.$goods_attr_id.'"')->find();
+			$goodsRepOne = D('GoodsRep')->where('goods_attr_id="'.$goods_attr_id.'" and goods_id='.$id)->find();
 			$this->ajaxReturn($goodsRepOne);
 		}
 	}

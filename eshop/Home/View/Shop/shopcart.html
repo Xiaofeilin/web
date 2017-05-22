@@ -103,11 +103,11 @@
 							<div class="clear"></div>
 							<div class="bundle-main">
 
-							<!---->
+							<!--假数据开始-->
 								<ul class="item-content clearfix">
 									<li class="td td-chk">
 										<div class="cart-checkbox ">
-											<input class="check" id="J_CheckBox_170037950254" name="items[]" value="170037950254" type="checkbox">
+											<input class="check check-one" id="J_CheckBox_170037950254" name="items[]" value="170037950254" type="checkbox">
 											<label for="J_CheckBox_170037950254"></label>
 										</div>
 									</li>
@@ -160,21 +160,19 @@
 									</li>
 									<li class="td td-op">
 										<div class="td-inner">
-											<a title="移入收藏夹" class="btn-fav" href="#">
-                  移入收藏夹</a>
-											<a href="javascript:;" data-point-url="#" class="delete">
-                  删除</a>
+											<a title="移入收藏夹" class="btn-fav" href="#">移入收藏夹</a>
+											<a href="javascript:;" data-point-url="#" class="delete">删除</a>
 										</div>
 									</li>
 								</ul>
-							<!---->	
+							<!--假数据结束-->	
 								
 								
-								
+							<!--假数据开始-->	
 								<ul class="item-content clearfix">
 									<li class="td td-chk">
 										<div class="cart-checkbox ">
-											<input class="check" id="J_CheckBox_170037950254" name="items[]" value="170037950254" type="checkbox">
+											<input class="check check-one" id="J_CheckBox_170037950254" name="items[]" value="170037950254" type="checkbox">
 											<label for="J_CheckBox_170037950254"></label>
 										</div>
 									</li>
@@ -227,14 +225,12 @@
 									</li>
 									<li class="td td-op">
 										<div class="td-inner">
-											<a title="移入收藏夹" class="btn-fav" href="#">
-                  移入收藏夹</a>
-											<a href="javascript:;" data-point-url="#" class="delete">
-                  删除</a>
+											<a title="移入收藏夹" class="btn-fav" href="#">移入收藏夹</a>
+											<a href="javascript:;" data-point-url="#" class="delete">删除</a>
 										</div>
 									</li>
 								</ul>
-											
+							<!--假数据结束-->					
 								
 								
 								
@@ -244,14 +240,13 @@
 				</div>
 
 				<div class="float-bar-wrapper">
-					<div id="J_SelectAll2" class="select-all J_SelectAll">
-					<!--
-						<div class="cart-checkbox">
+					<div id="J_SelectAll2" class="select-all J_SelectAll" style="width:120px">
+						<div class="cart-checkbox" style="float:left">
 							<input class="check-all check" id="J_SelectAllCbx2" name="select-all" value="true" type="checkbox">
 							<label for="J_SelectAllCbx2"></label>
 						</div>
-					-->
-						<a id="check-all" style="width:100px">全/反选</a>
+
+						<div id="check-all" style="float:left">全/反选</div>
 					</div>
 					<div class="operations" style="margin-left:40px">
 						<a href="#" hidefocus="true" class="deleteAll">删除</a>
@@ -376,33 +371,101 @@
 </html>
 
 <script type="text/javascript">
-	$('#check-all').click(function(){ 
-		$('input[name=items[]][type=checkbox]').each(function(){
-			$(this).attr('checked',!$(this).attr('checked'));
-		});
+	$(".text_box").change(function(){
+		var n = $(this).val();
+		if(n < 1){
+			n = 1;
+			$(this).val(1);
+		}
+		var p = $(this).parents('li').prev().children().children().children().children('.price-now').text();
+		$(this).parents('li').next().children().children().text((parseFloat(n) * parseFloat(p)).toFixed(2));
+		totalPrice();
+	})
+
+	//加的效果
+	$(".add").click(function(){
+		var n = $(this).prev().val();
+		var num = parseInt(n) + 1;
+		
+		if(num == 0){
+			return false;
+		}
+		$(this).prev().val(num);
+		var p = $(this).parents('li').prev().children().children().children().children('.price-now').text();
+		$(this).parents('li').next().children().children().text((parseFloat(num) * parseFloat(p)).toFixed(2));
+		totalPrice();
+	});
+	//减的效果
+	$(".min").click(function(){
+		var n = $(this).next().val();
+		var num = parseInt(n)-1;
+		
+		if(num == 0){
+			return false;
+		}
+		$(this).next().val(num);
+		var p = $(this).parents('li').prev().children().children().children().children('.price-now').text();
+		$(this).parents('li').next().children().children().text((parseFloat(num) * parseFloat(p)).toFixed(2));
+		totalPrice();
 	});
 
-	$(document).ready(function(){
-		//加的效果
-		$(".add").click(function(){
-			var n = $(this).prev().val();
-			var num = parseInt(n) + 1;
-			
-			if(num == 0){ return false; }
-			$(this).prev().val(num);
-			var p = $(this).parents('li').prev().children().children().children().children('.price-now').text();
-			$(this).parents('li').next().children().children().text(parseInt(num) * parseInt(p) + '.00');
-		});
-		//减的效果
-		$(".min").click(function(){
-			var n = $(this).next().val();
-			var num = parseInt(n)-1;
-			
-			if(num == 0){ return false; }
-			$(this).next().val(num);
-			var p = $(this).parents('li').prev().children().children().children().children('.price-now').text();
-			$(this).parents('li').next().children().children().text(parseInt(num) * parseInt(p) + '.00');
-		});
+	$(".check-one").click(function(){
+		if($(".check-one").length == $(".check-one:checked").length){
+			$(".check-all").prop("checked",true);
+			totalPrice();
+		}else{
+			$(".check-all").prop("checked",false);
+			totalPrice();
+		}
+	})
+
+	$(".check-all").click(function(){
+		if($(this).prop("checked") == true){
+			$(".check-one").prop("checked",true);
+			totalPrice();
+		}else{
+			$(".check-one").prop("checked",false);
+			totalPrice();
+		}
+	})
+
+	function totalPrice(){
+		var allprice = 0;
+		var allnum = 0;
+		$(".item-content").each(function(){
+			$(this).find(".check-one").each(function(){
+				if($(this).prop("checked")){
+					var price = parseFloat($(this).parents('li').next().next().next().children().children().children().children('.price-now').text());
+					var num = parseInt($(this).parents('li').next().next().next().next().children().children().children().children('.text_box').val());
+					var total = price * num;
+					$(this).parents('li').next().next().next().next().next().children().children('.number').text(parseFloat(total).toFixed(2));
+					var oneprice = parseFloat($(this).parents('li').next().next().next().next().next().children().children('.number').text());
+					allnum += num;
+					allprice += oneprice;	
+				}
+				$("#J_SelectedItemsCount").text(allnum);
+				$("#J_Total").text(allprice.toFixed(2));
+			})
+		})
+	}
+
+	//商品规格选择
+	$(function(){
+		$(".theme-options").each(function(){
+			var i=$(this);
+			var p=i.find("ul>li");
+			p.click(function(){
+				if(!!$(this).hasClass("selected")){
+					$(this).removeClass("selected");
+				
+				}else{
+					$(this).addClass("selected").siblings("li").removeClass("selected");
+					
+				}
+
+			})
+		})
+
 	})
 
 
