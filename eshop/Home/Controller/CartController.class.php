@@ -37,9 +37,6 @@
 				}
 			}
 			$data['cart'] = $_SESSION['cart'];
-			echo '<pre>';
-			print_r($data);
-			echo '</pre>';
 			$this->assign($data);
 			$this->display();
 		}
@@ -74,7 +71,6 @@
 		
 
 		public function payment(){
-			var_dump($_POST);
 			$items = I('post.items');
 			$data = array();
 			if(!I('select-all','')){
@@ -82,13 +78,10 @@
 					foreach($value as $value1){
 						$data[$key][$value1] = $_SESSION['cart'][$key][$value1];
 					}
-					
 				}
 			}else
 				$data = $_SESSION['cart'];
-			echo '<pre>';
-			print_r($_SESSION);
-			echo '</pre>';
+			$_SESSION['data'] = $items;
 			$add = D("address");
 			$map['uid'] = $_SESSION['info']['id'];
 			$addinfo = $add->where($map)->select();
@@ -176,9 +169,71 @@
 			}
 		}
 
-		public function Success(){
+		public function aSuccess(){
+			$orders = D('orders');
+			$detail = D('detail');
+			$goodsRep = D('GoodsRep');
 
+			$orders->startTrans();
+			$sum = 0;
+			foreach ($_SESSION['data'] as $key => $value) {
+				foreach($value as $key1 => $value1){
+					$attr_value = $_SESSION['cart'][$key][$value1]['attr_val'];
+					$attr_value = $attr_value == '0'? '':$attr_value;
+					$num = $_SESSION['cart'][$key][$value1]['num'];
+					$price = $_SESSION['cart'][$key][$value1]['price'];
+					$data[] = array(
+						'goods_id'=>$key,
+						'goods_attr_id'=>$attr_value,
+						'price'=>$price,
+						'num'=>$num,
+					);
+					$sum+= $_SESSION['cart'][$key][$value1]['sum'];
+
+
+					$value1 = $value1==0?'':str_replace('.', ',' , $value1);
+					
+					if( !$goodsRep->where('goods_id='.$key . ' and goods_attr_id = "'.$value1.'"')->setDec('goods_number',$num) ){
+						$orders->rollback();
+						$this->error('库存不足');
+					}	
+				}
+			}
+			$ordersData = I('post.','');
+			$ordersData['total'] = $sum;
+			$ordersData['buytime'] = time();
+			$ordersData['user_id'] = $_SESSION['info']['id'];
+			
+			if( !($id = $orders->add($ordersData)) ){
+				$orders->rollback();
+				$this->error();
+				exit;
+			}
+
+			foreach ($data as $key => $value) {
+				$data[$key]['orders_id'] = $id;
+			}
+
+			if($detail->addAll($data)){
+				$orders->commit();
+				$this->redirect('success',array('id' => $id,) );
+			}else{
+				$orders->rollback();
+				$this->error();
+				exit;
+			}
+			
 		}
+
+		public function success(){
+			$id = I('get.id','');
+			$orders = D('orders');
+			$ordersOne = $orders->field('a.total,b.*')->alias('a')->join('left join address b on a.address_id=b.id')->where('a.id='.$id)->find();
+			$this->assign('ordersOne',$ordersOne);
+			$this->display();
+		}
+
+
 	}
 	
-
+	

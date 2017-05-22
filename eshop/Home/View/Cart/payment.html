@@ -8,6 +8,7 @@
 <link href="__PUBLIC__/Home/css/address.css" rel="stylesheet" type="text/css">			
 <div class="concent">
 <!--地址 -->
+<form action="{:U('aSuccess')}" method="post" id='cart_form'>
 <div class="paycont">
 	<div class="address">
 		<h3>确认收货地址 </h3>
@@ -18,7 +19,8 @@
 		<ul>
 			<?php for($i = 0; $i < count($addinfo); $i++):?>
 			<li class="user-addresslist {$addinfo[$i]['status'] == 1 ? 'defaultAddr' : ''}" count="{$i}" style="overflow:hidden">
-				<input type="hidden" value='{$addinfo|json_encode=###}'>
+				<input type="hidden" value= "{$addinfo[$i]['id']} " name="{$addinfo[$i]['status'] == 1 ? 'address_id': ''}">
+				<input type="hidden" value='{$addinfo|json_encode=###}' >
 				<span class="new-option-r" id="default"><i class="am-icon-check-circle"></i>设为默认</span>
 				<p class="new-tit new-p-re">
 					<span class="new-txt">{$addinfo[$i]['name']}</span>
@@ -46,11 +48,12 @@
 	<div class="logistics">
 		<h3>选择物流方式</h3>
 		<ul class="op_express_delivery_hot">
-			<li data-value="yuantong" class="OP_LOG_BTN  "><i class="c-gap-right" style="background-position:0px -468px"></i>圆通<span></span></li>
-			<li data-value="shentong" class="OP_LOG_BTN  "><i class="c-gap-right" style="background-position:0px -1008px"></i>申通<span></span></li>
-			<li data-value="yunda" class="OP_LOG_BTN  "><i class="c-gap-right" style="background-position:0px -576px"></i>韵达<span></span></li>
-			<li data-value="zhongtong" class="OP_LOG_BTN op_express_delivery_hot_last "><i class="c-gap-right" style="background-position:0px -324px"></i>中通<span></span></li>
-			<li data-value="shunfeng" class="OP_LOG_BTN  op_express_delivery_hot_bottom"><i class="c-gap-right" style="background-position:0px -180px"></i>顺丰<span></span></li>
+			<input type="hidden" name="logistics" value="圆通">
+			<li data-value="yuantong" class="OP_LOG_BTN   selected"><i class="c-gap-right" style="background-position:0px -468px"></i><a>圆通</a><span></span></li>
+			<li data-value="shentong" class="OP_LOG_BTN  "><i class="c-gap-right" style="background-position:0px -1008px"></i><a>申通</a><span></span></li>
+			<li data-value="yunda" class="OP_LOG_BTN  "><i class="c-gap-right" style="background-position:0px -576px"></i><a>韵达</a><span></span></li>
+			<li data-value="zhongtong" class="OP_LOG_BTN op_express_delivery_hot_last "><i class="c-gap-right" style="background-position:0px -324px"></i><a>中通</a><span></span></li>
+			<li data-value="shunfeng" class="OP_LOG_BTN  op_express_delivery_hot_bottom"><i class="c-gap-right" style="background-position:0px -180px"></i><a>顺丰</a><span></span></li>
 		</ul>
 	</div>
 	<div class="clear"></div>
@@ -167,7 +170,7 @@
 				<div class="order-user-info">
 					<div id="holyshit257" class="memo">
 						<label>买家留言：</label>
-						<input type="text" title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）" placeholder="选填,建议填写和卖家达成一致的说明" class="memo-input J_MakePoint c2c-text-default memo-close">
+						<input type="text" title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）" placeholder="选填,建议填写和卖家达成一致的说明" name="com" class="memo-input J_MakePoint c2c-text-default memo-close">
 						<div class="msg hidden J-msg">
 							<p class="error">最多输入500个字符</p>
 						</div>
@@ -267,7 +270,7 @@
 
 					<div id="holyshit269" class="submitOrder">
 						<div class="go-btn-wrap">
-							<a id="J_Go" href="success.html" class="btn-go" tabindex="0" title="点击此按钮，提交订单">提交订单</a>
+							<a id="J_Go" href="javascript:viod(0)" class="btn-go" tabindex="0" title="点击此按钮，提交订单">提交订单</a>
 						</div>
 					</div>
 					<div class="clear"></div>
@@ -278,6 +281,7 @@
 		<div class="clear"></div>
 	</div>
 </div>
+</form>
 
 <div id="light" class="white_content panel panel-primary"> 
 	<form class="am-form am-form-horizontal" count>
@@ -373,9 +377,14 @@
 <script src="__PUBLIC__/Home/js/citySet.js"></script>
 <script type="text/javascript">
 
-	$('#J_Go').click(){
-		
-	}
+$('#J_Go').click(function(){
+	document:cart_form.submit();
+	
+});
+
+	$('.op_express_delivery_hot').find('li').click(function(){
+		$('input[name="logistics"]').val($(this).find('a').html());
+	});
 
 	$("#city").click(function (e) {
 		SelCity(this,e);
