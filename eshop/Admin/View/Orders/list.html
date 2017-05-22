@@ -1,0 +1,128 @@
+﻿<layout name="Index/header_foot"/>
+<include file="index/list" />
+<div class="page-container">
+	<form >
+    <p>搜索内容：
+      <input type="text" style="width:120px;" class="input-text"  value="{$Think.get.search_val}" name="search_val">
+      <span class="select-box" style="width:150px;">
+      <select  class="select"   size="1" name="search_key" >
+        <option value="">请选择搜索类型</option>
+        <option value="id" <eq name="Think.get.search_key" value="id">selected</eq> >ID</option>
+        <option value="username" <eq name="Think.get.search_key" value="username">selected</eq>>用户名</option>
+        <option value="tel" <eq name="Think.get.search_key" value="tel">selected</eq> >联系电话</option>
+        <option value="linkman" <eq name="Think.get.search_key" value="linkman">selected</eq> >联系人</option>
+        <option value="address" <eq name="Think.get.search_key" value="address">selected</eq> >地址</option>
+        <option value="total" <eq name="Think.get.search_key" value="total">selected</eq> >总额</option>
+      </select>
+      </span>
+    </p>
+    <p>
+      订单状态: 
+      <select name="state" class="select" style="width:200px;">
+        <option value=''>--请选择--</option>
+        <option value="0" <eq name="Think.get.state" value="0">selected</eq>>新订单</option>
+        <option value="1" <eq name="Think.get.state" value="1">selected</eq>>已出货</option>
+        <option value="2" <eq name="Think.get.state" value="2">selected</eq>>已收货</option>
+      </select>
+    </p>
+    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"><a href="{:U('list','',false)}?unset=1">&nbsp;<input  class="btn btn-danger radius" type="button" value="重置条件"></a>
+  </form>
+		
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> </span> <span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
+	<table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr>
+				<th scope="col" colspan="10"></th>
+			</tr>
+			<tr class="text-c">
+				<th width="25"><input type="checkbox" name="" value=""></th>
+        <th>详细</th>
+				<th>ID</th>
+        <th>用户名</th>
+        <th>联系电话</th>      
+        <th>联系人</th>
+        <th>地址</th>
+        <th>总额</th>
+        <th>购买时间</th>
+        <th>状态</th>
+			</tr>
+		</thead>
+		<tbody>
+			<foreach name="ordersList" item="val">
+			<tr align="center" class="0" id="0_1" id = 'tr_1'>
+				<td style="text-align:center;"><input type="checkbox" value="{$val[id]}" name=""></td>
+        <td style="text-align:center;"><a href="javascript:;" onclick="detail('订单详细','{:U('ordersdetail',$val )}')" class=" btn btn-primary radius">订单详细</a></td>
+        <td style="text-align:center;">{$val[id]}</td>
+        <td style="text-align:center;">{$val[username]}</td>
+        <td style="text-align:center;">{$val[tel]}</td>
+				<td style="text-align:center;">{$val[linkman]}</td>
+        <td style="text-align:center;">{$val[address]}</td>
+        <td style="text-align:center;">{$val[total]}</td>
+        <td style="text-align:center;">{$val[buytime] |date='Y-m-d H:i:s',###}</td>
+
+        <td style="word-wrap:break-word;word-break:break-all;width:200px;text-align:center;">
+          <select name="state" id="state" class="select" data-id="{$val[id]}">
+            <option value="0" <eq name="val.state" value="0">selected</eq>>新订单</option>
+            <option value="1" <eq name="val.state" value="1">selected</eq>>已发货</option>
+            <option value="2" <eq name="val.state" value="2">selected</eq>>已收货</option>
+            <option value="3" <eq name="val.state" value="3">selected</eq>>无效订单</option>
+          </select>
+        </td>
+
+			</tr>
+			</foreach>
+      <tr><td height="30" colspan="10" align="center">{$show}</td></tr>
+		</tbody>
+	</table>
+</div>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+/*
+  参数解释：
+  title 标题
+  url   请求的url
+  id    需要操作的数据id
+  w   弹出层宽度（缺省调默认值）
+  h   弹出层高度（缺省调默认值）
+*/
+
+function del() { 
+  var msg = "您真的确定要删除吗？\n\n请确认！"; 
+  if (confirm(msg)==true){ 
+    return true; 
+  }else{ 
+    return false; 
+  } 
+} 
+
+/*订单详细*/
+function detail(title,url,id,w,h){
+  layer_show(title,url,w,h);
+}
+
+// ajax无刷新修改状态
+var oldval = '';
+$('#state').click(function(){
+  oldval = $(this).val();
+});
+
+$('#state').change(function(){
+  var val = $(this).val();
+  var id = $(this).attr('data-id');
+  if (val == '3'){
+    if (confirm('确定无效该订单？') == false){
+      $(this).children('option[value = '+oldval+']').prop('selected',true);
+      return false;
+    }
+  }
+
+  $.getJSON("{:U('ajaxSel')}",{ id:id,state:val},function(data){
+    if(data!=null){
+      alert('修改成功');
+    }
+  });
+});
+</script>
+</body>
+</html>

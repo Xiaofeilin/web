@@ -1,0 +1,55 @@
+<layout name="Index/header_foot"/>
+<article class="page-container">
+    <div class="bk-gray radius box-shadow">
+      <table class="table table-border radius">
+        <tr>
+          <th colspan="2"><i class="Hui-iconfont">&#xe62c;</i> 订单个人信息</th>
+        </tr>
+        <tr class="f-18 hl-30 text-l">
+          <td>用户名: <smail>{$orders.username}</smail></td>
+          <td>联系电话: <smail>{$orders.tel}</smail></td>
+        </tr>
+        <tr class="f-18 hl-30 text-l">
+          <td>联系人: <smail>{$orders.linkman}</smail></td>
+          <td>地址: <smail>{$orders.address}</smail></td>
+        </tr>
+        <tr class="f-18 hl-30 text-l">
+          <td>购买时间: <smail>{$orders.buytime | date='Y-m-d H:i:s',###}</smail></td>
+          <td>订单状态: <small>{$orders.statecn}</small></td>
+        </tr>
+      </table>
+    </div>
+    <br>
+    <div class="line"></div>
+    <br>
+    <div class="bk-gray radius box-shadow">
+      <table class="table table-border radius">
+        <tr>
+          <th colspan="5"><i class="Hui-iconfont">&#xe6b9;</i> 订单商品信息</th>
+        </tr>
+        <tr class="f-18 hl-30 text-l">
+          <th>商品名</th>
+          <th>商品信息</th>
+          <th>单价</th>
+          <th>数量</th>
+          <th>总额(元)</th>
+        </tr>
+        <foreach name="detailList" item="val">
+        <tr class="f-18 hl-30 text-l">
+          <td>{$val.goods.goods_name}</td>
+          <td>{$val.goods_attr.attr_value}</td>
+          <td>{$val.goods_attr.attr_price}</td>
+          <td>{$val.detail.num}</td>
+          <td>{$val.detail.price}</td>
+        </tr>
+        </foreach>
+        <tr>
+          <td class="f-18 hl-30 text-r" colspan="5">
+            总计: {$orders.total} 元
+          </td>
+        </tr>
+      </table>
+    </div>
+</article>
+</body>
+</html>
