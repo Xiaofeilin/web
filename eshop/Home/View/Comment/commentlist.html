@@ -1,0 +1,142 @@
+<layout name="Common/header_foot"/>
+<include file="Common/search"/>
+<link href="__PUBLIC__/Home/css/personal.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/Home/css/appstyle.css" rel="stylesheet" type="text/css">
+<div class="nav-table">
+	<div class="long-title"><span class="all-goods">全部分类</span></div>
+	<div class="nav-cont">
+		<ul>
+			<li class="index"><a href="#">首页</a></li>
+			<li class="qc"><a href="#">闪购</a></li>
+			<li class="qc"><a href="#">限时抢</a></li>
+			<li class="qc"><a href="#">团购</a></li>
+			<li class="qc last"><a href="#">大包装</a></li>
+		</ul>
+		<div class="nav-extra">
+			<i class="am-icon-user-secret am-icon-md nav-user"></i><b></b>我的福利
+			<i class="am-icon-angle-right" style="padding-left: 10px;"></i>
+		</div>
+	</div>
+</div>
+<b class="line"></b>
+<div class="center">
+<div class="col-main">
+	<div class="main-wrap">
+		<div class="user-comment">
+			<!--标题 -->
+			<div class="am-cf am-padding">
+				<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">发表评论</strong> / <small>Make&nbsp;Comments</small></div>
+			</div>
+			<hr/>
+			<form action="" method="post" id="com_form"  enctype="multipart/form-data">
+				<div class="comment-main">
+					<foreach name="detailList" item="value">
+					<div class="comment-list">
+						<div class="item-pic">
+							<a href="#" class="J_MakePoint">
+								<img src="__ROOT__/Uploads/{$value['logo']}" class="itempic">
+							</a>
+						</div>
+
+						<div class="item-title">
+
+							<div class="item-name">
+								<a href="#">
+									<p class="item-basic-info">{$value['goods_name']}</p>
+								</a>
+							</div>
+							<div class="item-info">
+								<div class="info-little">
+									<span>{$value['goods_attr_id']}</span>
+								</div>
+								<div class="item-price">
+									价格：<strong>{$value['price']}元</strong>
+								</div>										
+							</div>
+						</div>
+						<div class="clear"></div>
+						<div class="item-comment">
+							<textarea placeholder="请写下对宝贝的感受吧，对他人帮助很大哦！" name="goods_comment[{$value['goods_id']}][{$value['goods_attr_id']}]"></textarea>
+						</div>
+						<div class="filePic">
+							<input type="file" class="inputPic" name="pic[{$value['goods_id']}][{$value['goods_attr_id']}][]" allowexts="gif,jpeg,jpg,png,bmp" accept="image/*"  multiple='multiple'>
+							<span>晒照片(0/5)</span>
+							<img src="__PUBLIC__/Home/images/image.jpg" alt="">
+						</div>
+						<div class="item-opinion">
+							<li><i class="op1" score='3'></i>好评</li>
+							<li><i class="op2"  score='2'></i>中评</li>
+							<li><i class="op3"  score='1'></i>差评</li>
+							<input type="hidden" class="score" name="score[{$value['goods_id']}][{$value['goods_attr_id']}]" value="">
+						</div>
+					</div>		
+					</foreach>		
+					<div class="info-btn">
+						<a id="go" href="javascript:void(0)"><div class="am-btn am-btn-danger">发表评论</div></a>
+					</div>							
+					<script type="text/javascript">
+						$(document).ready(function() {
+							$(".comment-list .item-opinion li").click(function() {	
+								$(this).prevAll().children('i').removeClass("active");
+								$(this).nextAll().children('i').removeClass("active");
+								$(this).children('i').addClass("active");
+								$('.score').val( $('.active').attr('score') );
+							});
+				     })
+					</script>					
+				</div>
+			</form>
+		</div>
+
+	</div>
+	
+</div>
+
+<aside class="menu">
+	<ul>
+		<li class="person">
+			<a href="index.html">个人中心</a>
+		</li>
+		<li class="person">
+			<a href="#">个人资料</a>
+			<ul>
+				<li> <a href="information.html">个人信息</a></li>
+				<li> <a href="safety.html">安全设置</a></li>
+				<li> <a href="address.html">收货地址</a></li>
+			</ul>
+		</li>
+		<li class="person">
+			<a href="#">我的交易</a>
+			<ul>
+				<li><a href="order.html">订单管理</a></li>
+				<li> <a href="change.html">退款售后</a></li>
+			</ul>
+		</li>
+		<li class="person">
+			<a href="#">我的资产</a>
+			<ul>
+				<li> <a href="coupon.html">优惠券 </a></li>
+				<li> <a href="bonus.html">红包</a></li>
+				<li> <a href="bill.html">账单明细</a></li>
+			</ul>
+		</li>
+
+		<li class="person">
+			<a href="#">我的小窝</a>
+			<ul>
+				<li> <a href="collection.html">收藏</a></li>
+				<li> <a href="foot.html">足迹</a></li>
+				<li class="active"> <a href="comment.html">评价</a></li>
+				<li> <a href="news.html">消息</a></li>
+			</ul>
+		</li>
+
+	</ul>
+
+</aside>
+</div>
+<script>
+	$('#go').click(function(){
+		document:com_form.submit();
+	})
+</script>

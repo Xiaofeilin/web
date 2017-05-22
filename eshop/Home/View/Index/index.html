@@ -41,7 +41,7 @@
 		<!--走马灯 -->
 
 		<div class="marqueen">
-			<span class="marqueen-title">商城头条</span>
+			<span class="marqueen-title">商城头条</span><!---->
 			<div class="demo">
 
 				<ul>
@@ -58,18 +58,22 @@
 			<div class="mod-vip">
 				<div class="m-baseinfo">
 					<a href="person/index.html">
+						<if condition="$_SESSION['info']">
+						<img src="__ROOT__/Uploads/{$_SESSION['info']['sm_icon']}">
+						<else/>
 						<img src="__PUBLIC__/Home/images/getAvatar.do.jpg">
+						</if>
 					</a>
 					<em>
-						Hi,<span class="s-name">小叮当</span>
+						Hi,<span class="s-name">{$_SESSION['info'] ? $_SESSION['info']['username'] : '小叮当'}</span>
 						<a href="#"><p>点击更多优惠活动</p></a>									
 					</em>
 				</div>
-				<div class="member-logout">
-					<a class="am-btn-warning btn" href="login.html">登录</a>
-					<a class="am-btn-warning btn" href="register.html">注册</a>
+				<div class="member-logout" style="display:{$_SESSION['info']?'none':'block'}">
+					<a class="am-btn-warning btn" href="{:U('Login/login')}">登录</a>
+					<a class="am-btn-warning btn" href="{:U('Reg/register')}">注册</a>
 				</div>
-				<div class="member-login">
+				<div class="member-login" style="display:{$_SESSION['info']?'block':'none'}">
 					<a href="#"><strong>0</strong>待收货</a>
 					<a href="#"><strong>0</strong>待发货</a>
 					<a href="#"><strong>0</strong>待付款</a>

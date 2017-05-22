@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!---->
 <html>
 
 	<head>
@@ -10,6 +10,11 @@
 		<link href="__PUBLIC__/Home/AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css">
 		<link href="__PUBLIC__/Home/AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet" type="text/css">
 
+		<link href="__PUBLIC__/Home/basic/css/demo.css" rel="stylesheet" type="text/css" />
+
+		<link href="__PUBLIC__/Home/css/hmstyle.css" rel="stylesheet" type="text/css"/>
+		<link href="__PUBLIC__/Home/css/skin.css" rel="stylesheet" type="text/css" />
+
 		<link href="__PUBLIC__/Home/css/personal.css" rel="stylesheet" type="text/css">
 		<link href="__PUBLIC__/Home/css/infstyle.css" rel="stylesheet" type="text/css">
 		<link href="__PUBLIC__/Home/css/addstyle.css" rel="stylesheet" type="text/css">
@@ -19,6 +24,8 @@
 		<script src="__PUBLIC__/Home/AmazeUI-2.4.2/assets/js/amazeui.js"></script>
 
 		<link href="__PUBLIC__/Home/css/address.css" rel="stylesheet" type="text/css">
+
+		
 
 		<link rel="stylesheet" href="__PUBLIC__/Home/css/addcss.css" />
 
@@ -55,16 +62,17 @@
 								<div class="menu-hd MyShangcheng"><a href="{:U('User/index')}" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
 							</div>
 							<div class="topMessage mini-cart">
-								<div class="menu-hd"><a id="mc-menu-hd" href="#" target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum" class="h">0</strong></a></div>
+								<div class="menu-hd"><a id="mc-menu-hd" href="{:U('Home/Cart/shopcart')}" target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum" class="h">0</strong></a></div>
 							</div>
 							<div class="topMessage favorite">
 								<div class="menu-hd"><a href="#" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div>
 						</ul>
 						</div>
+						<include file="Common/search"/>
 
 						<!--悬浮搜索框-->
 
-						<div class="nav white">
+						<!--<div class="nav white">
 							<div class="logoBig">
 								<li><img src="__PUBLIC__/Home/images/logobig.png" /></li>
 							</div>
@@ -79,11 +87,14 @@
 						</div>
 
 						<div class="clear"></div>
-					</div>
+					</div>-->
 				</div>
 			</article>
 		</header>
-            <div class="nav-table">
+
+
+
+            <!--<div class="nav-table">
 					   <div class="long-title"><span class="all-goods">全部分类</span></div>
 					   <div class="nav-cont">
 							<ul>
@@ -99,4 +110,4 @@
 						    </div>
 						</div>
 			</div>
-			<b class="line"></b>
+			<b class="line"></b>-->

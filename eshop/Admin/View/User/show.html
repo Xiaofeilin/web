@@ -1,0 +1,90 @@
+<layout name="Index/header_foot"/>
+<body>
+<article class="page-container">
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">头像:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<img id="preview" width="50" src="__ROOT__/Uploads/{$userOne['icon']}" />
+		</div>
+	</div><br />
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"> 会员账号:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<div>{$userOne["account"]}</div>
+		</div>
+	</div><br />
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">会员名称:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<div>{$userOne["username"]}</div>
+		</div>
+	</div><br />
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">真实姓名:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<div>{$userOne["realname"]}</div>
+		</div>
+	</div><br />
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">生日日期:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<div>{$userOne["birthdate"]|date="Y-m-d",###}</div>
+		</div>
+	</div><br />
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">手机号码:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<div>{$userOne["tel"]}</div>
+		</div>
+	</div><br />
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">电子邮箱:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<div>{$userOne["email"]}</div>
+		</div>
+	</div><br />
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">注册时间:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<div>{$userOne["regtime"]|date="Y-m-d H:i:s",###}</div>
+		</div>
+	</div><br />
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">会员积分:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<div>{$userOne["credit"]}</div>
+		</div>
+	</div><br />
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">会员经验:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<div>{$userOne["exp"]}</div>
+		</div>
+	</div><br />
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">会员等级:</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<div>{$userOne["level"]}</div>
+		</div>
+	</div>
+
+</article>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+
+</body>
+</html>
