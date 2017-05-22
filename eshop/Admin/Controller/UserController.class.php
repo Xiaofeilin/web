@@ -1,7 +1,7 @@
 <?php
 	namespace Admin\Controller;
 
-	class UserController extends EqualController{
+	class UserController extends EqualController{//
 		/**
 		*['创建User类实例']
 		*/

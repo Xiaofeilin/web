@@ -1,7 +1,7 @@
 <?php
 	namespace Admin\Model;
 	use Think\Model;
-	class UserModel extends Model{
+	class UserModel extends Model{//
 		/**
 		*[搜索+分页]
 		*@return array 		$data[搜索后+分页的数据]
