@@ -2,6 +2,9 @@
 
 <link href="__PUBLIC__/Home/css/systyle.css" rel="stylesheet" type="text/css">
 
+		<div class="nav-table">
+		<include file="Public/header"/>
+		<div class="clear" style="clear:both"></div>
 		<div class="center">
 			<div class="col-main">
 				<div class="main-wrap">
@@ -10,12 +13,12 @@
 							<div class="m-user">
 								<!--个人信息 -->
 								<div class="m-bg"></div>
-								<div class="m-userinfo">
+								<div class="m-userinfo" style="overflow:hidden">
 									<div class="m-baseinfo">
 										<a href="information.html">
-											<img src="__PUBLIC__/Home/images/getAvatar.do.jpg">
+											<img src="__ROOT__/Uploads/{$_SESSION['info']['sm_icon']}">
 										</a>
-										<em class="s-name">({$_SESSION['info']['account'] ? $_SESSION['info']['account'] : "未设置"})<span class="vip1"></em>
+										<em class="s-name" style="position:relative;left:0px;top:0px">({$_SESSION['info']['username'] ? $_SESSION['info']['username'] : "小叮当"})<span class="vip1"></em>
 										<div class="s-prestige am-btn am-round">
 											</span>会员福利</div>
 									</div>
