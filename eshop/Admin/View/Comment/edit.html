@@ -1,0 +1,104 @@
+<layout name="Index/header_foot"/>
+<style>
+	li{float:left;}
+</style>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" method="post" id="form-admin-add" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="{$comment['id']}">
+	
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">评论ID：</label>
+		<div class="formControls col-xs-8 col-sm-3">
+			<input type="text" disabled name='brand_name' value="{$comment['id']}" class="input-text"   >
+		</div>
+	</div>
+	
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">评论用户名：</label>
+		<div class="formControls col-xs-8 col-sm-3">
+			<input type="text" disabled name='brand_name' value="{$user['username']}" class="input-text"   >
+		</div>
+	</div>
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">商品名称：</label>
+		<div class="formControls col-xs-8 col-sm-3">
+			<input type="text" disabled name='brand_name' value="{$goods['goods_name']}" class="input-text"   >
+		</div>
+	</div>
+	
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">商品属性：</label>
+		<div class="formControls col-xs-8 col-sm-3">
+			<input type="text" disabled name='brand_name' value="{$comment['attr_value']}" class="input-text"   >
+		</div>
+	</div>
+	
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">商品logo：</label>
+		<div class="formControls col-xs-8 col-sm-3">
+			<img width="50" src="__ROOT__/Uploads/{$goods['logo']}">
+		</div>
+	</div>
+	
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">评分：</label>
+		<div class="formControls col-xs-8 col-sm-3">
+			<input type="text" disabled name='brand_name' value="{$comment['score']}" class="input-text"   >
+		</div>
+	</div>
+	
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">添加时间：</label>
+		<div class="formControls col-xs-8 col-sm-3">
+			<input type="text" disabled name='brand_name' value="{$comment['addtime']|date='Y-m-d',###}" class="input-text"   >
+		</div>
+	</div>
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">审核：</label>
+		<div class="formControls col-xs-8 col-sm-9"> 
+			<span class="select-box" style="width:150px;">
+			<select class="select" name="is_show" size="1">
+				<option value="">请选择...</option>
+				<option value="0" {$comment['is_show']==0?'selected':''}>未审</option>
+				<option value="1" {$comment['is_show']==1?'selected':''}>已审</option>
+			</select>
+			</span>
+		 </div>
+	</div>
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">评论内容：</label>
+		<div class="formControls col-xs-8 col-sm-6">
+			<textarea name="site_url"   class="textarea"  disabled  dragonfly="true" >{$comment['goods_comment']}</textarea>
+		</div>
+	</div>
+	
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">多图：</label>
+		<div class="formControls col-xs-8 col-sm-6">
+			<ul>	
+				<foreach name="pics" item="val">
+				<li><img src="__ROOT__/Uploads/{$val[goods_pric]}"></li>
+				</foreach>
+			</ul>
+		</div>
+	</div>
+
+	<div class="row cl">
+		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+		</div>
+	</div>
+	</form>
+</article>
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+</body>
+</html>

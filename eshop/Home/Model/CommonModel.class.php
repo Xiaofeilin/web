@@ -2,12 +2,13 @@
 	namespace Home\Model;
 	use Think\Model;
 	class CommonModel extends Model{
-		public function catSelect(){
+		public function catSelect($id=''){
 			$cat = D('cat');
-			$catList = $cat->field('id,cat_name,parent_id')->where('is_show=1')->select();
+			$catList = $cat->where('is_show=1')->select();
 			$data = array();
-		
 			foreach($catList as $key=>$val){
+				
+				if($id==$val['id']) $cat_path = $val['cat_path'];
 				if($val['parent_id']==0){
 					$data[$key] = $val;
 					foreach($catList as $key1=>$val1){
@@ -21,7 +22,8 @@
 					}	
 				}
 			}
-			
-			return $data;
+			$catAll['catAll'] = $data;
+			$catAll['cat_path'] = $cat_path; 
+			return $catAll;
 		}
 	}

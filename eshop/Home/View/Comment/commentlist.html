@@ -32,7 +32,9 @@
 				<div class="comment-main">
 					<foreach name="detailList" item="value">
 					<div class="comment-list">
+					<input type="checkbox" name="is[{$value['goods_id']}][{$value['goods_attr_id']}]" value="{$value['id']}">
 						<div class="item-pic">
+
 							<a href="#" class="J_MakePoint">
 								<img src="__ROOT__/Uploads/{$value['logo']}" class="itempic">
 							</a>
@@ -60,14 +62,14 @@
 						</div>
 						<div class="filePic">
 							<input type="file" class="inputPic" name="pic[{$value['goods_id']}][{$value['goods_attr_id']}][]" allowexts="gif,jpeg,jpg,png,bmp" accept="image/*"  multiple='multiple'>
-							<span>晒照片(0/5)</span>
+							<span>晒照片</span>
 							<img src="__PUBLIC__/Home/images/image.jpg" alt="">
 						</div>
 						<div class="item-opinion">
-							<li><i class="op1" score='3'></i>好评</li>
+							<li><i class="op1 active" score='3'></i>好评</li>
 							<li><i class="op2"  score='2'></i>中评</li>
-							<li><i class="op3"  score='1'></i>差评</li>
-							<input type="hidden" class="score" name="score[{$value['goods_id']}][{$value['goods_attr_id']}]" value="">
+							<li><i class="op3 "  score='1'></i>差评</li>
+							<input type="hidden" class="score" name="score[{$value['goods_id']}][{$value['goods_attr_id']}]" value="3">
 						</div>
 					</div>		
 					</foreach>		
@@ -137,6 +139,10 @@
 </div>
 <script>
 	$('#go').click(function(){
+		if($('input:checked').length<=0){
+			alert('请选择评价商品');
+			return false;
+		}
 		document:com_form.submit();
 	})
 </script>

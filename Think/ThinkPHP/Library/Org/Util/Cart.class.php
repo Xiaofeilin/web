@@ -126,21 +126,7 @@ class Cart{
     }
     
 
-    /*
-    购物车中商品的总金额
-    */
-    public function getPrice() {
-        //数量为0，价钱为0
-        if ($this->getCnt() == 0) {
-            return 0;
-        }
-        $price = 0.00;
-        $data = $_SESSION['cart'];
-        foreach ($data as $item) {
-            $price += $item['num'] * $item['price'];
-        }
-        return sprintf("%01.2f", $price);
-    }
+    
  
     /*
     清空购物车
