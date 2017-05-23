@@ -8,6 +8,10 @@ class UserModel extends Model{
 		array('tel','/^((13[0-9])|(15[^4])|(18[0-9])|(17[0-8])|(147,145))\\d{8}$/','手机号码不符合规范！','0'),
 	);
 
+	/**
+	*['用户的数据处理']
+	*@return  array		返回用户信息
+	*/
 	public function getAll(){
 		$userinfo = $this->select();
 		$sex = array('女','男','保密');
@@ -32,6 +36,10 @@ class UserModel extends Model{
 		}
 	}
 
+	/**
+	*['图片插入处理']
+	*@param string	&$data[图片信息]
+	*/
 	protected function _before_insert(&$data){
 		$sub = I('sub',0);
 		if($sub ==1 && $FILES['icon']['error'] == 0){
@@ -46,7 +54,10 @@ class UserModel extends Model{
 		}
 	}
 
-
+	/**
+	*['图片更新处理']
+	*@param string	&$data[图片信息]
+	*/
 	protected function _before_update(&$data){
 		$sub = I('sub',0);
 		if($sub == 1 && $FILES['icon']['error'] == 0){

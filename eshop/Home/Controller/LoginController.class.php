@@ -19,8 +19,12 @@ class LoginController extends Controller {
 			$user = D('user');
 			$userInfo = $user->where($map)->find();
 
-			$_SESSION['info'] = $userInfo;
-			$this->redirect("Test/test");
+			if($userInfo['is_use'] == 1){
+				$_SESSION['info'] = $userInfo;
+				$this->redirect("Test/test");
+			}else{
+				$this->error('你的账户被禁用或被拉进黑名单！','',3);
+			}
 		}
 		if(IS_POST){
 			$rule = array(

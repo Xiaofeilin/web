@@ -18,6 +18,11 @@ class SafeModel extends Model{
 		array('tel','/^((13[0-9])|(15[^4])|(18[0-9])|(17[0-8])|(147,145))\\d{8}$/','手机号码不符合规范！',0),	
 	);
 
+	/**
+	*['回调函数检测手机号码是否存在']
+	*@param string	$val[用户输入的手机号码]
+	*@return  boolean	返回true或false
+	*/
 	public function checkTel($val){
 		$map['tel'] = $val;
 		$info = $this->model->where($map)->find();
@@ -28,6 +33,11 @@ class SafeModel extends Model{
 		}
 	}
 
+	/**
+	*['回调函数检测原密码是否正确']
+	*@param string	$val[用户输入的原密码]
+	*@return  boolean	返回true或false
+	*/
 	public function checkOldPwd($val){
 		$map['pwd'] = md5($val);
 		$map['id'] = $_SESSION['info']['id'];

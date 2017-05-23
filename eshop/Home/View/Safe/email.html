@@ -63,6 +63,7 @@
 							$("#emailError").html("");
 						});
 
+						//检测邮件地址是否正确
 						$("input[name=email]").blur(function(){
 							var email = $("#email").val();
 							$.ajax({
@@ -80,6 +81,7 @@
 							});
 						});
 
+						//发送验证码到电子邮件
 						$("a[id=sendEmailCode]").click(function(){
 							$("#sendEmailCode").attr("disabled",true);
 							
@@ -119,6 +121,7 @@
 							}
 						});
 
+						//检测邮箱验证码是否正确
 						$("input[name=emailcode]").blur(function(){
 							var code = $("#emailcode").val();
 							$.ajax({
@@ -136,6 +139,7 @@
 							});
 						});
 
+						//绑定邮箱处理
 						$("div[id=submit]").click(function(){
 							if($("#email").val() && $("#emailcode").val()){
 								if(x == 1 && y == 1){

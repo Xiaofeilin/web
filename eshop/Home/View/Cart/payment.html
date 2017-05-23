@@ -20,7 +20,7 @@
 			<?php for($i = 0; $i < count($addinfo); $i++):?>
 			<li class="user-addresslist {$addinfo[$i]['status'] == 1 ? 'defaultAddr' : ''}" count="{$i}" style="overflow:hidden">
 				<input type="hidden" value= "{$addinfo[$i]['id']} " name="{$addinfo[$i]['status'] == 1 ? 'address_id': ''}">
-				<input type="hidden" value='{$addinfo|json_encode=###}' >
+				<input type="hidden" value='{$addinfo|json_encode=###}' name="json">
 				<span class="new-option-r" id="default"><i class="am-icon-check-circle"></i>设为默认</span>
 				<p class="new-tit new-p-re">
 					<span class="new-txt">{$addinfo[$i]['name']}</span>
@@ -115,11 +115,12 @@
 								</li>
 								<li class="td td-info">
 									<div class="item-props">
-										<foreach name="value1['attr_val_arr']" item="value2">
+										<foreach name="value1['attr_val_arr']" item="value2" key="key2">
 										<span class="sku-line">{$value2=='0'?'':$value2}</span>
 										</foreach>
 									</div>
 								</li>
+
 								<li class="td td-price">
 									<div class="item-price price-promo-promo">
 										<div class="price-content">
@@ -128,10 +129,12 @@
 									</div>
 								</li>
 							</div>
+
 							<li class="td td-amount">
 								<div class="amount-wrapper ">
 									<div class="item-amount ">
-										<span class="phone-title">购买数量</span>
+										<!--<span class="phone-title">购买数量</span>-->
+										<input type="hidden" class="gAId" gid="{$key}" attr_id="{$key1}" >
 										<div class="sl">
 											<input class="min am-btn" name="" type="button" value="-" />
 											<input class="text_box" name="" type="text" value="{$value1['num']}" style="width:30px;" />
@@ -178,7 +181,7 @@
 				</div>
 			</div>
 			<!--优惠券 -->
-			<div class="buy-agio">
+			<!--<div class="buy-agio">
 				<li class="td td-coupon">
 
 					<span class="coupon-title">优惠券</span>
@@ -226,13 +229,13 @@
 
 				</li>
 
-			</div>
+			</div>-->
 			<div class="clear"></div>
 			</div>
 			<!--含运费小计 -->
 			<div class="buy-point-discharge ">
 				<p class="price g_price ">
-					合计（含运费） <span>¥</span><em class="pay-sum">244.00</em>
+					合计（含运费） <span>¥</span><em class="pay-sum"></em>
 				</p>
 			</div>
 
@@ -242,7 +245,7 @@
 					<div class="box">
 						<div tabindex="0" id="holyshit267" class="realPay"><em class="t">实付款：</em>
 							<span class="price g_price ">
-                    									<span>¥</span> <em class="style-large-bold-red " id="J_ActualFee">244.00</em>
+                    									<span>¥</span> <em class="style-large-bold-red " id="J_ActualFee"></em>
 							</span>
 						</div>
 
@@ -251,18 +254,18 @@
 							<p class="buy-footer-address">
 								<span class="buy-line-title buy-line-title-type">寄送至：</span>
 								<span class="buy--address-detail">
-				   				<span class="province">湖北省</span>
-								<span class="city">武汉市</span>
-								<span class="dist">洪山区</span>
-								<span class="street">雄楚大道666号(中南财经政法大学)</span>
+				   				<span class="province" id="province"></span>
+								<span class="city" id="city"></span>
+								<span class="dist" id="street"></span>
+								<span class="street" id="detailed"></span>
 								</span>
 								</span>
 							</p>
 							<p class="buy-footer-address">
 								<span class="buy-line-title">收货人：</span>
 								<span class="buy-address-detail">   
-                       							  		<span class="buy-user">艾迪 </span>
-								<span class="buy-phone">15871145629</span>
+                       							  		<span class="buy-user" id="buyer"></span>
+								<span class="buy-phone" id="buyer-tel"></span>
 								</span>
 							</p>
 						</div>
@@ -376,11 +379,124 @@
 <script src="__PUBLIC__/Home/js/cityJson.js"></script>
 <script src="__PUBLIC__/Home/js/citySet.js"></script>
 <script type="text/javascript">
+	$(document).ready(function(){
+		var allprice = 0;
+		var allnum = 0;
+		$(".item-content").each(function(){
+			var price = parseFloat($(this).find('.price-now').text());
+			var num = parseInt($(this).find('.text_box').val());
+			var total = price * num;
+			$(this).find('.number').text(parseFloat(total).toFixed(2));
+			var oneprice = parseFloat($(this).find('.number').text());
+			allprice += oneprice+10;
+		})
+		$('.pay-sum').text(allprice.toFixed(2));
+		$("#J_ActualFee").text(allprice.toFixed(2));
 
-$('#J_Go').click(function(){
-	document:cart_form.submit();
-	
-});
+		var count = $(".defaultAddr").attr("count");
+		var list = $("input[name=json]").val();
+		var obj = JSON.parse(list);
+		$.each(obj,function(i,item){
+			if(count == i){
+				$("#province").html(item.province);
+				$("#city").html(item.city);
+				$("#street").html(item.street);
+				$("#detailed").html(item.detailed);
+				$("#buyer").html(item.name);
+				$("#buyer-tel").html(item.tel);
+			}
+		});
+	})
+
+	$('.add').click(function(){
+		var _tr = $(this).parent().parent().parent().parent().parent();
+		var oneSum = _tr.find('.J_ItemSum');
+		var oneprice = _tr.find('.price-now');
+		var _prev = $(this).prev();
+		var num = $(this).prev().val();
+		var gid = $(this).parent().prev().attr('gid');
+		var attrId = $(this).parent().prev().attr('attr_id');
+		$.ajax({
+			type:'GET',
+			url:"{:U('Cart/ajaxRep','',false)}/play/add/num/"+num + '/gid/' + gid + '/attrId/' + attrId,
+			dataType:'json',
+			success:function(data){
+				if(data){
+					oneSum.html(parseInt(oneSum.html())+parseInt(oneprice.html()) );
+					_prev.val(parseInt(num)+1);
+					totalPrice();
+				}
+			}
+		})
+	})
+
+	$('.min').click(function(){
+		var _tr = $(this).parent().parent().parent().parent().parent()
+		var oneSum = _tr.find('.J_ItemSum');
+		var oneprice = 	_tr.find('.price-now');
+		var _next = $(this).next();
+		var num = $(this).next().val();
+		if(num>0){
+			var gid = $(this).parent().prev().attr('gid');
+			var attrId = $(this).parent().prev().attr('attr_id');
+			$.ajax({
+				type:'GET',
+				url:"{:U('Cart/ajaxRep','',false)}/play/min/"+ '/gid/' + gid + '/attrId/' + attrId,
+				dataType:'json',
+				success:function(data){
+					if(data){
+						oneSum.html(parseInt(oneSum.html())-parseInt(oneprice.html()) );
+						_next.val(parseInt(num)-1);
+						totalPrice();
+					}
+				}
+			})
+		}
+	})
+
+	$(".text_box").change(function(){
+		var gid = $(this).parent().prev().attr('gid');
+		var attrId = $(this).parent().prev().attr('attr_id');
+		var _this = $(this);
+		var n = $(this).val();
+		if(n < 1){
+			n = 1;
+			$(this).val(1);
+		}
+		$.ajax({
+			type:'GET',
+			url:"{:U('Cart/ajaxRep','',false)}/play/now/num/"+ n + '/gid/' + gid + '/attrId/' + attrId,
+			dataType:'json',
+			success:function(data){
+				if(data){
+					var p = _this.parents('li').prev().children().children().children().children('.price-now').text();
+					_this.parents('li').next().children().children().text((parseFloat(n) * parseFloat(p)).toFixed(2));
+					totalPrice();
+				}else
+					_this.val(n);
+			}
+		})
+	})	
+
+	function totalPrice(){
+		var allprice = 0;
+		var allnum = 0;
+		$(".item-content").each(function(){
+			var price = parseFloat($(this).find('.price-now').text());
+			var num = parseInt($(this).find('.text_box').val());
+			var total = price * num;
+			$(this).find('.number').text(parseFloat(total).toFixed(2));
+			var oneprice = parseFloat($(this).find('.number').text());
+			allprice += oneprice+10;
+		})
+		$('.pay-sum').text(allprice.toFixed(2));
+		$("#J_ActualFee").text(allprice.toFixed(2));
+	}
+
+	$('#J_Go').click(function(){
+		document:cart_form.submit();
+		
+	});
 
 	$('.op_express_delivery_hot').find('li').click(function(){
 		$('input[name="logistics"]').val($(this).find('a').html());
@@ -397,12 +513,28 @@ $('#J_Go').click(function(){
 	$(".user-addresslist").click(function() {
 		$(this).addClass("defaultAddr").siblings().removeClass("defaultAddr");
 		var count = $(".defaultAddr").attr("count");
+		var list = $("input[name=json]").val();
+		var obj = JSON.parse(list);
+
 		$.ajax({
 			url:"__CONTROLLER__/setDefault",
 			data:{count:count},
 			type:"POST",
 			dataType:"json",
-			success:function(res){}
+			success:function(res){
+				if(res == 1){
+					$.each(obj,function(i,item){
+						if(count == i){
+							$("#province").html(item.province);
+							$("#city").html(item.city);
+							$("#street").html(item.street);
+							$("#detailed").html(item.detailed);
+							$("#buyer").html(item.name);
+							$("#buyer-tel").html(item.tel);
+						}
+					});
+				}
+			}
 		});
 	});
 
@@ -431,7 +563,7 @@ $('#J_Go').click(function(){
 
 	$(".edit").click(function(){
 		var count = $(".listLi").attr("count");
-		var list = $("input[type=hidden]").val();
+		var list = $("input[name=json]").val();
 		$("#light").css({display:"block"});
 		var obj = JSON.parse(list);
 

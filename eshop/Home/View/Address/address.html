@@ -142,7 +142,8 @@
 					<script src="__PUBLIC__/Home/js/Popt.js"></script>
 					<script src="__PUBLIC__/Home/js/cityJson.js"></script>
 					<script src="__PUBLIC__/Home/js/citySet.js"></script>
-					<script type="text/javascript">							
+					<script type="text/javascript">	
+						//更改默认地址						
 						$(".new-option-r").click(function() {
 							$(this).parent('.user-addresslist').addClass("defaultAddr").siblings().removeClass("defaultAddr");
 							var count = $(".defaultAddr").attr("count");
@@ -168,6 +169,7 @@
 							$(this).removeClass("listLi");
 						})
 
+						//删除地址
 						$(".del").click(function(){
 							var count = $(".listLi").attr("count");
 							$.ajax({
@@ -183,6 +185,7 @@
 							});
 						});
 
+						//编辑地址
 						$(".edit").click(function(){
 							var count = $(".listLi").attr("count");
 							var list = $("input[type=hidden]").val();
@@ -203,6 +206,7 @@
 							$("#retelError").html("");
 						});
 
+						//手机号码检测
 						$("input[name=retel]").blur(function(){
 							var tel = $("#retel").val();
 							$.ajax({
@@ -218,6 +222,7 @@
 							});
 						});
 
+						//编辑确认检测
 						$("a[id=resubmit]").click(function(){
 							var name = $("#rename").val();
 							var tel = $("#retel").val();
@@ -254,6 +259,7 @@
 							$("#addError").html("");
 						});
 
+						//重置
 						$("a[id=reset]").click(function(){
 							$("#name").val("");
 							$("#tel").val("");
@@ -267,6 +273,7 @@
 							$("#telError").html("");
 						});
 
+						//手机号码检测
 						$("input[name=tel]").blur(function(){
 							var tel = $("#tel").val();
 							$.ajax({
@@ -282,6 +289,7 @@
 							});
 						});
 
+						//添加地址检测
 						$("a[id=submit]").click(function(){
 							var name = $("#name").val();
 							var tel = $("#tel").val();

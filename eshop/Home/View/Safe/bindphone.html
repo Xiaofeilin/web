@@ -96,7 +96,8 @@
 						$("input[name=newCode]").focus(function(){
 							$("#newCodeError").html("");
 						});
-
+ 
+ 						//发送验证码到旧手机
 						$("a[id=sendOldTelCode]").click(function(){
 							$("#sendOldTelCode").attr("disabled",true);
 							
@@ -134,6 +135,7 @@
 							}
 						});
 
+						//检测旧手机的验证码是否正确
 						$("input[name=oldCode]").blur(function(){
 							var oldCode = $("#oldCode").val();
 							$.ajax({
@@ -151,6 +153,7 @@
 							});
 						});
 
+						//检测新手机是否合法
 						$("input[name=newTel]").blur(function(){
 							var newTel = parseInt($("#newTel").val());
 							$.ajax({
@@ -168,6 +171,7 @@
 							});
 						});
 
+						//发送验证码到新手机
 						$("a[id=sendNewTelCode]").click(function(){
 							$("#sendNewTelCode").attr("disabled",true);
 							
@@ -207,6 +211,7 @@
 							}
 						});
 
+						//检测新手机的验证码是否正确
 						$("input[name=newCode]").blur(function(){
 							var newCode = $("#newCode").val();
 							$.ajax({
@@ -224,6 +229,7 @@
 							});
 						});
 
+						//绑定手机处理
 						$("div[id=submit]").click(function(){
 							if( ($("#oldCode").val() && $("#newTel").val() && $("#newCode").val()) ||  ($("#newTel").val() && $("#newCode").val()) ){
 								if( (x == 1 && y == 1 && z == 1) || (y == 1 && z == 1) ){

@@ -22,8 +22,6 @@
 
 							<div class="filePic">
 								<a href="javascript:void(0);" data-src="" title="更换头像"  id="localImag">
-									<!--onclick="document.getElementById('light').style.display='block';"-->
-									<!--<img class="am-circle am-img-thumbnail" src="{$val['icon'] != null ? '__ROOT__/Uploads/$val[icon]' : '__PUBLIC__/Home/images/default'}.jpg" alt="" id="preview" />-->
 									<img class="am-circle am-img-thumbnail" src="__ROOT__/Uploads/{$val.icon}" alt="" id="preview" style="width:100px;height:100px;overflow:hidden" />
 									<input type='file' name='icon' id="doc" onchange="setImagePreview()" class="inputPic" style="width:100px;height:100px" />
 								</a>
@@ -185,6 +183,7 @@
 								$("#sub").val(1);
 							});
 
+							//时间插件调用
 							$("#ECalendar_case3").ECalendar({
 								type:"date",//date只返回日期，time能加选时间
 								stamp:false,
@@ -202,6 +201,7 @@
 								$("#accountError").html("");
 							});
 
+							//检测账户是否合法
 							$("input[name=account]").blur(function(){
 								var account = $("#account").val();
 								$.ajax({

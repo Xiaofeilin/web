@@ -4,6 +4,11 @@ use Think\Controller;
 class EqualController extends Controller{
 	protected $model;
 
+	/**
+	*[前调方法]
+	*1.判断cookie是否存在，存在则自动登录
+	*2.若cookie不存在，则判断session，用户信息没有则提醒登录
+	*/
 	public function _initialize(){
 		if(cookie('acc') && cookie('pwd')){
 			$str = cookie('acc');

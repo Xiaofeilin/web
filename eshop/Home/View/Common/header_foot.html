@@ -90,7 +90,13 @@
                 </a>
                 <div class="ibar_login_box status_login ">
                   <div class="avatar_box " >
-                    <p class="avatar_imgbox "><img src="__ROOT__/Uploads/{$Think.session.info.sm_icon}" /></p>
+                    <p class="avatar_imgbox ">
+                    	<if condition="$_SESSION['info']">
+			<img src="__ROOT__/Uploads/{$_SESSION['info']['sm_icon']}">
+		<else/>
+			<img src="__PUBLIC__/Home/images/getAvatar.do.jpg">
+		</if>
+                    </p>
                     <ul class="user_info ">
                       <li>用户名:{$_SESSION['info']['account'] ? $_SESSION['info']['account'] : "未设置"}</li>
                       <li>级&nbsp;别:普通会员</li>

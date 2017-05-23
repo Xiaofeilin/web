@@ -3,8 +3,6 @@
 <link href="__PUBLIC__/Home/css/cartstyle.css" rel="stylesheet" type="text/css" />
 <link href="__PUBLIC__/Home/css/optstyle.css" rel="stylesheet" type="text/css" />
 
-
-
 <!--购物车 -->
 <form action="{:U('payment')}" method="post" id="cart_form">
 <div class="concent">
@@ -34,8 +32,12 @@
 			</div>
 		</div>
 		<div class="clear"></div>
+
+
+		<div class="item-list">
 		<foreach name="cart" item="val" key="key">
-		<tr class="item-list">
+		
+		
 			<div class="bundle  bundle-last ">
 				<div class="bundle-hd">
 					<div class="bd-promos">
@@ -50,10 +52,10 @@
 				<div class="bundle-main">
 					<foreach name="val" item="val1" key="key1">
 					<if condition="$key1 nheq 'name'">
-						<ul class="item-content clearfix">
+					<ul class="item-content clearfix">
 						<li class="td td-chk">
 							<div class="cart-checkbox ">
-								<input class="check-one" id="J_CheckBox_170037950254" name="items[{$key}][]" value="{$key1}" type="checkbox">
+								<input class="check-one" id="J_CheckBox_170037950254" name="items[{$key}][]" value="{$key1}" type="checkbox" gid="{$key}">
 								<label for="J_CheckBox_170037950254"></label>
 							</div>
 						</li>
@@ -115,9 +117,16 @@
 					
 					</foreach>
 				</div>
-			</div>
-		</tr>
+			</div>		
+			
+		
+
 		</foreach>
+
+		</div>
+		<empty name="Think.session.cart">
+			<tr class="item-list"><div class="bundle  bundle-last " style="">购物车空空如也~<a href="{:U('Index/index')}" style="margin-left:20px;color:gray" >去购物~</a></div></tr>
+		</empty>
 		<div class="clear"></div>
 
 	
@@ -133,7 +142,7 @@
 			<span >全选</span>
 		</div>
 		<div class="operations">
-			<a href="#" hidefocus="true" class="deleteAll">删除</a>
+			<a href="javascript:;" hidefocus="true" class="deleteAll" id="deleteAll">删除</a>
 			<a href="#" hidefocus="true" class="J_BatchFav">移入收藏夹</a>
 		</div>
 		<div class="float-bar-right">
@@ -150,8 +159,7 @@
 				<strong class="price">¥<em id="J_Total">0.00</em></strong>
 			</div>
 			<div class="btn-area">
-				<a href="javascript:void(0)" id="J_Go" class="submit-btn submit-btn-disabled" aria-label="请注意如果没有选择宝贝，将无法结算">
-					<span>结&nbsp;算</span></a>
+				<input type="submit" value="结算" id="J_Go" class="btn-area submit-btn submit-btn-disabled" aria-label="请注意如果没有选择宝贝，将无法结算" style="border:0px" disabled="true">
 			</div>
 		</div>
 
@@ -218,6 +226,57 @@
 </div> -->
 
 <script>
+$(".delete").click(function(){
+	if(confirm("确定删除该商品？")){
+		var _tr = $(this).parent().parent().parent();
+		var gid = _tr.find('.td-amount').find('.gAId').attr('gid');
+		$.ajax({
+			url:"{:U('Cart/ajaxDel','',false)}/gid/" + gid,
+			type:"GET",
+			dataType:'json',
+			success:function(res){
+				if(res == 1){
+					_tr.parent().parent().remove();
+					totalPrice();
+				}else if(res == 2){
+					_tr.parent().parent().remove();
+					$('.item-list').html('<div class="bundle  bundle-last " style="">购物车空空如也~<a href="{:U('Index/index')}" style="margin-left:20px;color:gray" >去购物~</a></div>');
+					$(".check-all").prop("checked",false);
+					$("#J_SelectedItemsCount").text(0);
+					$("#J_Total").text(0);
+				}
+			}
+		})
+	}
+});
+
+$(".deleteAll").click(function(){
+	if($(".check-one").length == $(".check-one:checked").length){
+		if(confirm("确定删除该商品？")){
+			var _ul = $(this).parent().parent().parent();
+			var valArr = new Array;
+			$(".check-one").each(function(i){
+				valArr[i] = $(this).attr('gid');
+			});
+			var gid = valArr.join(',');
+			$.ajax({
+				url:"{:U('Cart/ajaxDelAll','',false)}",
+				type:"POST",
+				data:{gid:gid},
+				dataType:'json',
+				success:function(res){
+					if(res == 1){
+						$('.bundle-last').empty();
+						$('.item-list').html('<div class="bundle  bundle-last " style="">购物车空空如也~<a href="{:U('Index/index')}" style="margin-left:20px;color:gray" >去购物~</a></div>');
+						$(".check-all").prop("checked",false);
+						$("#J_SelectedItemsCount").text(0);
+						$("#J_Total").text(0);
+					}
+				}
+			})
+		}
+	}
+})
 
 $('#J_Go').click(function(){
 	$.ajax({
@@ -225,22 +284,13 @@ $('#J_Go').click(function(){
 		url:"{:U('Cart/ajaxPay','',false)}",
 		dataType:'json',
 		success:function(data){
+			console.log(data);
 			if(data){
 				document:cart_form.submit();
-			}else{
-				if (confirm("你还未登录？是－选择确定，否-选择取消")){
-					window.location.href="{:U('Login/login')}"
-				}
 			}
 		}
 	})
 });
-
-
-$('.check-all').click(function(){
-	$('.check').attr('checked',true);
-});
-
 	
 $('.add').click(function(){
 	var _tr = $(this).parent().parent().parent().parent().parent()
@@ -258,6 +308,7 @@ $('.add').click(function(){
 			if(data){
 				oneSum.html(parseInt(oneSum.html())+parseInt(oneprice.html()) );
 				_prev.val(parseInt(num)+1);
+				totalPrice();
 			}
 		}
 	})
@@ -280,13 +331,12 @@ $('.min').click(function(){
 				if(data){
 					oneSum.html(parseInt(oneSum.html())-parseInt(oneprice.html()) );
 					_next.val(parseInt(num)-1);
+					totalPrice();
 				}
 			}
 		})
 	}
 })
-
-
 
 $(".text_box").change(function(){
 	var gid = $(this).parent().prev().attr('gid');
@@ -314,6 +364,11 @@ $(".text_box").change(function(){
 })
 
 $(".check-one").click(function(){
+	if($(this).prop("checked") == true){
+		$("#J_Go").attr("disabled",false);
+	}else{
+		$("#J_Go").attr("disabled",true);
+	}
 	if($(".check-one").length == $(".check-one:checked").length){
 		$(".check-all").prop("checked",true);
 		totalPrice();
@@ -326,9 +381,11 @@ $(".check-one").click(function(){
 $(".check-all").click(function(){
 	if($(this).prop("checked") == true){
 		$(".check-one").prop("checked",true);
+		$("#J_Go").attr("disabled",false);
 		totalPrice();
 	}else{
 		$(".check-one").prop("checked",false);
+		$("#J_Go").attr("disabled",true);
 		totalPrice();
 	}
 })

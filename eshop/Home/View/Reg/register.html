@@ -161,6 +161,7 @@
 		$("#telError").html("");
 	});
 
+	//检测账号
 	$("input[name=account]").blur(function(){
 		var acc = $("#account").val();
 		$.ajax({
@@ -178,6 +179,7 @@
 		});
 	});
 
+	//检测账号注册的密码是否合法
 	$("input[name=passwordone]").blur(function(){
 		var pwd = $("#passwordone").val();
 		$.ajax({
@@ -195,6 +197,7 @@
 		});
 	});
 
+	//检测手机号码是否合法
 	$("input[name=tel]").blur(function(){
 		var tel = $("#tel").val();
 		$.ajax({
@@ -212,6 +215,7 @@
 		});
 	});
 
+	//发送手机验证码
 	$("a[id=sendTelCode]").click(function(){
 		$("#sendTelCode").attr("disabled",true);
 		
@@ -251,6 +255,7 @@
 		}
 	});
 
+	//检测手机验证码是否正确
 	$("input[name=code]").blur(function(){
 		var code = $("#code").val();
 		$.ajax({
@@ -268,6 +273,7 @@
 		});
 	});
 
+	//检测手机注册的密码是否合法
 	$("input[name=passwordtwo]").blur(function(){
 		var pwd = $("#passwordtwo").val();
 		$.ajax({
@@ -285,6 +291,7 @@
 		});
 	});
 
+	//注册处理
 	$("input[name=submitReg]").click(function(){
 		if( ($("#account").val && $("#password")) || ($("#tel").val() && $("#code").val() && $("#password").val()) ){
 			if( (x == 1 && y ==1) || (z ==1 && w == 1 && v ==1) ){

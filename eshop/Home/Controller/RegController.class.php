@@ -4,6 +4,9 @@ use Think\Controller;
 class RegController extends Controller {
 	protected $eCode;
 
+	/**
+	*[注册页面显示]
+	*/
 	public function reg(){
 		$this->display();
 	}

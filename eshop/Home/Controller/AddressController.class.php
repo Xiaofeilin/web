@@ -2,6 +2,9 @@
 namespace Home\Controller;
 //use Think\Controller;
 class AddressController extends EqualController {
+	/**
+	*[地址管理页面显示]
+	*/
 	public function address(){
 		$add = D("address");
 		$map['uid'] = $_SESSION['info']['id'];
@@ -12,6 +15,9 @@ class AddressController extends EqualController {
 		$this->display();
 	}
 
+	/**
+	*[检查手机号码是否正确]
+	*/
 	public function checkTel(){
 		$user = D('User');
 		$info = $user->create();
@@ -19,13 +25,15 @@ class AddressController extends EqualController {
 		$this->error($user->getError());
 	}
 
+	/**
+	*[设置默认地址]
+	*/
 	public function setDefault(){
 		$count = I("count");
 
 		$add = D("address");
 		$map['uid'] = $_SESSION['info']['id'];
 		$data['status'] = 0;
-		//$clear = $add->where($map)->execute("update `address` set `status` = 0 where `status` = 1");
 		$clear = $add->where($map)->where('status = 1')->save($data);
 		$addinfo = $add->where($map)->select();
 
@@ -36,6 +44,9 @@ class AddressController extends EqualController {
 		$result = $add->where($mp)->save($da);
 	}
 
+	/**
+	*[删除地址]
+	*/
 	public function delAdd(){
 		$count = I("count");
 
@@ -52,6 +63,9 @@ class AddressController extends EqualController {
 		}
 	}
 
+	/**
+	*[添加地址]
+	*/
 	public function setSuccess(){
 		$add = D("address");
 		$map['uid'] = $_SESSION['info']['id'];
@@ -75,6 +89,9 @@ class AddressController extends EqualController {
 		}	
 	}
 
+	/**
+	*[编辑已存在的地址]
+	*/
 	public function reSuccess(){
 		$add = D("address");
 		$map['id'] = I("id");

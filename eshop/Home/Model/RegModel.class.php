@@ -32,6 +32,11 @@ class RegModel extends Model{
 		}
 	}
 
+	/**
+	*['回调函数检测手机号码是否合法']
+	*@param string	$val[用户输入的手机号码]
+	*@return  boolean	返回true或false
+	*/
 	public function checkTel($val){
 		$map['tel'] = $val;
 		$info = $this->model->where($map)->find();

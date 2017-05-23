@@ -5,6 +5,9 @@ class SafeController extends EqualController {
 	protected $oldCode;
 	protected $newCode;
 
+	/**
+	*[安全中心页面显示]
+	*/
 	public function safety(){
 		$user = D('User');
 		$map['id'] = $_SESSION['info']['id'];
@@ -13,6 +16,9 @@ class SafeController extends EqualController {
 		$this->display();
 	}
 
+	/**
+	*[发送验证码到旧手机]
+	*/
 	public function sendOldTelCode(){
 		$oldCode = mt_rand(1,999999);
 		$toTel = I("tel");
@@ -27,6 +33,9 @@ class SafeController extends EqualController {
 		}
 	}
 
+	/**
+	*[检测发送到旧手机的验证码]
+	*/
 	public function checkOldCode(){
 		$cCode = I("oldcode");
 		$oldCode = $_SESSION['safeMsg']['oldCode'];
@@ -38,6 +47,9 @@ class SafeController extends EqualController {
 		}
 	}
 
+	/**
+	*[检测新手机号码是否合法]
+	*/
 	public function checkNewTel(){
 		$tel = new \Home\Model\SafeModel();
 		$info = $tel->create();
@@ -47,6 +59,9 @@ class SafeController extends EqualController {
 		$this->error($tel->getError());
 	}
 
+	/**
+	*[发送验证码到新手机]
+	*/
 	public function sendNewTelCode(){
 		$newCode = mt_rand(1,999999);
 		$toTel = I("tel");
@@ -61,6 +76,9 @@ class SafeController extends EqualController {
 		}
 	}
 
+	/**
+	*[检测发送到新手机的验证码]
+	*/
 	public function checkNewCode(){
 		$cCode = I("newcode");
 		$newCode = $_SESSION['safeMsg']['newCode'];
@@ -72,6 +90,9 @@ class SafeController extends EqualController {
 		}
 	}
 
+	/**
+	*[记录新手机号码到数据库]
+	*/
 	public function changeTel(){
 		$user = D("User");
 		$data['tel'] = $_SESSION['safeMsg']['tel'];
@@ -88,6 +109,9 @@ class SafeController extends EqualController {
 		}
 	}
 
+	/**
+	*[检测邮件地址是否正确]
+	*/
 	public function checkEmail(){
 		$email = new \Home\Model\SafeModel();
 		$info = $email->create();
@@ -98,6 +122,9 @@ class SafeController extends EqualController {
 		$this->error($email->getError());
 	}
 
+	/**
+	*[发送验证码到邮箱]
+	*/
 	public function sendEmailCode(){
 		$eCode = mt_rand(1,999999);
 		$toemail = I("email");
@@ -113,6 +140,9 @@ class SafeController extends EqualController {
 		}
 	}
 
+	/**
+	*[检测发送到邮箱的验证码]
+	*/
 	public function checkEmailCode(){
 		$cCode = I("ecode");
 		$eCode = $_SESSION['safeMsg']['emailcode'];
@@ -124,6 +154,9 @@ class SafeController extends EqualController {
 		}
 	}
 
+	/**
+	*[记录邮箱地址到数据库]
+	*/
 	public function changeEmail(){
 		$user = D("User");
 		$data['email'] = $_SESSION['safeMsg']['email'];
@@ -140,6 +173,9 @@ class SafeController extends EqualController {
 		}
 	}
 
+	/**
+	*[检测旧密码]
+	*/
 	public function checkOldPwd(){
 		$oldpwd = new \Home\Model\SafeModel();
 		$info = $oldpwd->create();
@@ -147,6 +183,9 @@ class SafeController extends EqualController {
 		$this->error($oldpwd->getError());
 	}
 
+	/**
+	*[检测新密码是否合法]
+	*/
 	public function checkPwd(){
 		$pwd = new \Home\Model\SafeModel();
 		$info = $pwd->create();
@@ -156,6 +195,9 @@ class SafeController extends EqualController {
 		$this->error($pwd->getError());
 	}
 
+	/**
+	*[检测重复密码与新密码是否一致]
+	*/
 	public function checkRePwd(){
 		$repwd = new \Home\Model\SafeModel();
 		$info = $repwd->create();
@@ -163,6 +205,9 @@ class SafeController extends EqualController {
 		$this->error($repwd->getError());
 	}
 
+	/**
+	*[记录新密码到数据库]
+	*/
 	public function changePwd(){
 		$user = D("User");
 		$data['pwd'] = md5($_SESSION['safeMsg']['pwd']);

@@ -9,12 +9,18 @@ class UserController extends EqualController {
 		$this->model = D('User');
 	}
 
+	/**
+	*[用户主页面显示]
+	*/
 	public function index(){
 		$time = time();
 		$this->assign('time',$time);
 		$this->display();
 	}
 
+	/**
+	*[用户详细页面显示]
+	*/
 	public function information(){
 		if(IS_POST){
 			$_POST['birthdate'] = strtotime(I('birthdate'));
@@ -35,6 +41,9 @@ class UserController extends EqualController {
 		}
 	}
 
+	/**
+	*[检测账号是否合法]
+	*/
 	public function checkAcc(){
 		$user = D('User');
 		$info = $user->create();

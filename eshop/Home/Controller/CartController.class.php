@@ -50,18 +50,41 @@
 				if($play=='add' && is_numeric($num)){	
 					if($_SESSION['cart'][$gid][$attrId]['rep_num']>$num){
 						$_SESSION['cart'][$gid][$attrId]['num'] += 1;
+						$_SESSION['cart'][$gid][$attrId]['sum'] = $_SESSION['cart'][$gid][$attrId]['num'] * $_SESSION['cart'][$gid][$attrId]['price'];
 						$this->ajaxReturn(1);
 					}
 				}elseif($play=='min'){
 					$_SESSION['cart'][$gid][$attrId]['num'] -= 1;
+					$_SESSION['cart'][$gid][$attrId]['sum'] = $_SESSION['cart'][$gid][$attrId]['num'] * $_SESSION['cart'][$gid][$attrId]['price'];
 					$this->ajaxReturn(1);
 				}elseif($play=='now' && is_numeric($num) && $num>=0){
 					if($_SESSION['cart'][$gid][$attrId]['rep_num']>$num){
 						$_SESSION['cart'][$gid][$attrId]['num'] = $num;
+						$_SESSION['cart'][$gid][$attrId]['sum'] = $num * $_SESSION['cart'][$gid][$attrId]['price'];
 						$this->ajaxReturn(1);
 					}
 				}
 			}
+		}
+
+		public function ajaxDel(){
+			$gid = I('get.gid');
+			unset($_SESSION['cart'][$gid]);
+			if(empty($_SESSION['cart'])){
+				$this->ajaxReturn(2);
+			}else{
+				$this->ajaxReturn(1);
+			}
+		}
+
+		public function ajaxDelAll(){
+			$gid = I('post.gid');
+			$gid = explode(',', $gid);
+			
+			foreach ($gid as $key => $val) {
+				unset($_SESSION['cart'][$val]);
+			}
+			$this->ajaxReturn(1);
 		}
 
 		public function ajaxPay(){
@@ -71,6 +94,9 @@
 		
 
 		public function payment(){
+			if(empty($_SESSION['info'])){
+				$this->error("你仍未登录，请登录后再操作！",U('Login/login'),3);
+			}
 			$items = I('post.items');
 			$data = array();
 			if(!I('select-all','')){
@@ -104,6 +130,9 @@
 			$mp['id'] = $addinfo[$count]['id'];
 			$da['status'] = 1;
 			$result = $add->where($mp)->save($da);
+			if($result){
+				$this->ajaxReturn(1);
+			}
 		}
 
 		public function delAdd(){
