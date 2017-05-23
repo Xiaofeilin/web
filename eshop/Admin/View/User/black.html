@@ -53,10 +53,10 @@
 			             <td style="text-align:center;">{$val[email]}</td>
 			             <!--<td style="text-align:center;" show="{$val['is_use']}" ><img src="__PUBLIC__/Admin/images/{$val['is_use']}.gif" /></td>-->
 				<td style="text-align:center;">{$val['regtime'] |date='Y-m-d H:i:s',###}</td>			
-				<td class="td-manage" style="text-align:center;"> <a title="查看" href="javascript:void({$val['id']});" onclick="show('会员详细信息','{:U('show',array('id'=>$val['id']) )}','500','400')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe62d;</i></a> <a title="离开黑名单" href="{:U('outblack',array('id'=>$val['id'],'p'=>$p) )}" onclick="outblack()" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				<td class="td-manage" style="text-align:center;"> <a title="查看" href="javascript:void({$val['id']});" onclick="show('会员详细信息','{:U('show',array('id'=>$val['id']) )}','500','400')" class="ml-5 maincolor" style="text-decoration:none"><i class="Hui-iconfont">&#xe62d;</i></a> <a title="离开黑名单" href="{:U('outblack',array('id'=>$val['id'],'p'=>$p) )}" onclick="outblack()" class="ml-5 c-danger" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 			</tr>
 			</foreach>
-      				<tr><td height="30" colspan="10" align="center">{$show}</td></tr>
+      				<tr><td height="30" colspan="10" class="pages text-c">{$show}</td></tr>
 		</tbody>
 	</table>
 </div>

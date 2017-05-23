@@ -30,14 +30,14 @@
 		</thead>
 		<tbody>
 		<foreach name="typeList" item="val">
-		<tr align="center" class="0" id="0_1" id = 'tr_1'>
+		<tr align="center" class="0 text-c" id="0_1" id = 'tr_1'>
 			<td><input type="checkbox" value="1" name=""></td>
 			<td>{$val['id']}</td>
 			<td>{$val[type_name]}</td>
 			<td class="td-manage"> 
-				<a style="text-decoration:none"  href="{:U('Attr/list',array('type_id'=>$val['id']) )}" title="编辑属性"><i class="Hui-iconfont">&#xe615;</i></a>
-				<a title="编辑" href="javascript:;" onclick="edit('管理员编辑','{:U('edit',array('id'=>$val['id']) )}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-				<a title="删除" href="{:U('del',array('id'=>$val['id']))}" onclick="del()" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+				<a class="ml-5 maincolor" style="text-decoration:none"  href="{:U('Attr/list',array('type_id'=>$val['id']) )}" title="编辑属性"><i class="Hui-iconfont">&#xe615;</i></a>
+				<a title="编辑" href="javascript:;" onclick="edit('管理员编辑','{:U('edit',array('id'=>$val['id']) )}')" class="ml-5 maincolor" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+				<a title="删除" href="{:U('del',array('id'=>$val['id']))}" onclick="del()" class="ml-5 c-danger" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
 			</td>
 		</tr>
 		</foreach>

@@ -93,6 +93,13 @@
 				$count = implode($count[0]);
 				$data['count'] = $count;
 				$page = new \Think\Page($count,C('YeShu'));
+				$page->setConfig('header', '<li class="rows">共<b>%TOTAL_ROW%</b>条记录 第<b>%NOW_PAGE%</b>页/共<b>%TOTAL_PAGE%</b>页</li>');  
+			    $page->setConfig('prev', '上一页');  
+			    $page->setConfig('next', '下一页');  
+			    $page->setConfig('last', '末页');  
+			    $page->setConfig('first', '首页');  
+			    $page->setConfig('theme', '%FIRST%%UP_PAGE%%LINK_PAGE%%DOWN_PAGE%%END%%HEADER%');  
+			    $page->lastSuffix = false;//最后一页不显示为总页数 
 				$data['show'] = $page->show();
 
 				$data['roleList'] = $this->query("SELECT role.id,`role_name`,GROUP_CONCAT(pri_name),role.addtime FROM `role` left join role_pri on role.id = role_pri.role_id left join privilege on role_pri.pri_id = privilege.id where role.id in ( SELECT role.id FROM `role` left join role_pri on role.id = role_pri.role_id left join privilege on role_pri.pri_id = privilege.id where privilege.pri_name LIKE '%{$search_val}%' GROUP BY role.id ) GROUP BY role.id limit " . $page->firstRow.','.$page->listRows );
@@ -110,6 +117,13 @@
 		$count = $this->where($where)->count();
 		$data['count'] = $count;
 		$page = new \Think\Page($count,C('YeShu'));
+		$page->setConfig('header', '<li class="rows">共<b>%TOTAL_ROW%</b>条记录 第<b>%NOW_PAGE%</b>页/共<b>%TOTAL_PAGE%</b>页</li>');  
+	    $page->setConfig('prev', '上一页');  
+	    $page->setConfig('next', '下一页');  
+	    $page->setConfig('last', '末页');  
+	    $page->setConfig('first', '首页');  
+	    $page->setConfig('theme', '%FIRST%%UP_PAGE%%LINK_PAGE%%DOWN_PAGE%%END%%HEADER%');  
+	    $page->lastSuffix = false;//最后一页不显示为总页数 
 		$data['show'] = $page->show();
 
 		$roleList = $this->field('role.id,role_name,GROUP_CONCAT(pri_name),role.addtime')->join('left join role_pri on role.id = role_pri.role_id left join privilege on role_pri.pri_id = privilege.id')->group('role.id')->where($where)->limit($page->firstRow.','.$page->listRows)->select();

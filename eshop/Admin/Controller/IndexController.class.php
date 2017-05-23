@@ -50,6 +50,7 @@
 		//清理缓存 执行方法
 		public function clearRuntime(){
 			$R = $_GET['path'] ? $_GET['path'] : RUNTIME_PATH;
-			if($this->_deleteDir($R)) die("cleared!");
+			if($this->_deleteDir($R))
+				$this->success('清理完成!');
 		}
 	}

@@ -84,6 +84,13 @@
 				$count = implode($count[0]);
 				$data['count'] = $count;
 				$page = new \Think\Page($count,C('YeShu'));
+				$page->setConfig('header', '<li class="rows">共<b>%TOTAL_ROW%</b>条记录 第<b>%NOW_PAGE%</b>页/共<b>%TOTAL_PAGE%</b>页</li>');  
+			    $page->setConfig('prev', '上一页');  
+			    $page->setConfig('next', '下一页');  
+			    $page->setConfig('last', '末页');  
+			    $page->setConfig('first', '首页');  
+			    $page->setConfig('theme', '%FIRST%%UP_PAGE%%LINK_PAGE%%DOWN_PAGE%%END%%HEADER%');  
+			    $page->lastSuffix = false;//最后一页不显示为总页数 
 				$data['show'] = $page->show();
 				
 				$adminList = $this->query("SELECT admin.id,admin_name,GROUP_CONCAT(role_name),admin.addtime,admin_nick,tel,email,is_use,icon FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where admin.id in ( SELECT admin.id FROM `admin` left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id where role.role_name LIKE '%{$search_val}%' $and GROUP BY admin.id ) GROUP BY admin.id limit " . $page->firstRow.','.$page->listRows );
@@ -100,6 +107,13 @@
 				$count = $this->where($where)->count();
 				$data['count'] = $count;
 				$page = new \Think\Page($count,C('YeShu'));
+				$page->setConfig('header', '<li class="rows">共<b>%TOTAL_ROW%</b>条记录 第<b>%NOW_PAGE%</b>页/共<b>%TOTAL_PAGE%</b>页</li>');  
+			    $page->setConfig('prev', '上一页');  
+			    $page->setConfig('next', '下一页');  
+			    $page->setConfig('last', '末页');  
+			    $page->setConfig('first', '首页');  
+			    $page->setConfig('theme', '%FIRST%%UP_PAGE%%LINK_PAGE%%DOWN_PAGE%%END%%HEADER%');  
+			    $page->lastSuffix = false;//最后一页不显示为总页数 
 				$data['show'] = $page->show();
 
 				$adminList = $this->field('admin.id,admin_name,GROUP_CONCAT(role_name),admin.addtime,admin_nick,tel,email,is_use,icon')->join('left join admin_role on admin.id = admin_role.admin_id left join role on admin_role.role_id = role.id')->group('admin.id')->where($where)->limit($page->firstRow.','.$page->listRows)->select();

@@ -85,4 +85,14 @@
 			$this->assignHead('编辑管理员角色',U('list'),'编辑管理员角色');
 			$this->display();
 		}
+
+		public function delall(){
+			$ids = I('ids');
+			$res = $this->model->where(array('id'=>array('in',$ids)))->delete();
+			if ($res != false) {
+				$this->success('删除成功');
+			}else{
+				$this->error('没有选项被选中');
+			}
+		}
 	}
