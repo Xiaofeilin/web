@@ -89,10 +89,9 @@
 										<div class="calendarWarp" style="width:284px;position:relative;top:-12px;left:6px">
 											<input type="text" name="birthdate" class='ECalendar' id="ECalendar_case3"  value="{$val.birthdate|date='Y-m-d',###}" style="width:100%" />
 										</div>
-										<!--<input type="hidden" name="time" id="time" value="" />-->
-										<div class="callback" style="position:relative;left:106px;color:red">
+										<!--<div class="callback" style="position:relative;left:106px;color:red">
 											你选择的时间是： <span></span>
-										</div>
+										</div>-->
 									</div>
 								</div>
 								
@@ -119,25 +118,6 @@
 								</div>
 						</div>
 						</form>
-
-						<!--<div id="light" class="white_con panel panel-primary"> 
-							<p><div onclick="document.getElementById('light').style.display='none';" class="am-btn am-btn-danger">关闭</div></p>
-
-							<form action="action.php?a=updatepic" method="post" enctype="multipart/form-data">
-								<div class="form-group">
-
-									<input type="hidden" name="id" value="{$val.id}">
-
-									<input type="hidden" name="oldpic" value="{$val.icon}">
-
-									<label>请选择新头像：</label>
-
-									<input type="file" name="picture" class="form-control">
-								</div>
-								<button type="submit" class="am-btn am-btn-danger" style="position:relative;top:160px">Submit</button>
-							</form>
-						</div> -->
-
 						</foreach>
 
 						<script src="__PUBLIC__/Home/js/Ecalendar.jquery.js"></script>
