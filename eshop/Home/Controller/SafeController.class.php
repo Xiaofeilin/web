@@ -219,6 +219,8 @@ class SafeController extends EqualController {
 			$_SESSION['info']['pwd'] = $data['pwd'];
 			unset($_SESSION['safeMsg']);
 			unset($_SESSION['info']);
+			cookie('acc',null);
+			cookie('pwd',null);
 			$this->ajaxReturn(1);
 		}else{
 			$this->ajaxReturn(2);
