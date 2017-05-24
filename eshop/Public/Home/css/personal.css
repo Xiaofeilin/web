@@ -71,7 +71,7 @@ header{display: none;}
 color: #555555;background:none;border-color:transparent;cursor: default;}
 .am-nav-tabs > li > a {margin-right: 0px;}
 .am-nav-tabs > li.am-active {border-bottom:2px solid #F03726;}
-.am-tabs-d2 .am-tabs-nav li {max-width:216px;}
+.am-tabs-d2 .am-tabs-nav li {max-width:255px;}
 /*选项卡样式*/
 .am-nav-tabs> li{cursor: pointer;}
 .am-nav-tabs > li > a {

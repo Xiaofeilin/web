@@ -103,17 +103,11 @@
 </html>
 
 <script type="text/javascript">
-	//console.log($("#remember").val());
-	//console.log($("#rememberme").attr('checked'));
 	$("#rememberme").change(function(){
 		if($("#rememberme").attr('checked')){
 			$("#remember").val("1");
-			//console.log($("#remember").val());
-			//console.log($("#rememberme").attr('checked'));
 		}else{
 			$("#remember").val("0");
-			//console.log($("#remember").val());
-			//console.log($("#rememberme").attr('checked'));
 		}
 	});	
 
@@ -132,8 +126,8 @@
 			dataType:"text",
 			success:function(res){
 				if(res == 1){
-					//location.href = "{:U('Index/index')}";
-					location.href = "{:U('Test/test')}";
+					location.href = "{:U('Index/index')}";
+					//location.href = "{:U('Test/test')}";
 				}else{
 					$("div[id=loginError]").html(res);
 				}
