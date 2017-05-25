@@ -225,7 +225,7 @@
 				</div>
 				<li>
 					<div class="clearfix tb-btn tb-btn-buy theme-login" id='buy'>
-						<a id="LikBuy" title="点此按钮到下一步确认购买信息" href="javascript:void(0)">立即购买</a>
+						<a id="LikBuy" title="点此按钮到下一步确认购买信息" href="{:U('Cart/addCart')}">立即购买</a>
 					</div>
 				</li>
 				<li>
@@ -422,6 +422,9 @@ function getAttrId(option){
 			
 		});
 	goods_attr_id.sort();
+	goods_attr_id.sort(function (x,y) {
+            		return x-y;
+       	 });
 	if(option==1)
 		return goods_attr_id.join('.')
 	else

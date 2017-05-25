@@ -24,7 +24,7 @@
 			$id = I('get.id','');
 			parent::edit('',array('id'=>$id));
 			$data = array();
-			$data['typeOne'] = $this->model->find();
+			$data['typeOne'] = $this->model->where('id='.$id)->find();
 			$this->assign($data);
 			$this->display();
 		}
