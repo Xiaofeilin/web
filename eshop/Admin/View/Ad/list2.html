@@ -1,0 +1,35 @@
+<layout name="Index/header_foot"/>
+<form method="post" action="" name="listForm">
+       <div class="list-div" id="listDiv">
+
+             <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
+             <tr>
+                         
+                <th>Id</th>
+                <th>广告名称</th>
+                <th>广告图片</th>
+                <th>广告链接</th>
+                <th>是否显示</th>
+                <th>添加时间</th>
+                <th>操作</th>
+               </tr>
+                  <foreach name="adlist" item="val">
+                    <tr align="center" class="0" id="0_1" id = 'tr_1'>
+                        <!-- <input type="hidden" value="{$val['id']}"> -->
+                        <td align="center">{$val['id']}</td>
+                        <td align="center" >{$val['name']}</td>
+                      
+                        <td align="center" ><img src="__IMG__/{$val['pic']}" height ="100" width="100"></td>
+                        <td align="center">{$val['link']}</td>
+                        <td align="center">{$val['isshow']}</td>
+                        <td align="center" >{$val['addtime']|date="Y-m-d",###}</td>
+                        <td align="center" >
+                          <a href="{:U('edit',array('id'=>$val['id']) )}">修改</a> |
+                          <a href="{:U('Admin/Ad/del',array('id'=>$val['id']))}" title="移除">删除</a>
+                        </td>
+                    </tr>
+                  </foreach>
+               <tr><td height="30" colspan="15" align="center">{$show}</td></tr>
+            </table>
+      </div>
+</form>

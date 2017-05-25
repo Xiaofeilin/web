@@ -1,32 +1,104 @@
 <layout name="Index/header_foot"/>
-<form method="post" action="" name="listForm">
-       <div class="list-div" id="listDiv">
-
-             <table width="100%" cellspacing="1" cellpadding="2" id="list-table">
-             <tr>
-                         
-                <th>Id</th>
+<include file="index/list" />
+<div class="page-container">
+	<form >
+		<p>搜索内容：
+			<input type="text" style="width:120px;" class="input-text"  value="{$Think.get.search_val}" name="search_val">
+			<span class="select-box" style="width:150px;">
+			<select  class="select"   size="1" name="search_key" >
+				<option value="">请选择搜索类型</option>
+				<option value="brand_name" <eq name="Think.get.search_key" value="brand_name">selected</eq>>品牌名</option>
+				<option value="site_url" <eq name="Think.get.search_key" value="site_url">selected</eq> >url地址</option>
+				<option value="id" <eq name="Think.get.search_key" value="id">selected</eq> >ID</option>
+			</select>
+			</span>
+		</p>
+		<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"><a href="{:U('list','',false)}?unset=1">&nbsp;<input  class="btn btn-danger radius" type="button" value="重置条件"></a>
+	</form>
+		
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="add('{$title}','{$url}','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> {$title}</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+	<table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr>
+				<th scope="col" colspan="9"></th>
+			</tr>
+			<tr class="text-c">
+				<th width="25"><input type="checkbox" name="" value=""></th>
+				<th>Id</th>
                 <th>网站名称</th>
                 <th>网址</th>
                 <th>显示</th>
                 <th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<foreach name="linkslist" item="val">
+			<tr align="center" class="0" id="0_1" id = 'tr_1'>
+				<td class="text-c"><input type="checkbox" value="1" name=""></td>
+				<td class="text-c">{$val['id']}</td>
+				<td class="text-c">{$val['link_name']}</td>
+				<td class="text-c"><span><a href="http://{$val['link']}" >{$val['link_url']}</a></span></td>
+				<td class="text-c">{$val['isshow']}</td>
+				
+				<td class="td-manage text-c"> <a title="编辑" href="javascript:;" onclick="edit('管理员编辑','{:U('edit',array('id'=>$val['id']) )}')" class="ml-5 maincolor" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" onclick="del()" class="ml-5 c-danger" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+			</tr>
+			</foreach>
+		</tbody>
+	</table>
+</div>
 
-    
-               </tr>
-                  <foreach name="linkslist" item="val">
-                    <tr align="center" class="0" id="0_1" id = 'tr_1'>
-                        <!-- <input type="hidden" value="{$val['id']}"> -->
-                        <td align="center">{$val.id}</td>
-                        <td align="center" >{$val.link_name}</td>
-                        <td align="center" >{$val.link_url}</td>
-                        <td align="center" >{$val.isshow}</td>
-                        <td  align="center" >
-                          <a href="{:U('edit',array('id'=>$val['id']) )}">编辑</a> |
-                          <a href="{:U('Admin/FriendLinks/del',array('id'=>$val[id]))}" title="移除">删除</a>
-                        </td>
-                    </tr>
-                  </foreach>
-               <tr><td height="30" colspan="15" align="center">{$show}</td></tr>
-            </table>
-      </div>
-</form>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+/*
+	参数解释：
+	title	标题
+	url		请求的url
+	id		需要操作的数据id
+	w		弹出层宽度（缺省调默认值）
+	h		弹出层高度（缺省调默认值）
+*/
+/*管理员-增加*/
+function add(title,url,w,h){
+	layer_show(title,url,w,h);
+}
+function del() { 
+	var msg = "您真的确定要删除吗？\n\n请确认！"; 
+	if (confirm(msg)==true){ 
+		return true; 
+	}else{ 
+		return false; 
+	} 
+} 
+
+/*管理员-编辑*/
+function edit(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+
+
+//ajax无刷新修改是否显示
+$('td[show]').click(function(){
+	var td = $(this);
+	var show = $(this).attr('show');
+	var id = td.prev().prev().html();
+	$.ajax({
+		type:'GET',
+		url:"{:U('ajaxIsShow','',false)}/id/" +id,
+		dataType:'json',
+		success:function(data){
+		if(data!=null){
+				td.children().attr('src','__PUBLIC__/Admin/images/'+data+'.gif');
+			}
+		}
+	})
+});
+
+//是否显示按钮点击提交表单
+$('input[name="is_show"]').click(function(){
+	$(this).parent().parent().submit();
+});
+
+	
+</script>
+</body>
+</html>

@@ -70,7 +70,7 @@ class CarouselController extends Controller{
         		if($car ->save()){
         			$this ->success('修改成功',U('Carousel/list'));
         		}else{
-        			$this ->error('修改失败');
+        			$this ->error('修改失败',U('Carousel/list'));
         		}
         	}else{
         		$this ->error($car ->getError());

@@ -1,40 +1,66 @@
-  <layout name="Index/header_foot"/>
-  <div class="main-div">
-      <form action="{:U('Admin/Carousel/add')}" id="cat_form" method="post" name="theForm" enctype="multipart/form-data" >
-
-              <table width="100%" style="margin:0 auto" id="general-table">
-
-                    <tr>
-                          <td class="label">轮播图名称:</td>
-                          <td><input type='text' name='name' maxlength="20" value='' size='27' /> <font color="red">*</font></td>
-                    </tr>
-
-                    <tr>
-                          <td class="label">轮播图图片:</td>
-                          <td><input type='file' name='pic' maxlength="20" value='' size='27' /></td>
-                    </tr>
-                     <tr>
-                          <td class="label">轮播图链接:</td>
-                          <td><input type='text' name='link' maxlength="20" value='' size='27' /> <font color="red">*</font></td>
-                    </tr>
-                     <tr>
-                          <td class="label">是否在前台显示：</td>
-                          <td>
-                                <input type="radio" name="isshow" value="1">是
-                                <input type="radio" name="isshow" value="0" checked>否
-                          </td>
-                    </tr>
-
-                     <tr>
-                          
-                          <td><input type='hidden' name='addtime' maxlength="20" value='{:time()}' size='27' /> <font color="red">*</font></td>
-                    </tr>
-
-              </table>
-              <div class="button-div">
-              <input type="submit" value=" 确定 " />
-              <input type="reset" value=" 重置 " />
-              </div>
-      </form>
+<layout name="Index/header_foot"/>
+<body>
+<article class="page-container">
+  <form class="form form-horizontal" method="post" id="form-admin-add" enctype="multipart/form-data">
+  <div class="row cl">
+    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>轮播图名称</label>
+    <div class="formControls col-xs-8 col-sm-9">
+      <input type="text" name='name'  class="input-text"   >
+    </div>
+  </div>
+  <div class="row cl">
+    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>轮播图图片</label>
+    <div class="formControls col-xs-8 col-sm-9">
+      <input type="file" name="pic">
+    </div>
+  </div>
+  <div class="row cl">
+    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>轮播图连接</label>
+    <div class="formControls col-xs-8 col-sm-9">
+      <input type="text" name='link'  class="input-text"   >
+    </div>
+  </div>
+  <div class="row cl">
+    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>是否显示</label>
+    <div class="formControls col-xs-8 col-sm-9">
+      <input type="radio" name="isshow" value="1">是
+      <input type="radio" name="isshow" value="0" checked>否
+    </div>
   </div>
 
+      <input type="hidden" name='addtime' value="{:time()}" >
+    
+  
+  
+
+  <div class="row cl">
+    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+      <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+    </div>
+  </div>
+  </form>
+</article>
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+<script type="text/javascript">
+
+
+$('input[name="logo"]').change(function(){
+  var pic = document.getElementsByName('logo')[0].files[0];
+  var url = window.URL.createObjectURL(pic);
+  if($(this).next().attr('src'))
+    $(this).next().attr('src', url);
+  else
+    $(this).after('<img name="logo" src="'+url+'" width="100">');
+});
+
+
+
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
