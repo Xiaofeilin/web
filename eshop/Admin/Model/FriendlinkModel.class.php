@@ -3,6 +3,12 @@ namespace Admin\Model;
 use Think\Model;
 
 class FriendLinkModel extends Model{
+
+
+	protected function _before_insert(&$data){
+		$data['link_url'] = 'http://' . $_POST['link_url'];
+	}
+
 	/**
 	*[搜索+分页]
 	*@return array 		$data[搜索后+分页的数据]

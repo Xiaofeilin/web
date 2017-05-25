@@ -48,8 +48,8 @@ class CarouselController extends EqualController{
 		$upload = new \Think\Upload();// 实例化上传类   
 		$upload->maxSize   =     3145728 ;// 设置附件上传大小
 		$upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型    
-		$upload->rootPath  =      './Public/Uploads';
-		$upload->savePath  =      '/car/'; // 设置附件上传目录   
+		$upload->rootPath  =      'Uploads';
+		$upload->savePath  =      '/Car/'; // 设置附件上传目录   
 		$upload->saveName  =  array('uniqid', 'md5'); //上传文件命名规则，[0]-函数名，[1]-参数，多个参数使用数组
 		 // 上传文件     
 		$info = $upload->uploadOne($file);	 
