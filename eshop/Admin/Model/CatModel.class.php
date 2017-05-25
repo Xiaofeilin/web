@@ -28,12 +28,16 @@
 		*/
 		protected function _before_insert(&$data){
 
-			if($data['search_attr_id'] = $this->join_path($data['search_attr_id']))
-				return false;
 			
-			if($data['brand_id'] = $this->join_path($data['brand_id']))
-				return false;
+			if(  $data['search_attr_id'] ){
+				if( !( $data['search_attr_id'] = $this->join_path($data['search_attr_id']) ) )
+					return false;
+			}
+			
+			$data['brand_id'] = $this->join_path($data['brand_id']);
+			
 
+			
 			if($data['parent_id']!==0){
 				$catOne = $this->find($data['parent_id']);
 				$data['cat_path'] = $catOne['cat_path']  . $catOne['id'] . ',';
@@ -42,24 +46,22 @@
 		}
 
 		protected function _before_update(&$data){
-	
+			
 			if(count($data)<=3) return;
-
+			$data['brand_id'] = $this->join_path($data['brand_id']);
 			if(  $data['search_attr_id'] ){
 				if( !( $data['search_attr_id'] = $this->join_path($data['search_attr_id']) ) )
 					return false;
 			}
-			if( $data['brand_id']) {
-				if( !($data['brand_id'] = $this->join_path($data['brand_id'])) )
-					return false;
-			} 
+				
+					
+		
 		}
 
 		protected function join_path($path){
 			if( !empty($path) ){
 				if(!is_array($path) ){
-					$this->error = '筛选属性错误';
-					return false;
+					$this->error = '筛选错误';
 				}
 				$path_str= "";
 				foreach($path as $key=>$val){
@@ -68,6 +70,7 @@
 				}
 				$path_str= rtrim($path_str , ',' );
 			}
+
 			return $path_str;
 		}
 
@@ -210,4 +213,5 @@
 				$catOne['parent_name'] = '顶级分类';
 			return $catOne;
 		}
+		
 	}

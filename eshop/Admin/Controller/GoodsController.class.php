@@ -90,7 +90,6 @@
 		*[还原商品数据或删除商品数据]
 		*/
 		public function restoreOrDel(){
-
 			//检验数据是否不合格
 			if( $goodsData =$this->model-> idAndIs_del( I('get.id','') , I('get.is_del') )){
 
@@ -120,6 +119,19 @@
 
 		public function del(){
 			
+			$id = I('get.id','');
+			$is_del = I('get.is_del','');
+
+			if($id&&$is_del=='0'){
+				$detail = D('detail');
+				$n = $detail->field('count(0) num')->where('goods_id='.$id)->find();
+				if($n['num']=='0') {
+					$this->model->delete($id);
+					$this->success( '删除成功',U( 'recycle',array( 'p'=>$p) ) );
+				}else
+					$this->error('该商品已售买无法删除');
+				
+			}
 		}
 
 		/**

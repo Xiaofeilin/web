@@ -68,18 +68,24 @@
 			$lv = I('get.lv','0');
 			$p = I('get.p',0);
 
-			if($lv<2)
-				$catList = $this->model->where('parent_id='.$id)->select();	
-			else
-				$catList = D('goods')->where('cat_id='.$id)->select();
-				
-			if(!empty($catList)){
-				$error = $this->model->getError();
-				$this->error($error);
-				exit;
+			if($lv<2){
+				$catList = $this->model->where('parent_id='.$id)->select();
+				if(!empty($catList)){
+					$this->error('该分类有子分类无法删除');
+					exit;
+				}
+				$this->model->delete($id);
+				$this->success( '删除成功',U( 'list',array( 'p'=>$p) ) );
+			}else{
+				$goods = D('Goods');
+				$n = $goods->field('count(0) num')->where('cat_id='.$id)->find();
+				if($n['num']=='0') {
+					$this->model->delete($id);
+					$this->success( '删除成功',U( 'list',array( 'p'=>$p) ) );
+				}else
+					$this->error('该分类有商品无法删除');
 			}
-
-			$this->success( '修改成功',U('list',array('p'=>$p)) );
+			
 		}
 
 
