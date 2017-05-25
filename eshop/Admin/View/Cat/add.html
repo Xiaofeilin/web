@@ -126,6 +126,7 @@ function addnew(a){
 
 		newP.find('label ').html('');
 		newP.find("a").html("[-]");
+		newP.find('a').next().next().remove();
 		newP.find("select[name='search_attr_id[ ]']").remove();
 		p.after(newP);
 	}
