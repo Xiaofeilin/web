@@ -255,6 +255,7 @@
 		}
 
 		public function success(){
+			session('cart',null);
 			$id = I('get.id','');
 			$orders = D('orders');
 			$ordersOne = $orders->field('a.total,b.*')->alias('a')->join('left join address b on a.address_id=b.id')->where('a.id='.$id)->find();

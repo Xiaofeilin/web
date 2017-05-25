@@ -101,6 +101,7 @@
 						<foreach name="value" item="value1" key="key1">
 						<if condition="$key1 nheq 'name'">
 						<ul class="item-content clearfix">
+							<input type="hidden" class="rep_num" value="{$value1['rep_num']}">
 							<div class="pay-phone">
 								<li class="td td-item">
 									<div class="item-pic">
@@ -428,6 +429,7 @@
 				}
 			}
 		})
+		
 	})
 
 	$('.min').click(function(){
@@ -455,13 +457,18 @@
 	})
 
 	$(".text_box").change(function(){
+		var _tr = $(this).parent().parent().parent().parent().parent();
 		var gid = $(this).parent().prev().attr('gid');
 		var attrId = $(this).parent().prev().attr('attr_id');
 		var _this = $(this);
 		var n = $(this).val();
+		var rep_num = $(this).find(".rep_num").val();
 		if(n < 1){
 			n = 1;
 			$(this).val(1);
+		}
+		if(n > rep_num){
+			n = rep_num;
 		}
 		$.ajax({
 			type:'GET',

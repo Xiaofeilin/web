@@ -74,10 +74,10 @@
 					<a class="am-btn-warning btn" href="{:U('Reg/register')}">注册</a>
 				</div>
 				<div class="member-login" style="display:{$_SESSION['info']?'block':'none'}">
-					<a href="#"><strong>0</strong>待收货</a>
-					<a href="#"><strong>0</strong>待发货</a>
-					<a href="#"><strong>0</strong>待付款</a>
-					<a href="#"><strong>0</strong>待评价</a>
+					<a href="{:U('Orders/orders')}"><strong>{$ordst1}</strong>待收货</a>
+					<a href="{:U('Orders/orders')}"><strong>{$ordst0}</strong>待发货</a>
+					<!--<a href="#"><strong>0</strong>待付款</a>-->
+					<a href="{:U('Orders/orders')}"><strong>{$ordst2}</strong>待评价</a>
 				</div>
 				<div class="clear"></div>	
 			</div>																	    

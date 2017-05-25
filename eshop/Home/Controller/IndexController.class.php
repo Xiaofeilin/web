@@ -20,6 +20,16 @@
 	    		$data['goods'] = $this->model->goodsSelect();
 	    		$data['catAll'] = $this->model->catSelect();
 	    		$data['floorGoods'] = $this->model->floorSelect();
+
+	    		$id = $_SESSION['info']['id'];
+			$orders = D('orders');
+			$ordst0 = $orders->where("state = 0 and user_id = '$id'")->count();
+			$ordst1 = $orders->where("state = 1 and user_id = '$id'")->count();
+			$ordst2 = $orders->where("state = 2 and user_id = '$id'")->count();
+			$this->assign('ordst0',$ordst0);
+			$this->assign('ordst1',$ordst1);
+			$this->assign('ordst2',$ordst2);
+			
 	      		$this->assign($data);
 	      		$this->display();
 	   	}

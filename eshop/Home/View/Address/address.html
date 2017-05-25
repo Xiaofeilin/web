@@ -74,7 +74,7 @@
 							<ul class="am-avg-sm-1 am-avg-md-3 am-thumbnails">
 								<?php for($i = 0; $i < count($addinfo); $i++):?>
 								<li class="user-addresslist {$addinfo[$i]['status'] == 1 ? 'defaultAddr' : ''}" count="{$i}">
-									<input type="hidden" value='{$addinfo|json_encode=###}'>
+									<input type="hidden" id="json" value='{$addinfo|json_encode=###}'>
 									<span class="new-option-r" id="default"><i class="am-icon-check-circle"></i>设为默认</span>
 									<p class="new-tit new-p-re">
 										<span class="new-txt">{$addinfo[$i][name]}</span>
@@ -186,7 +186,7 @@
 						//编辑地址
 						$(".edit").click(function(){
 							var count = $(".listLi").attr("count");
-							var list = $("input[type=hidden]").val();
+							var list = $("input[type=hidden][id=json]").val();
 							$("#light").css({display:"block"});
 							var obj = JSON.parse(list);
 
