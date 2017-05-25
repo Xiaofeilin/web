@@ -297,7 +297,7 @@
 					<div class="am-tab-panel am-fade" >						
 	                               			<div class="actor-new">
 	                                    				<div class="rate">                
-	                                    					<strong>{$sum}<span>%</span></strong><br> <span>好评度</span>            
+	                                    					<strong>{$csum}<span>%</span></strong><br> <span>好评度</span>            
 	                                    				</div>
 	                                       			 <dl>                    
 	                                            				<dt>买家印象</dt>                    
@@ -485,6 +485,31 @@ function a(){
 	})
 }
 
+
+$('#text_box').change(function(){
+
+	var rep = parseInt($('.stock').html());
+	var n = $(this).val();
+
+	if(parseInt(n)>=rep){
+		$(this).val(rep);
+		$('#add').attr('disabled',true);
+		$('#min').removeAttr('disabled');
+	}else if(parseInt(n)<=0){
+		$(this).val(0);
+		$('#min').attr('disabled',true);
+		$('#add').removeAttr('disabled');
+	}else if(parseInt(n)<rep&&parseInt(n)>0){
+		$('#min').removeAttr('disabled');
+		$('#add').removeAttr('disabled');
+	}else{
+		$(this).val(0);
+		$('#min').attr('disabled',true);
+		$('#add').removeAttr('disabled');
+	}
+
+})
+
 $('#cart').click(function(){
 
 	var str = getAttrId(1)?getAttrId(1):0;
@@ -507,16 +532,7 @@ $('#cart').click(function(){
 	  	function(data){
 	  		if(data) alert('添加成功');
    	 });
-	// $.ajax({
-	// 	type:'POST',
-	// 	url:"{:U('Cart/ajaxGetCart','',false)}",
-		
-	// 	dataType:'json',
-	// 	success:function(data){
-
-	// 		if(data) alert('添加成功');
-	// 	}
-	// })
+	
 
 })
 	

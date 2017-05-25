@@ -23,8 +23,8 @@ class Cart{
                     );
         }
 
-        if(isset($_SESSION['cart'][$id][$attr_id])){
-               $this->incNum($id,$attr_id,$num);
+        if(isset($_SESSION['cart'][$id][$goodsArr['attr_id']])){
+               $this->incNum($id,$goodsArr['attr_id'],$goodsArr['num']);
                 return;
         }
         
