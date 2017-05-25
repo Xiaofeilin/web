@@ -262,6 +262,35 @@
 			$this->display();
 		}
 
+		public function getCart(){
+			$id = I('get.id','');
+			$attr_id = I('get.goodsAttrId');
+			$attr_arr = D('GoodsAttr')->where('id in('.str_replace('.',',',$attr_id).')')->getField('attr_id',true);
+
+			$attrId = D('attr')->where('id in('.implode(',', $attr_arr).')')->select();
+			foreach ($attrId as $key => $value) {
+				foreach ($attr_arr as $key1 => $value1) {
+					if($value['id']==$value1['attr_id']){
+						$arr[] = $value1['attr_value'].':'.$value['attr_name'];
+					}
+				}
+			}
+			$attr_name = implode('|', $arr);
+			$goodsOne = D('goods')->where('id='.$id)->find();
+			
+			$_SESSION['cart'][$id] = array(
+				'name'=>$goodsOne['goods_name'],
+				$attr_id=>array(
+					'attr_id'=>$attr_id,
+					'attr_val'=>$attr_name,
+					'num'=>1,
+					'market'=>$goodsOne['market_price'],
+					'logo'=>$goodsOne['logo'],
+				),
+			);
+
+			$this->redirect('shopcart');
+		}
 
 	}
 	

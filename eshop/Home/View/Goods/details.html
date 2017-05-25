@@ -428,9 +428,7 @@ function getAttrId(option){
 	if(option==1)
 		return goods_attr_id.join('.')
 	else
-		return goods_attr_val.join('|')
-	
-	
+		return goods_attr_val.join('|')	
 }
 
 
@@ -465,7 +463,7 @@ $("#comment").on("click", function(){
 
 function a(){
 	var str = getAttrId(1);
-	var url = "{:U('ajaxGetRep','',false)}/id/{$goodsOne['id']}/goodsAttrId/" + str;
+	var url = "{:U('Cart/getCart','',false)}/id/{$goodsOne['id']}/goodsAttrId/" + str;
 	$('#LikBuy').attr('href',url);
 	$.ajax({
 		type:'GET',
@@ -512,11 +510,9 @@ $('#text_box').change(function(){
 		$('#min').attr('disabled',true);
 		$('#add').removeAttr('disabled');
 	}
-
 })
-
+var n = parseInt($('#J_MiniCartNum').html())
 $('#cart').click(function(){
-
 	var str = getAttrId(1)?getAttrId(1):0;
 	var str1 = getAttrId(2)?getAttrId(2):0;
 
@@ -535,10 +531,15 @@ $('#cart').click(function(){
 	  		'num':num,
 	  	},
 	  	function(data){
-	  		if(data) alert('添加成功');
+	  		if(data){
+	  			alert('添加成功');
+	  			var n1 = parseInt($('#J_MiniCartNum').html())+1;
+	  			if((n1-n)==1){
+	  				$('#J_MiniCartNum').html(n1);
+	  				$('.cart_num ').html(n1);
+	  			}
+	  		} 
    	 });
-	
-
 })
 	
 </script>
