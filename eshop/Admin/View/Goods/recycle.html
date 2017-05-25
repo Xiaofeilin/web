@@ -79,11 +79,11 @@
        <a title="还原" href="{:U('restoreOrDel',array('id'=>$val['id'],'p'=>$p,'is_del'=>0) )}" onclick="del()" class="ml-5 c-danger" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
       </tr>
       </foreach>
+      <tr><td height="30" colspan="16" class="pages text-c">{$show}</td></tr>
     </tbody>
   </table>
 </div>
 </form>
-{$show}
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="__PUBLIC__/Admin/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 

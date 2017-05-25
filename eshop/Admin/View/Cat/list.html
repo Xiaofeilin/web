@@ -50,10 +50,9 @@
 				<td class="td-manage"> <a title="编辑" href="javascript:;" onclick="edit('管理员编辑','{:U('edit',array('id'=>$val['id']) )}')" class="ml-5 maincolor" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="{:U('del',array('id'=>$val['id'],'lv'=>$val['lv'],'p'=>$p) )}" onclick="del()" class="ml-5 c-danger" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 			</tr>
 			</foreach>
-			
+			<tr><td height="30" colspan="10" class="pages text-c">{$show}</td></tr>
 		</tbody>
 	</table>
-	{$show}
 </div>
 
 <!--请在下方写此页面业务相关的脚本-->
