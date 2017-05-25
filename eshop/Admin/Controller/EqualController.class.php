@@ -56,26 +56,26 @@
 
 
 		// 判断是否登录
-		// public function _initialize()
-		//    { 
-		//    		//做权限的认证
-		//    		//判断用户是否已经登录
-		//    		if(!session('?admininfo')) { 
-		//    			$this->redirect('Login/login');
-		//    		}
+		public function _initialize()
+		   { 
+		   		//做权限的认证
+		   		//判断用户是否已经登录
+		   		if(!session('?admininfo')) { 
+		   			$this->redirect('Login/login');
+		   		}
 
-		//    		$ControllerName = CONTROLLER_NAME;
-		//    		$ActionName = ACTION_NAME;
+		   		$ControllerName = CONTROLLER_NAME;
+		   		$ActionName = ACTION_NAME;
 
-		//    		$isPriList = D('privilege')->field('id')->where("`controller_name` = '{$ControllerName}' and `action_name` = '{$ActionName}'")->find();
+		   		$isPriList = D('privilege')->field('id')->where("`controller_name` = '{$ControllerName}' and `action_name` = '{$ActionName}'")->find();
 
-		//    		$priList = $_SESSION['admininfo']['priList']['group_concat(distinct role_pri.pri_id)'];
+		   		$priList = $_SESSION['admininfo']['priList']['group_concat(distinct role_pri.pri_id)'];
 
-		//    		$priArr = explode(',', $priList);
+		   		$priArr = explode(',', $priList);
 
-		//    		if(empty($isPriList['id']) && !in_array($isPriList['id'],$priArr)) { 
-		//    			$this->error('对不起,没有访问权限!','');
-		//    		}
+		   		if(empty($isPriList['id']) && !in_array($isPriList['id'],$priArr)) { 
+		   			$this->error('对不起,没有访问权限!','');
+		   		}
 
-		//    }
+		   }
 	}
