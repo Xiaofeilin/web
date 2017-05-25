@@ -118,6 +118,10 @@
 			$this->error($error);
 		}
 
+		public function del(){
+			
+		}
+
 		/**
 		*[商品库存]
 		*/

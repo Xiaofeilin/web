@@ -75,6 +75,7 @@
         <td>{$val['addtime']}</td>
         <td >{$val['sort_num']}</td>
         <td>
+         <a title="还原" href="{:U('restoreOrDel',array('id'=>$val['id'],'p'=>$p,'is_del'=>0) )}" onclick="del()" class="ml-5 c-danger" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
        <a title="还原" href="{:U('restoreOrDel',array('id'=>$val['id'],'p'=>$p,'is_del'=>0) )}" onclick="del()" class="ml-5 c-danger" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
       </tr>
       </foreach>
