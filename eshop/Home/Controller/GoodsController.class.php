@@ -4,9 +4,118 @@
 		public function __construct(){
 			parent::__construct();
 			$this->model = D('goods');
+			
+			
 		}
 
 		public function search(){
+			$search =explode('|', I('search',''));
+			
+			
+			//******************************************分类**************************************************************
+			if($cid = I('get.cid')){
+				
+
+				$data['cid'] = $cid;
+
+				$cat = D('cat');
+				$catOne = $cat->field('id,search_attr_id,brand_id,price_section,cat_name')->where('id='.$cid)->find();
+				$data['cat_name'] = $catOne['cat_name'];
+				$data['cid'] = $catOne['id'];
+				
+				//************************************************商品属性筛选*****************************************
+				$search_attr_id = $catOne['search_attr_id'];
+				if($search_attr_id){
+					$goodsAttr = D('GoodsAttr');
+					$goodsList = $goodsAttr->field('a.attr_id,a.attr_value,attr_name')->alias('a')->join('left join attr b on a.attr_id=b.id')->where('a.attr_id in ('.$search_attr_id.')')->select();
+					$goodsList = array_unique($goodsList,SORT_REGULAR);
+					$attrSearch = array();
+					foreach($goodsList as $key=>$value){
+						$attrSearch[$value['attr_name']][] = $value;
+					}
+					$data['attrSearch'] = $attrSearch;
+
+					$attr_search = I('get.attr_search','');
+					$data['i'] = 0;
+					if($search['0']&&$attr_search){
+						$data['search_arr'] = explode('.', $attr_search);
+					}else{
+						if(substr_count($attr_search,'.')==3){
+							$data['search_arr'] = explode('.', $attr_search);
+						}elseif(!$search['0'])
+							$data['search_arr'] = array_fill(0, count($attrSearch), 0);
+					}
+				
+					$search_arr =  implode('.', $data['search_arr'] );
+					$search['0'] =$search_arr ?$search_arr :$search['0']; 
+				}
+				
+				//******************************************商品品牌筛选************************************************
+				$brand_id = $catOne['brand_id'];
+				if($brand_id){
+					$brand = D('brand');
+					$brandList = $brand->where('id in ('.$brand_id.')')->select();
+					$data['brandList'] = $brandList;
+					if(($brand_search = I('get.brand_id',''))!='no' )
+						$search['1'] = $brand_search?$brand_search:$search['1'];
+					else
+						$search['1'] = '';
+				}
+				
+
+				//**********************************价格筛选*************************************
+				$num = $catOne['price_section'];
+				if($num){
+					$shop_price = $this->model->field('max(shop_price) maxp, min(shop_price) minp')->find();
+					$diff = ceil( ( $shop_price['maxp'] - $shop_price['minp'] ) / $num );
+					$price_arr = array();
+					$minp = intval($shop_price['minp']);
+					for($i=0;$i<$num;$i++){
+						$price_arr[$i] = $minp + $diff;
+						$price_section[] = $minp.'--'.$price_arr[$i];
+						$minp = $price_arr[$i];
+					}
+					$data['price_section'] = $price_section;
+					if( ( $price = I('price','') )!='no')
+						$search['2'] = $price?$price:$search['2'];
+					else
+						$search['2'] ='';
+				}
+			}
+
+			//**********************************商品名*****************************************
+			if($index_sysc=I('get.index_sysc',''))
+				$search['0'] = $index_sysc?$index_sysc:$search['0'];
+
+			//************************************排序******************************************
+			$order = I('get.order','sort_num');
+			$by = I('get.value','desc')=='desc' ? 'asc':'desc';
+			$data['by'] = $by;
+			$sort =  ($order.' '.$by);
+			if($cid)
+				$search['3'] = $order?$sort:$search['3'];
+			else
+				$search['1'] = $order?$sort:$search['3'];
+			
+
+			//************************************热销商品**************************************
+			$where['is_hot'] = array('eq',1);
+			if($cid)
+				$where['cat_id'] = array('eq',$cid);
+			$data['hot_goods'] = $this->model->field('id,shop_price,logo,goods_name,addtime')->where($where)->limit(4)->select();
+
+
+			$n = $cid?2:4;
+			$search = array_slice($search,0,$n);
+			$data['search'] = implode('|', $search);
+
+
+			$goodsList = $this->model->search($data['search']);
+			$data['goodsList'] = $goodsList['goodsList'];
+			$data['show'] = $goodsList['show'];
+			$data['count'] = $goodsList['count'];
+
+			$this->assign($data);
 			$this->display();
 		}
 
@@ -17,9 +126,7 @@
 			$goodsRep = D('GoodsRep');
 			$comment = D('GoodsComment');
 			$cat = D('cat');
-
-		
-			$this->history($id);
+			$data['goods_history'] = $this->history($id);
 
 			$data['goodsOne'] = $this->model->where('id='.$id)->find();
 
@@ -49,10 +156,9 @@
 					$data['goodsAttr']['attr_type'][$value['attr_name']][] = $value;
 			}
 
-			$catAll = $this->model->catSelect($cat_id);
-			$data['catAll'] = $catAll['catAll'];
-			$cat_path = rtrim( $catAll['cat_path'] , ',');
-			
+			$data['catAll']= $this->model->catSelect();
+			$cat_path = $cat->field('cat_path')->where('id='.$cat_id )->getField('cat_path');
+			$cat_path = rtrim( $cat_path, ',');
 			$data['path'] = $cat->field('cat_name')->where('id in ('. $cat_path .')')->select();
 			$commentNum = $comment->field('score,count(0)')->where('is_show=1 and goods_id='.$id)->group('score')->select();
 			$score = array();
@@ -70,6 +176,44 @@
 			$this->display();
 		}
 
+
+		public function history($id,$cur_time=0){
+
+			//如是COOKIE 里面不为空，则往里面增加一个商品ID
+			if (!empty($_COOKIE['SHOP']['history'])){
+				//取得COOKIE里面的值，并用逗号把它切割成一个数组
+				$history = explode(',', $_COOKIE['SHOP']['history']);
+				
+				//在这个数组的开头插入当前正在浏览的商品ID
+				array_unshift($history, $id);
+				
+				//去除数组里重复的值
+				$history = array_unique($history);
+				
+				//当数组的长度大于5里循环执行里面的代码
+				while (count($history) > 5){
+				
+					//将数组最后一个单元弹出，直到它的长度小于等于5为止
+					array_pop($history);
+				}
+				
+				//把这个数组用逗号连成一个字符串写入COOKIE，并设置其过期时间为30天
+				cookie('SHOP[history]', implode(',', $history), $cur_time + 3600 * 24 * 30);
+				
+			}else{
+				//如果COOKIE里面为空，则把当前浏览的商品ID写入COOKIE ，这个只在第一次浏览该网站时发生
+				cookie('SHOP[history]', $id);
+			}
+
+			//以上均为记录浏览的商品ID到COOKIE里,下面将讲到怎样用这样COOKIE里的数据
+
+			//取得COOKIE里的数据 ,格式为1,2,3,4 这样，当然也有可以为0
+			$history =isset ($_COOKIE['SHOP']['history']) ? $_COOKIE['SHOP']['history'] : 0;
+
+			//写SQL语句，用IN 来查询出这些ID的商品列表
+			 return $goods_history = $this->model->field('id,goods_name,logo,shop_price')->where('id in('.$history.')')->select();
+			
+		}
 
 		public function ajaxGetRep(){
 			$goods_attr_id = I('get.goodsAttrId','');
@@ -105,48 +249,6 @@
 			$this->ajaxReturn($data);
 		}
 
-		public function history($id,$cur_time=0){
 
-			
-			//如是COOKIE 里面不为空，则往里面增加一个商品ID
-			if (isset($_COOKIE['SHOP']['history'])){
-				
-				//取得COOKIE里面的值，并用逗号把它切割成一个数组
-				$history = explode(',', $_COOKIE['SHOP']['history']);
-
-				//在这个数组的开头插入当前正在浏览的商品ID
-				array_unshift($history, $id);
-		
-				//去除数组里重复的值
-				$history = array_unique($history);
-				
-				//当数组的长度大于5里循环执行里面的代码
-				while (count($history) > 5){
-				
-					//将数组最后一个单元弹出，直到它的长度小于等于5为止
-					array_pop($history);
-				}
-				//把这个数组用逗号连成一个字符串写入COOKIE，并设置其过期时间为30天
-				setcookie('SHOP[history]', implode(',', $history), $cur_time + 3600 * 24 * 30);
-
-			}else{
-				//如果COOKIE里面为空，则把当前浏览的商品ID写入COOKIE ，这个只在第一次浏览该网站时发生
-				$_COOKIE['SHOP']['history'];
-				setcookie('SHOP[history]', $id, $cur_time + 3600 * 24 * 30);
-
-			}
-
-			//以上均为记录浏览的商品ID到COOKIE里,下面将讲到怎样用这样COOKIE里的数据
-
-			//取得COOKIE里的数据 ,格式为1,2,3,4 这样，当然也有可以为0
-			$history =isset ($_COOKIE['SHOP']['history']) ? $_COOKIE['SHOP']['history'] : 0;
-			
-			//写SQL语句，用IN 来查询出这些ID的商品列表
-			if($history!=0)
-				$sql_history = $this->model->where('goods_id in ('. $history .')')->select();
-			var_dump($history);
-			
-
-		}
 
 	}

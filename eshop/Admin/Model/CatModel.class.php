@@ -12,7 +12,7 @@
 			array('is_show',array(0,1),'请不要乱修改html',1,'in'),
 			array('price_section','sortIt100','排序只能大于0小于等于100',1,'callback'),
 		);
-		//
+		
 		public function sortIt100($sort_num){
 			if( I('post.price_section','') ){
 				if(I('post.price_section','')>100||I('post.price_section','')<0){
@@ -44,13 +44,16 @@
 
 
 		protected function _before_update(&$data){
-
+			
 			if(count($data)<=3) return;
 
 			if(  !$data['search_attr_id'] || !($data['search_attr_id'] = $this->join_path($data['search_attr_id']) ) )
-				
+				return false;
+
 			if( !$data['brand_id'] || !($data['brand_id'] = $this->join_path($data['brand_id'])) )
 				return false;
+			// var_dump($data);
+			// exit;
 		}
 
 

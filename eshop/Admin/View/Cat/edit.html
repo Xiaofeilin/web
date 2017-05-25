@@ -101,11 +101,9 @@ $('select[type="type"]').change(function(){
 });
 
 function addnew(a){
-	var p = $(a).parent().parent();
+	var p = $(a).parent();
 	if($(a).html()=="[+]"){
-
 		var newP = p.clone(true);
-
 		newP.find('label ').html('');
 		 newP.find(':selected').removeAttr('selected');
 		newP.find("a").html("[-]");

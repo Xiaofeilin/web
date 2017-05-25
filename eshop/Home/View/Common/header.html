@@ -34,7 +34,7 @@
 											<dl class="dl-sort">
 												<dt><span title="蛋糕">{$val1['cat_name']}</span></dt>
 												<foreach name="val1['cat3']" item="val2">
-												<dd><a title="{$val2['cat_name']}" href="#"><span>{$val2['cat_name']}</span></a></dd>
+												<dd><a title="{$val2['cat_name']}" href="{:U('Goods/search',array('cid'=>$val2['id']))}"><span>{$val2['cat_name']}</span></a></dd>
 												</foreach>
 											</dl>
 											</foreach>
