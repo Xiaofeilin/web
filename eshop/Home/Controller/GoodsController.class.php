@@ -136,9 +136,12 @@
 				$where['cat_id'] = array('eq',$cid);
 			$data['hot_goods'] = $this->model->field('id,shop_price,logo,goods_name,addtime')->where($where)->limit(4)->select();
 
+
+
 			$n = $cid?4:2;
 			$search = array_slice($search,0,$n);
 			$data['search'] = implode('|', $search);
+			$data['catAll']= $this->model->catSelect();
 			$goodsList = $this->model->search($data['search'],$cn);
 			$data['goodsList'] = $goodsList['goodsList'];
 			$data['show'] = $goodsList['show'];
