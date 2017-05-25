@@ -48,7 +48,6 @@ class LoginModel extends Model{
 			if(empty($userInfo)){
 				return $this->model->getError();
 			}else{
-				
 				$data['errorlogin'] = $userInfo['errorlogin'] + 1;
 				$data['errortime'] = $userInfo['errorlogin'] > 5 ? $userInfo['errortime'] : $time;//判断登录错误次数，若大于5使用原时间戳，小于则用当前时间戳
 				$data['status'] = $userInfo['errorlogin'] > 5 ? 0 : 1;//判断登录次数，若大于5则禁用用户，小于5则启用用户
