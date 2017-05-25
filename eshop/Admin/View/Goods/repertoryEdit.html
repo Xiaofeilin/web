@@ -7,7 +7,7 @@
                      <caption><h2>库存表</h2></caption>
                   <thead>
                           <tr class="text-c">
-                          <th><input type="button" class="btn btn-primary radius" name="none" value="添加库存" class="btn btn-primary radius"></th>      
+                          <th><a href="{:U('delRep',array('gid'=>$goods_id))}"><input type="button" class="btn btn-primary radius"  value="删除库存" class="btn btn-primary radius"></a></th>      
                           <foreach name="attr_name" item="val">
                           <th>{$val}</th>
                           </foreach>
@@ -19,7 +19,7 @@
                     
                     <foreach name="goodsRepList" item="val" key="key">
                     <tr  class="text-c"  id = {$val['id']} hand="0">
-                          <td ><input type="button" class="btn btn-primary radius" value="{$key==0?'+':'-'}"></td>
+                          <td ><input type="button" name="ad" class="btn btn-primary radius" value="{$key==0?'+':'-'}"></td>
                           <foreach name="repertoryAttr" item="val1" key="key1">
                           <td >
                                 <select name="{$status}goods_attr[{$key1}][{$val['id']}][]" id="">
@@ -40,20 +40,25 @@
  </form>
 <script>
 
-       $('input[type="button"]').click(function(){
+
+       $('input[name="ad"]').click(function(){
               var tr = $(this).parent().parent();
              if($(this).attr('value')=="+"){     
                     var newTr = tr.clone(true);
                     newTr.find('input[value="+"]').attr('value','-');
                     newTr.find(':selected').removeAttr('selected');
+                    newTr.removeAttr('id');
 
                    var trSelect =  newTr.find('select');
-                   var oldName = trSelect.attr('name');
-                   var newName = oldName.replace('old_','');
-                   var start = newName.indexOf('][')+1;
-                    var last = newName.lastIndexOf('][')+1;
-                   var newName = newName.replace(newName.slice(start,last) , '');
-                    trSelect.attr('name',newName);
+                   trSelect.each(function(){
+                           var oldName = $(this).attr('name');
+                           var newName = oldName.replace('old_','');
+                           var start = newName.indexOf('][')+1;
+                            var last = newName.lastIndexOf('][')+1;
+                           var newName = newName.replace(newName.slice(start,last) , '');
+                            $(this).attr('name',newName);
+                     });
+
 
                    var trInput = newTr.find('input[name]');
                    trInput.each(function(){
@@ -63,22 +68,25 @@
                     var last = newName.lastIndexOf(']');
                    var newName = newName.replace(newName.slice(start,last) , '');
 
-
                      $(this).attr('name',newName);
+
                    });
-                 
+                  
                     tr.after(newTr);
              }else{
-                      var id = tr.attr('id');
-                     $.ajax({
-                                type:'GET',
-                                url:"{:U('ajaxDelRep','',false)}/id/"+id,
-                                dataType:'json',
-                                success:function(data){
-                                       if(data==1)
-                                               tr.remove();
-                                }
-                    });
+                     var id = tr.attr('id');
+                     if(id!=undefined){
+                           $.ajax({
+                                      type:'GET',
+                                      url:"{:U('ajaxDelRep','',false)}/id/"+id,
+                                      dataType:'json',
+                                      success:function(data){
+                                             if(data==1)
+                                                     tr.remove();
+                                      }
+                          });
+                    }else
+                         tr.remove();
              }
        });
 

@@ -151,7 +151,6 @@
 			 	$goodsRep = D('GoodsRep');
 			 	//调用repetoryNew处理传来的数据
 			 	if($goodsrepData = $this->model->repertoryNew( $goods_id , $goods_attr , $goods_num , $goods_price ) ){
-			 		
 			 		//批量添加是否成功
 			 		if($goodsRep->addAll($goodsrepData))
 			 			$this->success('添加成功',U( '' , array('id'=>$goods_id) ) );
@@ -180,6 +179,7 @@
 		*[库存修改]
 		*/
 		public function repertoryEdit(){
+
 			//判断是否post提交
 			if(IS_POST){
 				//获取post数据，并处理数据
@@ -192,7 +192,6 @@
 				//开启事物
 				$goodsRep = D('GoodsRep');
 				$goodsRep->startTrans();
-
 				//将旧的库存数据修改
 				if( $goodsRepOldData ){
 					foreach ($goodsRepOldData  as $key => $value) {
@@ -211,15 +210,18 @@
 				$goods_price = I('post.goods_price');
 				$goodsRepData = $this->model->repertoryNew( $goods_id , $goods_attr , $goods_num ,$goods_price);
 				
+						
 				 //将新数据批量添加
 				 if($goodsRepData ){
+
 			 		if( $goodsRep->addAll($goodsRepData) ){
 			 			$goodsRep->commit();
 				 		$this->success('添加成功',U( 'repertory' , array('id'=>$goods_id) ) );
 				 		exit;
 				 	}
 			 	}else{
-			 		 $goodsRep->commit();
+
+			 		$goodsRep->commit();
 			 		$this->success('添加成功',U( 'repertory' , array('id'=>$goods_id) ) );
 			 		exit;
 			 	}
@@ -230,6 +232,16 @@
 			$error = $this->model->getError();
 			$this->error($error);
 			exit;
+		}
+
+		/**
+		*[删除库存]
+		*/
+		public function DelRep(){
+			if( $gid = I('get.gid') ){
+				if(D('GoodsRep')->where('goods_id='.$gid)->delete())
+					$this->success('删除成功',U( 'repertory' , array('id'=>$gid) ) );
+			}
 		}
 
 

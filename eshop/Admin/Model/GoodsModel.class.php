@@ -421,13 +421,13 @@
 		*@return array 		$goodsRepData[商品属性与商品数一一对应的数组]
 		*/
 		public function repertoryNew($goods_id, $goods_attr,$goods_num ,  $goods_price ){
+		
 			if($goods_attr){
 				foreach($goods_attr as $key => $value) {
 					foreach ($value as $key1 => $value1) {
 						$goodsAttr[$key1][] = $value1;
 					}
 				}
-	
 				foreach ($goodsAttr as $key => $value) {
 					$num = $goods_num[$key];
 					$price = $goods_price[$key];
@@ -467,29 +467,42 @@
 		*/
 		public function repertoryOld($goods_id,$old_goods_attr,$old_goods_num,$old_goods_price){
 
-			foreach ($old_goods_attr  as $key => $value) {
-				foreach ($value as $key1 => $value1) {
-					$old_goods_attrArr[$key1][]=$value1[0];
+			if($old_goods_attr){
+				foreach ($old_goods_attr  as $key => $value) {
+					foreach ($value as $key1 => $value1) {
+						$old_goods_attrArr[$key1][]=$value1[0];
+					}
 				}
-			}
-			
-			foreach ($old_goods_attrArr as $key => $value) {
-				$num = $old_goods_num[$key];
-				$price = $old_goods_price[$key];
-				if( !is_numeric( $num ) && $price < 0 ) continue;
-				if( !is_numeric( $price ) && $price< 0 ) continue;
-				sort($value);
-				$str = ltrim(implode(',', $value) , ',') ;
 				
-				
-				$oldGoodsRepData[] = array(
-					'id'=>$key,
-					'goods_id'=>$goods_id,
-					'goods_number'=>$num,
-					'goods_attr_id' => $str,
-					'goods_price'=>$price,
-				);
+				foreach ($old_goods_attrArr as $key => $value) {
+					$num = $old_goods_num[$key];
+					$price = $old_goods_price[$key];
+					if( !is_numeric( $num ) && $price < 0 ) continue;
+					if( !is_numeric( $price ) && $price< 0 ) continue;
+					sort($value);
+					$str = ltrim(implode(',', $value) , ',') ;
+					
+					
+					$oldGoodsRepData[] = array(
+						'id'=>$key,
+						'goods_id'=>$goods_id,
+						'goods_number'=>$num,
+						'goods_attr_id' => $str,
+						'goods_price'=>$price,
+					);
 
+				}
+			}else{
+				foreach ($old_goods_num as $key => $value) {
+					$oldGoodsRepData[] = array(
+						'id'=>$key,
+						'goods_id'=>$goods_id,
+						'goods_number'=>$old_goods_num[$key],
+						'goods_attr_id' => '',
+						'goods_price'=>$old_goods_price[$key],
+					);
+				}
+				
 			}
 			return $oldGoodsRepData;
 		}
