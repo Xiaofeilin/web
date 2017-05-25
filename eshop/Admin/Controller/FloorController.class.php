@@ -10,7 +10,9 @@
 			$this->model = D('floor');
 		}
 
-
+		/**
+		*['创建floor添加']
+		*/
 		public function add(){
 			parent::add();
 			$data['catList'] = $this->catSelect();
@@ -18,7 +20,9 @@
 			$this->display();
 		}
 
-
+		/**
+		*['创建floor修改']
+		*/
 		public function edit(){
 			if( ( $id=I('get.id','')) && is_numeric($id) ){
 				parent::edit('',array('id'=>$id));
@@ -30,6 +34,9 @@
 				$this->error('非法进入');
 		}
 
+		/**
+		*['创建floor视图']
+		*/
 		public function list(){
 			$data= $this->model->search();
 			$this->assign($data);
@@ -37,6 +44,9 @@
 			$this->display();
 		}
 
+		/**
+		*['创建floor删除']
+		*/
 		public function del(){
 			if(  ( $id=I('get.id','') )  && is_numeric( $id ) ){
 				if($this->model->delete($id)){
@@ -49,6 +59,10 @@
 			exit;
 		}
 
+		/**
+		*['查询3级分类']
+		*@return array 		$data['3级分类数组']
+		*/
 		public function catSelect(){
 			$cat = D('cat');
 			$catAll = $cat->select();

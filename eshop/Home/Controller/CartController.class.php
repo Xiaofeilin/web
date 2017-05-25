@@ -1,7 +1,9 @@
 <?php
 	namespace Home\Controller;
 	class CartController extends CommonController {
-		
+		/**
+		*[ajax获取购物车]
+		*/
 		public function ajaxGetCart(){
 			$cart = new \Org\Util\Cart();
 			$goods_id = I('post.id','');
@@ -18,7 +20,10 @@
 				$this->ajaxReturn(1);
 			}
 		}
-
+		
+		/**
+		*[购物车视图]
+		*/
 		public function shopcart(){
 			
 			$goodsRep = D('GoodsRep');

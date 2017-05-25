@@ -8,6 +8,10 @@
 			array('brand_name','','分类名唯一',1,'unique'),
 		);
 
+		/**
+		*[在添加brand前上传图片并获取上传图片路径]
+		*@param array 	$data[自动验证过滤后的form表单数据]
+		*/
 		protected function _before_insert(&$data){
 			$imgData = imgUpLoad('logo','Brand');
 			if(isset( $imgData['error'])){
@@ -19,7 +23,10 @@
 			}
 		}
 
-
+		/**
+		*[在添加brand后上传图片并获取上传图片路径]
+		*@param array 	$data[自动验证过滤后的form表单数据]
+		*/
 		protected function _before_update(&$data){
 			imgDel($this,$data['id']);
 			$imgData = imgUpLoad('logo','Brand');
@@ -33,7 +40,9 @@
 		}
 
 
-
+		/**
+		*[搜索+分页]
+		*/
 		public function search(){
 
 			//******************************搜索****************************

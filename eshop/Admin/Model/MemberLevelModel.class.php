@@ -9,6 +9,9 @@
 			array('rate','number','1',2),
 		);
 
+		/**
+		*[积分的大小比较]
+		*/
 		protected function gtBottomNum($top_num){
 			if(!($top_num>I('post.bottom_num',0) )&&!is_numeric($top_num) )
 				return false;

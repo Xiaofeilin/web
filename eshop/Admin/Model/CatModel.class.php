@@ -13,6 +13,10 @@
 			array('price_section','sortIt100','排序只能大于0小于等于100',1,'callback'),
 		);
 		
+		/**
+		*[排序小于100]
+		*@param number 	$sort_num['排序']
+		*/
 		public function sortIt100($sort_num){
 			if( I('post.price_section','') ){
 				if(I('post.price_section','')>100||I('post.price_section','')<0){
@@ -45,6 +49,10 @@
 				$data['cat_path'] = '0,';
 		}
 
+		/**
+		*[数据修改后的操作，主要拼接父路径]
+		*@param array 	$data[经过自动验证的数据]
+		*/
 		protected function _before_update(&$data){
 			
 			if(count($data)<=3) return;
@@ -58,6 +66,11 @@
 		
 		}
 
+		/**
+		*[属性，匹配拼接]
+		*@param array 	$path[拼接的数组]
+		*@return sting 		$path_str[拼接字符]
+		*/
 		protected function join_path($path){
 			if( !empty($path) ){
 				if(!is_array($path) ){
@@ -89,6 +102,11 @@
 			return $catAll;
 		}
 
+		/**
+		*[还原分类修改表]
+		*@param number 	$id['分类id']
+		*@return string 	$html['修改表html']
+		*/
 		public function restore($id){
 			$attr = D('attr');
 			$type = D('type');

@@ -3,6 +3,16 @@
 	use Think\Model;
 	class EqualModel extends Model{
 
+
+		/**
+		*[搜索+分页公共方法]
+		*@param string 	$name['返回结果集下标,可不写，自动拼接']
+		*@param string 	$field['字段']
+		*@param array 	$where[搜索条件]
+		*@param string 	$order[排序]
+		*@param string 	$join[连接]
+		*@return array 		$data[搜索+分页结果]
+		*/
 		public function search( $name='',$field='*',$where=array(),$order=array(),$join='' ){
 			$data = array();
 			$count = $this->where($where)->count();

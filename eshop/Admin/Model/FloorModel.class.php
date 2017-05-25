@@ -9,6 +9,10 @@
 			array('is_show',array(0,1),'请不要乱改html代码',1,'in'),
 		);
 
+		/**
+		*[在添加floor前上传图片并获取上传图片路径]
+		*@param array 	$data[自动验证过滤后的form表单数据]
+		*/
 		public function _before_insert(&$data){
 
 			$imgData = imgUpLoad('logo','Brand');
@@ -29,6 +33,10 @@
 		}
 
 
+		/**
+		*[在修改brand前上传图片并获取上传图片路径]
+		*@param array 	$data[自动验证过滤后的form表单数据]
+		*/
 		public function _before_update(&$data){
 
 			if(count($data)<3) return;
@@ -51,6 +59,12 @@
 			
 		}
 
+		/**
+		*[拼接楼层名]
+		*@param string 	$one[第1分类名]
+		*@param string 	$two[第2分类名]
+		*@return string 	$name['楼层名']
+		*/
 		public function floorName($one='',$two=''){
 			$cat = D('cat');
 			$name = "";
@@ -67,6 +81,10 @@
 			return $name;
 		}
 
+		/**
+		*[排序小于100]
+		*@param number 	$sort_num['排序']
+		*/
 		public function sortIt100($sort){
 			if( !empty($sort) ){
 				if($sort>100||$sort<0){
@@ -76,6 +94,10 @@
 			}
 		}
 
+		/**
+		*[搜索+分页]
+		*@return array 		$data[搜索后+分页的数据]
+		*/
 		public function search(){
 			$cat = D('cat');
 			$catAll = $cat->field('cat_name,id')->select();

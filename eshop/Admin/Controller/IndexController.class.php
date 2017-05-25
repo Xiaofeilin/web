@@ -26,6 +26,7 @@
 				$this->success('清理完成!');
 		}
 
+		
 		public function index(){
 			$this->display();
 		}

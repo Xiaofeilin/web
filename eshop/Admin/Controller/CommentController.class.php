@@ -1,23 +1,36 @@
 <?php
 	namespace Admin\Controller;
 	class CommentController extends EqualController{
+		
+		/**
+		*['创建comment类实例']
+		*/
 		public function __construct(){
 			parent::__construct();
 			$this->model = D('GoodsComment');
 		}
 
+		/**
+		*['创建comment视图']
+		*/
 		public function list(){
 			$data= $this->model->search();
 			$this->assign($data);
 			$this->display();
 		}
 
+		/**
+		*['创建未审comment视图']
+		*/
 		public function nolist(){
 			$data= $this->model->search(1);
 			$this->assign($data);
 			$this->display();
 		}
 
+		/**
+		*['创建comment修改']
+		*/
 		public function edit(){
 			$id = I('id','');
 			parent::edit('',array('id'=>$id));
