@@ -72,7 +72,7 @@
 																	<div class="item-basic-info">
 																		<a href="javascript:void(0);">
 																			<p>{$val['goods_name']}</p>
-																			<p class="info-little">颜色：{$val['attr_name']}
+																			<p class="info-little">{$val['goods_attr_id']}
 																				<br/>包装：盒装 </p>
 																		</a>
 																	</div>
@@ -114,7 +114,7 @@
 															<li class="td td-change">
 																<div class="am-btn am-btn-danger anniu">
 																<if condition="$val.state eq '已收货'">
-																<a href="javascript:void(0);" style="color:white">评价商品</a>
+																<a href="{:U('Comment/commentlist',array('id'=>$list[0][orders_id]))}" style="color:white">评价商品</a>
 																<elseif condition="$val.state eq '已发货'" />
 																<a href="{:U('Orders/sureOrders',array('id'=>$list[0][orders_id]))}" style="color:white">确认收货</a>
 																<elseif condition="$val.state eq '待发货'" />
