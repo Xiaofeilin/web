@@ -48,9 +48,10 @@
 					}
 
 				}
-				S('floor_data');
+				S('floor_data',$data);
 			}
 			$data = S('floor_data');
+
 			return $data;
 			
 		}
