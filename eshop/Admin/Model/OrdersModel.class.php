@@ -53,7 +53,7 @@
 	    $page->setConfig('theme', '%FIRST%%UP_PAGE%%LINK_PAGE%%DOWN_PAGE%%END%%HEADER%');  
 	    $page->lastSuffix = false;//最后一页不显示为总页数 
 		$data['show'] = $page->show();
-		$ordersList = $this->field('orders.id id,user.username,address.tel tel,orders.total total,orders.buytime buytime,orders.state state,address.name linkman,concat(address.province,address.city,address.street,address.detailed) address')->join('LEFT JOIN user ON orders.user_id = user.id')->join('LEFT JOIN address ON orders.address_id = address.id')->where($where)->limit($page->firstRow.','.$page->listRows)->select();
+		$ordersList = $this->field('orders.id id,user.account username,address.tel tel,orders.total total,orders.buytime buytime,orders.state state,address.name linkman,concat(address.province,address.city,address.street,address.detailed) address')->join('LEFT JOIN user ON orders.user_id = user.id')->join('LEFT JOIN address ON orders.address_id = address.id')->where($where)->limit($page->firstRow.','.$page->listRows)->select();
 
 		$data['ordersList'] = $ordersList;
 		return $data;
