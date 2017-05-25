@@ -25,9 +25,9 @@ class CarouselController extends EqualController{
 	*[Carousel数据表添加]
 	*/
 	public function add(){
-		$this->assign('title','轮播图');
+		/*$this->assign('title','轮播图');
 		$this->assign('url',U('add'));
-		$this->assign('urlName','轮播图添加');
+		$this->assign('urlName','轮播图添加');*/
 
 		if(IS_POST){
 			$newcar = I('post.');
@@ -38,6 +38,7 @@ class CarouselController extends EqualController{
 			M('Carousel') ->add($newcar);
 			$this->redirect('list');
 		}
+		parent::add('list');
 		$this ->display();	
 	}
 

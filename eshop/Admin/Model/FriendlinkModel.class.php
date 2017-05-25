@@ -3,8 +3,6 @@ namespace Admin\Model;
 use Think\Model;
 
 class FriendLinkModel extends Model{
-
-
 	protected function _before_insert(&$data){
 		$data['link_url'] = 'http://' . $_POST['link_url'];
 	}
