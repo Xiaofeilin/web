@@ -94,6 +94,7 @@
 		*/
 		public function list(){
 			$data = $this->model->search();
+			$data['y'] = 4;
 			$this->assign($data);
 			$this->assignHead('添加分类',U('add'),'分类列表');
 			$this->display();

@@ -43,7 +43,7 @@
 
 				<td >{$val['id']}</td>
 				<td >
-				<span><a href="#" >{$val[cat_name]}</a></span>
+				<span><a href="#" >{$y-$val['lv']|str_repeat ="+---+",###} {$val[cat_name]}</a></span>
 				</td>
 				<td width="20%" show="{$val['is_show']}" ><img  src="__PUBLIC__/Admin/images/{$val['is_show']}.gif" /></td>
 				<td width="10%"><span>{$val['parent_id']}</span></td>
