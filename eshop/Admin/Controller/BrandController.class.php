@@ -10,12 +10,17 @@
 			$this->model = D('brand');
 		}
 
-
+		/**
+		*['brand添加']
+		*/
 		public function add(){
 			parent::add();
 			$this->display();
 		}
 
+		/**
+		*['brand视图']
+		*/
 		public function list(){
 			$data = array();
 			$data = $this->model->search();
@@ -24,6 +29,9 @@
 			$this->display();
 		}
 
+		/**
+		*['brand修改']
+		*/
 		public function edit(){
 			
 			$data = array();
@@ -34,6 +42,9 @@
 			$this->display();
 		}
 
+		/**
+		*['brand删除']
+		*/
 		public function del(){
 			$id = I('get.id','');
 			$p = I('get.p','');

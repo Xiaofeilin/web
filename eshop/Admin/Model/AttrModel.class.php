@@ -10,6 +10,11 @@
 			array('type_id','require','请不要乱修改html'),
 		);
 
+		/**
+		*['类型下属性类型转换']
+		*@param number 	$type_id['类型id']
+		*@return array 		$attrList['转换后的数组']
+		*/
 		public function handle($type_id){
 			$attrList = $this->where('type_id='.$type_id)->select();
 			foreach ($attrList as $key => $value) {

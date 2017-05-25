@@ -10,6 +10,9 @@
 			$this->model = D('attr');
 		}
 
+		/**
+		*['创建attr视图']
+		*/
 		public function list(){
 			$data = array();
 			$type = D('type');
@@ -22,6 +25,9 @@
 			$this->display();
 		}
 
+		/**
+		*['attr添加']
+		*/
 		public function add(){
 			$type_id = I('get.type_id','');
 			parent::add('',array('type_id'=>$type_id) );
@@ -31,8 +37,10 @@
 			$this->display();
 		}
 
+		/**
+		*['attr修改']
+		*/
 		public function edit(){
-			
 			$data = array();
 			$data['id'] = I('get.id','');
 			parent::edit( '' , array( 'id'=>$data['id']  ) );
@@ -42,6 +50,9 @@
 			$this->display();
 		}
 
+		/**
+		*['attr删除']
+		*/
 		public function del(){
 			$p = I('get.p','');
 			$id = I('get.id','');
@@ -57,6 +68,5 @@
 				$this->success( '删除成功',U( 'list',array('type_id'=>$type_id , 'p'=>$p) ) );
 			}
 			exit;
-
 		}
 	}

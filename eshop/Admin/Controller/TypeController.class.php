@@ -2,16 +2,25 @@
 	namespace Admin\Controller;
 	class TypeController extends EqualController{
 
+		/**
+		*['创建type实例‘]
+		*/
 		public function __construct(){
 			parent::__construct();
 			$this->model = D('type');
 		}
 
+		/**
+		*['创建type添加‘]
+		*/
 		public function add(){
 			parent::add();
 			$this->display();
 		}
 
+		/**
+		*['创建type视图‘]
+		*/
 		public function list(){
 			$data = array();
 			$data = $this->model->search();
@@ -20,6 +29,9 @@
 			$this->display();
 		}
 
+		/**
+		*['创建type修改‘]
+		*/
 		public function edit(){
 			$id = I('get.id','');
 			parent::edit('',array('id'=>$id));
@@ -29,6 +41,9 @@
 			$this->display();
 		}
 
+		/**
+		*['创建type删除‘]
+		*/
 		public function del(){
 			$id = I('get.id','');
 			$p = I('get.p','');

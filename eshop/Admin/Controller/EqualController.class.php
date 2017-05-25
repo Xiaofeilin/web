@@ -47,7 +47,12 @@
 
 
 		
-
+		/**
+		*[设置头部信息]
+		*@param string 	$title[标题]
+		*@param string 	$url[连接名]
+		*@param string 	$urlName[连接地址]
+		*/
 		public function assignHead($title,$url,$urlName){
 			$this->assign('title',$title);
 			$this->assign('url',$url);
