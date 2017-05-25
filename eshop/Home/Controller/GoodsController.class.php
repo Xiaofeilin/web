@@ -32,23 +32,29 @@
 					$attrSearch = array();
 					foreach($goodsList as $key=>$value){
 						$attrSearch[$value['attr_name']][] = $value;
+						if(!in_array($value['attr_name'], $attr_name))
+							$attr_name[] = $value['attr_name'];
 					}
 					$data['attrSearch'] = $attrSearch;
+					$cn = count($attrSearch);
 
 					$attr_search = I('get.attr_search','');
 					$data['i'] = 0;
 					if($search['0']&&$attr_search){
 						$data['search_arr'] = explode('.', $attr_search);
 					}else{
-						if(substr_count($attr_search,'.')==3){
+						if(substr_count($attr_search,'.')==($cn-1)){
 							$data['search_arr'] = explode('.', $attr_search);
 						}elseif(!$search['0'])
-							$data['search_arr'] = array_fill(0, count($attrSearch), 0);
+							$data['search_arr'] = array_fill(0, $cn, 0);
 					}
-				
 					$search_arr =  implode('.', $data['search_arr'] );
-					$search['0'] =$search_arr ?$search_arr :$search['0']; 
-				}
+					if($attr_search!='0')
+						$search['0'] =$search_arr ?$search_arr :$search['0']; 
+					else
+						$search['0']='';
+				}else
+					$search['0'] ='';
 				
 				//******************************************商品品牌筛选************************************************
 				$brand_id = $catOne['brand_id'];
@@ -60,7 +66,8 @@
 						$search['1'] = $brand_search?$brand_search:$search['1'];
 					else
 						$search['1'] = '';
-				}
+				}else
+					$search['1'] ='';
 				
 
 				//**********************************价格筛选*************************************
@@ -80,7 +87,33 @@
 						$search['2'] = $price?$price:$search['2'];
 					else
 						$search['2'] ='';
+
+				}else
+					$search['2'] ='';
+
+				//****************************显示信息**************************************
+				$search_val = '';
+				foreach ($search as $key => $value) {
+					if($key==0){
+						$attr_val = explode('.', $value);
+						foreach ($attr_val as $key => $value) {
+							if($value){
+								$value = $value!='0'?$value:'无';
+								$search_val.=$attr_name[$key] . ' : ' . $value . '  ';
+							}
+						}
+					}
+					if($key==1){
+						$value = $value?$value:'无';
+						$search_val.='  价格 : ' . $value;
+					}
+					if($key==2){
+						$value = $value?$value:'无';
+						$search_val.='  品牌 : ' . $value;
+					}
 				}
+				$data['search_val'] = $search_val;
+
 			}
 
 			//**********************************商品名*****************************************
@@ -103,13 +136,10 @@
 				$where['cat_id'] = array('eq',$cid);
 			$data['hot_goods'] = $this->model->field('id,shop_price,logo,goods_name,addtime')->where($where)->limit(4)->select();
 
-
 			$n = $cid?4:2;
 			$search = array_slice($search,0,$n);
 			$data['search'] = implode('|', $search);
-
-
-			$goodsList = $this->model->search($data['search']);
+			$goodsList = $this->model->search($data['search'],$cn);
 			$data['goodsList'] = $goodsList['goodsList'];
 			$data['show'] = $goodsList['show'];
 			$data['count'] = $goodsList['count'];

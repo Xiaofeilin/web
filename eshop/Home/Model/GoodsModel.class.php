@@ -1,7 +1,7 @@
 <?php
 	namespace Home\Model;
 	class GoodsModel extends CommonModel{
-		public function search($search=''){
+		public function search($search='',$cn=0){
 			
 
 			
@@ -12,9 +12,8 @@
 			if($cid = I('get.cid')){
 				$where['cat_id'] = array('eq',$cid); 
 				
-
 				//******************************属性搜索***********************************
-				if( ($attr_search = $search[0])&&$search[0]!=='0.0.0.0' ){
+				if( ($attr_search = $search[0])&&substr_count($search[0],'.')!=$cn-1 ){
 					$attr_search = explode( '.' ,  $attr_search );
 					$goods_id = array();
 					$goodsAttr = D('GoodsAttr');
