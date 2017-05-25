@@ -21,6 +21,7 @@
 	    		$data['catAll'] = $this->model->catSelect();
 	    		$data['floorGoods'] = $this->model->floorSelect();
 
+	    		//用户订单
 	    		$id = $_SESSION['info']['id'];
 			$orders = D('orders');
 			$ordst0 = $orders->where("state = 0 and user_id = '$id'")->count();
@@ -29,6 +30,24 @@
 			$this->assign('ordst0',$ordst0);
 			$this->assign('ordst1',$ordst1);
 			$this->assign('ordst2',$ordst2);
+
+			// 轮播图
+   			$car = D('Carousel');
+   			$where['isshow'] = 1;
+   			$carList = $car -> where($where) -> select();
+   			$this->assign('carList',$carList);
+
+   			// 友情链接
+   			$link = D('Friendlink');
+   			$where['isshow'] = 1;
+   			$linkList = $link ->where($where) ->select();
+   			$this ->assign('linkList',$linkList);
+
+   			// 广告
+   			$ad = D('Ad');
+   			$where['isshow'] = 1;
+   			$adList = $ad ->where($where) ->select();
+   			$this ->assign('adList',$adList);
 			
 	      		$this->assign($data);
 	      		$this->display();

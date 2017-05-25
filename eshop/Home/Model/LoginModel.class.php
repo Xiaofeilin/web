@@ -23,9 +23,13 @@ class LoginModel extends Model{
 		$time = time();
 
 		if(!empty($userInfo)){
-			if($time - $userInfo['errortime'] > 1800){//判断时间差
-				$data['status'] = 1;
-				$this->model->where("id={$userInfo['id']}")->field('status')->save($data);//符合条件则更改用户状态
+			if($userInfo['is_use'] == 1){
+				if($time - $userInfo['errortime'] > 1800){//判断时间差
+					$data['status'] = 1;
+					$this->model->where("id={$userInfo['id']}")->field('status')->save($data);//符合条件则更改用户状态
+				}
+			}else{
+				return "你的账户被禁用或被拉进黑名单！";
 			}
 		}
 

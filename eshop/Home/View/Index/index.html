@@ -5,11 +5,9 @@
  			<!--轮播 -->
 	<div class="am-slider am-slider-default scoll" data-am-flexslider id="demo-slider-0">
 		<ul class="am-slides">
-			<li class="banner1"><a href="introduction.html"><img src="__PUBLIC__/Home/images/ad1.jpg" /></a></li>
-			<li class="banner2"><a><img src="__PUBLIC__/Home/images/ad2.jpg" /></a></li>
-			<li class="banner3"><a><img src="__PUBLIC__/Home/images/ad3.jpg" /></a></li>
-			<li class="banner4"><a><img src="__PUBLIC__/Home/images/ad4.jpg" /></a></li>
-
+			<foreach name="carList" item="val">
+				<li class="banner1"><a href="introduction.html"><img src="__ROOT__/Uploads/{$val['pic']}" /></a></li>
+			</foreach>
 		</ul>
 	</div>
 	<!--轮播-->
@@ -57,7 +55,7 @@
 				    
 			<div class="mod-vip">
 				<div class="m-baseinfo">
-					<a href="person/index.html">
+					<a href="{:U('User/index')}">
 						<if condition="$_SESSION['info']">
 							<img src="__ROOT__/Uploads/{$_SESSION['info']['sm_icon']}">
 						<else/>
@@ -65,7 +63,7 @@
 						</if>
 					</a>
 					<em>
-						Hi,<span class="s-name">{$_SESSION['info'] ? $_SESSION['info']['username'] : '小叮当'}</span>
+						Hi,<span class="s-name">{$_SESSION['info'] ? $_SESSION['info']['account'] : '小叮当'}</span>
 						<a href="#"><p>点击更多优惠活动</p></a>									
 					</em>
 				</div>
@@ -87,7 +85,9 @@
 					<li><a target="_blank" href="#"><span>[特惠]</span>家电狂欢千亿礼券 买1送1！</a></li>
 					
 				</ul>
-           				 <div class="advTip"><img src="__PUBLIC__/Home/images/advTip.jpg"/></div>
+           				<foreach name="adList" item="val">
+           					<div class="advTip"><img src="__ROOT__/Uploads/{$val['pic']}" width="220" height="88" /></div>
+           				</foreach>
 			</div>
 		</div>
 		<div class="clear"></div>

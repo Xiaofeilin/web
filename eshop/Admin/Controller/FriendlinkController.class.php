@@ -25,14 +25,8 @@ class FriendlinkController extends EqualController{
 	*[Friendlink数据表添加]
 	*/
 	public function add(){
-		if(IS_POST){			
-			$newlink = I('post.');
-			$links = D('Friendlink');
-			$links->add($newlink);
-			$this->redirect('list');
-		}else{
-			$this->display();
-		}	
+		parent::add('list');
+		$this->display();
 	}
 
 	/**
