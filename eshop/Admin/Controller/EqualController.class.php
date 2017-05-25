@@ -73,7 +73,7 @@
 
 		   		$priArr = explode(',', $priList);
 
-		   		if(empty($isPriList['id']) && !in_array($isPriList['id'],$priArr)) { 
+		   		if(empty($isPriList['id']) || !in_array($isPriList['id'],$priArr)) { 
 		   			$this->error('对不起,没有访问权限!','');
 		   		}
 
