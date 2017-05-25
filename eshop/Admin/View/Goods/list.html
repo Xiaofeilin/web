@@ -76,10 +76,10 @@
 				<td class="td-manage"> <a href="{:U('repertory',array('id'=>$val['id'],'p'=>$p))}">库存</a><a title="编辑" href="javascript:;" onclick="edit('商品编辑','{:U('edit',array('id'=>$val['id']) )}')" class="ml-5 maincolor" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="{:U('restoreOrDel',array('id'=>$val['id'],'p'=>$_GET['p'],'is_del'=>1) )}" onclick="del()" class="ml-5 c-danger" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 			</tr>
 			</foreach>
+			<tr><td height="30" colspan="16" class="pages text-c">{$show}</td></tr>
 		</tbody>
 	</table>
 	</form>
-	{$show}
 </div>
 
 <!--请在下方写此页面业务相关的脚本-->
