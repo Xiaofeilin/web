@@ -17,7 +17,7 @@
 <div id="nav" class="navfull" style="display:none">
 	<div class="area clearfix" >
 		<div class="category-content" id="guide_2">
-			<div class="category" style="height:430px;z-index:100">
+			<div class="category" style="height:430px">
 				<ul class="category-list" id="js_climit_li">
 					<foreach name="catAll" item="val">
 					<li class="appliance js_toggle relative first">
@@ -53,19 +53,46 @@
 	</div>
 </div>
 <script>
-$('.long-title').hover(
-	function(){
-		$('#nav').show();
-	},
-	function (){
-		$('#nav').hover(
+
+		(function() {
+			$('.am-slider').flexslider();
+		});
+		$(document).ready(function() {
+			$("li").hover(function() {
+				$(".category-content .category-list li.first .menu-in").css("display", "none");
+				$(".category-content .category-list li.first").removeClass("hover");
+				$(this).addClass("hover");
+				$(this).children("div.menu-in").css("display", "block")
+			}, function() {
+				$(this).removeClass("hover")
+				$(this).children("div.menu-in").css("display", "none")
+			});
+		})
+		
+		$(function() {});
+		$(window).load(function() {
+			$('.flexslider').flexslider({
+				animation: "slide",
+				start: function(slider) {
+					$('body').removeClass('loading');
+				}
+			});
+		});
+
+		$('.long-title').hover(
 			function(){
-				$(this).show();
+				$('#nav').show();
 			},
-			function(){
-				$(this).hide();
+			function (){
+				$('#nav').hover(
+					function(){
+						$(this).show();
+					},
+					function(){
+						$(this).hide();
+					}
+				);
 			}
-		);
-	}
-)
+		)
+
 </script>
