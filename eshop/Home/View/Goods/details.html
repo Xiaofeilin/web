@@ -450,6 +450,7 @@ $('#fy').on('click','a',function () {
 })
 
 $("#comment").on("click", function(){
+
 	$.ajax({
 		type:'GET',
 		url: '{:U("ajaxComment",'',false)}/id/{$goodsOne["id"]}',
