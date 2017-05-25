@@ -124,7 +124,7 @@
 					<h4>￥{$val['shop_price']}</h4>
 				</div>
 				<div class="recommendationMain one">
-					<a href="introduction.html"><img  src="__ROOT__/Uploads/{$val['logo']} "></img></a>
+					<a href="{:U('Goods/details',array('id'=>$val['id']))}"><img  src="__ROOT__/Uploads/{$val['logo']} "></img></a>
 				</div>
 			</div>						
 			</foreach>

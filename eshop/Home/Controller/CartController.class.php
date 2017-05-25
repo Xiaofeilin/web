@@ -13,7 +13,6 @@
 				'market'=>I('post.market',''),
 				'logo' => I('post.logo','')
 			);
-			
 			if(  $goods_id && $name ){
 				$cart->addItem($goods_id,$name,$goodsArr);
 				$this->ajaxReturn(1);

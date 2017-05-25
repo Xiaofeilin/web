@@ -119,6 +119,7 @@
 		}
 
 		public function details(){
+	
 			$id = I('get.id','');
 			$goodsPics = D('GoodsPics');
 			$goodsAttr = D('GoodsAttr');
@@ -168,7 +169,7 @@
 			}
 			$num = array_sum($score)*3;
 			$data['num'] = array_sum($score);
-			$data['sum'] = ceil( ($sum/$num)*100 );
+			$data['csum'] = intval(ceil( ($sum/$num)*100 ));
 			$data['score'] = $score;
 	
 			$this->assign($data);
