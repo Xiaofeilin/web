@@ -8,6 +8,9 @@
 			$this->model = D('Index');
 		}
 
+		/**
+		*[主页]
+		*/
 	    	public function index(){
 	    		$data['css'] = array('am-u-sm-7 am-u-md-4 text-two sug',
 						'am-u-sm-7 am-u-md-4 text-two',

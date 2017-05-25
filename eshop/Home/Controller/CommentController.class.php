@@ -3,12 +3,17 @@
 	class CommentController extends CommonController {
 
 		protected $model;
-
+		/**
+		*['实例goodscomment']
+		*/
 		public function __construct(){
 			parent::__construct();
 			$this->model = D('GoodsComment');
 		}
 
+		/**
+		*[添加评论]
+		*/
 		public function commentlist(){
 
 			$detail = D('detail');
@@ -58,6 +63,9 @@
 			$this->display();
 		}
 
+		/**
+		*[评论查看]
+		*/
 		public function comment(){
 			$picsList = array();
 			$commentList = $this->model->field('a.*,b.logo,b.goods_name')->alias('a')->join('left join goods b on a.goods_id=b.id')->select();
@@ -71,7 +79,6 @@
 					}
 				}
 			}
-			var_dump($picsList);
 			$this->assign('picsList',$picsList);
 			$this->assign('commentList',$commentList);
 			$this->display();

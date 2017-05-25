@@ -148,6 +148,9 @@
 			$this->display();
 		}
 
+		/**
+		*[详情页]
+		*/
 		public function details(){
 	
 			$id = I('get.id','');
@@ -206,7 +209,9 @@
 			$this->display();
 		}
 
-
+		/**
+		*[历史记录]
+		*/
 		public function history($id,$cur_time=0){
 
 			//如是COOKIE 里面不为空，则往里面增加一个商品ID
@@ -245,6 +250,9 @@
 			
 		}
 
+		/**
+		*[ajax获取库存价格]
+		*/
 		public function ajaxGetRep(){
 			$goods_attr_id = I('get.goodsAttrId','');
 			$id = I('get.id','');
@@ -253,6 +261,9 @@
 			$this->ajaxReturn($goodsRepOne);
 		}
 
+		/**
+		*[ajax获取评论]
+		*/
 		public function ajaxComment(){
 			$data = array();
 			$id = I('get.id','');

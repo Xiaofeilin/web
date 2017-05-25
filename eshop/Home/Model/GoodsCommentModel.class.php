@@ -2,6 +2,9 @@
 	namespace Home\Model;
 	class GoodsCommentModel extends CommonModel{
 
+		/**
+		*[图片，session处理]
+		*/
 		public function file_com(){
 			$commet = array();
 			$is = '';

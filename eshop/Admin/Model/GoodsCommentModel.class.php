@@ -1,6 +1,11 @@
 <?php
 	namespace Admin\Model;
 	class GoodsCommentModel extends EqualModel{
+
+		/**
+		*[搜索+分页]
+		*@param 0,1 	$is_show[是否审核]
+		*/
 		public function search($is_show=0){
 			$where = array('is_show'=>array('eq',$is_show));
 
