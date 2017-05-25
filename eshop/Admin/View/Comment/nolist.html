@@ -17,7 +17,8 @@
 		<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"><a href="{:U('list','',false)}?unset=1">&nbsp;<input  class="btn btn-danger radius" type="button" value="重置条件"></a>
 	</form>
 		
-	<br>
+	<form action="{:U('delall')}" method="post">
+	<div class="cl pd-5 bg-1 bk-gray mt-20" style="height:29px"> </div>
 	<table class="table table-border table-bordered table-bg table-hover">
 		<thead>
 			<tr class="text-c">
@@ -46,9 +47,10 @@
 				<td class="td-manage"> <a title="详情" href="javascript:;" onclick="edit('评论详情','{:U('edit',array('id'=>$val['id']) )}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a></td>
 			</tr>
 			</foreach>
+			<tr><td height="30" colspan="10" class="pages text-c">{$show}</td></tr>
 		</tbody>
 	</table>
-	{$show}
+	</form>
 </div>
 
 <!--请在下方写此页面业务相关的脚本-->
