@@ -71,6 +71,7 @@ class LoginController extends Controller {
 
 	public function logout(){
 		session('info',null);
+		session('cart',null);
 		cookie('acc',null);
 		cookie('pwd',null);
 		$this->success("退出成功！",U('Login/login'),3);
