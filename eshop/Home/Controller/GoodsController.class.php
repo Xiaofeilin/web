@@ -105,11 +105,11 @@
 					}
 					if($key==1){
 						$value = $value?$value:'无';
-						$search_val.='  价格 : ' . $value;
+						$search_val.='  品牌 : ' . $value;
 					}
 					if($key==2){
 						$value = $value?$value:'无';
-						$search_val.='  品牌 : ' . $value;
+						$search_val.='  价格 : ' . $value;
 					}
 				}
 				$data['search_val'] = $search_val;
