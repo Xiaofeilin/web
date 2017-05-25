@@ -29,8 +29,9 @@
 <![endif]-->
 <!--/meta 作为公共模版分离出去-->
 <title>{$title}</title>
+<!-- 无操作退出 -->
 <script type="text/javascript">
-    var maxTime = 6; // seconds
+    var maxTime = 600; // seconds
     var time = maxTime;
     $('html').on('keydown mousemove mousedown', function(e){
         time = maxTime; // reset
