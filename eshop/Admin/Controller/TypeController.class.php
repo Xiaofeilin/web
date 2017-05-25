@@ -25,7 +25,7 @@
 			$data = array();
 			$data = $this->model->search();
 			$this->assign($data);
-			$this->assignHead('类型列表',U('add'),'添加类型');
+			$this->assignHead('添加类型',U('add'),'类型列表');
 			$this->display();
 		}
 

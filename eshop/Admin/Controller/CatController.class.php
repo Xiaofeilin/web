@@ -95,7 +95,7 @@
 		public function list(){
 			$data = $this->model->search();
 			$this->assign($data);
-			$this->assignHead('添加分类',U('add'),'管理员列表');
+			$this->assignHead('添加分类',U('add'),'分类列表');
 			$this->display();
 		}
 	}

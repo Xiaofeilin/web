@@ -82,7 +82,7 @@
 
 			//变量模板赋值
 			$this->assign($data);
-			$this->assignHead('回收站',U('list'),'商品列表');
+			$this->assignHead('回收站',U('list'),'回收站');
 			$this->display();
 		}
 
@@ -166,7 +166,7 @@
 			//变量模板赋值
 			$this->assign('goods_id',$goods_id);
 			$this->assign($data);
-			$this->assignHead('库存列表',U('list'),'商品列表');
+			$this->assignHead('库存列表',U('list'),'库存列表');
 			
 			//判断是否第一次添加还是修改
 			if($data['goodsRepList'])
