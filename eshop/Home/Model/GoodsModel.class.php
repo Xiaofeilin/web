@@ -8,7 +8,6 @@
 			$order = 'sort_num asc';
 			$search = explode('|', $search);
 			
-			
 			//*****************************分类搜索***********************************
 			if($cid = I('get.cid')){
 				$where['cat_id'] = array('eq',$cid); 

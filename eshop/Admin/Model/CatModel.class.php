@@ -31,7 +31,6 @@
 			if($data['search_attr_id'] = $this->join_path($data['search_attr_id']))
 				return false;
 			
-
 			if($data['brand_id'] = $this->join_path($data['brand_id']))
 				return false;
 
@@ -42,21 +41,19 @@
 				$data['cat_path'] = '0,';
 		}
 
-
 		protected function _before_update(&$data){
-			
+	
 			if(count($data)<=3) return;
 
-			if(  !$data['search_attr_id'] || !($data['search_attr_id'] = $this->join_path($data['search_attr_id']) ) )
-				return false;
-
-			if( !$data['brand_id'] || !($data['brand_id'] = $this->join_path($data['brand_id'])) )
-				return false;
-			// var_dump($data);
-			// exit;
+			if(  $data['search_attr_id'] ){
+				if( !( $data['search_attr_id'] = $this->join_path($data['search_attr_id']) ) )
+					return false;
+			}
+			if( $data['brand_id']) {
+				if( !($data['brand_id'] = $this->join_path($data['brand_id'])) )
+					return false;
+			} 
 		}
-
-
 
 		protected function join_path($path){
 			if( !empty($path) ){
@@ -88,7 +85,6 @@
 			}
 			return $catAll;
 		}
-
 
 		public function restore($id){
 			$attr = D('attr');
@@ -163,7 +159,6 @@
 			return $html;
 		}
 
-
 		/**
 		*[搜索+分页]
 		*@return array 		$data[搜索后+分页的数据]
@@ -201,8 +196,6 @@
 			return $data;
 		}
 
-
-
 		/**
 		*[为单一数据添加父类的名称]
 		*@param int 		$id[要添加的数据id]
@@ -216,6 +209,5 @@
 			}else
 				$catOne['parent_name'] = '顶级分类';
 			return $catOne;
-	
 		}
 	}

@@ -97,7 +97,6 @@
 			else
 				$search['1'] = $order?$sort:$search['3'];
 			
-
 			//************************************热销商品**************************************
 			$where['is_hot'] = array('eq',1);
 			if($cid)
@@ -105,7 +104,7 @@
 			$data['hot_goods'] = $this->model->field('id,shop_price,logo,goods_name,addtime')->where($where)->limit(4)->select();
 
 
-			$n = $cid?2:4;
+			$n = $cid?4:2;
 			$search = array_slice($search,0,$n);
 			$data['search'] = implode('|', $search);
 
