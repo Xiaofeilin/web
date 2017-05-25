@@ -95,7 +95,6 @@ $('td[show]').click(function(){
 		url:"{:U('ajaxIsShow','',false)}/id/" +id,
 		dataType:'json',
 		success:function(data){
-			alert(1);
 		if(data!=null){
 				td.children().attr('src','__PUBLIC__/Admin/images/'+data+'.gif');
 			}

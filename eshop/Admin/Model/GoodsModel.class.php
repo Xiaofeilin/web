@@ -260,9 +260,10 @@
 			//判断有没有促销，将促销时间转为时间戳
 			if($data['is_sale']==1){
 				if( ($start = I('post.promote_start_time','')) && ($end = I('post.promote_end_time','')) ){
-					 $data['promote_start_time'] = strtotime($start.' 00:00:01');
-					 $data['promote_end_time'] = strtotime($end.' 23:59:59');
+					 $data['promote_start_time'] = strtotime($start);
+					 $data['promote_end_time'] = strtotime($end);
 				}
+
 			}
 		}
 
