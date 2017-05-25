@@ -50,7 +50,7 @@ class CarouselController extends Controller{
 	}
 
 	
-	 public function edit()
+	public function edit()
     {
         $car = M('Carousel');
         $where = array('id' => I('id') );

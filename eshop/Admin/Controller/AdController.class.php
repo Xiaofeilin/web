@@ -48,42 +48,43 @@ class AdController extends Controller{
 	    return !empty($info) ? $info['savepath'].$info['savename'] : '';
 	}
 
-	public function edit(){
-		
-		$ad = D('Ad');
-		$where = array('id' =>I('id'));
-		if(IS_POST){
-			
-			if($_FILES['pic']){
-				$info = $this ->upload($_FILES['pic']);
-				if(!$info){
-					$this ->error($ad->getError());
-				}else{
-					$_POST['pic'] = $info;
-				// var_dump($_POST);exit;
 
-				}
-			}
-			if($ad ->create()){
-				if($ad ->save()){
-					$this ->success('修改成功',U('Ad/list'));
-				}else{
-					$this ->error('又他喵错了',U('Ad/list'));
-				}
-			}else{
-				$this ->error($ad ->getError());
-			}
-		}else{
-			$adlist = $ad ->where($where) ->find();
-			// dump($adlist);
-			$this ->assign('adlist',$adlist);
-			$this ->display();
-		}
+	public function edit()
+    {
+        $ad = M('Ad');
+        $where = array('id' => I('id') );
+        if(IS_POST){
+        	// var_dump($_FILES);exit;
+        	if($_FILES['pic']['name']){
+        		// var_dump($_FILES['pic']);exit;
+        		$info = $this ->upload($_FILES['pic']);
+        		if(!$info){
+        			$this -> error($info ->getError());
+        		}else{
+        			$_POST['pic'] = $info;
+        		}
+        	}
 
+        	if($ad ->create()){
+        		if($ad ->save()){
+        			$this ->success('修改成功',U('Ad/list'));
+        		}else{
+        			$this ->error('修改失败',U('Ad/list'));
+        		}
+        	}else{
+        		$this ->error($car ->getError());
+        	}
+        }else{
+        	 //分配数据
+        	$adlist = $ad ->where($where) ->find();
+            $this->assign('adlist',$adlist);
+            //显示模板
+            $this->display();
+        }
 
-		
-		
-	}
+           
+        	
+    }
 
 	public function del(){
 		$id = $_GET['id'];
