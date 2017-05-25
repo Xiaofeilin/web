@@ -189,7 +189,7 @@
 						</foreach>
 					</div>
 					<span class="more ">
-						<a href="# ">更多美味<i class="am-icon-angle-right" style="padding-left:10px ;" ></i></a>
+						<a href="# ">更多<i class="am-icon-angle-right" style="padding-left:10px ;" ></i></a>
 					</span>
 				</div>
 			</div>
@@ -202,8 +202,7 @@
 					</div>
 					<a href="# ">
 						<div class="outer-con ">
-							<div class="title ">开抢啦！</div>
-							<div class="sub-title ">零食大礼包</div>	
+							<div class="title ">开抢啦！</div>	
 						</div>
 						<img src="__ROOT__/Uploads/{$val['logo']} " />
 					</a>
@@ -216,7 +215,7 @@
 						<div class="sub-title ">¥{$goods_val['shop_price']}</div>
 						<i class="am-icon-shopping-basket am-icon-md  seprate"></i>
 					</div>
-					<a href="{:U('Goods/details',array('id'=>$goods_val['id']))}"><img src="__ROOT__/Uploads/{$goods_val['logo']}" /></a>
+					<a href="{:U('Goods/details',array('id'=>$goods_val['id']))}"><img src="__ROOT__/Uploads/{$goods_val['logo']}" width="180px" /></a>
 				</div>
 				</foreach>
 			</div>
