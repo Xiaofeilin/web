@@ -45,10 +45,11 @@
 		public function del(){
 			$p = I('get.p','');
 			$id = I('get.id','');
-			$type_id = I('get.type_id','');
+			 $type_id = I('get.type_id','');
 			
 			$goodsAttr = D('GoodsAttr');
-			$goodsAttrNum = $goodsAttr->field('count(0) num')->where('id='.$id)->find();
+			$goodsAttrNum = $goodsAttr->field('count(0) num')->where('attr_id='.$id)->find();
+			
 			if($goodsAttrNum['num'])
 				$this->error('部分商品含有此属性');
 			else{
