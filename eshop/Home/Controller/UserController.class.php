@@ -13,7 +13,15 @@ class UserController extends EqualController {
 	*[用户主页面显示]
 	*/
 	public function index(){
+		$id = $_SESSION['info']['id'];
+		$orders = D('orders');
+		$ordst0 = $orders->where("state = 0 and user_id = '$id'")->count();
+		$ordst1 = $orders->where("state = 1 and user_id = '$id'")->count();
+		$ordst2 = $orders->where("state = 2 and user_id = '$id'")->count();
 		$time = time();
+		$this->assign('ordst0',$ordst0);
+		$this->assign('ordst1',$ordst1);
+		$this->assign('ordst2',$ordst2);
 		$this->assign('time',$time);
 		$this->display();
 	}
@@ -33,7 +41,6 @@ class UserController extends EqualController {
 				$this->display();
 			}
 		}else{
-			//$user = D('User');
 			$map['id'] = $_SESSION['info']['id'];
 			$userinfo = $this->model->where($map)->getAll();
 			$this->assign('userinfo',$userinfo);

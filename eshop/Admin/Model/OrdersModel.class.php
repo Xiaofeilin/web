@@ -60,8 +60,8 @@
 		}
 
 		public function detail($id){
-			$detail = D('detail');
-			$detailList = $detail->field('')->join('LEFT JOIN goods ON detail.goods_id = goods.id')->join('LEFT JOIN goods_attr ON detail.goods_attr_id = goods_attr.id')->where("detail.orders_id = $id")->find();
+			
+			$detailList = $this->field('goods.goods_name goods_name,goods_attr.attr_value attr_value,detail.price price,detail.num num')->join('LEFT JOIN detail ON orders.id = detail.orders_id')->join('LEFT JOIN goods ON detail.goods_id = goods.id')->join('LEFT JOIN goods_attr ON detail.goods_attr_id = goods_attr.id')->join('LEFT JOIN attr ON goods_attr.attr_id = attr.id')->where("orders.id = {$id}")->select();
 			return $detailList;
 		}
 

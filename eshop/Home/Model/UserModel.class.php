@@ -40,7 +40,7 @@ class UserModel extends Model{
 	*['图片插入处理']
 	*@param string	&$data[图片信息]
 	*/
-	protected function _before_insert(&$data){
+	protected function _insert(&$data){
 		$sub = I('sub',0);
 		if($sub ==1 && $FILES['icon']['error'] == 0){
 			$imgData = imgUpLoad('icon','Home/Icon');
@@ -58,7 +58,7 @@ class UserModel extends Model{
 	*['图片更新处理']
 	*@param string	&$data[图片信息]
 	*/
-	protected function _before_update(&$data){
+	protected function _update(&$data){
 		$sub = I('sub',0);
 		if($sub == 1 && $FILES['icon']['error'] == 0){
 			imgDel($this,$data['id'],"icon");

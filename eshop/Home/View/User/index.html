@@ -24,7 +24,7 @@
 									</div>
 									<div class="m-right">
 										<div class="m-new">
-											<a href="news.html"><i class="am-icon-bell-o"></i>消息</a>
+											<a href="javascript:void(0);"><i class="am-icon-bell-o"></i>消息</a>
 										</div>
 										<div class="m-address">
 											<a href="{:U('Address/address')}" class="i-trigger">我的收货地址</a>
@@ -81,11 +81,10 @@
 									<a class="i-load-more-item-shadow" href="{:U('Orders/orders')}">全部订单</a>
 								</div>
 								<ul>
-									<!--<li><a href="order.html"><i><img src="__PUBLIC__/Home/images/pay.png"/></i><span>待付款</span></a></li>-->
-									<li><a href="order.html"><i><img src="__PUBLIC__/Home/images/send.png"/></i><span>待发货<em class="m-num">1</em></span></a></li>
-									<li><a href="order.html"><i><img src="__PUBLIC__/Home/images/receive.png"/></i><span>待收货</span></a></li>
-									<li><a href="order.html"><i><img src="__PUBLIC__/Home/images/comment.png"/></i><span>待评价<em class="m-num">3</em></span></a></li>
-									<li><a href="change.html"><i><img src="__PUBLIC__/Home/images/refund.png"/></i><span>退换货</span></a></li>
+									<li><a href="{:U('Orders/orders')}"><i><img src="__PUBLIC__/Home/images/send.png"/></i><span>待发货<em class="m-num">{$ordst0}</em></span></a></li>
+									<li><a href="{:U('Orders/orders')}"><i><img src="__PUBLIC__/Home/images/receive.png"/></i><span>待收货<em class="m-num">{$ordst1}</em></span></a></li>
+									<li><a href="{:U('Orders/orders')}"><i><img src="__PUBLIC__/Home/images/comment.png"/></i><span>待评价<em class="m-num">{$ordst2}</em></span></a></li>
+									<li><a href="javascript:void(0);"><i><img src="__PUBLIC__/Home/images/refund.png"/></i><span>退换货</span></a></li>
 								</ul>
 							</div>
 
@@ -98,7 +97,7 @@
 									<ul class="lg-list">
 										<!--物流遍历单个区块开始-->
 										<li class="lg-item">
-											<div class="item-info">
+											<div class="item-info" style="margin-left:0px">
 												<a href="javascript:void(0);" onclick="tip()">
 													<img src="__PUBLIC__/Home/images/65.jpg_120x120xz.jpg" alt="抗严寒冬天保暖隔凉羊毛毡底鞋垫超薄0.35厘米厚吸汗排湿气舒适">
 												</a>
@@ -110,9 +109,6 @@
 													<a class="lg-detail i-tip-trigger" href="javascript:void(0);" onclick="tip()">查看物流明细</a>
 												</div>
 											</div>
-											<!--<div class="lg-confirm">
-												<a class="i-btn-typical" href="#">确认收货</a>
-											</div>-->
 										</li>
 										<!--物流遍历单个区块结束-->
 									</ul>
