@@ -73,7 +73,7 @@
 				//**********************************价格筛选*************************************
 				$num = $catOne['price_section'];
 				if($num){
-					$shop_price = $this->model->field('max(shop_price) maxp, min(shop_price) minp')->find();
+					$shop_price = $this->model->field('max(shop_price) maxp, min(shop_price) minp')->where('cat_id='.$cid)->find();
 					$diff = ceil( ( $shop_price['maxp'] - $shop_price['minp'] ) / $num );
 					$price_arr = array();
 					$minp = intval($shop_price['minp']);
