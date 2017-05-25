@@ -7,7 +7,7 @@ class OrdersController extends EqualController {
 	*/
 	public function __construct(){
 		parent::__construct();
-		$this->model = D('orders');
+		$this->model = D('Orders');
 	}
 
 	/**
