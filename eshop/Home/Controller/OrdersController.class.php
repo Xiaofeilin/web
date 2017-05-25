@@ -52,14 +52,24 @@ class OrdersController extends EqualController {
 			}
 			$html.='</div><div class="order-right"><li class="td td-amount"><div class="item-amount">合计：'.$list[0]['total'].'<p>含运费：<span>10.00</span></p></div></li><div class="move-right"><li class="td td-status"><div class="item-status">';
 			if($val['state'] == '待发货'){
-				$html.='<p class="Mystatus">买家已付款</p></div></li><li class="td td-change"><div class="am-btn am-btn-danger anniu">提醒发货</div></li></div></div></div></div></div>';
+				$html.='<p class="Mystatus">买家已付款</p></div></li><li class="td td-change"><div class="am-btn am-btn-danger anniu"><a href="javascript:void(0);" style="color:white">提醒发货</a></div></li></div></div></div></div></div>';
 			}else if($val['state'] == '已发货'){
-				$html.='<p class="Mystatus">卖家已发货</p></div></li><li class="td td-change"><div class="am-btn am-btn-danger anniu">确认收货</div></li></div></div></div></div></div>';
+				$html.="<p class='Mystatus'>卖家已发货</p></div></li><li class='td td-change'><div class='am-btn am-btn-danger anniu'><a href='".U('Orders/sureOrders',array('id'=>$list[0][orders_id]))."' style='color:white'>确认收货</a></div></li></div></div></div></div></div>";
 			}else if($val['state'] == '已收货'){
-				$html.='<p class="Mystatus">交易成功</p></div></li><li class="td td-change"><div class="am-btn am-btn-danger anniu">评价商品</div></li></div></div></div></div></div>';
+				$html.='<p class="Mystatus">交易成功</p></div></li><li class="td td-change"><div class="am-btn am-btn-danger anniu"><a href="javascript:void(0);" style="color:white">评价商品</a></div></li></div></div></div></div></div>';
 			}
 		}
-		
 		$this->ajaxReturn($html);
+	}
+
+	/**
+	*['确认订单']
+	*/
+	public function sureOrders(){
+		$id = I('get.id');
+		$data['state'] = 2;
+		$where['id'] = $id;
+		$res = $this->model->where($where)->save($data);
+		$this->success("确认收货成功！",U('Orders/orders'),3);
 	}
 }

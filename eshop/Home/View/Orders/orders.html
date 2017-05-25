@@ -53,6 +53,7 @@
 									<div class="order-main">
 										<foreach name="ordersList" item="list">
 										<div class="order-list">
+											<input type="hidden" class="orderid" value="{$key}" name="">
 											<div class="order-status5">
 												<div class="order-title">
 													<span>成交时间：{$list[0]['buytime']|date="Y-m-d",###}</span>
@@ -113,11 +114,11 @@
 															<li class="td td-change">
 																<div class="am-btn am-btn-danger anniu">
 																<if condition="$val.state eq '已收货'">
-																评价商品
+																<a href="javascript:void(0);" style="color:white">评价商品</a>
 																<elseif condition="$val.state eq '已发货'" />
-																确认收货
+																<a href="{:U('Orders/sureOrders',array('id'=>$list[0][orders_id]))}" style="color:white">确认收货</a>
 																<elseif condition="$val.state eq '待发货'" />
-																提醒发货
+																<a href="javascript:void(0);" style="color:white">提醒发货</a>
 																</if>
 																</div>
 															</li>
