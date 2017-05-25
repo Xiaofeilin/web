@@ -7,8 +7,8 @@
 			<span class="select-box" style="width:150px;">
 			<select  class="select"   size="1" name="search_key" >
 				<option value="">请选择搜索类型</option>
-				<option value="brand_name" <eq name="Think.get.search_key" value="brand_name">selected</eq>>品牌名</option>
-				<option value="site_url" <eq name="Think.get.search_key" value="site_url">selected</eq> >url地址</option>
+				<option value="name" <eq name="Think.get.search_key" value="name">selected</eq>>广告名称</option>
+				<option value="link" <eq name="Think.get.search_key" value="link">selected</eq> >url连接</option>
 				<option value="id" <eq name="Think.get.search_key" value="id">selected</eq> >ID</option>
 			</select>
 			</span>
@@ -34,7 +34,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<foreach name="adlist" item="val">
+			<foreach name="adList" item="val">
 			<tr align="center" class="0" id="0_1" id = 'tr_1'>
 				<td class="text-c"><input type="checkbox" value="1" name=""></td>
 				<td class="text-c">{$val['id']}</td>

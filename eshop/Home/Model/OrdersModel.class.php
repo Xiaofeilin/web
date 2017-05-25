@@ -17,13 +17,6 @@ class OrdersModel extends Model{
 
 		$detail = D('detail');
 
-		/*
-		orders.buytime   orders.total   orders.state	orders				user_id
-		detail.price   detail.num			detail				orders_id   goods_id   goods_attr_id
-		goods.goods_name				goods
-		goods_attr.attr_id				goods_attr			goods_id   attr_id
-		attr.attr_name					attr	
-		*/
 		$dlist = $detail->field('goods.goods_name,attr.attr_name,detail.price,detail.num,orders.total,orders.state,orders.buytime,orders.user_id,goods.sm_logo,detail.orders_id')->join('LEFT JOIN goods ON detail.goods_id = goods.id')->join('LEFT JOIN goods_attr ON detail.goods_attr_id = goods_attr.id')->join('LEFT JOIN attr ON goods_attr.attr_id = attr.id')->join('LEFT JOIN orders ON detail.orders_id = orders.id')->where($where)->where("orders.user_id = '$id'")->select();
 
 		$stateName = array('待发货','已发货','已收货','无效订单');

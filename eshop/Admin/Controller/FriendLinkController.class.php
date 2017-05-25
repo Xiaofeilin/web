@@ -1,32 +1,32 @@
 <?php 
 namespace Admin\Controller;
-use Think\Controller;
-
-class FriendLinkController extends Controller{
-	public function list(){
-		$links = D('Friendlink'); 
-		// $linkslist = $links ->select();
-		$linkslist = $links ->getAll();
-		// dump($linkslist);
-		$this->assign('title','友情添加');
-		$this->assign('url',U('add'));
-		$this->assign('urlName','友情连接');
-
-		$this ->assign('linkslist',$linkslist);
-		$this ->display();
-
-	
+//use Think\Controller;
+class FriendlinkController extends EqualController{
+	/**
+	*['创建Friendlink类实例']
+	*/
+	public function __construct(){
+		parent::__construct();
+		$this->model = D('Friendlink');
 	}
 
+	/**
+	*[Friendlink数据表显示和搜索]
+	*/
+	public function list(){
+		$data = array();
+		$data = $this->model->search();
+		$this->assign($data);
+		$this->assignHead('友情添加',U('add'),'友情连接');
+		$this->display();
+	}
 
+	/**
+	*[Friendlink数据表添加]
+	*/
 	public function add(){
-		/*$this->assign('title','友情连接');
-		$this->assign('url',U('list'));
-		$this->assign('urlName','友情连接列表');
-*/
 		if(IS_POST){			
 			$newlink = I('post.');
-			// var_dump($newlink);
 			$links = D('Friendlink');
 			$links->add($newlink);
 			$this->redirect('list');
@@ -35,7 +35,9 @@ class FriendLinkController extends Controller{
 		}	
 	}
 
-
+	/**
+	*[Friendlink数据表删除]
+	*/
 	public function del(){
 		$id = $_GET['id'];
 		$links = D('Friendlink');
@@ -43,17 +45,14 @@ class FriendLinkController extends Controller{
 		$this->redirect('list');
 	}
 
-
+	/**
+	*[Friendlink数据表编辑]
+	*/
 	public function edit(){
-		/*$this->assign('title','修改友情连接');
-		$this->assign('url',U('list'));
-		$this->assign('urlName','友情连接列表');*/
-
 		$links = D('Friendlink');
 		if(IS_POST){			
 			$editlink = $_POST;
 			$links->save($editlink);
-			//$this->redirect('list');
 			$this->success("修改成功!",U('list'),3);
 		}else{
 			$id = $_GET['id'];
@@ -65,5 +64,4 @@ class FriendLinkController extends Controller{
 			$this->display();
 		}	
 	}
-
 }

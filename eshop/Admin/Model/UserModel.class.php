@@ -69,9 +69,9 @@
 		}
 
 		/**
-		*[修改显示]
+		*[会员显示]
 		*@param int 		$id[要显示的数据id]
-		*@return array 		$userOne[修改后的数据]
+		*@return array 		$userOne[会员数据]
 		*/
 		public function getUserOne($id){
 			$data['id'] = $id;
