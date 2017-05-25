@@ -21,9 +21,12 @@ class LoginController extends Controller {
 
 			if($userInfo['is_use'] == 1){
 				$_SESSION['info'] = $userInfo;
-				$this->redirect("Test/test");
+				$this->redirect("Index/index");
 			}else{
-				$this->error('你的账户被禁用或被拉进黑名单！','',3);
+				session('info',null);
+				cookie('acc',null);
+				cookie('pwd',null);
+				$this->error('你的账户被禁用或被拉进黑名单！',U('Login/login'),3);
 			}
 		}
 		if(IS_POST){
@@ -44,18 +47,22 @@ class LoginController extends Controller {
 			}
 			$userInfo = $user->where($map)->find();//查找用户信息
 
-			$check = new \Home\Model\LoginModel();
-			$res = $check->checkErrorlogin($info,$userInfo);//获取检测结果
+			if($userInfo['is_use'] == 1){
+				$check = new \Home\Model\LoginModel();
+				$res = $check->checkErrorlogin($info,$userInfo);//获取检测结果
 
-			$rem = I("rem");
-			if($res == 1){
-				if($rem == 1){
-					cookie('acc',I("account"),60*60*24*7);
-					cookie('pwd',I("password"),60*60*24*7);
+				$rem = I("rem");
+				if($res == 1){
+					if($rem == 1){
+						cookie('acc',I("account"),60*60*24*7);
+						cookie('pwd',I("password"),60*60*24*7);
+					}
+					$this->ajaxReturn(1);
+				}else{
+					$this->ajaxReturn($res,"eval");
 				}
-				$this->ajaxReturn(1);
 			}else{
-				$this->ajaxReturn($res,"eval");
+				$this->ajaxReturn("你的账户被禁用或被拉进黑名单！","eval");
 			}
 		}else{
 			$this->display();

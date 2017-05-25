@@ -1,0 +1,249 @@
+<include file="Public/personHeader"/>
+		<div class="nav-table">
+		<include file="Public/header"/>
+		<div class="clear" style="clear:both"></div>
+
+		<div class="center">
+			<div class="col-main">
+				<div class="main-wrap">
+
+					<div class="user-order">
+
+						<div class="am-cf am-padding">
+							<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">订单管理</strong> / <small>Order</small></div>
+						</div>
+						<hr/>
+
+						<div class="am-tabs am-tabs-d2 am-margin" data-am-tabs>
+
+							<ul class="am-avg-sm-5 am-tabs-nav am-nav am-nav-tabs">
+								<li class="am-active lichg" style="width:255px" value="7"><a href="#tab1">所有订单</a></li>
+								<li class="lichg" style="width:255px" value="0"><a href="#tab2">待发货</a></li>
+								<li class="lichg" style="width:255px" value="1"><a href="#tab3">待收货</a></li>
+								<li class="lichg" style="width:255px" value="2"><a href="#tab4">待评价</a></li>
+							</ul>
+
+							<div class="am-tabs-bd">
+
+								<div class="am-tab-panel am-fade am-in am-active" id="tab1">
+									<div class="order-top">
+										<div class="th th-item">
+											<td class="td-inner">商品</td>
+										</div>
+										<div class="th th-price">
+											<td class="td-inner">单价</td>
+										</div>
+										<div class="th th-number">
+											<td class="td-inner">数量</td>
+										</div>
+										<div class="th th-operation">
+											<td class="td-inner">商品操作</td>
+										</div>
+										<div class="th th-amount">
+											<td class="td-inner">合计</td>
+										</div>
+										<div class="th th-status">
+											<td class="td-inner">交易状态</td>
+										</div>
+										<div class="th th-change">
+											<td class="td-inner">交易操作</td>
+										</div>
+									</div>
+
+									<div class="order-main">
+										<foreach name="ordersList" item="list">
+										<div class="order-list">
+											<div class="order-status5">
+												<div class="order-title">
+													<span>成交时间：{$list[0]['buytime']|date="Y-m-d",###}</span>
+												</div>
+												<div class="order-content">
+													<div class="order-left">
+														<foreach name="list" item="val">
+														<ul class="item-list">
+															<li class="td td-item">
+																<div class="item-pic">
+																	<a href="javascript:void(0);" class="J_MakePoint">
+																		<img src="__ROOT__/Uploads/$val['sm_logo']" class="itempic J_ItemImg">
+																	</a>
+																</div>
+																<div class="item-info">
+																	<div class="item-basic-info">
+																		<a href="javascript:void(0);">
+																			<p>{$val['goods_name']}</p>
+																			<p class="info-little">颜色：{$val['attr_name']}
+																				<br/>包装：盒装 </p>
+																		</a>
+																	</div>
+																</div>
+															</li>
+															<li class="td td-price">
+																<div class="item-price">
+																	{$val['price']}
+																</div>
+															</li>
+															<li class="td td-number">
+																<div class="item-number">
+																	<span>×</span>{$val['num']}
+																</div>
+															</li>
+															<li class="td td-operation">
+																<div class="item-operation">
+																	
+																</div>
+															</li>
+														</ul>
+														</foreach>
+													</div>
+													<div class="order-right">
+														<li class="td td-amount">
+															<div class="item-amount">
+																合计：{$val['total']}
+																<p>含运费：<span>10.00</span></p>
+															</div>
+														</li>
+														<div class="move-right">
+															<li class="td td-status">
+																<div class="item-status">
+																	<p class="Mystatus">{$val['state']}</p>
+																	<!--<p class="order-info"><a href="orderinfo.html">订单详情</a></p>
+																	<p class="order-info"><a href="logistics.html">查看物流</a></p>-->
+																</div>
+															</li>
+															<li class="td td-change">
+																<div class="am-btn am-btn-danger anniu">
+																<if condition="$val.state eq '已收货'">
+																评价商品
+																<elseif condition="$val.state eq '已发货'" />
+																确认收货
+																<elseif condition="$val.state eq '待发货'" />
+																提醒发货
+																</if>
+																</div>
+															</li>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										</foreach>
+										<empty name="ordersList">
+											<div class='order-list'>暂无订单数据~</div>
+										</empty>
+									</div>
+								</div>
+					
+
+								<div class="am-tab-panel am-fade" id="tab2">
+									<div class="order-top">
+										<div class="th th-item">
+											<td class="td-inner">商品</td>
+										</div>
+										<div class="th th-price">
+											<td class="td-inner">单价</td>
+										</div>
+										<div class="th th-number">
+											<td class="td-inner">数量</td>
+										</div>
+										<div class="th th-operation">
+											<td class="td-inner">商品操作</td>
+										</div>
+										<div class="th th-amount">
+											<td class="td-inner">合计</td>
+										</div>
+										<div class="th th-status">
+											<td class="td-inner">交易状态</td>
+										</div>
+										<div class="th th-change">
+											<td class="td-inner">交易操作</td>
+										</div>
+									</div>
+
+									<div class="order-main">
+
+									</div>
+								</div>
+
+								<div class="am-tab-panel am-fade" id="tab3">
+									<div class="order-top">
+										<div class="th th-item">
+											<td class="td-inner">商品</td>
+										</div>
+										<div class="th th-price">
+											<td class="td-inner">单价</td>
+										</div>
+										<div class="th th-number">
+											<td class="td-inner">数量</td>
+										</div>
+										<div class="th th-operation">
+											<td class="td-inner">商品操作</td>
+										</div>
+										<div class="th th-amount">
+											<td class="td-inner">合计</td>
+										</div>
+										<div class="th th-status">
+											<td class="td-inner">交易状态</td>
+										</div>
+										<div class="th th-change">
+											<td class="td-inner">交易操作</td>
+										</div>
+									</div>
+
+									<div class="order-main">
+										
+									</div>
+								</div>
+
+								<div class="am-tab-panel am-fade" id="tab4">
+									<div class="order-top">
+										<div class="th th-item">
+											<td class="td-inner">商品</td>
+										</div>
+										<div class="th th-price">
+											<td class="td-inner">单价</td>
+										</div>
+										<div class="th th-number">
+											<td class="td-inner">数量</td>
+										</div>
+										<div class="th th-operation">
+											<td class="td-inner">商品操作</td>
+										</div>
+										<div class="th th-amount">
+											<td class="td-inner">合计</td>
+										</div>
+										<div class="th th-status">
+											<td class="td-inner">交易状态</td>
+										</div>
+										<div class="th th-change">
+											<td class="td-inner">交易操作</td>
+										</div>
+									</div>
+
+									<div class="order-main">									
+										
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<script type="text/javascript">
+					$('.lichg').click(function(){
+						var state = $(this).val();
+						$.ajax({
+							url:"{:U('Orders/ajaxOrders','',false)}/state/" + state,
+							type:'GET',
+							dataType:"json",
+							success:function(res){
+								if(res == ""){
+									$(".order-main").html("<div class='order-list'>暂无订单数据~</div>");
+								}else{
+									$(".order-main").html(res);
+								}
+							}
+						})
+					})
+				</script>
+				
+<include file="Public/personFooter"/>

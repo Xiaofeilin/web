@@ -238,12 +238,10 @@
 						if(res.info != "短信发送失败！"){
 							timer = setInterval(function(){
 								num--;
-								//$("#sendTelCode").val("等待" + num + "秒后重新发送");
 								if(num == 0){
 									clearInterval(timer);
 									timer = undefined;
 									$("#sendTelCode").removeAttr("disabled",false);
-									//$("#sendTelCode").val("获取短信验证码");
 								}
 							},1000);
 						}

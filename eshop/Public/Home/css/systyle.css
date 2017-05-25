@@ -28,7 +28,7 @@ a.i-trigger { cursor: pointer;position: relative; z-index: 2;display: block; pad
 .m-big{display: none;}
 /*订单*/
 .m-order{ overflow:hidden; margin-bottom:15px;margin-top: 15px;background:#fff;}
-.m-order li{ float:left; width:20%; color: #4B4B4B; text-align: center;}
+.m-order li{ float:left; width:25%; color: #4B4B4B; text-align: center;}
 .m-order li a{ padding: 10px 0px;vertical-align: middle;display: block;color: #4B4B4B;text-align: center;}
 .m-order li a i img{width:30px ;height: 30px;margin: auto;}
 .m-order li a span{height: 18px; line-height: 18px; display: block;}

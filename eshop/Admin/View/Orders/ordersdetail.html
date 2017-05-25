@@ -36,11 +36,11 @@
         </tr>
         <foreach name="detailList" item="val">
         <tr class="f-18 hl-30 text-l">
-          <td>{$val.goods.goods_name}</td>
-          <td>{$val.goods_attr.attr_value}</td>
-          <td>{$val.goods_attr.attr_price}</td>
-          <td>{$val.detail.num}</td>
-          <td>{$val.detail.price}</td>
+          <td>{$val.goods_name}</td>
+          <td>{$val.attr_value}</td>
+          <td>{$val.price}</td>
+          <td>{$val.num}</td>
+          <td>{$val[price] * $val[num]}</td>
         </tr>
         </foreach>
         <tr>

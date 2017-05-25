@@ -100,25 +100,26 @@ function detail(title,url,id,w,h){
 }
 
 // ajax无刷新修改状态
-var oldval = '';
-$('#state').click(function(){
-  oldval = $(this).val();
-});
-
-$('#state').change(function(){
-  var val = $(this).val();
-  var id = $(this).attr('data-id');
-  if (val == '3'){
-    if (confirm('确定无效该订单？') == false){
-      $(this).children('option[value = '+oldval+']').prop('selected',true);
-      return false;
+$(':input[id=state]').each(function(){
+  var oldval = '';
+  $(this).click(function(){
+    oldval = $(this).val();
+  });
+  $(this).change(function(){
+    var val = $(this).val();
+    var id = $(this).attr('data-id');
+    if (val == '3'){
+      if (confirm('确定无效该订单？') == false){
+        $(this).children('option[value = '+oldval+']').prop('selected',true);
+        return false;
+      }
     }
-  }
 
-  $.getJSON("{:U('ajaxSel')}",{ id:id,state:val},function(data){
-    if(data!=null){
-      alert('修改成功');
-    }
+    $.getJSON("{:U('ajaxSel')}",{ id:id,state:val},function(data){
+      if(data!=null){
+        alert('修改成功');
+      }
+    });
   });
 });
 </script>

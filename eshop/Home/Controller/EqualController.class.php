@@ -10,6 +10,12 @@ class EqualController extends Controller{
 	*2.若cookie不存在，则判断session，用户信息没有则提醒登录
 	*/
 	public function _initialize(){
+		if($_SESSION['info'] && $_SESSION['info']['is_use'] != 1){
+			session('info',null);
+			cookie('acc',null);
+			cookie('pwd',null);
+			$this->error('你的账户被禁用或被拉进黑名单！',U('Index/index'),3);
+		}
 		if(cookie('acc') && cookie('pwd')){
 			$str = cookie('acc');
 			$preg = "/^((13[0-9])|(15[^4])|(18[0-9])|(17[0-8])|(147,145))\\d{8}$/";
@@ -24,11 +30,16 @@ class EqualController extends Controller{
 			$userInfo = $user->where($map)->find();
 
 			$_SESSION['info'] = $userInfo;
-			//$this->redirect("__CONTROLLER__/");
 		}
 		if(!session('?info')){
 			$this->error('你尚未登录，请先登录再操作！',U('Login/login'),2);
 		}
+		$sum = 0;
+		$data = $_SESSION['cart'];
+		foreach ($data as $key => $value) {
+			$sum += count($key);
+		}
+		$this->assign('sum',$sum);
 	}
 
 	/**

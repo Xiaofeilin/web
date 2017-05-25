@@ -9,4 +9,13 @@
 			
 		}
 
+		public function _initialize(){
+			$sum = 0;
+			$data = $_SESSION['cart'];
+			foreach ($data as $key => $value) {
+				$sum += count($key);
+			}
+			$this->assign('sum',$sum);
+		}
+
 	}
