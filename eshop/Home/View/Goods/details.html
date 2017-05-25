@@ -225,7 +225,7 @@
 				</div>
 				<li>
 					<div class="clearfix tb-btn tb-btn-buy theme-login" id='buy'>
-						<a id="LikBuy" title="点此按钮到下一步确认购买信息" href="{:U('Cart/addCart')}">立即购买</a>
+						<a id="LikBuy" title="点此按钮到下一步确认购买信息" href="javascript:void(0)">立即购买</a>
 					</div>
 				</li>
 				<li>
@@ -465,6 +465,8 @@ $("#comment").on("click", function(){
 
 function a(){
 	var str = getAttrId(1);
+	var url = "{:U('ajaxGetRep','',false)}/id/{$goodsOne['id']}/goodsAttrId/" + str;
+	$('#LikBuy').attr('href',url);
 	$.ajax({
 		type:'GET',
 		url:"{:U('ajaxGetRep','',false)}/id/{$goodsOne['id']}/goodsAttrId/" + str,

@@ -51,7 +51,13 @@
 
 		public function catSelect(){
 			$cat = D('cat');
-			return	$cat->where(' LENGTH(cat_path) =6')->select();
+			$catAll = $cat->select();
+			$data = array();
+			foreach($catAll as $k=>$v){
+				if(substr_count($v['cat_path'], ',')==3)
+					$data[] = $v;
+			}
+			return $data;
 		}
 
 		/**
