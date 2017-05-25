@@ -67,7 +67,8 @@
 			$id = I('get.id','');
 			$floorOne = $this->model->find($id);
 			$floorOne['is_show'] = $floorOne['is_show']?0:1;
-			if($this->model->save( $floorOne))
+			$floorData = array('id'=>$id,'is_show'=>$floorOne['is_show']);
+			if($this->model->save( $floorData))
 				$this->ajaxReturn(  $floorOne['is_show'] );
 		}
 	}
