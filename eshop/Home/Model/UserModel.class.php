@@ -40,12 +40,16 @@ class UserModel extends Model{
 	*['图片插入处理']
 	*@param string	&$data[图片信息]
 	*/
-	protected function _insert(&$data){
+	protected function _before_insert(&$data){
 		$sub = I('sub',0);
 		if($sub ==1 && $FILES['icon']['error'] == 0){
 			$imgData = imgUpLoad('icon','Home/Icon');
 			if(isset( $imgData['error'])){
-				$this->error = $imgData['error'];
+				if($imgData['error'] == 4){
+					$data['icon'] = $_SESSION['info']['icon'];
+					$data['sm_icon'] = $_SESSION['info']['sm_icon'];
+					$this->error = "修改成功！";
+				}
 				return false;
 			}else{
 				$data['icon'] = $imgData['icon'];
@@ -58,13 +62,17 @@ class UserModel extends Model{
 	*['图片更新处理']
 	*@param string	&$data[图片信息]
 	*/
-	protected function _update(&$data){
+	protected function _before_update(&$data){
 		$sub = I('sub',0);
 		if($sub == 1 && $FILES['icon']['error'] == 0){
 			imgDel($this,$data['id'],"icon");
 			$imgData = imgUpLoad('icon','Home/Icon');
 			if(isset( $imgData['error'])){
-				$this->error = $imgData['error'];
+				if($imgData['error'] == 4){
+					$data['icon'] = $_SESSION['info']['icon'];
+					$data['sm_icon'] = $_SESSION['info']['sm_icon'];
+					$this->error = "修改成功！";
+				}
 				return false;
 			}else{
 				$data['icon'] = $imgData['icon'];
