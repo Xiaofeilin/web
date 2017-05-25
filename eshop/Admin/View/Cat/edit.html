@@ -101,7 +101,7 @@ $('select[type="type"]').change(function(){
 });
 
 function addnew(a){
-	var p = $(a).parent();
+	var p = $(a).parent().parent();
 	if($(a).html()=="[+]"){
 		var newP = p.clone(true);
 		newP.find('label ').html('');
